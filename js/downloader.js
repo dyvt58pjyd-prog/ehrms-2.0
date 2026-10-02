@@ -123,87 +123,45 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
   }
 }
 
-export function generateAdobeDigitalSignature(name, designation, reason = 'Official Record Attestation & Digital Verification', location = 'New Delhi, India', options = {}) {
+export function generateAdobeDigitalSignature(name, designation, reason = 'Official Record Verification', location = 'New Delhi, India', options = {}) {
   const currentPersonnel = (typeof window !== 'undefined' && window.ehrmsState?.currentUser?.name) 
     ? window.ehrmsState.currentUser.name 
     : 'ANURAG ANIL BAWASKAR';
-    
-  const currentDesig = (typeof window !== 'undefined' && window.ehrmsState?.currentUser?.designation)
-    ? window.ehrmsState.currentUser.designation
-    : 'ADDITIONAL SECTION OFFICER - I';
 
   const signerName = (name || currentPersonnel).toUpperCase().replace(/SHRI|SMT\.|DR\./g, '').trim();
-  const signerDesig = designation || currentDesig;
   
   const now = new Date();
   const pad = (n) => String(n).padStart(2, '0');
   const dateFormatted = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} +05'30'`;
-  const serialNo = options.serialNo || '81042444eHRMS';
-  const org = options.org || 'GOVERNMENT OF INDIA';
-  const dept = options.dept || 'MINISTRY OF DEFENCE';
 
   return `
-    <div class="adobe-signature-container" style="
-      display: inline-block;
-      width: 375px;
-      max-width: 100%;
-      border: 1.5px solid #52525b;
+    <div class="adobe-digital-signature" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid #555555;
       background-color: #ffffff;
-      padding: 6px 10px;
-      border-radius: 2px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      padding: 9px 15px;
       font-family: Arial, Helvetica, sans-serif;
       text-align: left;
-      position: relative;
-      overflow: hidden;
       box-sizing: border-box;
       margin: 8px 0;
-      color: #0f172a;
+      width: 385px;
+      max-width: 100%;
     ">
-      <!-- Translucent Adobe Checkmark Watermark -->
-      <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); opacity: 0.08; pointer-events: none; z-index: 1;">
-        <svg width="75" height="75" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="11" fill="#16a34a" />
-          <path d="M7 12.5l3.5 3.5 7-7" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Iconic Adobe Green Tickmark -->
+      <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+        <svg width="46" height="46" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 24.5L19.5 35L39 13" stroke="#008000" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-
-      <div style="display: flex; align-items: stretch; justify-content: space-between; position: relative; z-index: 2;">
-        <!-- Left Side: Adobe Graphic & Personnel Name -->
-        <div style="flex: 1.1; display: flex; flex-direction: column; justify-content: center; padding-right: 10px; border-right: 1px dotted #94a3b8;">
-          <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px;">
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;">
-              <circle cx="10" cy="10" r="9.5" fill="#15803d" />
-              <path d="M6 10.2L8.8 13L14.5 7" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span style="font-size: 10px; font-weight: 800; color: #15803d; letter-spacing: 0.3px; text-transform: uppercase;">Signature Valid</span>
-          </div>
-          
-          <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 800; color: #b91c1c; line-height: 1.15; letter-spacing: 0.3px; margin: 2px 0; word-break: break-word;">
-            ${signerName}
-          </div>
-          
-          <div style="font-size: 8px; font-weight: 700; color: #334155; line-height: 1.2;">
-            ${signerDesig}
-          </div>
-          
-          <div style="font-size: 7.5px; color: #15803d; font-weight: 700; margin-top: 3px; letter-spacing: 0.2px;">
-            [DIGITALLY SIGNED VIA e-SIGN DSC]
-          </div>
-        </div>
-
-        <!-- Right Side: Adobe Certificate X.509 Details -->
-        <div style="flex: 1.45; padding-left: 10px; font-size: 8.5px; line-height: 1.35; color: #1e293b; font-family: Arial, sans-serif;">
-          <div style="font-weight: 800; color: #0f172a; font-size: 9px; margin-bottom: 1px;">
-            Digitally signed by ${signerName}
-          </div>
-          <div style="font-size: 7.5px; color: #475569; line-height: 1.2; margin-bottom: 2px; word-break: break-all;">
-            <strong>DN:</strong> c=IN, o=${org}, ou=${dept}, serialNumber=${serialNo}, cn=${signerName}
-          </div>
-          <div style="font-size: 8px; color: #334155;"><strong>Date:</strong> ${dateFormatted}</div>
-          <div style="font-size: 8px; color: #334155;"><strong>Reason:</strong> ${reason}</div>
-          <div style="font-size: 8px; color: #334155;"><strong>Location:</strong> ${location}</div>
-        </div>
+      <!-- Exact Adobe Signature Properties -->
+      <div style="font-size: 11px; line-height: 1.48; color: #000000;">
+        <div style="font-size: 13.5px; font-weight: bold; color: #008000; margin-bottom: 2px; letter-spacing: 0.2px;">Signature Valid</div>
+        <div style="font-size: 11px; color: #000000;">Digitally signed by <strong>${signerName}</strong></div>
+        <div style="font-size: 10px; color: #222222;">Date: ${dateFormatted}</div>
+        <div style="font-size: 10px; color: #222222;">Reason: ${reason}</div>
+        <div style="font-size: 10px; color: #222222;">Location: ${location}</div>
       </div>
     </div>
   `;
@@ -396,42 +354,22 @@ export function wrapGovDocument(title, bodyContent, isSinglePage = false) {
       font-size: 9px;
     }
     
-    .sig-box {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      border: 1px solid #767676;
-      background-color: #ffffff;
-      padding: 6px;
-      border-radius: 2px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      width: 370px;
-      margin-left: auto;
-    }
-    .adobe-left {
-      flex: 1;
-      display: flex;
-      justify-content: center;
+    
+    .adobe-digital-signature {
+      display: inline-flex;
       align-items: center;
-      color: #ca3922;
-      font-family: Arial, sans-serif;
-      font-size: 20px;
-      font-weight: bold;
-      border-right: 1px dotted #ccc;
-      padding-right: 15px;
-      margin-right: 10px;
-    }
-    .adobe-right {
-      flex: 2;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 10px;
-      color: #333;
+      gap: 14px;
+      border: 1px solid #555555;
+      background-color: #ffffff;
+      padding: 9px 15px;
+      font-family: Arial, Helvetica, sans-serif;
       text-align: left;
-      font-weight: normal;
-      line-height: 1.3;
+      box-sizing: border-box;
+      margin: 8px 0;
+      width: 385px;
+      max-width: 100%;
     }
+
 
     .sig-box strong {
       font-size: 10px;
@@ -1441,40 +1379,22 @@ export function downloadLeaveOrder(user, app) {
         line-height: 1.5;
         font-weight: bold;
       }
-      .adobe-signature {
-        border: 1px solid #767676;
-        background-color: #ffffff;
-        padding: 5px 8px;
-        border-radius: 2px;
-        margin-bottom: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        width: 370px;
-        margin-left: auto;
-      }
-      .adobe-left {
-        flex: 1;
-        display: flex;
-        justify-content: center;
+      
+      .adobe-digital-signature {
+        display: inline-flex;
         align-items: center;
-        color: #ca3922;
-        font-family: Arial, sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-        border-right: 1px dotted #ccc;
-        padding-right: 15px;
-        margin-right: 10px;
-      }
-      .adobe-right {
-        flex: 2;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 10px;
-        color: #333;
+        gap: 14px;
+        border: 1px solid #555555;
+        background-color: #ffffff;
+        padding: 9px 15px;
+        font-family: Arial, Helvetica, sans-serif;
         text-align: left;
-        font-weight: normal;
-        line-height: 1.3;
+        box-sizing: border-box;
+        margin: 8px 0;
+        width: 385px;
+        max-width: 100%;
       }
+
       /* Suppress the standard header injected by wrapGovDocument */
       .doc-header, .gov-tricolor-top { display: none !important; }
     </style>
