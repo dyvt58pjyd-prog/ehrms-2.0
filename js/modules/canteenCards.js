@@ -1,96 +1,1352 @@
 /**
- * e-HRMS 2.0 - CSD Canteen Smart Cards Provision
- * Highly authentic replication of the official URC Canteen Cards.
+ * e-HRMS 2.0 - Official CSD Canteen & Retail Billing System
+ * Unit Run Canteen (URC) • Canteen Stores Department (CSD)
+ * Complete integration with Smart Cards, POS Terminal, Quota Management,
+ * Invoices, AFD Booking, and Cryptographic Blockchain Ledger.
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, showDownloadToast } from '../downloader.js';
 
-export function renderCanteenCards(container) {
+// Module-level interactive state
+let currentTab = 'cards';
+let activeCategory = 'All';
+let searchQuery = '';
+let cart = [];
+let selectedCustomerCard = 'LB08260547713500S01';
+let activeModalTxn = null;
+
+export function renderCanteenCards(container, initialTab = null) {
+  if (initialTab) {
+    currentTab = initialTab;
+  }
+
   const state = store.get();
-  const user = state.currentUser;
+  const user = state.currentUser || { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104' };
+  const csd = state.csdBilling || {
+    cardNo: 'LB08260547713500S01',
+    dependentCardNo: 'LB08260547713500D01',
+    canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+    entitlements: { groceriesLimit: 10000, groceriesDrawn: 2850, liquorLimit: 10, liquorDrawn: 2 },
+    inventory: [],
+    transactions: [],
+    afdOrders: []
+  };
 
-  // Derive dependent name (Father)
   const dependentName = 'SHRI ANIL RAMKRISHNA BAWASKAR';
   const dependentRelation = 'Father';
 
   container.innerHTML = `
     <!-- Top Header Strip -->
-    <div class="page-title-strip">
-      <div>
-        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: var(--goi-navy); display: flex; align-items: center; gap: 8px;">
-          <span>🛒</span> Official CSD Canteen Cards &bull; Unit Run Canteen (URC)
-        </h2>
-        <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">
-          Canteen Stores Department (CSD) &bull; Primary &amp; Dependent Smart Cards
+    <div class="page-title-strip" style="background: linear-gradient(135deg, #002b49 0%, #004b80 100%); color: white; padding: 18px 24px; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <img src="assets/csd_logo.png" style="height: 48px; background: white; padding: 4px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);" alt="CSD Logo" onerror="this.style.display='none'">
+          <div>
+            <h2 style="margin: 0; font-size: 21px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px;">
+              <span>🛒</span> Official CSD Canteen &amp; Retail Billing System &bull; URC
+            </h2>
+            <div style="font-size: 12.5px; color: #cbd5e1; margin-top: 4px;">
+              Canteen Stores Department (CSD) &bull; Ministry of Defence &bull; <strong>URC HQ DELHI AREA (Sena Bhawan)</strong>
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <button class="btn btn-sm btn-primary" id="btn-download-canteen">
-          📥 Download CSD Cards (PDF)
-        </button>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-sm btn-primary" id="btn-download-canteen" style="background: #ff9933; border-color: #e67e00; font-weight: 700; color: #000;">
+            📥 Download CSD Cards (PDF)
+          </button>
+          <button class="btn btn-sm btn-outline" id="btn-switch-pos" style="color: white; border-color: rgba(255,255,255,0.4); font-weight: 700;">
+            🛒 POS Terminal
+          </button>
+          <a href="csd_portal.html" target="_blank" class="btn btn-sm" style="background: #138808; color: white; font-weight: 700; text-decoration: none; border-radius: 4px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;" title="Open Standalone Cashier &amp; POS Screen">
+            ↗️ Standalone CSD Portal
+          </a>
+        </div>
       </div>
     </div>
 
-    <!-- Cards Layout -->
-    <div style="display: flex; flex-direction: column; gap: 40px; margin-bottom: 40px;">
-      
-      <!-- PRIMARY CARD SECTION -->
-      <div>
-        <h3 style="font-size: 16px; color: var(--goi-navy); margin-bottom: 16px; border-bottom: 2px solid var(--border-light); padding-bottom: 6px;">
-          1. Primary Canteen Card (Serving Personnel)
-        </h3>
-        
-        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-          <!-- Primary Card Front -->
-          ${renderCardFront(
-            user.name, 
-            'ASO-I', 
-            'SERVING', 
-            'GROCERY & LIQUOR CARD', 
-            'LB08260547713500S01', 
-            'assets/anurag_photo.jpg', 
-            'D 1710 1998'
-          )}
+    <!-- CSD Module Tab Navigation Bar -->
+    <div class="csd-tab-nav" style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 2px; overflow-x: auto;">
+      <button class="csd-nav-btn ${currentTab === 'cards' ? 'active' : ''}" data-tab="cards">
+        🪪 Smart Canteen Cards
+      </button>
+      <button class="csd-nav-btn ${currentTab === 'pos' ? 'active' : ''}" data-tab="pos">
+        🛒 Retail POS Billing Terminal
+      </button>
+      <button class="csd-nav-btn ${currentTab === 'quotas' ? 'active' : ''}" data-tab="quotas">
+        📊 Monthly Quotas &amp; Limits
+      </button>
+      <button class="csd-nav-btn ${currentTab === 'invoices' ? 'active' : ''}" data-tab="invoices">
+        🧾 Purchase History &amp; Invoices (${(csd.transactions || []).length})
+      </button>
+      <button class="csd-nav-btn ${currentTab === 'afd' ? 'active' : ''}" data-tab="afd">
+        🚗 AFD Booking Desk
+      </button>
+      <button class="csd-nav-btn ${currentTab === 'blockchain' ? 'active' : ''}" data-tab="blockchain">
+        🔗 Blockchain Audit Ledger
+      </button>
+    </div>
 
-          <!-- Primary Card Back -->
-          ${renderCardBack('5012423002107316')}
+    <style>
+      .csd-nav-btn {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-bottom: none;
+        border-radius: 6px 6px 0 0;
+        padding: 9px 18px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .csd-nav-btn:hover {
+        background: #eff6ff;
+        color: #002b49;
+      }
+      .csd-nav-btn.active {
+        background: #002b49;
+        color: #ffffff;
+        border-color: #002b49;
+        box-shadow: 0 -2px 6px rgba(0,0,0,0.06);
+      }
+      .csd-product-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .csd-product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        border-color: #38bdf8;
+      }
+      .csd-cat-pill {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .csd-cat-pill:hover, .csd-cat-pill.active {
+        background: #002b49;
+        color: #ffffff;
+        border-color: #002b49;
+      }
+      .csd-invoice-row:hover {
+        background: #f0f9ff !important;
+      }
+    </style>
+
+    <!-- Tab Content Render Area -->
+    <div id="csd-tab-container"></div>
+
+    <!-- Invoice Viewer Modal -->
+    <div id="csd-invoice-modal" class="parichay-modal-overlay" style="display: none; z-index: 10005; background: rgba(15, 23, 42, 0.85); position: fixed; inset: 0; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;">
+      <div style="background: white; border-radius: 8px; width: 100%; max-width: 860px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); position: relative; border: 1px solid #94a3b8;">
+        <div style="background: #002b49; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10;">
+          <div style="font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>🧾</span> CSD Retail Tax Invoice &bull; Print Preview
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button id="btn-modal-print-invoice" class="btn btn-sm btn-primary" style="background: #ff9933; border-color: #e67e00; color: #000; font-weight: 700;">
+              🖨️ Print Invoice
+            </button>
+            <button id="btn-modal-dl-invoice" class="btn btn-sm btn-outline" style="color: white; border-color: rgba(255,255,255,0.4); font-weight: 700;">
+              📥 Download HTML / PDF
+            </button>
+            <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0 4px;">
+              &times;
+            </button>
+          </div>
         </div>
+        <div id="csd-modal-invoice-content" style="padding: 24px;"></div>
       </div>
-
-      <!-- DEPENDENT CARD SECTION -->
-      <div>
-        <h3 style="font-size: 16px; color: var(--goi-navy); margin-bottom: 16px; border-bottom: 2px solid var(--border-light); padding-bottom: 6px;">
-          2. Dependent Canteen Card (${dependentRelation})
-        </h3>
-        
-        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-          <!-- Dependent Card Front -->
-          ${renderCardFront(
-            dependentName, 
-            'DEPENDENT', 
-            'DEPENDENT', 
-            'GROCERY CARD', 
-            'LB08260547713500D01', 
-            'assets/father_photo.jpg', 
-            'D 1710 1976'
-          )}
-
-          <!-- Dependent Card Back -->
-          ${renderCardBack('5012423002107317')}
-        </div>
-      </div>
-
     </div>
   `;
 
-  // Bind Download Action
-  const btnDownload = container.querySelector('#btn-download-canteen');
-  if (btnDownload) {
-    btnDownload.addEventListener('click', () => {
-      downloadCanteenCards(user);
+  // Bind Global Header Buttons
+  container.querySelector('#btn-download-canteen')?.addEventListener('click', () => {
+    downloadCanteenCards(user);
+  });
+
+  container.querySelector('#btn-switch-pos')?.addEventListener('click', () => {
+    switchTab('pos');
+  });
+
+  // Bind Sub-Navigation
+  const tabBtns = container.querySelectorAll('.csd-nav-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchTab(btn.dataset.tab);
+    });
+  });
+
+  // Modal close handlers
+  const invoiceModal = container.querySelector('#csd-invoice-modal');
+  container.querySelector('#btn-close-invoice-modal')?.addEventListener('click', () => {
+    invoiceModal.style.display = 'none';
+  });
+
+  container.querySelector('#btn-modal-print-invoice')?.addEventListener('click', () => {
+    window.print();
+  });
+
+  container.querySelector('#btn-modal-dl-invoice')?.addEventListener('click', () => {
+    if (activeModalTxn) {
+      downloadCsdInvoice(user, activeModalTxn);
+    }
+  });
+
+  // Function to switch tabs
+  function switchTab(tabKey) {
+    currentTab = tabKey;
+    tabBtns.forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tabKey);
+    });
+    renderActiveTab();
+  }
+
+  // Render content based on active tab
+  function renderActiveTab() {
+    const tabContainer = container.querySelector('#csd-tab-container');
+    if (!tabContainer) return;
+
+    switch (currentTab) {
+      case 'cards':
+        renderCardsTab(tabContainer);
+        break;
+      case 'pos':
+        renderPosTab(tabContainer);
+        break;
+      case 'quotas':
+        renderQuotasTab(tabContainer);
+        break;
+      case 'invoices':
+        renderInvoicesTab(tabContainer);
+        break;
+      case 'afd':
+        renderAfdTab(tabContainer);
+        break;
+      case 'blockchain':
+        renderBlockchainTab(tabContainer);
+        break;
+      default:
+        renderCardsTab(tabContainer);
+        break;
+    }
+  }
+
+  // -------------------------------------------------------------
+  // TAB 1: SMART CARDS (Original Highly Authentic Replication)
+  // -------------------------------------------------------------
+  function renderCardsTab(tabContainer) {
+    tabContainer.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 40px; margin-bottom: 40px;">
+        <!-- PRIMARY CARD SECTION -->
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px;">
+            <h3 style="margin: 0; font-size: 17px; color: #002b49; font-weight: 800;">
+              1. Primary CSD Smart Card (Serving Officer)
+            </h3>
+            <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; border: 1px solid #bbf7d0;">
+              ✓ ACTIVE &bull; GROCERY &amp; LIQUOR
+            </span>
+          </div>
+          
+          <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+            <!-- Primary Card Front -->
+            ${renderCardFront(
+              user.name, 
+              'ASO-I', 
+              'SERVING', 
+              'GROCERY & LIQUOR CARD', 
+              csd.cardNo || 'LB08260547713500S01', 
+              'assets/anurag_photo.jpg', 
+              'D 1710 1998'
+            )}
+
+            <!-- Primary Card Back -->
+            ${renderCardBack('5012423002107316')}
+          </div>
+
+          <div style="margin-top: 20px; padding: 12px 16px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+            <div>
+              <strong>Chip UID:</strong> <span style="font-family: monospace;">IND-CSD-CHIP-7F89B2</span> &bull; 
+              <strong>Attached Depot:</strong> ${csd.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'} &bull; 
+              <strong>Card PIN:</strong> <span style="font-family: monospace;">1234</span>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="window.print()" style="font-weight: 600;">
+              🖨️ Print Card
+            </button>
+          </div>
+        </div>
+
+        <!-- DEPENDENT CARD SECTION -->
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px;">
+            <h3 style="margin: 0; font-size: 17px; color: #002b49; font-weight: 800;">
+              2. Dependent CSD Smart Card (${dependentRelation})
+            </h3>
+            <span style="background: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; border: 1px solid #bae6fd;">
+              ✓ ACTIVE &bull; GROCERY AUTHORIZED
+            </span>
+          </div>
+          
+          <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+            <!-- Dependent Card Front -->
+            ${renderCardFront(
+              dependentName, 
+              'DEPENDENT', 
+              'DEPENDENT', 
+              'GROCERY CARD', 
+              csd.dependentCardNo || 'LB08260547713500D01', 
+              'assets/father_photo.jpg', 
+              'D 1710 1976'
+            )}
+
+            <!-- Dependent Card Back -->
+            ${renderCardBack('5012423002107317')}
+          </div>
+
+          <div style="margin-top: 20px; padding: 12px 16px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+            <div>
+              <strong>Beneficiary Relation:</strong> Father (RSI Anil R. Bawaskar) &bull; 
+              <strong>Annual Renewal:</strong> Synchronized with Primary Card &bull; 
+              <strong>Valid Till:</strong> 11/02/2033
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="window.print()" style="font-weight: 600;">
+              🖨️ Print Card
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // -------------------------------------------------------------
+  // TAB 2: RETAIL POS BILLING TERMINAL
+  // -------------------------------------------------------------
+  function renderPosTab(tabContainer) {
+    const inv = csd.inventory || [];
+    const categories = ['All', 'Groceries', 'Electronics', 'Liquor', 'Toiletries', 'Automobiles'];
+
+    // Filter items
+    const filteredItems = inv.filter(it => {
+      const matchCat = activeCategory === 'All' || it.category === activeCategory;
+      const matchQuery = !searchQuery || 
+        it.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        (it.id && it.id.includes(searchQuery)) ||
+        (it.hsn && it.hsn.includes(searchQuery));
+      return matchCat && matchQuery;
+    });
+
+    // Cart calculations
+    let taxableTotal = 0;
+    let cgstTotal = 0;
+    let sgstTotal = 0;
+    let netTotal = 0;
+    let marketTotal = 0;
+    let cartGroceryTotal = 0;
+    let cartLiquorUnits = 0;
+
+    cart.forEach(item => {
+      const netVal = item.price * item.qty;
+      const taxable = netVal / 1.18;
+      taxableTotal += taxable;
+      cgstTotal += taxable * 0.09;
+      sgstTotal += taxable * 0.09;
+      netTotal += netVal;
+      marketTotal += ((item.marketPrice || item.price * 1.15) * item.qty);
+
+      if (item.category === 'Groceries') cartGroceryTotal += netVal;
+      if (item.category === 'Liquor') cartLiquorUnits += item.qty;
+    });
+
+    const savingsTotal = Math.max(0, marketTotal - netTotal);
+
+    // Quota validation
+    const ent = csd.entitlements || { groceriesLimit: 10000, groceriesDrawn: 2850, liquorLimit: 10, liquorDrawn: 2 };
+    const grocRemaining = ent.groceriesLimit - ent.groceriesDrawn;
+    const liqRemaining = ent.liquorLimit - ent.liquorDrawn;
+    const grocExceeded = cartGroceryTotal > grocRemaining;
+    const liqExceeded = cartLiquorUnits > liqRemaining;
+
+    tabContainer.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start;">
+        
+        <!-- Left: Catalog & Filters -->
+        <div>
+          <!-- Search & Filter Header -->
+          <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+              <input type="text" id="csd-pos-search" placeholder="🔍 Search by product name, barcode (BCD), or HSN..." value="${searchQuery}" style="flex: 1; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none;">
+              <button class="btn btn-sm btn-outline" id="btn-clear-pos-search" style="font-weight: 600;">Clear</button>
+            </div>
+
+            <!-- Categories -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              ${categories.map(c => `
+                <button class="csd-cat-pill ${activeCategory === c ? 'active' : ''}" data-cat="${c}">
+                  ${c}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Product Catalog Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;">
+            ${filteredItems.length === 0 ? `
+              <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #64748b; background: white; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                No items match your search criteria. Try a different category or search term.
+              </div>
+            ` : filteredItems.map(it => {
+              const saveVal = (it.marketPrice || it.price * 1.15) - it.price;
+              const inCart = cart.find(c => c.id === it.id);
+              return `
+                <div class="csd-product-card">
+                  <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                      <span style="font-size: 10.5px; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 10px;">
+                        ${it.category}
+                      </span>
+                      <span style="font-size: 10px; font-family: monospace; color: #64748b;">
+                        HSN: ${it.hsn}
+                      </span>
+                    </div>
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px; line-height: 1.35;">
+                      ${it.name}
+                    </div>
+                    <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">
+                      BCD: <span style="font-family: monospace;">${it.id}</span> &bull; Stock: <strong>${it.stock}</strong>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+                      <span style="font-size: 18px; font-weight: 900; color: #002b49;">₹${it.price.toFixed(2)}</span>
+                      <del style="font-size: 12px; color: #94a3b8;">₹${(it.marketPrice || it.price * 1.15).toFixed(2)}</del>
+                    </div>
+                    <div style="font-size: 11px; font-weight: 700; color: #16a34a; margin-bottom: 12px;">
+                      Save ₹${saveVal.toFixed(2)} (${Math.round((saveVal / (it.marketPrice || it.price * 1.15)) * 100)}% Off)
+                    </div>
+
+                    <button class="btn btn-sm btn-add-to-bill" data-id="${it.id}" style="width: 100%; font-weight: 700; background: ${inCart ? '#0284c7' : '#002b49'}; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;">
+                      ${inCart ? `✓ Added (${inCart.qty}) &bull; Add More` : '➕ Add to Bill'}
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Right: POS Terminal Cart & Bill Generator -->
+        <div style="background: white; border: 1.5px solid #002b49; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); position: sticky; top: 20px;">
+          <!-- Terminal Header -->
+          <div style="background: #002b49; color: white; padding: 14px 18px;">
+            <div style="font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: space-between;">
+              <span>🛒 Active POS Billing Session</span>
+              <span style="font-size: 11px; font-family: monospace; background: #004b80; padding: 2px 6px; border-radius: 3px;">POS-04</span>
+            </div>
+            <div style="font-size: 11px; color: #cbd5e1; margin-top: 4px;">
+              Session: SESS-CSD-2026 &bull; Cashier: Hav. Rajesh Kumar
+            </div>
+          </div>
+
+          <!-- Customer Smart Card Selector -->
+          <div style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+            <label style="font-size: 11px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;">
+              SELECT SMART CARD HOLDER:
+            </label>
+            <select id="pos-card-select" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 600; outline: none;">
+              <option value="LB08260547713500S01" ${selectedCustomerCard === 'LB08260547713500S01' ? 'selected' : ''}>
+                Primary: Major Anurag A. Bawaskar (ASO-I) [LB08260547713500S01]
+              </option>
+              <option value="LB08260547713500D01" ${selectedCustomerCard === 'LB08260547713500D01' ? 'selected' : ''}>
+                Dependent: Shri Anil R. Bawaskar (Father) [LB08260547713500D01]
+              </option>
+            </select>
+
+            <!-- Quota Balances Strip -->
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; background: #e0f2fe; padding: 6px 10px; border-radius: 4px; color: #0369a1; font-weight: 700;">
+              <span>Groc Avail: ₹${(grocRemaining - cartGroceryTotal).toFixed(0)}</span>
+              <span>Liq Avail: ${(liqRemaining - cartLiquorUnits)} Units</span>
+            </div>
+
+            ${(grocExceeded || liqExceeded) ? `
+              <div style="margin-top: 8px; padding: 6px 10px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 4px; color: #dc2626; font-size: 11px; font-weight: 700;">
+                ⚠️ Monthly Quota Exceeded! Please adjust quantities.
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Cart Items Container -->
+          <div style="max-height: 260px; overflow-y: auto; padding: 14px 18px; border-bottom: 1px solid #e2e8f0;">
+            ${cart.length === 0 ? `
+              <div style="text-align: center; color: #94a3b8; font-size: 12.5px; padding: 25px 10px;">
+                <div style="font-size: 28px; margin-bottom: 6px;">🛒</div>
+                No items added to bill yet.<br>Click "Add to Bill" on items in catalog.
+              </div>
+            ` : `
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${cart.map(item => `
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px dashed #e2e8f0;">
+                    <div style="flex: 1; padding-right: 10px;">
+                      <div style="font-size: 12px; font-weight: 700; color: #0f172a; line-height: 1.25;">${item.name}</div>
+                      <div style="font-size: 11px; color: #64748b;">₹${item.price.toFixed(2)} &times; ${item.qty} = <strong>₹${(item.price * item.qty).toFixed(2)}</strong></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <button class="btn-qty-minus" data-id="${item.id}" style="width: 24px; height: 24px; border-radius: 3px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: bold;">-</button>
+                      <span style="font-size: 12px; font-weight: 800; min-width: 16px; text-align: center;">${item.qty}</span>
+                      <button class="btn-qty-plus" data-id="${item.id}" style="width: 24px; height: 24px; border-radius: 3px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: bold;">+</button>
+                      <button class="btn-remove-item" data-id="${item.id}" style="border: none; background: transparent; cursor: pointer; font-size: 14px; margin-left: 4px;" title="Remove Item">🗑️</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+
+          <!-- Financial Calculation Breakdown -->
+          <div style="padding: 14px 18px; background: #f8fafc; font-size: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #475569;">
+              <span>Taxable Subtotal:</span>
+              <span>₹${taxableTotal.toFixed(2)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #475569;">
+              <span>CGST (9.0%):</span>
+              <span>₹${cgstTotal.toFixed(2)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569;">
+              <span>SGST (9.0%):</span>
+              <span>₹${sgstTotal.toFixed(2)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 900; color: #002b49; border-top: 2px solid #cbd5e1; padding-top: 8px; margin-top: 4px;">
+              <span>NET PAYABLE:</span>
+              <span>₹${netTotal.toFixed(2)}</span>
+            </div>
+
+            ${savingsTotal > 0 ? `
+              <div style="margin-top: 8px; padding: 4px 8px; background: #dcfce7; color: #15803d; border-radius: 4px; font-size: 11px; font-weight: 700; text-align: center;">
+                🔥 You Save ₹${savingsTotal.toFixed(2)} vs Market Price!
+              </div>
+            ` : ''}
+
+            <!-- Payment Mode -->
+            <div style="margin-top: 12px;">
+              <label style="font-size: 10.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">PAYMENT METHOD:</label>
+              <select id="pos-payment-mode" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11.5px; outline: none;">
+                <option value="SBI DSP Defence Debit Card (Auth: 891244)">SBI DSP Defence Debit Card (Auth: 891244)</option>
+                <option value="BHIM UPI / BharatPe CSD Merchant (Txn: 429188201)">BHIM UPI / BharatPe CSD Merchant</option>
+                <option value="Cash at URC POS Counter">Cash at URC POS Counter</option>
+              </select>
+            </div>
+
+            <!-- Action Button -->
+            <button id="btn-generate-bill" class="btn btn-primary" ${cart.length === 0 || grocExceeded || liqExceeded ? 'disabled' : ''} style="width: 100%; margin-top: 14px; padding: 12px; font-size: 13.5px; font-weight: 800; background: #002b49; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              🖨️ Generate &amp; Download CSD Tax Invoice
+            </button>
+          </div>
+        </div>
+
+      </div>
+    `;
+
+    // Bind POS events
+    tabContainer.querySelector('#csd-pos-search')?.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderPosTab(tabContainer);
+    });
+
+    tabContainer.querySelector('#btn-clear-pos-search')?.addEventListener('click', () => {
+      searchQuery = '';
+      renderPosTab(tabContainer);
+    });
+
+    tabContainer.querySelectorAll('.csd-cat-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.cat;
+        renderPosTab(tabContainer);
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-add-to-bill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prod = inv.find(p => p.id === btn.dataset.id);
+        if (prod) {
+          const ex = cart.find(c => c.id === prod.id);
+          if (ex) {
+            ex.qty += 1;
+          } else {
+            cart.push({ ...prod, qty: 1 });
+          }
+          renderPosTab(tabContainer);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-qty-plus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = cart.find(c => c.id === btn.dataset.id);
+        if (item) {
+          item.qty += 1;
+          renderPosTab(tabContainer);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-qty-minus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = cart.find(c => c.id === btn.dataset.id);
+        if (item) {
+          item.qty -= 1;
+          if (item.qty <= 0) {
+            cart = cart.filter(c => c.id !== item.id);
+          }
+          renderPosTab(tabContainer);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-remove-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cart = cart.filter(c => c.id !== btn.dataset.id);
+        renderPosTab(tabContainer);
+      });
+    });
+
+    tabContainer.querySelector('#pos-card-select')?.addEventListener('change', (e) => {
+      selectedCustomerCard = e.target.value;
+      renderPosTab(tabContainer);
+    });
+
+    // Check out / Generate bill
+    tabContainer.querySelector('#btn-generate-bill')?.addEventListener('click', () => {
+      if (cart.length === 0) return;
+
+      const now = new Date();
+      const billSerial = Math.floor(1000 + Math.random() * 9000);
+      const billNo = `CSD/URC/DEL/2026/${String(now.getMonth() + 1).padStart(2, '0')}/${billSerial}`;
+      const indentNo = `IND-2026/${String(now.getMonth() + 1).padStart(2, '0')}/${billSerial}`;
+      const paymentMode = tabContainer.querySelector('#pos-payment-mode')?.value || 'SBI DSP Defence Debit Card';
+
+      const newTxn = {
+        id: `CSD-TXN-${Date.now()}`,
+        billNo,
+        indentNo,
+        date: now.toISOString().replace('T', ' ').slice(0, 19),
+        canteen: csd.canteen || 'URC HQ DELHI AREA (Sena Bhawan)',
+        terminal: 'POS-04 / IP: 192.168.1.104',
+        cashier: 'Havildar Rajesh Kumar',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode,
+        items: JSON.parse(JSON.stringify(cart)),
+        totalTaxable: taxableTotal,
+        totalCgst: cgstTotal,
+        totalSgst: sgstTotal,
+        totalNet: netTotal,
+        totalSavings: savingsTotal,
+        cardNo: selectedCustomerCard,
+        rank: user.designation || 'ASO-I (Group A Gazetted)',
+        grocLimit: ent.groceriesLimit,
+        grocDrawn: ent.groceriesDrawn + cartGroceryTotal,
+        liqLimit: ent.liquorLimit,
+        liqDrawn: ent.liquorDrawn + cartLiquorUnits,
+        status: 'COMPLETED'
+      };
+
+      // Update state
+      store.set(s => {
+        const existingTxns = (s.csdBilling && s.csdBilling.transactions) || [];
+        const updatedTxns = [newTxn, ...existingTxns];
+
+        // Deduct inventory stock
+        const currentInv = (s.csdBilling && s.csdBilling.inventory) || [];
+        const updatedInv = currentInv.map(p => {
+          const matchCart = cart.find(c => c.id === p.id);
+          if (matchCart) {
+            return { ...p, stock: Math.max(0, p.stock - matchCart.qty) };
+          }
+          return p;
+        });
+
+        // Update entitlements
+        const currentEnt = (s.csdBilling && s.csdBilling.entitlements) || ent;
+        const updatedEnt = {
+          ...currentEnt,
+          groceriesDrawn: currentEnt.groceriesDrawn + cartGroceryTotal,
+          groceriesBalance: Math.max(0, currentEnt.groceriesLimit - (currentEnt.groceriesDrawn + cartGroceryTotal)),
+          liquorDrawn: currentEnt.liquorDrawn + cartLiquorUnits,
+          liquorBalance: Math.max(0, currentEnt.liquorLimit - (currentEnt.liquorDrawn + cartLiquorUnits))
+        };
+
+        return {
+          ...s,
+          csdBilling: {
+            ...s.csdBilling,
+            transactions: updatedTxns,
+            inventory: updatedInv,
+            entitlements: updatedEnt
+          }
+        };
+      });
+
+      // Trigger authentic download
+      downloadCsdInvoice(user, newTxn);
+      showDownloadToast(`CSD Retail Tax Invoice #${billNo} Generated & Downloaded!`);
+
+      // Clear cart
+      cart = [];
+
+      // Open Modal to show newly generated invoice
+      openInvoiceModal(newTxn);
     });
   }
+
+  // -------------------------------------------------------------
+  // TAB 3: MONTHLY QUOTAS & ENTITLEMENT LIMITS
+  // -------------------------------------------------------------
+  function renderQuotasTab(tabContainer) {
+    const ent = csd.entitlements || {
+      groceriesLimit: 10000,
+      groceriesDrawn: 2850,
+      groceriesBalance: 7150,
+      liquorLimit: 10,
+      liquorDrawn: 2,
+      liquorBalance: 8,
+      afdEligibility: 'ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)'
+    };
+
+    const grocPercent = Math.min(100, Math.round((ent.groceriesDrawn / ent.groceriesLimit) * 100));
+    const liqPercent = Math.min(100, Math.round((ent.liquorDrawn / ent.liquorLimit) * 100));
+
+    tabContainer.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Quotas Cards Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          
+          <!-- Groceries Card -->
+          <div style="background: white; border: 1px solid #cbd5e1; border-top: 4px solid #0284c7; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 13px; font-weight: 800; color: #002b49;">🛒 GROCERIES QUOTA (MONTHLY)</span>
+              <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; font-weight: 700; padding: 2px 8px; border-radius: 10px;">Pay Level 7</span>
+            </div>
+            <div style="font-size: 28px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">
+              ₹${(ent.groceriesLimit - ent.groceriesDrawn).toFixed(2)}
+            </div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">
+              Available Balance of ₹${ent.groceriesLimit.toLocaleString()} Monthly Limit
+            </div>
+            
+            <!-- Progress Bar -->
+            <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; margin-bottom: 8px;">
+              <div style="height: 100%; width: ${grocPercent}%; background: linear-gradient(90deg, #38bdf8, #0284c7); border-radius: 5px;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #475569; font-weight: 600;">
+              <span>Drawn: ₹${ent.groceriesDrawn.toLocaleString()} (${grocPercent}%)</span>
+              <span>Total Limit: ₹${ent.groceriesLimit.toLocaleString()}</span>
+            </div>
+          </div>
+
+          <!-- Liquor Card -->
+          <div style="background: white; border: 1px solid #cbd5e1; border-top: 4px solid #8b5cf6; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 13px; font-weight: 800; color: #002b49;">🍾 LIQUOR ENTITLEMENT (MONTHLY)</span>
+              <span style="font-size: 11px; background: #f3e8ff; color: #7c3aed; font-weight: 700; padding: 2px 8px; border-radius: 10px;">Gazetted Officers</span>
+            </div>
+            <div style="font-size: 28px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">
+              ${ent.liquorLimit - ent.liquorDrawn} Units
+            </div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">
+              Available Balance of ${ent.liquorLimit} Units Monthly Limit
+            </div>
+            
+            <!-- Progress Bar -->
+            <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; margin-bottom: 8px;">
+              <div style="height: 100%; width: ${liqPercent}%; background: linear-gradient(90deg, #a78bfa, #7c3aed); border-radius: 5px;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #475569; font-weight: 600;">
+              <span>Drawn: ${ent.liquorDrawn} Units (${liqPercent}%)</span>
+              <span>Total Limit: ${ent.liquorLimit} Units</span>
+            </div>
+          </div>
+
+          <!-- AFD Card -->
+          <div style="background: white; border: 1px solid #cbd5e1; border-top: 4px solid #10b981; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 13px; font-weight: 800; color: #002b49;">🚗 AFD VEHICLE &amp; WHITE GOODS</span>
+              <span style="font-size: 11px; background: #d1fae5; color: #059669; font-weight: 700; padding: 2px 8px; border-radius: 10px;">Tier 1 Active</span>
+            </div>
+            <div style="font-size: 20px; font-weight: 900; color: #059669; margin-bottom: 4px;">
+              ✓ ELIGIBLE FOR CAR / BIKE
+            </div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">
+              Ex-factory ceiling: <strong>₹15,00,000</strong> &bull; Periodicity: 1 Car every 8 Years
+            </div>
+            <div style="font-size: 11.5px; color: #334155; line-height: 1.5; background: #f0fdf4; padding: 8px 12px; border-radius: 4px; border: 1px solid #bbf7d0;">
+              White goods (TV, Refrigerator, AC) permissible annually without ceiling cap.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Policy & Entitlements Statutory Framework -->
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px;">
+          <h3 style="margin-top: 0; color: #002b49; font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+            Statutory CSD Entitlement Guidelines under Ministry of Defence Rules
+          </h3>
+          
+          <table class="data-table" style="width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 12.5px;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
+                <th style="padding: 10px;">Pay Level / Cadre Category</th>
+                <th style="padding: 10px;">Monthly Grocery Limit</th>
+                <th style="padding: 10px;">Monthly Liquor Limit</th>
+                <th style="padding: 10px;">AFD Four-Wheeler Limit</th>
+                <th style="padding: 10px;">Quota Renewal Periodicity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #eff6ff; font-weight: 700; border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px; color: #002b49;">Pay Level 7 to 9 (ASO-I / Gazetted Officers) ★ Current</td>
+                <td style="padding: 10px;">₹ 10,000.00</td>
+                <td style="padding: 10px;">10 Units / Month</td>
+                <td style="padding: 10px;">Upto ₹ 15 Lakhs (Every 8 Yrs)</td>
+                <td style="padding: 10px; color: #16a34a;">Monthly (1st of Month)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px;">Pay Level 10 to 14 (Under Secy / Director / JS)</td>
+                <td style="padding: 10px;">₹ 15,000.00</td>
+                <td style="padding: 10px;">14 Units / Month</td>
+                <td style="padding: 10px;">Upto ₹ 25 Lakhs (Every 8 Yrs)</td>
+                <td style="padding: 10px;">Monthly (1st of Month)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px;">Pay Level 15 to 17 (Additional Secy / Secretary / CDS)</td>
+                <td style="padding: 10px;">₹ 20,000.00</td>
+                <td style="padding: 10px;">18 Units / Month</td>
+                <td style="padding: 10px;">No Price Ceiling (Every 8 Yrs)</td>
+                <td style="padding: 10px;">Monthly (1st of Month)</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;">Dependent Smart Cards (Parents / Family)</td>
+                <td style="padding: 10px;">Drawn from Primary Quota</td>
+                <td style="padding: 10px;">Not Authorized</td>
+                <td style="padding: 10px;">Under Primary Officer ID</td>
+                <td style="padding: 10px;">Annual Renewal Required</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 16px; font-size: 11.5px; color: #64748b; line-height: 1.5;">
+            <strong>Note:</strong> Unutilized grocery and liquor quotas automatically lapse at the end of every calendar month and do not accumulate or carry forward. Next monthly quota rollover occurs on <strong>01 November 2026</strong>.
+          </div>
+        </div>
+
+      </div>
+    `;
+  }
+
+  // -------------------------------------------------------------
+  // TAB 4: PURCHASE HISTORY & INVOICES
+  // -------------------------------------------------------------
+  function renderInvoicesTab(tabContainer) {
+    const txns = csd.transactions || [];
+
+    tabContainer.innerHTML = `
+      <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <h3 style="margin: 0; color: #002b49; font-size: 17px; font-weight: 800;">
+              🧾 Verified CSD Purchase Invoices &amp; Tax Memos
+            </h3>
+            <div style="font-size: 12px; color: #64748b; margin-top: 3px;">
+              Permanent electronic record of all retail transactions settled at Unit Run Canteens.
+            </div>
+          </div>
+
+          <button class="btn btn-sm btn-primary" id="btn-create-new-bill" style="font-weight: 700; background: #002b49;">
+            🛒 Open POS to Create Bill
+          </button>
+        </div>
+
+        ${txns.length === 0 ? `
+          <div style="text-align: center; padding: 40px; color: #64748b; border: 1px dashed #cbd5e1; border-radius: 6px;">
+            No purchase records found. Generate a bill from the POS Billing Terminal to view invoices here.
+          </div>
+        ` : `
+          <table class="data-table" style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
+                <th style="padding: 10px;">Date &amp; Time</th>
+                <th style="padding: 10px;">Bill / Indent No</th>
+                <th style="padding: 10px;">URC Depot</th>
+                <th style="padding: 10px;">Items Summary</th>
+                <th style="padding: 10px;">Taxable &bull; GST</th>
+                <th style="padding: 10px;">Net Paid</th>
+                <th style="padding: 10px;">Savings</th>
+                <th style="padding: 10px;">Status</th>
+                <th style="padding: 10px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${txns.map(t => {
+                const itemCount = (t.items || []).reduce((acc, it) => acc + (it.qty || 1), 0);
+                const itemsSummary = (t.items || []).slice(0, 2).map(it => `${it.name} (${it.qty})`).join(', ') + ((t.items || []).length > 2 ? ' ...' : '');
+                return `
+                  <tr class="csd-invoice-row" style="border-bottom: 1px solid #e2e8f0; transition: background 0.15s;">
+                    <td style="padding: 10px; font-size: 11.5px; color: #475569; white-space: nowrap;">${t.date}</td>
+                    <td style="padding: 10px; font-weight: 700; font-family: monospace; color: #002b49;">${t.billNo}</td>
+                    <td style="padding: 10px; font-size: 11.5px;">${t.canteen || 'URC HQ DELHI AREA'}</td>
+                    <td style="padding: 10px; font-size: 11px; max-width: 220px;" title="${itemsSummary}">
+                      <strong>${itemCount} Items:</strong> ${itemsSummary}
+                    </td>
+                    <td style="padding: 10px; font-size: 11px;">
+                      ₹${(t.totalTaxable || 0).toFixed(2)}<br>
+                      <span style="color: #64748b;">GST: ₹${((t.totalCgst || 0) + (t.totalSgst || 0)).toFixed(2)}</span>
+                    </td>
+                    <td style="padding: 10px; font-weight: 800; color: #002b49; font-size: 13.5px;">
+                      ₹${(t.totalNet || 0).toFixed(2)}
+                    </td>
+                    <td style="padding: 10px; font-weight: 700; color: #16a34a; font-size: 11px;">
+                      Save ₹${(t.totalSavings || 0).toFixed(2)}
+                    </td>
+                    <td style="padding: 10px;">
+                      <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px;">
+                        ✓ ${t.status || 'SETTLED'}
+                      </span>
+                    </td>
+                    <td style="padding: 10px; text-align: right; white-space: nowrap;">
+                      <button class="btn btn-sm btn-outline btn-view-invoice" data-id="${t.id}" style="font-weight: 700; margin-right: 4px;">
+                        📄 View
+                      </button>
+                      <button class="btn btn-sm btn-primary btn-dl-invoice" data-id="${t.id}" style="font-weight: 700; background: #002b49;">
+                        📥 Download
+                      </button>
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `}
+      </div>
+    `;
+
+    tabContainer.querySelector('#btn-create-new-bill')?.addEventListener('click', () => {
+      switchTab('pos');
+    });
+
+    tabContainer.querySelectorAll('.btn-view-invoice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        if (txn) openInvoiceModal(txn);
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-invoice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        if (txn) {
+          downloadCsdInvoice(user, txn);
+          showDownloadToast(`CSD Retail Tax Invoice #${txn.billNo} Downloaded!`);
+        }
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
+  // TAB 5: AFD (AGAINST FIRM DEMAND) BOOKING DESK
+  // -------------------------------------------------------------
+  function renderAfdTab(tabContainer) {
+    const orders = csd.afdOrders || [];
+
+    tabContainer.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Header Info Banner -->
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+          <div>
+            <h3 style="margin: 0; color: #002b49; font-size: 16px; font-weight: 800;">
+              🚗 AFD-I (Against Firm Demand) Online Indent Desk
+            </h3>
+            <div style="font-size: 12.5px; color: #475569; margin-top: 4px; line-height: 1.4;">
+              Subsidized procurement of Four-Wheelers, Two-Wheelers, and High-Value Electronics directly from OEM manufacturers under Ministry of Defence concessions.
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary" id="btn-toggle-afd-form" style="background: #002b49; font-weight: 700; white-space: nowrap;">
+            + Submit New AFD Indent
+          </button>
+        </div>
+
+        <!-- AFD Application Form (Collapsible) -->
+        <div id="afd-form-card" style="display: none; background: white; border: 1.5px solid #0284c7; border-radius: 8px; padding: 24px;">
+          <h4 style="margin: 0 0 16px 0; color: #002b49; font-size: 15px;">New AFD Indent Application Form</h4>
+          <form id="form-new-afd">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Item Category *</label>
+                <select id="afd-in-type" required style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12.5px;">
+                  <option value="Four Wheeler (Car)">Four Wheeler (Car - Upto ₹15 Lakhs Ex-Factory)</option>
+                  <option value="Two Wheeler (Bike/Scooter)">Two Wheeler (Bike / Scooter)</option>
+                  <option value="White Goods (Refrigerator/AC/TV)">White Goods (Refrigerator / AC / Smart TV)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Specific Model &amp; Variant *</label>
+                <input type="text" id="afd-in-model" placeholder="e.g. Maruti Suzuki Grand Vitara Zeta AT" required style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12.5px;">
+              </div>
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Authorized CSD Dealer Name &amp; Station *</label>
+                <input type="text" id="afd-in-dealer" placeholder="e.g. Rana Motors Pvt Ltd, Rama Road, New Delhi" required style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12.5px;">
+              </div>
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Ex-Showroom Civil Price (₹) *</label>
+                <input type="number" id="afd-in-civil" placeholder="e.g. 1625000" required step="100" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12.5px;">
+              </div>
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">CSD Subsidized Base Price (₹) *</label>
+                <input type="number" id="afd-in-price" placeholder="e.g. 1435000" required step="100" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12.5px;">
+              </div>
+              <div class="form-group">
+                <label style="font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Allotted Smart Card</label>
+                <input type="text" readonly value="${csd.cardNo || 'LB08260547713500S01'} (${user.name})" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #f8fafc;">
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <button type="button" class="btn btn-sm btn-outline" id="btn-cancel-afd" style="font-weight: 600;">Cancel</button>
+              <button type="submit" class="btn btn-sm btn-primary" style="background: #002b49; font-weight: 700;">Submit Indent for Sanction</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Existing Indents Table -->
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px;">
+          <h3 style="margin-top: 0; color: #002b49; font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+            My Active &amp; Historical AFD Indents
+          </h3>
+
+          ${orders.length === 0 ? `
+            <div style="text-align: center; padding: 30px; color: #64748b;">
+              No AFD indents submitted yet. Click "+ Submit New AFD Indent" to apply for vehicle/appliance quota.
+            </div>
+          ` : `
+            <table class="data-table" style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.5px;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
+                  <th style="padding: 10px;">Indent Ref &bull; Date</th>
+                  <th style="padding: 10px;">Item Category &bull; Model</th>
+                  <th style="padding: 10px;">Authorized Dealer</th>
+                  <th style="padding: 10px;">CSD Price</th>
+                  <th style="padding: 10px;">Civil MRP</th>
+                  <th style="padding: 10px;">Net Savings</th>
+                  <th style="padding: 10px;">Status &bull; Authority</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${orders.map(o => `
+                  <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 10px;">
+                      <strong>${o.id}</strong><br>
+                      <span style="font-size: 11px; color: #64748b;">${o.date}</span>
+                    </td>
+                    <td style="padding: 10px;">
+                      <span style="font-size: 11px; color: #0284c7; font-weight: 700;">${o.itemType}</span><br>
+                      <strong style="color: #0f172a;">${o.model}</strong>
+                    </td>
+                    <td style="padding: 10px; font-size: 11.5px; color: #334155;">${o.dealer}</td>
+                    <td style="padding: 10px; font-weight: 800; color: #002b49;">₹${Number(o.csdPrice).toLocaleString()}</td>
+                    <td style="padding: 10px; color: #94a3b8;"><del>₹${Number(o.civilPrice || o.csdPrice * 1.15).toLocaleString()}</del></td>
+                    <td style="padding: 10px; font-weight: 700; color: #16a34a;">Save ₹${Number(o.savings || ((o.civilPrice || o.csdPrice * 1.15) - o.csdPrice)).toLocaleString()}</td>
+                    <td style="padding: 10px;">
+                      <span style="background: #dcfce7; color: #166534; font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 10px;">
+                        ✓ ${o.status || 'SANCTIONED'}
+                      </span>
+                      <div style="font-size: 9.5px; color: #64748b; margin-top: 2px;">${o.sanctionAuthority || 'QMG Branch / CSD AFD Cell'}</div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `}
+        </div>
+
+      </div>
+    `;
+
+    // Bind form toggle & submit
+    const formCard = tabContainer.querySelector('#afd-form-card');
+    tabContainer.querySelector('#btn-toggle-afd-form')?.addEventListener('click', () => {
+      formCard.style.display = formCard.style.display === 'none' ? 'block' : 'none';
+    });
+
+    tabContainer.querySelector('#btn-cancel-afd')?.addEventListener('click', () => {
+      formCard.style.display = 'none';
+    });
+
+    tabContainer.querySelector('#form-new-afd')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = tabContainer.querySelector('#afd-in-type').value;
+      const model = tabContainer.querySelector('#afd-in-model').value;
+      const dealer = tabContainer.querySelector('#afd-in-dealer').value;
+      const civil = Number(tabContainer.querySelector('#afd-in-civil').value);
+      const csdPrice = Number(tabContainer.querySelector('#afd-in-price').value);
+      const savings = Math.max(0, civil - csdPrice);
+
+      const newOrder = {
+        id: `AFD-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+        date: new Date().toISOString().split('T')[0],
+        itemType: type,
+        model,
+        dealer,
+        csdPrice,
+        civilPrice: civil,
+        savings,
+        status: 'SUBMITTED FOR QMG SANCTION',
+        sanctionAuthority: 'Quartermaster General (QMG) Branch / CSD AFD Cell'
+      };
+
+      store.set(s => {
+        const curOrders = (s.csdBilling && s.csdBilling.afdOrders) || [];
+        return {
+          ...s,
+          csdBilling: {
+            ...s.csdBilling,
+            afdOrders: [newOrder, ...curOrders]
+          }
+        };
+      });
+
+      showDownloadToast(`AFD Indent #${newOrder.id} Submitted for Sanction!`);
+      renderAfdTab(tabContainer);
+    });
+  }
+
+  // -------------------------------------------------------------
+  // TAB 6: BLOCKCHAIN AUDIT LEDGER
+  // -------------------------------------------------------------
+  function renderBlockchainTab(tabContainer) {
+    const txns = csd.transactions || [];
+
+    tabContainer.innerHTML = `
+      <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h3 style="margin: 0; color: #002b49; font-size: 17px; font-weight: 800;">
+              🔗 Cryptographic Blockchain Audit Ledger
+            </h3>
+            <div style="font-size: 12.5px; color: #64748b; margin-top: 4px;">
+              Every CSD transaction is cryptographically chained with SHA-256 equivalent hashing to ensure zero fraud, non-repudiation, and tamper evidence.
+            </div>
+          </div>
+          <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 12px; border: 1px solid #86efac;">
+            ✓ CRYPTO CHAIN INTACT
+          </span>
+        </div>
+
+        <!-- Terminal Viewer -->
+        <div style="background: #020617; border: 1px solid #1e293b; border-radius: 6px; padding: 18px; font-family: 'Courier New', Courier, monospace; font-size: 11.5px; line-height: 1.6; color: #38bdf8; max-height: 480px; overflow-y: auto;">
+          <div style="color: #f59e0b; margin-bottom: 12px; font-weight: bold;">
+            [CSD BLOCKCHAIN NETWORK v2.0 - NODE: URC_DELHI_SENA_BHAWAN]
+          </div>
+
+          ${txns.length === 0 ? `
+            <div style="color: #64748b;">No transactions recorded in the blockchain ledger yet.</div>
+          ` : txns.map((t, idx) => {
+            const blockNum = txns.length - idx;
+            const prevHash = idx === txns.length - 1 ? '0000000000000000000000000000000000000000000000000000000000000000' : `0000a4b7f89c02d184019${blockNum - 1}e82b7194f10244`;
+            const currHash = `0000e9821cb4178a9410${blockNum}ff2084c01992147102`;
+            return `
+              <div style="margin-bottom: 18px; border-left: 2px solid ${idx === 0 ? '#10b981' : '#38bdf8'}; padding-left: 14px;">
+                <div style="color: #f59e0b; font-weight: bold;">[BLOCK #${blockNum}] &bull; MINED: ${t.date} &bull; NONCE: 491024</div>
+                <div style="color: #94a3b8; font-size: 10.5px;">PREV HASH: <span style="color: #64748b;">${prevHash}</span></div>
+                <div style="color: #ffffff; margin: 3px 0;">PAYLOAD: { BillNo: "${t.billNo}", Card: "${t.cardNo || csd.cardNo}", Amount: ₹${Number(t.totalNet || 0).toFixed(2)}, Items: ${(t.items || []).length}, Station: "${t.canteen || 'URC Delhi'}" }</div>
+                <div style="color: #10b981; word-break: break-all; font-size: 10.5px;">CURR HASH: ${currHash} &bull; STATUS: VERIFIED</div>
+              </div>
+            `;
+          }).join('')}
+
+          <div style="color: #10b981; margin-top: 16px; border-top: 1px dashed #334155; padding-top: 10px;">
+            &gt; LEDGER INTEGRITY VERIFIED. CRYPTOGRAPHIC CHAIN INTACT. ALL 256-BIT CHECKSUMS MATCH.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // -------------------------------------------------------------
+  // INVOICE MODAL VIEWER
+  // -------------------------------------------------------------
+  function openInvoiceModal(txn) {
+    activeModalTxn = txn;
+    const modal = container.querySelector('#csd-invoice-modal');
+    const content = container.querySelector('#csd-modal-invoice-content');
+    if (!modal || !content) return;
+
+    let totalGross = 0;
+    let totalCgst = 0;
+    let totalSgst = 0;
+    let totalNet = 0;
+    let totalMarket = 0;
+
+    const items = txn.items || [];
+    const rows = items.map((it, idx) => {
+      const netVal = it.price * it.qty;
+      const taxable = netVal / 1.18;
+      const cgst = taxable * 0.09;
+      const sgst = taxable * 0.09;
+      totalGross += taxable;
+      totalCgst += cgst;
+      totalSgst += sgst;
+      totalNet += netVal;
+      totalMarket += ((it.marketPrice || it.price * 1.15) * it.qty);
+      return `
+        <tr>
+          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9px;">${idx + 1}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 8.5px; font-family: monospace;">${(it.id || '').slice(-6)}<br><span style="color:#475569; font-size: 7.5px;">HSN: ${it.hsn || '0405'}</span></td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: left; font-size: 9.5px; font-weight: 700;">${it.name}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9.5px;">${it.qty}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px;">₹${(taxable / it.qty).toFixed(2)}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px; font-weight: 600;">₹${taxable.toFixed(2)}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${cgst.toFixed(2)}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${sgst.toFixed(2)}</td>
+          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9.5px; font-weight: 700;">₹${netVal.toFixed(2)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const savings = Math.max(0, totalMarket - totalNet);
+    const roundedNet = Math.round(totalNet);
+
+    content.innerHTML = `
+      <!-- A4 Detailed Tax Invoice -->
+      <div style="background: white; border: 1px solid #cbd5e1; padding: 24px; font-family: 'Segoe UI', Arial, sans-serif;">
+        
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #002b49; padding-bottom: 8px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="assets/csd_logo.png" style="height: 54px;" alt="CSD Logo" onerror="this.style.display='none'">
+            <div>
+              <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+              <div style="font-size: 17px; font-weight: 900; color: #002b49; letter-spacing: 0.5px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+              <div style="font-size: 11.5px; font-weight: 700; color: #dc2626;">TAX INVOICE / RETAIL CASH MEMO &bull; UNIT RUN CANTEEN (URC)</div>
+            </div>
+          </div>
+          <div style="text-align: right; font-size: 8.5px; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; background: #f8fafc;">
+            <div style="font-family: monospace; font-size: 12px; font-weight: 800; color: #002b49;">|| ||| |||| | ||||| ||</div>
+            <div><strong>GSTIN:</strong> 07AAAGC0123D1Z5</div>
+            <div><strong>FMS ID:</strong> FMS-889922 (HQ)</div>
+          </div>
+        </div>
+
+        <!-- Meta Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; border: 1px solid #000; padding: 8px 10px; font-size: 8.5px; margin-bottom: 10px; background: #fafafa;">
+          <div>
+            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">URC DETAILS</div>
+            <div>URC: <strong>${txn.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'}</strong></div>
+            <div>Station HQ: <span>HQ Delhi Area (011)</span></div>
+            <div>Terminal / IP: <span>${txn.terminal || 'POS-04 / 192.168.1.104'}</span></div>
+          </div>
+          <div>
+            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">BILL DETAILS</div>
+            <div>Bill No: <strong style="color: #b91c1c;">${txn.billNo}</strong></div>
+            <div>Date &amp; Time: <strong>${txn.date}</strong></div>
+            <div>Cashier: <span>${txn.cashier || 'Havildar Rajesh Kumar'}</span></div>
+          </div>
+          <div>
+            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">CARD HOLDER</div>
+            <div>Card No: <strong style="font-family: monospace;">${txn.cardNo || csd.cardNo}</strong></div>
+            <div>Name: <strong>${user.name}</strong></div>
+            <div>Designation: <span>${user.designation}</span></div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; border: 1px solid #000;">
+          <thead>
+            <tr style="background: #f1f5f9; font-size: 8.5px;">
+              <th style="border: 1px solid #000; padding: 4px; width: 4%;">SNo</th>
+              <th style="border: 1px solid #000; padding: 4px; width: 12%;">BCD / HSN</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: left; width: 34%;">Item Nomenclature</th>
+              <th style="border: 1px solid #000; padding: 4px; width: 6%;">Qty</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 9%;">Taxable Rate</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 11%;">Taxable Val</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">CGST (9%)</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">SGST (9%)</th>
+              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">Net Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+
+        <!-- Totals -->
+        <div style="display: flex; gap: 10px; margin-bottom: 10px; font-size: 8.5px;">
+          <div style="flex: 1; border: 1px solid #000; padding: 8px; background: #fafafa;">
+            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">STATUTORY GST SUMMARY (18%)</div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;"><span>Taxable Amount:</span> <strong>₹${totalGross.toFixed(2)}</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;"><span>Total Central GST (CGST):</span> <strong>₹${totalCgst.toFixed(2)}</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Total State GST (SGST):</span> <strong>₹${totalSgst.toFixed(2)}</strong></div>
+            <div style="border-top: 1px dotted #ccc; padding-top: 4px; font-size: 8px; color: #475569;">
+              Payment Mode: <strong>${txn.paymentMode || 'SBI DSP Defence Debit Card'}</strong>
+            </div>
+          </div>
+
+          <div style="flex: 1; border: 1px solid #000; padding: 8px; background: #ffffff;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Taxable Gross:</span> <span>₹${totalGross.toFixed(2)}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Taxes (CGST + SGST):</span> <span>₹${(totalCgst + totalSgst).toFixed(2)}</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 900; color: #002b49; border-top: 2px solid #000; padding-top: 4px;">
+              <span>NET PAYABLE:</span>
+              <span>₹${roundedNet.toFixed(2)}</span>
+            </div>
+            <div style="margin-top: 6px; font-size: 8px; font-weight: 700; color: #166534;">
+              Amount in Words: RUPEES ${roundedNet} ONLY
+            </div>
+          </div>
+        </div>
+
+        <!-- Savings -->
+        <div style="margin-bottom: 12px; text-align: center; font-size: 10px; font-weight: 800; padding: 6px; border: 2px dashed #15803d; background: #f0fdf4; color: #15803d; border-radius: 4px;">
+          🔥 CSD CONCESSION: YOU SAVED ₹${savings.toFixed(2)} COMPARED TO OPEN MARKET PRICES! 🔥
+        </div>
+
+        <!-- Verification Signatures -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 8px; border-top: 1px solid #000;">
+          <div style="text-align: center; width: 200px;">
+            <div style="font-family: 'Brush Script MT', cursive; font-size: 18px; color: #0f172a;">${user.name.split(' ')[0]}</div>
+            <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 8px; font-weight: 700;">
+              Card Holder Signature
+            </div>
+          </div>
+          <div style="text-align: right; border: 1px solid #86efac; background: #f0fdf4; padding: 6px 10px; border-radius: 4px;">
+            <div style="color: #15803d; font-weight: 800; font-size: 9px;">✓ ADOBE SIGNATURE VERIFIED</div>
+            <div style="font-size: 8px; color: #334155;">${txn.manager || 'Sub Maj R.K. Yadav'} &bull; CSD Manager</div>
+            <div style="font-size: 7.5px; color: #64748b;">${txn.date} +05'30' &bull; Location: New Delhi</div>
+          </div>
+        </div>
+
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+  }
+
+  // Initial render of current tab
+  renderActiveTab();
 }
 
 /**

@@ -2070,6 +2070,256 @@ export function downloadCanteenCards(user) {
 }
 
 /**
+ * 11B. Download Official CSD Retail Tax Invoice / Cash Receipt
+ * Government of India - Ministry of Defence - Canteen Stores Department
+ */
+export function downloadCsdInvoice(user, txnData) {
+  if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I', pan: 'EYUPB3666M' };
+  
+  const txn = txnData || {
+    id: 'CSD-TXN-2026-0901',
+    billNo: 'CSD/URC/DEL/2026/09/8812',
+    indentNo: 'IND-2026/09/8812',
+    date: '2026-09-24 11:32:15',
+    canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+    terminal: 'POS-04 / IP: 192.168.1.104',
+    cashier: 'Havildar Rajesh Kumar',
+    manager: 'Sub Maj R.K. Yadav',
+    paymentMode: 'SBI DSP Defence Debit Card (Auth: 891244)',
+    items: [
+      { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', qty: 2, price: 580.00, marketPrice: 650.00 },
+      { id: '8901725181223', name: 'TATA TEA GOLD 1KG POUCH', category: 'Groceries', hsn: '0902', qty: 1, price: 460.00, marketPrice: 540.00 },
+      { id: '4902430691234', name: 'GILLETTE MACH 3 (4 CT)', category: 'Toiletries', hsn: '8212', qty: 1, price: 425.00, marketPrice: 495.00 }
+    ],
+    totalTaxable: 1733.05,
+    totalCgst: 155.98,
+    totalSgst: 155.98,
+    totalNet: 2045.00,
+    totalSavings: 290.00,
+    cardNo: 'LB08260547713500S01',
+    rank: 'ASO-I (Group A Gazetted)',
+    grocLimit: 10000,
+    grocDrawn: 2850,
+    liqLimit: 10,
+    liqDrawn: 2
+  };
+  
+  let totalGross = 0;
+  let totalCgst = 0;
+  let totalSgst = 0;
+  let totalNet = 0;
+  let totalMarket = 0;
+  
+  const items = txn.items && txn.items.length > 0 ? txn.items : [
+    { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', qty: 2, price: 580.00, marketPrice: 650.00 },
+    { id: '8901725181223', name: 'TATA TEA GOLD 1KG POUCH', category: 'Groceries', hsn: '0902', qty: 1, price: 460.00, marketPrice: 540.00 }
+  ];
+
+  const rows = items.map((it, idx) => {
+    const qty = it.qty || 1;
+    const price = it.price || 0;
+    const market = it.marketPrice || (price * 1.15);
+    const netVal = price * qty;
+    const taxable = netVal / 1.18;
+    const cgst = taxable * 0.09;
+    const sgst = taxable * 0.09;
+    totalGross += taxable;
+    totalCgst += cgst;
+    totalSgst += sgst;
+    totalNet += netVal;
+    totalMarket += (market * qty);
+    return `
+      <tr>
+        <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9px;">${idx + 1}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 8.5px; font-family: monospace;">${(it.id || '890100').slice(-6)}<br><span style="color:#475569; font-size: 7.5px;">HSN: ${it.hsn || '0405'}</span></td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: left; font-size: 9.5px; font-weight: 700;">${it.name}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9.5px;">${qty}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px;">₹${(taxable / qty).toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px; font-weight: 600;">₹${taxable.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${cgst.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${sgst.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9.5px; font-weight: 700;">₹${netVal.toFixed(2)}</td>
+      </tr>
+    `;
+  }).join('');
+
+  const savings = Math.max(0, totalMarket - totalNet);
+  const roundedNet = Math.round(totalNet);
+
+  const adobeSig = generateAdobeDigitalSignature(
+    txn.manager || 'Sub Maj R.K. Yadav',
+    'Canteen Manager & Authorised Signatory, URC HQ Delhi Area',
+    'Statutory CSD Retail Tax Invoice & Quota Settlement Clearance',
+    'New Delhi, India',
+    txn.date ? txn.date.replace(/-/g, '.').replace(' ', ' ') + " +05'30'" : null
+  );
+
+  const body = `
+    <!-- Top Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #002b49; padding-bottom: 8px; margin-bottom: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="assets/csd_logo.png" style="height: 52px; width: auto; object-fit: contain;" alt="CSD Logo" onerror="this.style.display='none'">
+        <div>
+          <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+          <div style="font-size: 16px; font-weight: 900; color: #002b49; letter-spacing: 0.5px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+          <div style="font-size: 11px; font-weight: 700; color: #dc2626; letter-spacing: 0.5px;">TAX INVOICE / RETAIL CASH MEMO &bull; UNIT RUN CANTEEN (URC)</div>
+        </div>
+      </div>
+      <div style="text-align: right; font-size: 8px; line-height: 1.35; color: #334155; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; background: #f8fafc;">
+        <div style="font-family: monospace; font-size: 11px; font-weight: 800; color: #002b49;">|| ||| |||| | ||||| ||</div>
+        <div><strong>GSTIN:</strong> 07AAAGC0123D1Z5</div>
+        <div><strong>State TIN:</strong> TIN-07882931</div>
+        <div><strong>FMS ID:</strong> FMS-889922 (HQ)</div>
+      </div>
+    </div>
+
+    <!-- Meta Details Grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; border: 1px solid #000; padding: 6px 10px; font-size: 8.5px; margin-bottom: 8px; background: #fafafa;">
+      <div>
+        <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">URC &amp; STATION PARTICULARS</div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>URC Depot:</span> <strong>${txn.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Station HQ:</span> <span>HQ Delhi Area (011)</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Supply Depot:</span> <span>Base Supply Depot 1, Delhi Cantt</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Terminal / IP:</span> <span>${txn.terminal || 'POS-04 / 192.168.1.104'}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Tax Exemption No:</span> <span>EX-2026-DEL-099</span></div>
+      </div>
+      <div>
+        <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">TRANSACTION REFERENCE</div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Bill Number:</span> <strong style="color:#b91c1c;">${txn.billNo || 'CSD/URC/DEL/2026/09/8812'}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Indent No:</span> <span>${txn.indentNo || 'IND-2026/09/8812'}</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Date &amp; Time:</span> <strong>${txn.date || new Date().toLocaleString()}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Cashier ID:</span> <span>${txn.cashier || 'Havildar Rajesh Kumar'}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Audit Token:</span> <span style="font-family:monospace; font-size:7.5px;">SHA256-CSD-${(txn.id || 'TXN').replace(/[^a-zA-Z0-9]/g,'')}</span></div>
+      </div>
+      <div>
+        <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">SMART CARD HOLDER PROFILE</div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Card Number:</span> <strong style="font-family:monospace; color:#002b49;">${txn.cardNo || 'LB08260547713500S01'}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Rank &amp; Name:</span> <strong>${user.name}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Designation:</span> <span>${user.designation}</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>PAN / Blood:</span> <span>${user.pan || 'EYUPB3666M'} / ${user.bloodGroup || 'O+ve'}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Status:</span> <span style="color:#16a34a; font-weight:700;">SERVING ACTIVE (Group A)</span></div>
+      </div>
+    </div>
+
+    <!-- Monthly Quota Strip -->
+    <div style="border: 1px solid #002b49; padding: 4px 8px; margin-bottom: 8px; background: #e0f2fe; font-size: 8.5px; border-radius: 3px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 800; color: #002b49;">MONTHLY ENTITLEMENT &amp; QUOTA RECONCILIATION (Pay Level 7 Entitlement):</span>
+        <span style="color: #475569;">Billing Cycle: Current Month</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 3px; font-size: 8px;">
+        <div>Groceries Limit: <strong>₹${txn.grocLimit || 10000}</strong></div>
+        <div>Groceries Drawn: <strong>₹${txn.grocDrawn || 2850}</strong></div>
+        <div>Groceries Bal: <strong style="color:#16a34a;">₹${(txn.grocLimit || 10000) - (txn.grocDrawn || 2850)}</strong></div>
+        <div>Liquor Limit: <strong>${txn.liqLimit || 10} Units</strong></div>
+        <div>Liquor Drawn: <strong>${txn.liqDrawn || 2} Units</strong></div>
+        <div>Liquor Bal: <strong style="color:#16a34a;">${(txn.liqLimit || 10) - (txn.liqDrawn || 2)} Units</strong></div>
+      </div>
+    </div>
+
+    <!-- Invoice Item Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px; border: 1px solid #000;">
+      <thead>
+        <tr style="background: #f1f5f9; font-size: 8.5px;">
+          <th style="border: 1px solid #000; padding: 4px; width: 4%;">SNo</th>
+          <th style="border: 1px solid #000; padding: 4px; width: 12%;">BCD / HSN</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: left; width: 34%;">Item Nomenclature</th>
+          <th style="border: 1px solid #000; padding: 4px; width: 6%;">Qty</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 9%;">Taxable Rate</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 11%;">Taxable Val</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">CGST (9%)</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">SGST (9%)</th>
+          <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">Net Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+
+    <!-- Financial Totals & Tax Summary -->
+    <div style="display: flex; gap: 10px; margin-bottom: 8px; font-size: 8.5px;">
+      <!-- Tax Summary Box -->
+      <div style="flex: 1; border: 1px solid #000; padding: 6px; background: #fafafa;">
+        <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">STATUTORY GST SUMMARY (18% COMPOSITE)</div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 8px; text-align: right;">
+          <tr style="border-bottom: 1px solid #cbd5e1; font-weight: 700;">
+            <th style="text-align: left;">Rate</th><th>Taxable</th><th>CGST</th><th>SGST</th><th>Total Tax</th>
+          </tr>
+          <tr>
+            <td style="text-align: left;">18.00%</td>
+            <td>₹${totalGross.toFixed(2)}</td>
+            <td>₹${totalCgst.toFixed(2)}</td>
+            <td>₹${totalSgst.toFixed(2)}</td>
+            <td><strong>₹${(totalCgst + totalSgst).toFixed(2)}</strong></td>
+          </tr>
+        </table>
+        <div style="margin-top: 6px; font-size: 8px; color: #475569; border-top: 1px dotted #ccc; padding-top: 4px;">
+          <div><strong>Payment Mode:</strong> ${txn.paymentMode || 'SBI Defence Salary Package Debit Card'}</div>
+          <div><strong>Bank Txn Reference:</strong> PFMS-CSD-${Date.now().toString().slice(-8)} &bull; Auth: 914820</div>
+        </div>
+      </div>
+
+      <!-- Net Payable Box -->
+      <div style="flex: 1; border: 1px solid #000; padding: 6px; background: #ffffff;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+          <span>Total Taxable Value:</span>
+          <span>₹${totalGross.toFixed(2)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+          <span>Total CGST (Central Tax):</span>
+          <span>₹${totalCgst.toFixed(2)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span>Total SGST (State Tax):</span>
+          <span>₹${totalSgst.toFixed(2)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 900; color: #002b49; border-top: 2px solid #000; padding-top: 4px; margin-top: 2px;">
+          <span>NET AMOUNT PAYABLE:</span>
+          <span>₹${roundedNet.toFixed(2)}</span>
+        </div>
+        <div style="font-size: 8px; font-weight: 700; color: #166534; margin-top: 3px;">
+          Amount in Words: RUPEES ${numberToWordsINR(roundedNet).toUpperCase()}
+        </div>
+      </div>
+    </div>
+
+    <!-- Savings Banner -->
+    <div style="margin-bottom: 10px; text-align: center; font-size: 10px; font-weight: 800; padding: 5px; border: 2px dashed #15803d; background: #f0fdf4; color: #15803d; border-radius: 4px;">
+      🔥 CSD DEFENCE CONCESSION: YOU SAVED ₹${savings.toFixed(2)} COMPARED TO OPEN MARKET CIVIL RETAIL PRICES! 🔥
+    </div>
+
+    <!-- Signatures Block -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 6px; border-top: 1px solid #000; margin-bottom: 8px;">
+      <div style="text-align: center; width: 220px;">
+        <div style="font-family: 'Brush Script MT', cursive; font-size: 18px; color: #0f172a; margin-bottom: 2px;">${user.name.split(' ')[0]}</div>
+        <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 8px; font-weight: 700;">
+          Signature of Smart Card Holder<br>
+          <span style="font-weight: normal; color: #64748b;">(Verified by Card Chip &amp; Biometric PIN)</span>
+        </div>
+      </div>
+
+      <div style="text-align: right;">
+        <div style="font-weight: 700; font-size: 8px; margin-bottom: 2px; color: #1e293b;">Competent Issuing Officer:</div>
+        ${adobeSig}
+      </div>
+    </div>
+
+    <!-- Official Statutory Footer -->
+    <div style="border-top: 1px solid #cbd5e1; padding-top: 6px; font-size: 7.5px; color: #475569; text-align: justify; line-height: 1.35;">
+      <strong>Statutory Declaration under Army/Air Force/Navy &amp; MoD CSD Directives:</strong> Goods sold under CSD quota are strictly for personal bonafide consumption of authorized personnel and their verified family dependents. Resale, transfer, or commercial disposal of CSD stores is a severe punishable offence under Section 7 of the Essential Commodities Act &amp; Service Regulations. Goods once sold will not be exchanged or refunded unless found defective within 7 days.
+      <div style="text-align: center; margin-top: 4px; font-weight: 700; color: #002b49;">
+        --- SYSTEM GENERATED VERIFIED TAX INVOICE &bull; e-HRMS 2.0 NATIONAL DEFENCE PORTAL INTEGRATION ---
+      </div>
+    </div>
+  `;
+
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  const doc = wrapGovDocument(`CSD_Retail_Tax_Invoice_${safeBillNo}`, body, true);
+  triggerDownload(`CSD_Tax_Invoice_${safeBillNo}.html`, doc);
+}
+
+/**
  * 13. Download Official Special Operation Deployment Directive & Order
  * Government of India - Ministry of Defence - Department of Defence
  */

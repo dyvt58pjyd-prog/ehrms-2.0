@@ -220,6 +220,22 @@ export function renderDocumentVault(container) {
       downloadFn: () => DL.downloadCanteenCards(user)
     },
     {
+      id: 'DOC-CSD-INV-2026',
+      name: 'Official CSD Canteen Retail Tax Invoice (URC Delhi)',
+      category: 'Tax & Finance',
+      date: '24-Sep-2026',
+      verified: true,
+      issuer: 'Canteen Stores Department / URC HQ DELHI AREA (Sena Bhawan)',
+      docNo: 'CSD/URC/DEL/2026/09/8812',
+      icon: '🧾',
+      description: 'Official GST retail tax invoice for groceries and provisions drawn against smart card LB08260547713500S01 with 18% GST breakdown, digital signature, and quota reconciliation.',
+      downloadFn: () => {
+        const csdBilling = store.get().csdBilling || {};
+        const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;
+        DL.downloadCsdInvoice(user, txn);
+      }
+    },
+    {
       id: 'DOC-IPR-2026',
       name: 'Immovable Property Return (IPR) Acknowledgment',
       category: 'Compliance & Legal',

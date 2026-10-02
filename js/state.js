@@ -1049,6 +1049,97 @@ notifications: [
     rfidAccessId: 'DMA-GATE-SOUTH-08104'
   },
 
+  // Official CSD Canteen & Retail Billing System
+  csdBilling: {
+    cardNo: 'LB08260547713500S01',
+    dependentCardNo: 'LB08260547713500D01',
+    canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+    pin: '1234',
+    rank: 'ASO-I (Group A Gazetted)',
+    name: 'ANURAG ANIL BAWASKAR',
+    pan: 'EYUPB3666M',
+    entitlements: {
+      groceriesLimit: 10000,
+      groceriesDrawn: 2850,
+      groceriesBalance: 7150,
+      liquorLimit: 10,
+      liquorDrawn: 2,
+      liquorBalance: 8,
+      afdEligibility: 'ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)'
+    },
+    inventory: [
+      { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00, unit: 'Tin' },
+      { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00, unit: 'Pack' },
+      { id: '8901131000100', name: 'OLD MONK XXX RUM 750ML', category: 'Liquor', hsn: '2208', stock: 200, price: 450.00, marketPrice: 600.00, unit: 'Bottle' },
+      { id: '8806090123456', name: 'SAMSUNG 32" SMART LED TV', category: 'Electronics', hsn: '8528', stock: 15, price: 12500.00, marketPrice: 15990.00, unit: 'Unit' },
+      { id: '4902430691234', name: 'GILLETTE MACH 3 (4 CT)', category: 'Toiletries', hsn: '8212', stock: 80, price: 425.00, marketPrice: 495.00, unit: 'Pack' },
+      { id: '8901725181223', name: 'TATA TEA GOLD 1KG POUCH', category: 'Groceries', hsn: '0902', stock: 95, price: 460.00, marketPrice: 540.00, unit: 'Pack' },
+      { id: '8901030012224', name: 'DAWAT BASMATI RICE 5KG', category: 'Groceries', hsn: '1006', stock: 65, price: 485.00, marketPrice: 590.00, unit: 'Bag' },
+      { id: '8901207011400', name: 'CADBURY CELEBRATIONS BOX', category: 'Groceries', hsn: '1806', stock: 110, price: 195.00, marketPrice: 250.00, unit: 'Box' },
+      { id: '8901063140120', name: 'COLGATE TOTAL 150G (2PK)', category: 'Toiletries', hsn: '3306', stock: 140, price: 210.00, marketPrice: 260.00, unit: 'Pack' },
+      { id: '8901505001011', name: 'JOHNNIE WALKER BLACK LABEL 750ML', category: 'Liquor', hsn: '2208', stock: 45, price: 2650.00, marketPrice: 3800.00, unit: 'Bottle' }
+    ],
+    transactions: [
+      {
+        id: 'CSD-TXN-2026-0901',
+        billNo: 'CSD/URC/DEL/2026/09/8812',
+        indentNo: 'IND-2026/09/8812',
+        date: '2026-09-24 11:32:15',
+        canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+        terminal: 'POS-04 / IP: 192.168.1.104',
+        cashier: 'Havildar Rajesh Kumar',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode: 'SBI DSP Defence Debit Card (Auth: 891244)',
+        items: [
+          { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', qty: 2, price: 580.00, marketPrice: 650.00 },
+          { id: '8901725181223', name: 'TATA TEA GOLD 1KG POUCH', category: 'Groceries', hsn: '0902', qty: 1, price: 460.00, marketPrice: 540.00 },
+          { id: '4902430691234', name: 'GILLETTE MACH 3 (4 CT)', category: 'Toiletries', hsn: '8212', qty: 1, price: 425.00, marketPrice: 495.00 }
+        ],
+        totalTaxable: 1733.05,
+        totalCgst: 155.98,
+        totalSgst: 155.98,
+        totalNet: 2045.00,
+        totalSavings: 290.00,
+        status: 'COMPLETED'
+      },
+      {
+        id: 'CSD-TXN-2026-0814',
+        billNo: 'CSD/URC/DEL/2026/08/6421',
+        indentNo: 'IND-2026/08/6421',
+        date: '2026-08-18 16:45:00',
+        canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+        terminal: 'POS-02 / IP: 192.168.1.102',
+        cashier: 'Naik S.K. Sharma',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode: 'UPI / BharatPe CSD Merchant (Txn: 429188201)',
+        items: [
+          { id: '8901030012224', name: 'DAWAT BASMATI RICE 5KG', category: 'Groceries', hsn: '1006', qty: 2, price: 485.00, marketPrice: 590.00 },
+          { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', qty: 2, price: 144.00, marketPrice: 168.00 }
+        ],
+        totalTaxable: 1066.10,
+        totalCgst: 95.95,
+        totalSgst: 95.95,
+        totalNet: 1258.00,
+        totalSavings: 258.00,
+        status: 'COMPLETED'
+      }
+    ],
+    afdOrders: [
+      {
+        id: 'AFD-2026-0041',
+        date: '2026-09-10',
+        itemType: 'Four Wheeler (Car)',
+        model: 'Maruti Suzuki Grand Vitara Zeta AT',
+        dealer: 'Rana Motors CSD Depot, Rama Road, New Delhi',
+        csdPrice: 1435000,
+        civilPrice: 1625000,
+        savings: 190000,
+        status: 'SANCTIONED & P.O. GENERATED',
+        sanctionAuthority: 'Quartermaster General (QMG) Branch / CSD AFD Cell'
+      }
+    ]
+  },
+
   // Special Combined Operational Deployment Task Force Order (Govt of India, Ministry of Defence)
   specialOperationOrder: {
     orderNo: 'MoD/DoD/OPS-SPL/2026/8104-SEC',
@@ -1374,6 +1465,10 @@ class StateManager {
             }
           }
 
+          if (!parsed.csdBilling) {
+            parsed.csdBilling = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling));
+          }
+
           return parsed;
         }
       }
@@ -1387,6 +1482,18 @@ class StateManager {
     try {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+        // Cross-sync with standalone CSD Portal keys
+        if (this.data.csdBilling) {
+          if (this.data.csdBilling.transactions) {
+            localStorage.setItem('csd_txns', JSON.stringify(this.data.csdBilling.transactions));
+          }
+          if (this.data.csdBilling.inventory) {
+            localStorage.setItem('csd_inventory', JSON.stringify(this.data.csdBilling.inventory));
+          }
+          if (this.data.csdBilling.afdOrders) {
+            localStorage.setItem('csd_afd', JSON.stringify(this.data.csdBilling.afdOrders));
+          }
+        }
       }
       // Silently sync to backend for permanent storage
       fetch('/api/state', {

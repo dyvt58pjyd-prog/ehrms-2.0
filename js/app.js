@@ -301,6 +301,8 @@ class EhrmsApp {
           renderSmartIdCard(this.appContainer);
           break;
         case 'canteen':
+        case 'csd':
+        case 'csd-billing':
           renderCanteenCards(this.appContainer);
           break;
         case 'pension':
@@ -400,6 +402,9 @@ class EhrmsApp {
         { title: 'NPS PRAN Statement & Tier-I Wealth Portfolio', route: 'pension', icon: '💰', type: 'Pension & Wealth' },
         { title: 'Smart Biometric ID Card (Defence Civil Services)', route: 'id-card', icon: '🪪', type: 'Identity Proof' },
         { title: 'CSD Canteen Smart Cards (Grocery & Liquor Pass)', route: 'canteen', icon: '🛒', type: 'Welfare Cards' },
+        { title: 'CSD Retail POS Billing Terminal & Quotas', route: 'canteen', icon: '🧾', type: 'CSD Retail Billing' },
+        { title: 'CSD Retail Tax Invoices & Cash Receipts', route: 'canteen', icon: '📄', type: 'Tax & Finance' },
+        { title: 'CSD AFD Booking Desk (Cars & White Goods)', route: 'canteen', icon: '🚗', type: 'Welfare Schemes' },
         { title: 'Immovable Property Return (IPR) Acknowledgment', route: 'ipr', icon: '🏢', type: 'Compliance & Legal' },
         { title: 'Vigilance Clearance Certificate (Ordinary Passport NOC)', route: 'vigilance', icon: '🛡️', type: 'Compliance & Legal' },
         { title: 'Leave Management & Sanction Orders', route: 'leave', icon: '🏖️', type: 'Service Record' },

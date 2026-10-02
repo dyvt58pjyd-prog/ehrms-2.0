@@ -252,9 +252,9 @@ function renderEmployeeDashboard(state, user, leaves) {
                 <div class="tile-icon">🪪</div>
                 <div class="tile-label">${state.language === 'HI' ? 'डिजिटल पहचान पत्र' : 'Smart ID Card'}</div>
               </div>
-              <div class="action-tile" onclick="window.location.href='csd_portal.html'">
+              <div class="action-tile" onclick="window.location.hash='#canteen'">
                 <div class="tile-icon">🛒</div>
-                <div class="tile-label">${state.language === 'HI' ? 'कैंटीन स्मार्ट कार्ड' : 'CSD Billing Portal'}</div>
+                <div class="tile-label">${state.language === 'HI' ? 'कैंटीन व बिलिंग पोर्टल' : 'CSD Canteen & Billing'}</div>
               </div>
               <div class="action-tile" onclick="window.location.hash='#letterhead'">
                 <div class="tile-icon">📝</div>

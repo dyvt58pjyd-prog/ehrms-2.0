@@ -9,6 +9,8 @@ const DEFAULT_INVENTORY = [
 ];
 
 const DEFAULT_OFFICERS = [
+  { cardNo: 'LB08260547713500S01', rank: 'ASO-I (Gazetted)', name: 'ANURAG ANIL BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 10, grocDrawn: 2850, liqDrawn: 2 },
+  { cardNo: 'LB08260547713500D01', rank: 'DEPENDENT (Father)', name: 'ANIL R. BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 0, grocDrawn: 0, liqDrawn: 0 },
   { cardNo: 'GC10928374123456', rank: 'MAJOR', name: 'ANURAG A. BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 10, grocDrawn: 2500, liqDrawn: 2 },
   { cardNo: 'GC99887766554433', rank: 'COLONEL', name: 'RAM SINGH', canteen: 'URC HQ DELHI AREA', pan: 'ABCDE1234F', grocLimit: 15000, liqLimit: 14, grocDrawn: 14500, liqDrawn: 12 }
 ];
@@ -77,7 +79,7 @@ window.switchLoginTab = function(type) {
   const userLabel = document.getElementById('label-username');
   if (type === 'customer') {
     userLabel.innerText = "Smart Card Number";
-    document.getElementById('username').value = "GC10928374123456";
+    document.getElementById('username').value = "LB08260547713500S01";
   } else {
     userLabel.innerText = "User ID (admin / cashier)";
     document.getElementById('username').value = "admin";
