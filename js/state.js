@@ -1068,6 +1068,17 @@ notifications: [
       afdEligibility: 'ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)'
     },
     inventory: [
+      { 
+        id: '233243', 
+        name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', 
+        category: 'Electronics', 
+        hsn: '8517', 
+        stock: 12, 
+        price: 54436.00, 
+        marketPrice: 80999.00, 
+        unit: 'Unit',
+        specs: '15.75 cm (6.2\") FHD+ | Qualcomm Snapdragon 8 Elite (3nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 4000mAh | Brand Box with All Accessories | Brand Warranty till 23-05-2027 (Condition: Very Good A)'
+      },
       { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00, unit: 'Tin' },
       { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00, unit: 'Pack' },
       { id: '8901131000100', name: 'OLD MONK XXX RUM 750ML', category: 'Liquor', hsn: '2208', stock: 200, price: 450.00, marketPrice: 600.00, unit: 'Bottle' },
@@ -1080,6 +1091,40 @@ notifications: [
       { id: '8901505001011', name: 'JOHNNIE WALKER BLACK LABEL 750ML', category: 'Liquor', hsn: '2208', stock: 45, price: 2650.00, marketPrice: 3800.00, unit: 'Bottle' }
     ],
     transactions: [
+      {
+        id: 'CSD-TXN-2026-1002',
+        billNo: 'CSD/URC/DEL/2026/10/9482',
+        indentNo: 'IND-2026/10/9482',
+        date: '2026-10-02 18:45:10',
+        canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+        terminal: 'POS-01 / IP: 192.168.1.101',
+        cashier: 'Sub Maj R.K. Yadav',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode: 'SBI DSP Defence Salary Package Card (Auth: 894102)',
+        items: [
+          { 
+            id: '233243', 
+            name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', 
+            category: 'Electronics', 
+            hsn: '8517', 
+            qty: 1, 
+            price: 54436.00, 
+            marketPrice: 80999.00 
+          }
+        ],
+        totalTaxable: 46132.20,
+        totalCgst: 4151.90,
+        totalSgst: 4151.90,
+        totalNet: 54436.00,
+        totalSavings: 26563.00,
+        cardNo: 'LB08260547713500S01',
+        rank: 'ASO-I (Group A Gazetted)',
+        grocLimit: 10000,
+        grocDrawn: 2850,
+        liqLimit: 10,
+        liqDrawn: 2,
+        status: 'COMPLETED'
+      },
       {
         id: 'CSD-TXN-2026-0901',
         billNo: 'CSD/URC/DEL/2026/09/8812',
@@ -1467,6 +1512,22 @@ class StateManager {
 
           if (!parsed.csdBilling) {
             parsed.csdBilling = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling));
+          } else {
+            // Ensure newly added inventory items like Samsung Galaxy S25 are present
+            const curIds = new Set((parsed.csdBilling.inventory || []).map(i => i.id));
+            (INITIAL_DATA.csdBilling.inventory || []).forEach(item => {
+              if (!curIds.has(item.id)) {
+                parsed.csdBilling.inventory.unshift(item);
+              }
+            });
+
+            // Ensure newly added transactions are present
+            const curTxnIds = new Set((parsed.csdBilling.transactions || []).map(t => t.id));
+            (INITIAL_DATA.csdBilling.transactions || []).forEach(txn => {
+              if (!curTxnIds.has(txn.id)) {
+                parsed.csdBilling.transactions.unshift(txn);
+              }
+            });
           }
 
           return parsed;

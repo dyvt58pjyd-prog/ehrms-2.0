@@ -223,12 +223,12 @@ export function renderDocumentVault(container) {
       id: 'DOC-CSD-INV-2026',
       name: 'Official CSD Canteen Retail Tax Invoice (URC Delhi)',
       category: 'Tax & Finance',
-      date: '24-Sep-2026',
+      date: '02-Oct-2026',
       verified: true,
       issuer: 'Canteen Stores Department / URC HQ DELHI AREA (Sena Bhawan)',
-      docNo: 'CSD/URC/DEL/2026/09/8812',
+      docNo: 'CSD/URC/DEL/2026/10/9482',
       icon: '🧾',
-      description: 'Official GST retail tax invoice for groceries and provisions drawn against smart card LB08260547713500S01 with 18% GST breakdown, digital signature, and quota reconciliation.',
+      description: 'Official GST retail tax invoice for Samsung Galaxy S25 5G 12/256GB (Silver Shadow - ₹54,436) drawn against smart card LB08260547713500S01 with 18% composite GST breakdown, digital signature, and quota reconciliation.',
       downloadFn: () => {
         const csdBilling = store.get().csdBilling || {};
         const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;

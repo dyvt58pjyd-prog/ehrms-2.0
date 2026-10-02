@@ -1,6 +1,7 @@
 // --- CSD Full-Scale Web Application Logic ---
 
 const DEFAULT_INVENTORY = [
+  { id: '233243', name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', category: 'Electronics', hsn: '8517', stock: 12, price: 54436.00, marketPrice: 80999.00 },
   { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00 },
   { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00 },
   { id: '8901131000100', name: 'OLD MONK XXX RUM 750ML', category: 'Liquor', hsn: '2208', stock: 200, price: 450.00, marketPrice: 600.00 },
@@ -34,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- State Management ---
 function initializeStorage() {
   inventory = JSON.parse(localStorage.getItem('csd_inventory')) || [...DEFAULT_INVENTORY];
+  const curIds = new Set(inventory.map(i => i.id));
+  DEFAULT_INVENTORY.forEach(item => {
+    if (!curIds.has(item.id)) {
+      inventory.unshift(item);
+    }
+  });
   officers = JSON.parse(localStorage.getItem('csd_officers')) || [...DEFAULT_OFFICERS];
   transactions = JSON.parse(localStorage.getItem('csd_txns')) || generateMockTransactions();
   afdOrders = JSON.parse(localStorage.getItem('csd_afd')) || [];
