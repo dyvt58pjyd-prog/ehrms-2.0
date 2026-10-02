@@ -1,0 +1,17 @@
+{
+  "name": "ehrms-2.0",
+  "version": "2.0.0",
+  "description": "Electronic Human Resource Management System (eHRMS 2.0)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ehrms",
+    "hrms-2.0",
+    "personnel-management"
+  ],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-HRMS 2.0 | Electronic Human Resource Management System | Government of India</title>
+  <meta name="description" content="Unified Electronic Human Resource Management System 2.0 (e-HRMS 2.0) - Department of Personnel & Training (DoPT), Ministry of Personnel, Public Grievances and Pensions, Government of India.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2.0.33">
+  <link rel="stylesheet" href="css/components.css?v=2.0.33">
+  <link rel="stylesheet" href="css/dashboard.css?v=2.0.33">
+  <link rel="stylesheet" href="css/print.css?v=2.0.33">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<script>
+  window.addEventListener('error', function(e) {
+    fetch('/log_error_get?msg=' + encodeURIComponent(e.message + ' at ' + e.filename + ':' + e.lineno));
+  });
+  window.addEventListener('unhandledrejection', function(e) {
+    fetch('/log_error_get?msg=' + encodeURIComponent(e.reason ? e.reason.message : e.reason));
+  });
+</script>
+
+  <!-- Global USB Crypto Token (DSC) Modal for Financial Approvals -->
+  <div id="modal-dsc-token" class="parichay-modal-overlay" style="display: none; z-index: 10001; background: rgba(15, 23, 42, 0.95);">
+    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; width: 400px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+      <div style="background: #1e293b; padding: 15px; display: flex; justify-content: space-between; align-items: center; color: white;">
+        <div style="font-weight: bold; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🗝️</span>
+          Class-3 DSC Token
+        </div>
+        <button type="button" id="btn-close-dsc" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <div style="padding: 24px; text-align: center;" id="dsc-modal-body">
+        <div style="font-size: 40px; margin-bottom: 15px; animation: pulse 2s infinite;">USB</div>
+        <div style="font-weight: 700; margin-bottom: 10px; color: #1e293b;">Crypto Token Detected</div>
+        <div style="font-size: 12px; color: #475569; margin-bottom: 20px; padding: 10px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; text-align: left;">
+          Token Name: <strong>e-Pass 2003 Auto</strong><br>
+          Certificate Issuer: <strong>e-Mudhra CA</strong><br>
+          Status: <strong style="color: #16a34a;">Valid & Connected</strong>
+        </div>
+        <div style="text-align: left; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #1e293b;">Enter Token PIN to Sign:</div>
+        <input type="password" id="dsc-pin-input" placeholder="****" style="width: 100%; box-sizing: border-box; padding: 10px; text-align: center; font-size: 18px; letter-spacing: 4px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 20px;">
+        <button type="button" id="btn-dsc-sign" style="width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer;">Authenticate & Issue Token</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('btn-close-dsc').addEventListener('click', () => {
+      document.getElementById('modal-dsc-token').style.display = 'none';
+      document.getElementById('dsc-pin-input').value = '';
+    });
+    document.getElementById('btn-dsc-sign').addEventListener('click', () => {
+      const pin = document.getElementById('dsc-pin-input').value;
+      if (pin.length < 4) { alert('Invalid PIN'); return; }
+      document.getElementById('dsc-modal-body').innerHTML = `
+        <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+        <div style="font-weight: 700; color: #16a34a; font-size: 16px;">Cryptographic Signature Affixed</div>
+        <div style="font-size: 12px; color: #475569; margin-top: 10px;">Financial Sanction Authorized via e-Pass 2003 DSC.</div>
+        <button type="button" onclick="document.getElementById('modal-dsc-token').style.display='none'" style="margin-top: 20px; width: 100%; background: #1e293b; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer;">Close</button>
+      `;
+    });
+    window.openDscModal = function() {
+      document.getElementById('modal-dsc-token').style.display = 'flex';
+    };
+  </script>
+
+  <!-- Indian National Tricolor Top Stripe -->
+  <div class="tricolor-stripe"></div>
+
+  <!-- Accessibility & GIGW Compliance Bar -->
+  <div class="accessibility-bar">
+    <div class="accessibility-left">
+      <span>भारत सरकार &bull; Government of India</span>
+      <span style="color: var(--border-medium);">|</span>
+      <a href="#dashboard" accesskey="1">Skip to Main Content</a>
+      <span style="color: var(--border-medium);">|</span>
+      <a href="#" onclick="alert('Screen reader accessibility features active. All ARIA labels configured as per GIGW 3.0.'); return false;">Screen Reader Access</a>
+    </div>
+    <div class="accessibility-right">
+      <div class="font-resizer">
+        <span style="font-size: 11px; margin-right: 2px;">Text Size:</span>
+        <button class="font-btn" id="font-small" title="Decrease Font Size">A-</button>
+        <button class="font-btn active" id="font-normal" title="Normal Font Size">A</button>
+        <button class="font-btn" id="font-large" title="Increase Font Size">A+</button>
+      </div>
+      <span style="color: var(--border-medium);">|</span>
+      <button class="contrast-btn" id="toggle-contrast" title="High Contrast Mode">Contrast</button>
+      <span style="color: var(--border-medium);">|</span>
+      <button class="lang-btn" id="lang-toggle" title="Switch Language">हिन्दी</button>
+      <span style="color: var(--border-medium);">|</span>
+      <button class="contrast-btn" id="btn-reset-cache" title="Reset Browser Cache & Load Fresh Portal Data" style="color: #dc2626; border-color: #fca5a5;">🧹 Reset Cache</button>
+    </div>
+  </div>
+
+  <!-- Main Government Header -->
+  <header class="main-header">
+    <div class="header-container">
+      
+      <!-- Brand & Emblem -->
+      <a href="#dashboard" class="header-brand">
+        <img src="assets/emblem.png" alt="State Emblem of India" class="national-emblem" title="State Emblem of India &bull; भारत का राज्य चिन्ह">
+        <div class="brand-text">
+          <span class="gov-title-hi">भारत सरकार &bull; रक्षा मंत्रालय</span>
+          <span class="gov-title-en">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</span>
+          <span class="ministry-title">Department of Military Affairs (DMA) / सैन्य कार्य विभाग</span>
+          <div class="portal-badge-group">
+            <span class="portal-name">e-HRMS <span>2.0</span></span>
+            <span class="portal-tag">Official Defence Portal</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Header Right: Campaign Badges, Role Switcher & User Profile -->
+      <div class="header-right">
+        <!-- Official Campaign Badges -->
+        <div class="gov-campaign-badges">
+          <div class="badge-tag-gov digital-india">
+            <span>🇮🇳 Digital India</span>
+            <span style="font-size: 8px; font-weight: normal;">Power to Empower</span>
+          </div>
+          <div class="badge-tag-gov karmayogi">
+            <span>Mission Karmayogi</span>
+            <span style="font-size: 8px; font-weight: normal;">Competency Linked</span>
+          </div>
+        </div>
+
+        <!-- Live Notifications Center -->
+        <div class="notifications-container" style="position: relative; margin-right: 15px; margin-left: 10px; cursor: pointer;" onclick="document.getElementById('notif-dropdown').classList.toggle('show')">
+          <div style="font-size: 22px; position: relative;">
+            🔔
+            <div style="position: absolute; top: 0; right: -4px; background: #dc2626; color: white; border-radius: 50%; font-size: 9px; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid white;">3</div>
+          </div>
+          <div id="notif-dropdown" class="notif-dropdown" style="display: none; position: absolute; top: 35px; right: -60px; width: 320px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); z-index: 1000; flex-direction: column; overflow: hidden;">
+            <div style="padding: 12px 15px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between;">
+              <span>Alerts Center</span>
+              <span style="font-size: 11px; color: #0284c7; cursor: pointer;">Mark all read</span>
+            </div>
+            <div style="padding: 12px 15px; border-bottom: 1px solid #f1f5f9; display: flex; gap: 12px; align-items: flex-start; background: #eff6ff;">
+              <div style="font-size: 18px;">🛡️</div>
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Vigilance Clearance Updated</div>
+                <div style="font-size: 11px; color: #475569; margin-top: 2px;">Your CVC clearance has been verified successfully.</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Just now</div>
+              </div>
+            </div>
+            <div style="padding: 12px 15px; border-bottom: 1px solid #f1f5f9; display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 18px;">📁</div>
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #0f172a;">New e-Office File Received</div>
+                <div style="font-size: 11px; color: #475569; margin-top: 2px;">File No. MoD/DMA/2026/812 forwarded by DS (Estt).</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">2 hours ago</div>
+              </div>
+            </div>
+            <div style="padding: 12px 15px; display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 18px;">🎓</div>
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #0f172a;">iGOT Karmayogi Mandatory Course</div>
+                <div style="font-size: 11px; color: #475569; margin-top: 2px;">Cyber Security module pending completion.</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">1 day ago</div>
+              </div>
+            </div>
+            <div style="padding: 8px; text-align: center; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 11px; font-weight: 700; color: #16a34a; cursor: pointer;">
+              View All Notifications
+            </div>
+          </div>
+          <style>
+            .notif-dropdown.show { display: flex !important; }
+          </style>
+        </div>
+
+        <!-- User Profile Card (Visible when authenticated) -->
+        <div class="user-profile-header" id="header-user-profile" onclick="window.location.hash='#service-book'">
+          <img src="assets/avatar.svg" alt="User Avatar" class="user-avatar-img">
+          <div class="user-meta">
+            <span class="user-name" id="header-user-name">ANURAG ANIL BAWASKAR</span>
+            <span class="user-role-text" id="header-user-role">ADDITIONAL SECTION OFFICER - I</span>
+          </div>
+        </div>
+
+        <!-- Official Sign Out Button (Visible when authenticated) -->
+        <a href="#login" class="btn btn-sm btn-outline btn-logout" id="btn-header-logout" style="margin-left: 10px; font-weight: 700; color: #dc2626; border-color: #fca5a5;" title="Sign Out of e-HRMS 2.0">
+          🔐 Sign Out
+        </a>
+
+        <!-- Official Parichay Auth Badge (Visible only on #login / Unauthenticated) -->
+        <div id="header-auth-badge" style="display: none; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: #002b49; background: #e0f2fe; padding: 6px 12px; border-radius: 4px; border: 1px solid #bae6fd;">
+          🔒 Parichay SSO Authentication
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Navigation Bar -->
+  <nav class="portal-nav">
+    <div class="nav-container">
+      <a href="#dashboard" class="nav-item active">🏛️ Dashboard</a>
+      <a href="#orgchart" class="nav-item">🏢 Dynamic Org Chart</a>
+      <a href="#orders-circulars" class="nav-item">📜 Orders &amp; Circulars</a>
+      <a href="#letterhead" class="nav-item">✍️ Official Letterhead</a>
+      <a href="#eoffice" class="nav-item">📁 e-Office FTS</a>
+      <a href="#aebas" class="nav-item">👆 AEBAS Attendance</a>
+      <a href="#cghs" class="nav-item">⚕️ CGHS Medical</a>
+      <a href="#deputation" class="nav-item">🎓 Deputation & CSS</a>
+      <a href="#eawas" class="nav-item">🏡 e-Awas Allotment</a>
+      <a href="#vigilance" class="nav-item">🛡️ Vigilance & NOC</a>
+      <a href="#service-book" class="nav-item">📖 e-Service Book</a>
+      <a href="#vault" class="nav-item">🔐 Document Vault</a>
+      <a href="#leave" class="nav-item">🌴 Leave (LMS)</a>
+      <a href="#salary" class="nav-item">💳 7th CPC Salary</a>
+      <a href="#karmayogi" class="nav-item">🎓 iGOT Karmayogi</a>
+      <a href="#id-card" class="nav-item">🪪 Smart ID Card</a>
+      <a href="#canteen" class="nav-item">🛒 CSD Canteen</a>
+      <a href="#pension" class="nav-item">🛡️ NPS PRAN</a>
+      <a href="#bhavishya" class="nav-item">🎓 Bhavishya (Retirement)</a>
+      <a href="#claims" class="nav-item">🧾 Claims & CEA</a>
+      <a href="#tour" class="nav-item">✈️ Tour & TA</a>
+      <a href="#ltc" class="nav-item">🚆 LTC Concession</a>
+      <a href="#apar" class="nav-item">🎯 SPARROW APAR</a>
+      <a href="#ipr" class="nav-item">🏡 Property (IPR)</a>
+      <a href="#grievances" class="nav-item">⚖️ CPGRAMS</a>
+      <a href="#approvals" class="nav-item">
+        📝 Approvals (MSS)
+        <span class="nav-badge" id="approvals-nav-badge" style="display: none;">0</span>
+      </a>
+      <a href="#analytics" class="nav-item">📊 Cadre Analytics</a>
+    </div>
+  </nav>
+
+  <!-- Main Application Body Container -->
+  <main class="app-main">
+    <div id="app-content">
+      <!-- Dynamic Views Injected via app.js Router -->
+    </div>
+  </main>
+
+  <!-- Government of India Mandated Footer -->
+  <footer class="gov-footer">
+    <div class="footer-top">
+      <div class="footer-col">
+        <h4>About e-HRMS 2.0</h4>
+        <p style="font-size: 12px; line-height: 1.6; color: #94a3b8;">
+          e-HRMS 2.0 is an end-to-end digital human resource management system for Central Government employees developed by DoPT. It integrates the digital service book, leaves, tours, LTC, performance appraisal, property returns, and pay entitlements.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Statutory Links & Portals</h4>
+        <ul>
+          <li><a href="https://dopt.gov.in" target="_blank" rel="noopener">Department of Personnel & Training (DoPT)</a></li>
+          <li><a href="https://sparrow.gov.in" target="_blank" rel="noopener">SPARROW APAR System</a></li>
+          <li><a href="https://bhavishya.nic.in" target="_blank" rel="noopener">Bhavishya Pension Portal</a></li>
+          <li><a href="https://igotkarmayogi.gov.in" target="_blank" rel="noopener">iGOT Karmayogi Bharat Platform</a></li>
+          <li><a href="https://parichay.nic.in" target="_blank" rel="noopener">Parichay / Jan Parichay (MeriPehchaan)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Helpdesk & Grievances</h4>
+        <ul style="color: #94a3b8; font-size: 12px;">
+          <li>📞 National Helpdesk: 011-24648492 / 1800-11-2244</li>
+          <li>✉️ Technical Support: ehrms-support@nic.in</li>
+          <li>🏢 Central Office: North Block, Central Secretariat, New Delhi - 110001</li>
+          <li>🕒 Support Hours: Mon to Fri (09:00 AM - 05:30 PM IST)</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Security & Compliance</h4>
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.6;">
+          🔒 Secured with 256-bit TLS Encryption &bull; Certified by CERT-In Empanelled Auditor &bull; Aadhaar e-Sign Integration under IT Act, 2000.
+        </p>
+        <div style="margin-top: 12px; display: flex; align-items: center; gap: 10px;">
+          <img src="assets/emblem.png" alt="State Emblem of India" style="width: 24px; height: 38px; background: white; padding: 2px 4px; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.4); object-fit: contain;">
+          <span class="footer-nic-logo">NIC</span> <span style="font-size: 11px;">National Informatics Centre</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        Website Content Managed by <strong>Department of Military Affairs (DMA), Ministry of Defence, Government of India</strong>.
+      </p>
+      <p>
+        Designed, Developed and Hosted by <strong style="color: #38bdf8;">National Informatics Centre (NIC)</strong>. Last Updated: 05 September 2026.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Application Logic Scripts -->
+  <script type="module" src="js/app.js?v=2.0.51"></script>
+</body>
+</html>

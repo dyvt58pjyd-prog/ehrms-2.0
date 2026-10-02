@@ -1,0 +1,678 @@
+/* ==========================================================================
+   e-HRMS 2.0 - Government of India Design System
+   Department of Personnel & Training (DoPT)
+   ========================================================================== */
+
+:root {
+  /* Government of India Palette */
+  --goi-navy: #002b49;
+  --goi-navy-dark: #001a2c;
+  --goi-navy-light: #0d4269;
+  --goi-blue: #005691;
+  --goi-blue-soft: #e8f1f7;
+  --goi-saffron: #ff9933;
+  --goi-saffron-dark: #e67e00;
+  --goi-saffron-soft: #fff3e6;
+  --goi-green: #138808;
+  --goi-green-dark: #0e6306;
+  --goi-green-soft: #eaf6ea;
+  --goi-gold: #d4af37;
+  --goi-chakra-blue: #000080;
+
+  /* Neutral Surface Colors */
+  --bg-app: #f0f4f8;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-card: #ffffff;
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-dark: #94a3b8;
+
+  /* Typography Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Status Colors */
+  --status-success: #16a34a;
+  --status-success-bg: #dcfce7;
+  --status-warning: #ea580c;
+  --status-warning-bg: #ffedd5;
+  --status-danger: #dc2626;
+  --status-danger-bg: #fee2e2;
+  --status-info: #0284c7;
+  --status-info-bg: #e0f2fe;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+  /* Font Scaling */
+  --base-font-size: 14.5px;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* High Contrast Mode for Gov Accessibility Compliance (GIGW) */
+body.high-contrast {
+  --bg-app: #000000;
+  --bg-surface: #121212;
+  --bg-subtle: #1e1e1e;
+  --bg-card: #181818;
+  --border-light: #333333;
+  --border-medium: #555555;
+  --border-dark: #888888;
+  --text-primary: #ffff00;
+  --text-secondary: #ffffff;
+  --text-muted: #00e5ff;
+  --goi-navy: #0a0a0a;
+  --goi-navy-light: #222222;
+  --goi-blue-soft: #222222;
+  --goi-saffron-soft: #332200;
+  --goi-green-soft: #002200;
+}
+
+body.font-small {
+  --base-font-size: 13px;
+}
+
+body.font-large {
+  --base-font-size: 16.5px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Noto Sans', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--base-font-size);
+  color: var(--text-primary);
+  background-color: var(--bg-app);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tricolor Indian Flag Top Accent Stripe */
+.tricolor-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
+}
+
+/* Top Accessibility Bar (GIGW Compliant) */
+.accessibility-bar {
+  background-color: #f1f5f9;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  padding: 4px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.accessibility-bar a {
+  color: var(--goi-blue);
+  text-decoration: none;
+}
+
+.accessibility-bar a:hover {
+  text-decoration: underline;
+}
+
+.accessibility-left,
+.accessibility-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.font-resizer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.font-btn {
+  background: white;
+  border: 1px solid var(--border-medium);
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.font-btn:hover,
+.font-btn.active {
+  background: var(--goi-navy);
+  color: white;
+  border-color: var(--goi-navy);
+}
+
+.contrast-btn {
+  background: #111;
+  color: #ffff00;
+  border: 1px solid #444;
+  border-radius: 3px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lang-btn {
+  background: white;
+  border: 1px solid var(--border-medium);
+  border-radius: 3px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--goi-navy);
+}
+
+.lang-btn.active {
+  background: var(--goi-saffron);
+  color: white;
+  border-color: var(--goi-saffron-dark);
+}
+
+/* Main Government Header */
+.main-header {
+  background: var(--bg-surface);
+  border-bottom: 2px solid var(--goi-navy);
+  box-shadow: var(--shadow-sm);
+  padding: 12px 24px;
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+}
+
+.national-emblem {
+  width: 44px;
+  height: 70px;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.gov-title-hi {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.gov-title-en {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.ministry-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--goi-navy);
+  margin-top: 2px;
+  line-height: 1.25;
+}
+
+.portal-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.portal-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--goi-navy);
+  letter-spacing: -0.5px;
+}
+
+.portal-name span {
+  color: var(--goi-saffron-dark);
+}
+
+.portal-tag {
+  background: linear-gradient(135deg, var(--goi-navy), var(--goi-navy-light));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Header Right: Badges, Role Switcher & User Profile */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.gov-campaign-badges {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.badge-tag-gov {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--goi-blue-soft);
+  border: 1px solid #c9def0;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--goi-navy);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.badge-tag-gov.karmayogi {
+  background: #fdf2e9;
+  border-color: #f8cfab;
+  color: #9c4221;
+}
+
+.badge-tag-gov.digital-india {
+  background: #eef7ee;
+  border-color: #c0e5c0;
+  color: var(--goi-green-dark);
+}
+
+/* Role Selector Dropdown */
+.role-switcher-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.role-switcher-container label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.role-select {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  background: white;
+  color: var(--goi-navy);
+  cursor: pointer;
+  outline: none;
+}
+
+.role-select:focus {
+  border-color: var(--goi-blue);
+  box-shadow: 0 0 0 2px rgba(0, 86, 145, 0.2);
+}
+
+/* User Card in Header */
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-light);
+  cursor: pointer;
+}
+
+.user-avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--goi-gold);
+  background: white;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--goi-navy);
+  line-height: 1.2;
+}
+
+.user-role-text {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Main Navigation Bar */
+.portal-nav {
+  background: var(--goi-navy);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: var(--goi-navy-light);
+  color: #ffffff;
+}
+
+.nav-item.active {
+  color: #ffffff;
+  background-color: var(--goi-navy-light);
+  border-bottom-color: var(--goi-saffron);
+}
+
+.nav-badge {
+  background: var(--goi-saffron);
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+}
+
+/* App Body Layout */
+.app-main {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Page Header & Breadcrumbs */
+.page-title-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.breadcrumb a {
+  color: var(--goi-blue);
+  text-decoration: none;
+}
+
+.breadcrumb span.current {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.page-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--goi-navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-heading-hi {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Footer (NIC / MeitY / DoPT Mandated) */
+.gov-footer {
+  margin-top: auto;
+  background: #0f172a;
+  color: #cbd5e1;
+  border-top: 4px solid var(--goi-saffron);
+  font-size: 12px;
+}
+
+.footer-top {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 30px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.footer-col h4 {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 6px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-col a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-col a:hover {
+  color: var(--goi-saffron);
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  background: #020617;
+  padding: 16px 24px;
+  text-align: center;
+  border-top: 1px solid #1e293b;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.footer-bottom p {
+  margin: 4px 0;
+}
+
+.footer-nic-logo {
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 1px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .gov-campaign-badges {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .app-main {
+    padding: 16px;
+  }
+}
+
+/* Responsive adjustments for Letterhead Studio */
+@media (max-width: 1024px) {
+  #letterhead-workspace {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Dedicated Print Styles for Official Letterhead (Pixel-Perfect A4 Paper) */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 8mm;
+  }
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .main-header,
+  .portal-nav,
+  .page-title-strip,
+  #letterhead-workspace > .gov-card,
+  .main-footer {
+    display: none !important;
+  }
+  .app-main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #letterhead-workspace {
+    display: block !important;
+  }
+  #letterhead-paper-container {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  #letterhead-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* Adobe Signature Block (UI Rendering) */
+.sig-box {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  border: 1px solid #767676;
+  background-color: #ffffff;
+  padding: 6px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 370px;
+  margin-left: auto;
+}
+.adobe-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ca3922;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  border-right: 1px dotted #ccc;
+  padding-right: 15px;
+  margin-right: 10px;
+}
+.adobe-right {
+  flex: 2;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  color: #333;
+  text-align: left;
+  font-weight: normal;
+  line-height: 1.3;
+}

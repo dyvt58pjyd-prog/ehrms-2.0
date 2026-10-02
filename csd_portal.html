@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSD Billing Portal | Canteen Stores Department</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/csd_portal.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  
+  <!-- Multi-Role Login Screen -->
+  <div id="login-view" class="csd-login-container">
+    <div class="csd-login-box">
+      <img src="assets/csd_logo.png" alt="Canteen Stores Department" class="csd-login-logo">
+      <h2>CSD Unified Portal</h2>
+      <p style="color: var(--csd-gray); font-size: 13px; margin-bottom: 24px;">Centralized access for Management, Cashiers, and Card Holders.</p>
+      
+      <div class="login-tabs">
+        <div class="login-tab active" onclick="switchLoginTab('admin')">Staff Login</div>
+        <div class="login-tab" onclick="switchLoginTab('customer')">Smart Card Holder</div>
+      </div>
+      
+      <form id="csd-login-form">
+        <input type="hidden" id="login-role" value="admin">
+        <div class="form-group" id="group-username">
+          <label for="username" id="label-username">User ID (admin / cashier)</label>
+          <input type="text" id="username" value="admin" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Security PIN</label>
+          <input type="password" id="password" value="1234" required>
+        </div>
+        <button type="submit" class="btn-csd">Access System</button>
+      </form>
+      
+      <div style="margin-top: 16px;">
+        <a href="index.html" style="font-size: 12px; color: #64748b; text-decoration: none;">&larr; Back to e-HRMS 2.0</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Header -->
+  <header class="csd-app-header" id="app-header" style="display: none;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <img src="assets/csd_logo.png" alt="CSD Logo">
+      <div style="font-weight: 700; font-size: 18px; letter-spacing: 0.5px;">CANTEEN STORES DEPARTMENT</div>
+    </div>
+    <div class="csd-user-info">
+      <span id="header-user-badge" class="status-badge success">Role</span>
+      <span id="header-user-name">Name</span>
+      <button id="btn-logout" class="btn-header btn-logout">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="app-wrapper" id="app-wrapper" style="display: none;">
+    <!-- Side Navigation -->
+    <div class="side-nav" id="side-nav">
+      <!-- Dynamic Nav Items via JS -->
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+      
+      <!-- ================= ADMIN VIEWS ================= -->
+      
+      <!-- Admin: Analytics Dashboard -->
+      <div id="view-admin-dashboard" class="view-section">
+        <h2 style="margin-top: 0; color: var(--csd-navy);">Sales Analytics & Z-Reports</h2>
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <h4>Today's Revenue</h4>
+            <div class="stat-value" id="stat-revenue">₹0.00</div>
+          </div>
+          <div class="stat-card">
+            <h4>Transactions</h4>
+            <div class="stat-value" id="stat-txns">0</div>
+          </div>
+          <div class="stat-card">
+            <h4>Active Smart Cards</h4>
+            <div class="stat-value" id="stat-cards">0</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <h3>Revenue by Category</h3>
+          <canvas id="salesChart" height="100"></canvas>
+        </div>
+      </div>
+      
+      <!-- Admin: Inventory -->
+      <div id="view-admin-inventory" class="view-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <h2 style="margin: 0; color: var(--csd-navy);">Inventory Management</h2>
+          <button class="btn-csd btn-primary" style="width: auto;" onclick="toggleAddProduct()">+ Add Product</button>
+        </div>
+        
+        <div class="content-card" id="card-add-product" style="display: none; margin-bottom: 24px; border-left: 4px solid var(--csd-blue);">
+          <h3>Add New Product</h3>
+          <form id="form-add-product">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group"><label>Product Name</label><input type="text" id="prod-name" required></div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="prod-category" required>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Liquor">Liquor</option>
+                  <option value="Toiletries">Toiletries</option>
+                  <option value="Automobiles">Automobiles</option>
+                </select>
+              </div>
+              <div class="form-group"><label>HSN Code</label><input type="text" id="prod-hsn" required></div>
+              <div class="form-group"><label>Stock Level</label><input type="number" id="prod-stock" required min="1"></div>
+              <div class="form-group"><label>CSD Price (₹)</label><input type="number" id="prod-price" required step="0.01"></div>
+              <div class="form-group"><label>Market Price (₹)</label><input type="number" id="prod-market" required step="0.01"></div>
+            </div>
+            <button type="submit" class="btn-csd btn-primary" style="width: auto;">Save Product</button>
+            <button type="button" class="btn-csd" style="width: auto; background: transparent; color: var(--csd-gray);" onclick="toggleAddProduct()">Cancel</button>
+          </form>
+        </div>
+        
+        <div class="content-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>BCD</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>CSD Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-inventory"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Admin: Personnel -->
+      <div id="view-admin-personnel" class="view-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <h2 style="margin: 0; color: var(--csd-navy);">Card Holder Database</h2>
+          <button class="btn-csd btn-primary" style="width: auto;" onclick="toggleAddOfficer()">+ Register Smart Card</button>
+        </div>
+        
+        <div class="content-card" id="card-add-officer" style="display: none; margin-bottom: 24px; border-left: 4px solid var(--csd-blue);">
+          <h3>Register Smart Card</h3>
+          <form id="form-add-officer">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group"><label>Smart Card No</label><input type="text" id="off-card" required></div>
+              <div class="form-group"><label>PAN</label><input type="text" id="off-pan" required></div>
+              <div class="form-group"><label>Rank</label><input type="text" id="off-rank" required></div>
+              <div class="form-group"><label>Name</label><input type="text" id="off-name" required></div>
+              <div class="form-group"><label>Dependent Canteen</label><input type="text" id="off-urc" value="URC HQ DELHI AREA" required></div>
+            </div>
+            <button type="submit" class="btn-csd btn-primary" style="width: auto;">Register Card</button>
+            <button type="button" class="btn-csd" style="width: auto; background: transparent; color: var(--csd-gray);" onclick="toggleAddOfficer()">Cancel</button>
+          </form>
+        </div>
+        
+        <div class="content-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Card No</th>
+                <th>Rank & Name</th>
+                <th>Canteen</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="table-personnel"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admin: Blockchain Audit Log -->
+      <div id="view-admin-audit" class="view-section">
+        <h2 style="margin-bottom: 20px; color: var(--goi-navy);">🔗 Cryptographic Blockchain Audit Log</h2>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">
+          All CSD transactions are cryptographically hashed (SHA-256 equivalent) and chained to prevent tampering.
+        </p>
+        <div class="content-card" style="background: #020617; border: 1px solid #1e293b; color: #38bdf8;">
+          <div id="blockchain-ledger" style="font-family: monospace; font-size: 11.5px; line-height: 1.5; padding: 10px; height: 500px; overflow-y: auto;"></div>
+        </div>
+      </div>
+
+      <!-- ================= CASHIER VIEWS ================= -->
+      
+      <div id="view-cashier-pos" class="view-section" style="height: 100%; margin: -24px;">
+        <div class="pos-container">
+          <div class="pos-catalog">
+            <div class="category-filters" id="category-filters"></div>
+            <div class="catalog-scroll"><div class="catalog-grid" id="catalog-grid"></div></div>
+          </div>
+          <div class="pos-cart">
+            <div class="cart-header">🛒 CSD Sales Terminal</div>
+            <div class="customer-selector">
+              <label>Select Customer (Smart Card Holder)</label>
+              <select id="cart-customer-select" onchange="validateCartQuotas()"></select>
+              <div id="cart-quota-warning" style="color: var(--csd-red); font-size: 11px; font-weight: bold; margin-top: 8px; display: none;"></div>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-summary">
+              <div class="summary-row"><span>Taxable Value:</span><span id="cart-subtotal">₹ 0.00</span></div>
+              <div class="summary-row total"><span>NET PAYABLE:</span><span id="cart-total">₹ 0.00</span></div>
+              <button id="btn-print" class="btn-print" disabled>🖨️ Generate Bill</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= CUSTOMER VIEWS ================= -->
+      
+      <div id="view-customer-dashboard" class="view-section">
+        <h2 style="margin-top: 0; color: var(--csd-navy);">My Dashboard</h2>
+        
+        <div class="dashboard-grid">
+          <div class="stat-card" style="border-top-color: var(--csd-blue);">
+            <h4>Groceries Quota Remaining</h4>
+            <div class="stat-value" id="cust-groc-bal">₹0.00</div>
+          </div>
+          <div class="stat-card" style="border-top-color: #8b5cf6;">
+            <h4>Liquor Quota Remaining</h4>
+            <div class="stat-value" id="cust-liq-bal">0 Units</div>
+          </div>
+        </div>
+        
+        <div class="content-card">
+          <h3>Recent Transactions</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Bill No</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-cust-history"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div id="view-customer-afd" class="view-section">
+        <h2 style="margin-top: 0; color: var(--csd-navy);">AFD (Against Firm Demand) Desk</h2>
+        <p style="color: var(--csd-gray);">Apply for Cars, Two-Wheelers, and White Goods.</p>
+        
+        <div class="content-card" style="margin-bottom: 24px;">
+          <h3>Place AFD Request</h3>
+          <form id="form-afd-request">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label>Item Type</label>
+                <select id="afd-type" required>
+                  <option value="Four Wheeler (Car)">Four Wheeler (Car)</option>
+                  <option value="Two Wheeler (Bike)">Two Wheeler (Bike)</option>
+                  <option value="White Goods (Fridge/TV)">White Goods (Fridge/TV)</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Specific Model / Brand</label><input type="text" id="afd-model" required placeholder="e.g. Maruti Swift ZXI"></div>
+              <div class="form-group"><label>Dealer Name</label><input type="text" id="afd-dealer" required></div>
+              <div class="form-group"><label>Quoted Price (₹)</label><input type="number" id="afd-price" required></div>
+            </div>
+            <button type="submit" class="btn-csd btn-primary" style="width: auto;">Submit AFD Indent</button>
+          </form>
+        </div>
+        
+        <div class="content-card">
+          <h3>My AFD Indents</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Item</th>
+                <th>Dealer</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="table-afd-history"></tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Hidden Print Template (A4 Detailed Invoice) -->
+  <div id="receipt-container">
+    <div class="invoice-header">
+      <img src="assets/csd_logo.png" alt="CSD Logo" class="invoice-logo">
+      <div class="invoice-title">
+        <h1>CANTEEN STORES DEPARTMENT</h1>
+        <h2>TAX INVOICE / RETAIL INVOICE</h2>
+        <p>Issued Under Authority of Ministry of Defence, Govt. of India</p>
+      </div>
+      <div class="invoice-qr" id="receipt-qr">Auth QR</div>
+    </div>
+    
+    <div class="invoice-meta-grid" style="grid-template-columns: 1fr 1fr 1fr; font-size: 8px; margin-bottom: 10px;">
+      <div class="meta-col">
+        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">URC & Terminal Details</h4>
+        <div><span>URC Name:</span> <span id="receipt-canteen-name"></span></div>
+        <div><span>CSD Index No:</span> <span id="receipt-csd-index"></span></div>
+        <div><span>Station HQ:</span> <span id="receipt-station-hq"></span></div>
+        <div><span>Supply Depot:</span> <span id="receipt-supply-depot"></span></div>
+        <div><span>GSTIN / TIN:</span> <span>07AAAGC0123D1Z5 / <span id="receipt-state-tin"></span></span></div>
+        <div><span>Tax Exempt No:</span> <span id="receipt-tax-exemption-no"></span></div>
+        <div><span>FMS ID / Fiscal:</span> <span id="receipt-fms-id"></span> / <span id="receipt-fiscal-year"></span></div>
+        <div><span>Terminal IP:</span> <span id="receipt-pos-terminal-ip"></span></div>
+        <div><span>Terminal MAC:</span> <span id="receipt-pos-mac"></span></div>
+      </div>
+      <div class="meta-col">
+        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">Transaction Details</h4>
+        <div><span>Bill / Indent No:</span> <span id="receipt-bill-no"></span> / <span id="receipt-indent-no"></span></div>
+        <div><span>Date & Time:</span> <span id="receipt-date"></span></div>
+        <div><span>Session ID:</span> <span id="receipt-session-id"></span></div>
+        <div><span>Software Ver:</span> <span id="receipt-software-version"></span></div>
+        <div><span>Audit Hash:</span> <span id="receipt-audit-hash"></span></div>
+        <div><span>Cashier ID:</span> <span id="receipt-cashier-name"></span></div>
+        <div><span>Manager Name:</span> <span id="receipt-manager-name"></span></div>
+        <div><span>Central TIN:</span> <span id="receipt-central-tin"></span></div>
+        <div><span>Barcode Data:</span> <span id="receipt-barcode-data"></span></div>
+      </div>
+      <div class="meta-col">
+        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">Smart Card Holder Profile</h4>
+        <div><span>Smart Card No:</span> <span id="receipt-cust-card"></span></div>
+        <div><span>Card Status/Exp:</span> <span id="receipt-card-status"></span> / <span id="receipt-card-expiry"></span></div>
+        <div><span>Rank & Name:</span> <span id="receipt-cust-name"></span></div>
+        <div><span>PAN / Blood:</span> <span id="receipt-cust-pan"></span> / <span id="receipt-cust-blood-group"></span></div>
+        <div><span>DOB / DDO:</span> <span id="receipt-cust-dob"></span> / <span>10501 (HQ)</span></div>
+        <div><span>Serving Status:</span> <span>SERVING ACTIVE</span></div>
+        <div><span>Dependents:</span> <span id="receipt-cust-dependents"></span></div>
+        <div><span>AFD Eligibility:</span> <span id="receipt-afd-status"></span></div>
+        <div><span>Last Purchase:</span> <span id="receipt-last-purchase"></span></div>
+      </div>
+    </div>
+    
+    <div class="info-box" style="padding: 5px;">
+      <h4 style="margin-bottom: 3px;">Monthly Entitlement / Quota Limits</h4>
+      <div class="info-grid">
+        <div><strong>Groceries Limit:</strong> <span id="receipt-quota-groc-limit"></span></div>
+        <div><strong>Groceries Drawn:</strong> <span id="receipt-quota-groc-drawn"></span></div>
+        <div><strong>Groceries Balance:</strong> <span id="receipt-quota-groc-bal"></span></div>
+        <div><strong>Liquor Limit:</strong> <span id="receipt-quota-liq-limit"></span></div>
+        <div><strong>Liquor Drawn:</strong> <span id="receipt-quota-liq-drawn"></span></div>
+        <div><strong>Liquor Balance:</strong> <span id="receipt-quota-liq-bal"></span></div>
+      </div>
+    </div>
+    
+    <table class="invoice-table">
+      <thead>
+        <tr>
+          <th style="width: 5%;">SNo</th>
+          <th style="width: 10%;">BCD/HSN</th>
+          <th class="text-left" style="width: 35%;">Item Nomenclature</th>
+          <th style="width: 8%;">Qty</th>
+          <th style="width: 10%;">Rate(₹)</th>
+          <th style="width: 12%;">Taxable Amt</th>
+          <th style="width: 10%;">CGST(%)</th>
+          <th style="width: 10%;">SGST(%)</th>
+        </tr>
+      </thead>
+      <tbody id="receipt-items-body"></tbody>
+    </table>
+    
+    <div style="overflow: hidden;">
+      <div class="tax-summary-box">
+        <h4 style="margin: 0 0 5px 0;">Tax Summary</h4>
+        <table class="invoice-table" style="margin-bottom: 10px;">
+          <tr><th>Tax %</th><th>Taxable</th><th>CGST</th><th>SGST</th></tr>
+          <tbody id="receipt-tax-summary-body"></tbody>
+        </table>
+        
+        <h4 style="margin: 0 0 5px 0;">Payment Details</h4>
+        <div style="font-size: 10px;">
+          <div><strong>Mode:</strong> <span id="receipt-pay-mode"></span></div>
+          <div><strong>Ref / Txn ID:</strong> <span id="receipt-pay-ref"></span></div>
+          <div><strong>Auth Code:</strong> <span id="receipt-pay-auth"></span></div>
+        </div>
+        
+        <h4 style="margin: 10px 0 5px 0;">Category Summary</h4>
+        <div style="font-size: 10px;" id="receipt-category-summary"></div>
+      </div>
+      
+      <div class="totals-box">
+        <div><span>Total Taxable Amount:</span> <span id="receipt-total-gross"></span></div>
+        <div><span>Total CGST:</span> <span id="receipt-total-cgst"></span></div>
+        <div><span>Total SGST:</span> <span id="receipt-total-sgst"></span></div>
+        <div class="grand-total"><span>NET PAYABLE:</span> <span id="receipt-total-net"></span></div>
+        <div style="font-size: 10px; margin-top: 5px;"><span>Amount in Words:</span> <span id="receipt-amount-words"></span></div>
+      </div>
+    </div>
+
+    <div class="savings-banner">
+      🔥 YOU SAVED <span id="receipt-savings"></span> vs MARKET PRICE! 🔥
+    </div>
+    
+    <div class="signatures">
+      <div class="sig-line">Signature of Smart Card Holder</div>
+      <div class="sig-line">Auth Signatory / Cashier</div>
+    </div>
+
+    <div class="invoice-footer">
+      <div style="text-align: center; font-size: 8px; margin-bottom: 5px;">Canteen Timings: <span id="receipt-canteen-timings">0900 hrs to 1700 hrs</span> | CSD Helpline: 1800-273-4357</div>
+      <p><strong>Declaration:</strong> Goods sold under CSD quota are strictly for personal consumption of authorized personnel and their dependents. Resale is a punishable offense under law. Goods once sold will not be exchanged or taken back unless defective (within 7 days of purchase). Warranty on electronics is subject to original manufacturer terms.</p>
+      <p>System Generated Invoice &bull; e-HRMS 2.0 Integration &bull; Security Hash: <span id="receipt-qr-hash"></span> &bull; Thank you for your service to the Nation.</p>
+      <p style="text-align: center; margin-top: 10px;">--- END OF INVOICE ---</p>
+    </div>
+  </div>
+
+  <script src="js/csd_portal.js"></script>
+</body>
+</html>

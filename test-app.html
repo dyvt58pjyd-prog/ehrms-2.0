@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+  window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error("GLOBAL ERROR: " + msg, url, lineNo);
+  };
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
