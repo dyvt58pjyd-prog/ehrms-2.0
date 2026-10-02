@@ -123,16 +123,75 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
   }
 }
 
-export function generateAdobeDigitalSignature(name, designation, reason = 'Official Record Verification', location = 'New Delhi, India', options = {}) {
+export function formatAdobeDate(dateInput) {
+  const pad = (n) => String(n).padStart(2, '0');
+  
+  if (!dateInput) {
+    const d = new Date();
+    return `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} +05'30'`;
+  }
+
+  if (typeof dateInput === 'string') {
+    const trimmed = dateInput.trim();
+    // If it's already in the exact format "YYYY.MM.DD HH:mm:ss +05'30'"
+    if (/^\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}:\d{2} \+05'30'$/.test(trimmed)) {
+      return trimmed;
+    }
+    // If it's "YYYY.MM.DD HH:mm:ss"
+    if (/^\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}:\d{2}$/.test(trimmed)) {
+      return `${trimmed} +05'30'`;
+    }
+    // If it has "YYYY.MM.DD"
+    const dotParts = trimmed.split(' ');
+    if (/^\d{4}\.\d{2}\.\d{2}$/.test(dotParts[0])) {
+      const timePart = dotParts[1] || '11:30:00';
+      return `${dotParts[0]} ${timePart} +05'30'`;
+    }
+    // Check if DD.MM.YYYY or DD-MM-YYYY
+    const ddmmyyyy = trimmed.split(' ');
+    const parts = ddmmyyyy[0].split(/[.\-/]/);
+    if (parts.length === 3) {
+      let y, m, dNum;
+      if (parts[0].length === 4) {
+        y = parts[0];
+        m = pad(parts[1]);
+        dNum = pad(parts[2]);
+      } else {
+        dNum = pad(parts[0]);
+        m = pad(parts[1]);
+        y = parts[2];
+      }
+      const timePart = ddmmyyyy[1] || '11:45:20';
+      return `${y}.${m}.${dNum} ${timePart} +05'30'`;
+    }
+  }
+
+  const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+  if (!isNaN(d.getTime())) {
+    return `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} +05'30'`;
+  }
+
+  const now = new Date();
+  return `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} +05'30'`;
+}
+
+export function generateAdobeDigitalSignature(name, designation, reason = 'Official Record Verification', location = 'New Delhi, India', dateOrOptions = null) {
   const currentPersonnel = (typeof window !== 'undefined' && window.ehrmsState?.currentUser?.name) 
     ? window.ehrmsState.currentUser.name 
     : 'ANURAG ANIL BAWASKAR';
 
   const signerName = (name || currentPersonnel).toUpperCase().replace(/SHRI|SMT\.|DR\./g, '').trim();
   
-  const now = new Date();
-  const pad = (n) => String(n).padStart(2, '0');
-  const dateFormatted = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} +05'30'`;
+  let rawDate = null;
+  if (typeof dateOrOptions === 'string' || dateOrOptions instanceof Date) {
+    rawDate = dateOrOptions;
+  } else if (dateOrOptions && typeof dateOrOptions === 'object') {
+    rawDate = dateOrOptions.date || dateOrOptions.signDate || dateOrOptions.timestamp || null;
+    if (dateOrOptions.reason) reason = dateOrOptions.reason;
+    if (dateOrOptions.location) location = dateOrOptions.location;
+  }
+
+  const dateFormatted = formatAdobeDate(rawDate);
 
   return `
     <div class="adobe-digital-signature" style="
@@ -171,8 +230,8 @@ export function generateSVGStamp(topText, bottomText, color = "#002B49") {
   return "";
 }
 
-export function generateHandSignature(name, color = "#0f172a") {
-  return generateAdobeDigitalSignature(name, null, "Digital Verification & Attestation via e-Sign DSC");
+export function generateHandSignature(name, color = "#0f172a", dateOrOptions = null) {
+  return generateAdobeDigitalSignature(name, null, "Digital Verification & Attestation via e-Sign DSC", "New Delhi, India", dateOrOptions);
 }
 
 /**
@@ -949,12 +1008,29 @@ export function downloadPaySlip(user, payroll, month) {
       </tbody>
     </table>
 
-    <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 15px;">
-      <div style="text-align: right;">
-        <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
-        ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India")}
-      </div>
-    </div>
+    ${(() => {
+      const monthMap = { january: 0, february: 1, march: 2, april: 3, may: 4, june: 5, july: 6, august: 7, september: 8, october: 9, november: 10, december: 11 };
+      let psYear = new Date().getFullYear();
+      let psMonth = 7; // default August
+      if (month) {
+        const parts = month.toLowerCase().split(/\s+/);
+        parts.forEach(p => {
+          if (monthMap[p] !== undefined) psMonth = monthMap[p];
+          else if (/^\d{4}$/.test(p)) psYear = parseInt(p, 10);
+        });
+      }
+      const lastDay = new Date(psYear, psMonth + 1, 0).getDate();
+      const pad = (n) => String(n).padStart(2, '0');
+      const payslipSignDate = `${psYear}.${pad(psMonth + 1)}.${pad(lastDay)} 17:15:22 +05'30'`;
+      return `
+        <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 15px;">
+          <div style="text-align: right;">
+            <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
+            ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India", payslipSignDate)}
+          </div>
+        </div>
+      `;
+    })()}
     <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-top: 6px;">NOTE: Computer generated statement from PCDA (New Delhi) / e-HRMS 2.0 with cryptographic verification.</div>
   `;
 
@@ -1152,11 +1228,11 @@ export function downloadServiceBook(user, sb) {
     <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Personnel Digital Verification (Rule 257 GFR):</div>
-        ${generateAdobeDigitalSignature(user.name, user.designation, "e-Service Book Annual Employee Attestation", "New Delhi, India")}
+        ${generateAdobeDigitalSignature(user.name, user.designation, "e-Service Book Annual Employee Attestation", "New Delhi, India", "2026.04.12 11:15:20 +05'30'")}
       </div>
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Controlling Authority (Cadre / Estt):</div>
-        ${generateAdobeDigitalSignature(user.controllingOfficer.name, user.controllingOfficer.designation, "Annual Service Record Verification & Audit", "New Delhi, India")}
+        ${generateAdobeDigitalSignature(user.controllingOfficer.name, user.controllingOfficer.designation, "Annual Service Record Verification & Audit", "New Delhi, India", "2026.04.18 16:30:45 +05'30'")}
       </div>
     </div>
   `;
@@ -1212,11 +1288,11 @@ export function downloadAparDossier(user, apar) {
     <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Personnel Self-Appraisal e-Attestation:</div>
-        ${generateAdobeDigitalSignature(user.name, user.designation, "SPARROW APAR Electronic Submission & Attestation", "New Delhi, India")}
+        ${generateAdobeDigitalSignature(user.name, user.designation, "SPARROW APAR Electronic Submission & Attestation", "New Delhi, India", "2026.04.10 11:24:35 +05'30'")}
       </div>
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Reviewing Authority:</div>
-        ${generateAdobeDigitalSignature(user.reviewingOfficer.name, 'Reviewing Authority, DMA', "APAR Dossier Final Attestation", "New Delhi, India")}
+        ${generateAdobeDigitalSignature(user.reviewingOfficer.name, 'Reviewing Authority, DMA', "APAR Dossier Final Attestation", "New Delhi, India", "2026.06.12 14:15:48 +05'30'")}
       </div>
     </div>
   `;
@@ -1290,11 +1366,11 @@ export function downloadIprAck(user, ipr) {
     <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Declarant / Personnel Digital Signature:</div>
-        ${generateAdobeDigitalSignature(user.name, user.designation, "Statutory IPR Annual Declaration e-Filing", "New Delhi, India")}
+        ${generateAdobeDigitalSignature(user.name, user.designation, "Statutory IPR Annual Declaration e-Filing", "New Delhi, India", "2026.01.28 12:05:14 +05'30'")}
       </div>
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Central Vigilance Officer:</div>
-        ${generateAdobeDigitalSignature('Central Vigilance Officer (CVO)', 'Department of Military Affairs, MoD', "IPR Annual Compliance Verification", "New Delhi, India")}
+        ${generateAdobeDigitalSignature('Central Vigilance Officer (CVO)', 'Department of Military Affairs, MoD', "IPR Annual Compliance Verification", "New Delhi, India", "2026.02.04 15:20:33 +05'30'")}
       </div>
     </div>
   `;
@@ -1433,7 +1509,16 @@ export function downloadLeaveOrder(user, app) {
       <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 30px;">
         <div style="text-align: right;">
           <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Sanctioning Authority (DMA / MoD):</div>
-          ${generateAdobeDigitalSignature(reportingOfficerName, reportingOfficerDesig, "Leave Sanction Approval Order", "New Delhi, India")}
+          ${(() => {
+            let leaveSignDate = "2026.08.14 11:30:15 +05'30'";
+            if (app.startDate) {
+              const d = new Date(app.startDate);
+              d.setDate(d.getDate() - 2);
+              const pad = (n) => String(n).padStart(2, '0');
+              leaveSignDate = `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} 11:30:15 +05'30'`;
+            }
+            return generateAdobeDigitalSignature(reportingOfficerName, reportingOfficerDesig, "Leave Sanction Approval Order", "New Delhi, India", leaveSignDate);
+          })()}
           <div style="font-size: 9.5px; font-weight: bold; margin-top: 4px;">
             (${reportingOfficerName})<br>
             ${reportingOfficerDesig}<br>
@@ -1508,7 +1593,15 @@ export function downloadClaimOrder(user, claim) {
     <div class="sig-block" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 15px;">
       <div style="text-align: right;">
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
-        ${generateAdobeDigitalSignature(user.disbursingOfficer.name, user.disbursingOfficer.designation, "Claim Admissibility & PFMS Sanction", "New Delhi, India")}
+        ${(() => {
+          let claimSignDate = "2026.08.22 15:45:10 +05'30'";
+          if (claim.date || claim.submissionDate) {
+            const d = new Date(claim.date || claim.submissionDate);
+            const pad = (n) => String(n).padStart(2, '0');
+            claimSignDate = `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} 15:45:10 +05'30'`;
+          }
+          return generateAdobeDigitalSignature(user.disbursingOfficer.name, user.disbursingOfficer.designation, "Claim Admissibility & PFMS Sanction", "New Delhi, India", claimSignDate);
+        })()}
       </div>
     </div>
   `;
@@ -2296,7 +2389,7 @@ export function downloadTransferOrder(user) {
       <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 25px;">
         <div style="text-align: right;">
           <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Cadre Controlling Authority:</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Gazette Transfer & Relieving Order", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Gazette Transfer & Relieving Order", "New Delhi, India", "2026.09.09 15:30:22 +05'30'")}
         </div>
       </div>
     </div>
@@ -2374,7 +2467,7 @@ export function downloadSecurityClearanceCertificate(user) {
       <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 20px;">
         <div style="text-align: right;">
           <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Apex Sanctioning Authority:</div>
-          ${generateAdobeDigitalSignature('General Anil Chauhan', 'Chief of Defence Staff & Secretary DMA', "Level-1 Top Secret Security Vetting Sanction", "New Delhi, India")}
+          ${generateAdobeDigitalSignature('General Anil Chauhan', 'Chief of Defence Staff & Secretary DMA', "Level-1 Top Secret Security Vetting Sanction", "New Delhi, India", "2026.09.08 17:45:10 +05'30'")}
         </div>
       </div>
     </div>
@@ -2429,7 +2522,7 @@ export function downloadCtgSanctionOrder(user) {
     <div class="sig-block">
       <div>Copy to: PAO (DDO 10501), DRDO Accounts Pune, Service Book</div>
       <div style="display: flex; align-items: center; gap: 14px;">
-        ${generateESignature('Shri Pradeep Kumar, SAO', 'Drawing &amp; Disbursing Officer (DDO)')}
+        ${generateESignature('Shri Pradeep Kumar, SAO', 'Drawing &amp; Disbursing Officer (DDO)', "Composite Transfer Grant Sanction & Direct Credit", "New Delhi, India", "2026.09.10 11:45:15 +05'30'")}
       </div>
     </div>
   `;
@@ -2479,7 +2572,7 @@ export function downloadSpecialDutyAllowanceOrder(user) {
     <div class="sig-block">
       <div>Sanction conveyed with concurrence of Integrated Financial Adviser (IFA Defence)</div>
       <div style="display: flex; align-items: center; gap: 14px;">
-        ${generateESignature('Joint Secretary &amp; Financial Adviser (Defence Services)', 'Ministry of Defence, South Block, New Delhi')}
+        ${generateESignature('Joint Secretary &amp; Financial Adviser (Defence Services)', 'Ministry of Defence, South Block, New Delhi', "Special Duty & Cyber Allowance Sanction", "New Delhi, India", "2026.09.11 16:20:45 +05'30'")}
       </div>
     </div>
   `;
@@ -2883,7 +2976,15 @@ export function downloadNocOrder(user, app) {
     <div class="sig-block" style="margin-top: 24px; display: flex; justify-content: flex-end; align-items: flex-end;">
       <div style="text-align: right;">
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Competent Authority (DMA / MoD):</div>
-        ${generateAdobeDigitalSignature(app.authority || "Shri Rajender Singh", 'Deputy Secretary (Estt) & CVO, MoD', "Vigilance Clearance Certification Approval", "New Delhi, India")}
+        ${(() => {
+          let nocSignDate = "2026.07.18 12:10:05 +05'30'";
+          if (app.appliedOn) {
+            const d = new Date(app.appliedOn);
+            const pad = (n) => String(n).padStart(2, '0');
+            nocSignDate = `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} 12:10:05 +05'30'`;
+          }
+          return generateAdobeDigitalSignature(app.authority || "Shri Rajender Singh", 'Deputy Secretary (Estt) & CVO, MoD', "Vigilance Clearance Certification Approval", "New Delhi, India", nocSignDate);
+        })()}
       </div>
     </div>
   `;
@@ -2895,8 +2996,8 @@ export function downloadNocOrder(user, app) {
 /**
  * Generate a genuine Adobe-style e-Signature block
  */
-export function generateESignature(name, desig, reason = 'Official Record Attestation & Digital Verification', location = 'New Delhi, India') {
-  return generateAdobeDigitalSignature(name, desig, reason, location);
+export function generateESignature(name, desig, reason = 'Official Record Attestation & Digital Verification', location = 'New Delhi, India', dateOrOptions = null) {
+  return generateAdobeDigitalSignature(name, desig, reason, location, dateOrOptions);
 }
 
 
@@ -3112,7 +3213,7 @@ export function downloadServiceCertificate(user) {
       <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: flex-end; font-family: Arial, sans-serif;">
         <div style="text-align: right;">
           <div style="font-size: 10px; font-weight: bold; margin-bottom: 4px; color: #334155;">Issuing Authority (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Service Record Certification", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Service Record Certification", "New Delhi, India", "2026.09.10 14:20:18 +05'30'")}
         </div>
       </div>
     </div>
@@ -3255,7 +3356,7 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh")}\n<strong>Signature of person responsible for deduction of tax</strong><br>
+            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
             Full Name: Shri Rajender Singh<br>
             Designation: DS (Estt) & DDO
           </div>
@@ -3437,7 +3538,7 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh")}\n<strong>Signature of DDO</strong>
+            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh", "#0f172a", `${currentYear}.05.15 11:45:35 +05'30'`)}\n<strong>Signature of DDO</strong>
           </div>
         </div>
       </div>
@@ -3487,7 +3588,7 @@ export function downloadCGHSCertificate(user) {
       <div style="margin-top: 45px; text-align: right;">
         <div style="display: inline-block; text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Signature of Issuing Authority (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", user.controllingOfficer?.designation || "Deputy Secretary (Estt), MoD", "CGHS Dependency Certification Approval", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", user.controllingOfficer?.designation || "Deputy Secretary (Estt), MoD", "CGHS Dependency Certification Approval", "New Delhi, India", "2026.08.18 14:15:30 +05'30'")}
           <div style="font-size: 12px; font-weight: bold; margin-top: 6px; text-align: right; color: #111; line-height: 1.4;">
             (${user.controllingOfficer?.name || "Shri Rajender Singh"})<br>
             ${user.controllingOfficer?.designation || "Deputy Secretary to the Government of India"}<br>
@@ -3579,7 +3680,7 @@ export function downloadLTCCertificate(user) {
       <div style="margin-top: 45px; text-align: right;">
         <div style="display: inline-block; text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Accounts Officer (PAO) / DDO (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), DMA", "LTC Claim Financial Sanction Approval", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), DMA", "LTC Claim Financial Sanction Approval", "New Delhi, India", "2026.07.24 16:40:15 +05'30'")}
           <div style="font-size: 12px; font-weight: bold; margin-top: 6px; text-align: right; color: #111; line-height: 1.4;">
             (${user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO"})<br>
             Accounts Officer (PAO) &amp; DDO<br>
@@ -3758,7 +3859,7 @@ export function downloadAPAR(user) {
         <div>Date: <strong>10.04.${currentYear}</strong></div>
         <div style="text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Officer Reported Upon (Self-Appraisal Submission):</div>
-          ${generateAdobeDigitalSignature(user.name, user.designation, "SPARROW APAR Self-Appraisal Electronic Submission", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.name, user.designation, "SPARROW APAR Self-Appraisal Electronic Submission", "New Delhi, India", `${currentYear}.04.10 14:15:22 +05'30'`)}
         </div>
       </div>
     </div>
@@ -3804,7 +3905,7 @@ export function downloadAPAR(user) {
         <div>Date: <strong>05.05.${currentYear}</strong></div>
         <div style="text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Reporting Officer:</div>
-          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", user.reportingOfficer?.designation || "Joint Secretary (DMA)", "APAR Performance Assessment & Competency Grading", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", user.reportingOfficer?.designation || "Joint Secretary (DMA)", "APAR Performance Assessment & Competency Grading", "New Delhi, India", `${currentYear}.05.05 16:30:45 +05'30'`)}
         </div>
       </div>
 
@@ -3812,10 +3913,11 @@ export function downloadAPAR(user) {
       <p><strong>1. Do you agree with the assessment made by the reporting officer?</strong> Yes, completely agree.</p>
       <p><strong>2. Overall Grading (1-10):</strong> <span style="font-size: 18px; font-weight: bold; border: 1px solid #000; padding: 2px 10px;">9.22 (Outstanding)</span></p>
       
-      <div class="signature-block" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 20px;">
+      <div class="signature-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; flex-wrap: wrap; gap: 15px;">
+        <div>Date: <strong>20.05.${currentYear}</strong></div>
         <div style="text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Reviewing Officer:</div>
-          ${generateAdobeDigitalSignature(user.reviewingOfficer?.name || "Lieutenant General N.S. Raja Subramani", user.reviewingOfficer?.designation || "Chief of Defence Staff & Secretary DMA", "APAR Final Appraisal & Review Approval", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.reviewingOfficer?.name || "Lieutenant General N.S. Raja Subramani", user.reviewingOfficer?.designation || "Chief of Defence Staff & Secretary DMA", "APAR Final Appraisal & Review Approval", "New Delhi, India", `${currentYear}.05.20 17:15:10 +05'30'`)}
         </div>
       </div>
     </div>
@@ -3895,7 +3997,7 @@ export function downloadMACPOrder(user) {
       <div style="margin-top: 40px; display: flex; justify-content: flex-end; align-items: flex-end;">
         <div style="text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Sanctioning Authority (Under Secretary to GoI):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt) & Under Secretary, MoD", "MACP Office Order Sanction & Publication", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt) & Under Secretary, MoD", "MACP Office Order Sanction & Publication", "New Delhi, India", `${currentYear}.08.12 11:25:40 +05'30'`)}
         </div>
       </div>
       
@@ -4100,7 +4202,7 @@ export function downloadPostingOrder(user) {
       <div style="margin-top: 40px; display: flex; justify-content: flex-end; align-items: flex-end;">
         <div style="text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Competent Authority (Director / Joint Secretary):</div>
-          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", "Joint Secretary / Director (Estt), MoD", "Presidential Transfer & Posting Notification", "New Delhi, India")}
+          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", "Joint Secretary / Director (Estt), MoD", "Presidential Transfer & Posting Notification", "New Delhi, India", `${currentYear}.09.05 16:20:15 +05'30'`)}
         </div>
       </div>
       
