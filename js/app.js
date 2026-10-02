@@ -49,6 +49,7 @@ class EhrmsApp {
     this.initNavigation();
     this.initBilingual();
     this.initCacheReset();
+    this.initGlobalSearch();
 
     // Subscribe to central store updates
     store.subscribe((state) => {
@@ -312,6 +313,8 @@ class EhrmsApp {
           renderOrgChart(this.appContainer);
           break;
         case 'vault':
+        case 'documents':
+        case 'document-vault':
           renderDocumentVault(this.appContainer);
           break;
         case 'grievances':
@@ -365,6 +368,130 @@ class EhrmsApp {
         }
       }
     }
+  }
+
+  initGlobalSearch() {
+    const input = document.getElementById('global-search-input');
+    const dropdown = document.getElementById('global-search-dropdown');
+    if (!input || !dropdown) return;
+
+    input.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        dropdown.style.display = 'none';
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      const state = store.get();
+      const docs = [
+        { title: 'Digitally Certified e-Service Book (e-SB)', route: 'service-book', icon: '📖', type: 'Official Document' },
+        { title: '7th CPC Monthly Pay Slip & Salary Breakdown', route: 'salary', icon: '💳', type: 'Tax & Finance' },
+        { title: 'Form 16 (TDS Certificate & Detailed Annexure)', route: 'salary', icon: '📄', type: 'Tax & Finance' },
+        { title: 'ITR-V (Income Tax Return Verification)', route: 'salary', icon: '✅', type: 'Tax & Finance' },
+        { title: 'Form 26AS (Tax Credit Statement)', route: 'service-book', icon: '📑', type: 'Tax & Finance' },
+        { title: 'Official Government Service Certificate', route: 'service-book', icon: '📜', type: 'Service Record' },
+        { title: 'Gazette Transfer & Posting Order (DRDO Pune)', route: 'service-book', icon: '📋', type: 'Orders & Directives' },
+        { title: 'Special Operations Directive Order (TOP SECRET)', route: 'dashboard', icon: '🎖️', type: 'Orders & Directives' },
+        { title: 'CGHS Beneficiary Plastic Card & Medical Dossier', route: 'cghs', icon: '⚕️', type: 'Medical & Welfare' },
+        { title: 'LTC Claim Sanction & Settlement Warrant', route: 'ltc', icon: '✈️', type: 'Tax & Finance' },
+        { title: 'SPARROW e-APAR Performance Appraisal Dossier', route: 'apar', icon: '📊', type: 'Service Record' },
+        { title: 'MACP Scheme Sanction Order', route: 'service-book', icon: '🎖️', type: 'Service Record' },
+        { title: 'NPS PRAN Statement & Tier-I Wealth Portfolio', route: 'pension', icon: '💰', type: 'Pension & Wealth' },
+        { title: 'Smart Biometric ID Card (Defence Civil Services)', route: 'id-card', icon: '🪪', type: 'Identity Proof' },
+        { title: 'CSD Canteen Smart Cards (Grocery & Liquor Pass)', route: 'canteen', icon: '🛒', type: 'Welfare Cards' },
+        { title: 'Immovable Property Return (IPR) Acknowledgment', route: 'ipr', icon: '🏢', type: 'Compliance & Legal' },
+        { title: 'Vigilance Clearance Certificate (Ordinary Passport NOC)', route: 'vigilance', icon: '🛡️', type: 'Compliance & Legal' },
+        { title: 'Leave Management & Sanction Orders', route: 'leave', icon: '🏖️', type: 'Service Record' },
+        { title: 'Central Document Vault & DigiLocker Repository', route: 'vault', icon: '🔐', type: 'Document Repository' }
+      ];
+
+      const matchedDocs = docs.filter(d => 
+        d.title.toLowerCase().includes(q) || 
+        d.type.toLowerCase().includes(q) || 
+        d.route.toLowerCase().includes(q)
+      );
+
+      const circulars = (state.circulars || []).filter(c => 
+        (c.title && c.title.toLowerCase().includes(q)) || 
+        (c.orderNo && c.orderNo.toLowerCase().includes(q))
+      );
+
+      let html = '';
+      if (matchedDocs.length > 0) {
+        html += `<div style="padding: 8px 12px; background: #f8fafc; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Documents & Records (${matchedDocs.length})</div>`;
+        matchedDocs.slice(0, 6).forEach(d => {
+          html += `
+            <div class="search-result-item" data-route="${d.route}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; cursor: pointer; display: flex; align-items: center; gap: 10px;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='white'">
+              <span style="font-size: 18px;">${d.icon}</span>
+              <div style="flex: 1;">
+                <div style="font-size: 12.5px; font-weight: 700; color: #002B49;">${d.title}</div>
+                <div style="font-size: 10.5px; color: #64748b;">${d.type} &bull; Click to Open</div>
+              </div>
+              <span style="font-size: 11px; color: #0284c7; font-weight: 600;">Open &rarr;</span>
+            </div>
+          `;
+        });
+      }
+
+      if (circulars.length > 0) {
+        html += `<div style="padding: 8px 12px; background: #f8fafc; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Orders & Circulars (${circulars.length})</div>`;
+        circulars.slice(0, 3).forEach(c => {
+          html += `
+            <div class="search-result-item" data-route="orders-circulars" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; cursor: pointer; display: flex; align-items: center; gap: 10px;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='white'">
+              <span style="font-size: 18px;">📜</span>
+              <div style="flex: 1;">
+                <div style="font-size: 12px; font-weight: 700; color: #002B49;">${c.title}</div>
+                <div style="font-size: 10px; color: #64748b;">${c.orderNo || ''} &bull; ${c.date || ''}</div>
+              </div>
+              <span style="font-size: 11px; color: #0284c7; font-weight: 600;">View &rarr;</span>
+            </div>
+          `;
+        });
+      }
+
+      if (!html) {
+        html = `<div style="padding: 20px; text-align: center; color: #64748b; font-size: 12px;">No matching documents or records found for "<strong>${q}</strong>".</div>`;
+      }
+
+      dropdown.innerHTML = html;
+      dropdown.style.display = 'block';
+
+      dropdown.querySelectorAll('.search-result-item').forEach(item => {
+        item.addEventListener('mousedown', (evt) => {
+          evt.preventDefault();
+          const targetRoute = item.dataset.route;
+          if (targetRoute) {
+            window.location.hash = '#' + targetRoute;
+            dropdown.style.display = 'none';
+            input.value = '';
+          }
+        });
+      });
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        dropdown.style.display = 'none';
+      } else if (e.key === 'Enter') {
+        const first = dropdown.querySelector('.search-result-item');
+        if (first) {
+          const targetRoute = first.dataset.route;
+          if (targetRoute) {
+            window.location.hash = '#' + targetRoute;
+            dropdown.style.display = 'none';
+            input.value = '';
+          }
+        }
+      }
+    });
+
+    // Close on blur with small delay
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        dropdown.style.display = 'none';
+      }, 250);
+    });
   }
 }
 
