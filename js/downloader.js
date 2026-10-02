@@ -20,20 +20,109 @@ const FATHER_PHOTO_BASE64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/
 const AVATAR_SVG_BASE64 = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiNlOGYwZmUiIHN0cm9rZT0iIzAwMzM2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPCEtLSBIZWFkIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMzgiIHI9IjE4IiBmaWxsPSIjZDRhMzczIi8+CiAgPCEtLSBIYWlyIC0tPgogIDxwYXRoIGQ9Ik0zMiAzNSBDMzIgMjAsIDY4IDIwLCA2OCAzNSBDNjQgMjYsIDM2IDI2LCAzMiAzNSBaIiBmaWxsPSIjMmMyYzJjIi8+CiAgPCEtLSBHbGFzc2VzIC0tPgogIDxyZWN0IHg9IjM5IiB5PSIzNCIgd2lkdGg9IjkiIGhlaWdodD0iNyIgcng9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFhMmU0MCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cmVjdCB4PSI1MiIgeT0iMzQiIHdpZHRoPSI5IiBoZWlnaHQ9IjciIHJ4PSIyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxYTJlNDAiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjQ4IiB5MT0iMzciIHgyPSI1MiIgeTI9IjM3IiBzdHJva2U9IiMxYTJlNDAiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPCEtLSBTaG91bGRlcnMgLyBDb2F0IChHb3YgU3VpdCB3aXRoIEJhbmRoZ2FsYSAvIE5laHJ1IGNvbGxhcikgLS0+CiAgPHBhdGggZD0iTTIyIDg0IEMyMiA2MiwgMzggNTgsIDUwIDU4IEM2MiA1OCwgNzggNjIsIDc4IDg0IFoiIGZpbGw9IiMwMDJiNDkiLz4KICA8IS0tIENvbGxhciAmIFNhZmZyb24gTGFwZWwgUGluIC0tPgogIDxwYXRoIGQ9Ik00NiA1OCBMNTAgNjYgTDU0IDU4IFoiIGZpbGw9IiNmZmZmZmYiLz4KICA8Y2lyY2xlIGN4PSI1OCIgY3k9IjY4IiByPSIzIiBmaWxsPSIjZmY5OTMzIiBzdHJva2U9IiMxMzg4MDgiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4K';
 
 
+export function showDownloadToast(filename) {
+  try {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = 'toast success';
+    toast.style.cssText = 'display: flex; align-items: center; gap: 12px; background: #0f172a; color: white; border-left: 4px solid #10b981; padding: 14px 20px; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); margin-top: 10px; z-index: 999999; animation: slideIn 0.3s ease;';
+    toast.innerHTML = `
+      <div style="font-size: 24px;">📥</div>
+      <div>
+        <div style="font-weight: 700; font-size: 14px; color: #10b981;">Document Download Initiated</div>
+        <div style="font-size: 12px; color: #cbd5e1; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${filename}</div>
+      </div>
+    `;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.4s ease';
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 400);
+    }, 4000);
+  } catch (e) {
+    console.log('Download initiated:', filename);
+  }
+}
+
 /**
- * Trigger browser file download via Blob
+ * Trigger browser file download via Blob with delayed revocation & backend fallback
  */
 export function triggerDownload(filename, content, mimeType = 'text/html;charset=utf-8') {
-  const blob = new Blob([content], { type: mimeType });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}/**
+  showDownloadToast(filename);
+
+  try {
+    const blob = new Blob(['\ufeff', content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename;
+    a.setAttribute('download', filename);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+
+    // Mouse click event
+    if (typeof MouseEvent !== 'undefined') {
+      const clickEvt = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      });
+      a.dispatchEvent(clickEvt);
+    } else {
+      a.click();
+    }
+
+    // Delay revocation by 2 minutes so browser download manager has time to complete
+    setTimeout(() => {
+      try {
+        if (a.parentNode) {
+          a.parentNode.removeChild(a);
+        }
+        URL.revokeObjectURL(url);
+      } catch (e) {}
+    }, 120000);
+  } catch (err) {
+    console.warn('Direct Blob download failed, attempting backend download route:', err);
+    // Fallback via server attachment endpoint
+    fetch('/api/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, content, mimeType })
+    })
+    .then(res => res.blob())
+    .then(blob => {
+      const u = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = u;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        if (link.parentNode) link.parentNode.removeChild(link);
+        URL.revokeObjectURL(u);
+      }, 60000);
+    })
+    .catch(() => {
+      // Ultimate fallback: open in new tab
+      const win = window.open('', '_blank');
+      if (win) {
+        win.document.open();
+        win.document.write(content);
+        win.document.close();
+      }
+    });
+  }
+}
+/**
  * Standard Government Document Styling Wrapper
  */
 export function wrapGovDocument(title, bodyContent, isSinglePage = false) {

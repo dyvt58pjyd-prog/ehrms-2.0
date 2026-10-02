@@ -33,6 +33,34 @@ const server = http.createServer((req, res) => {
 
   const pathname = req.url.split('?')[0];
 
+  if (pathname === '/log_error_get') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
+    return;
+  }
+
+  if (req.method === 'POST' && pathname === '/api/download') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body);
+        const filename = (payload.filename || 'document.html').replace(/[^a-zA-Z0-9_.-]/g, '_');
+        const content = payload.content || '';
+        const mimeType = payload.mimeType || 'text/html; charset=utf-8';
+        
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Content-Type', mimeType);
+        res.writeHead(200);
+        res.end(content);
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end('Invalid download payload');
+      }
+    });
+    return;
+  }
+
   if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/state') {
     if (fs.existsSync(STATE_FILE)) {
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

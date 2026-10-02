@@ -42,6 +42,18 @@ export function renderServiceBook(container) {
         <button class="btn btn-outline" id="btn-download-ltc" style="margin-left: 8px; border-color: #8b5cf6; color: #8b5cf6;">
           ✈️ LTC Settlement Order
         </button>
+        <button class="btn btn-outline" id="btn-download-apar" style="margin-left: 8px; border-color: #06b6d4; color: #06b6d4;">
+          📊 APAR Dossier
+        </button>
+        <button class="btn btn-outline" id="btn-download-macp" style="margin-left: 8px; border-color: #ec4899; color: #ec4899;">
+          🎖️ MACP Order
+        </button>
+        <button class="btn btn-outline" id="btn-download-nps" style="margin-left: 8px; border-color: #6366f1; color: #6366f1;">
+          💰 NPS Statement
+        </button>
+        <button class="btn btn-outline" id="btn-download-transfer" style="margin-left: 8px; border-color: #14b8a6; color: #14b8a6;">
+          📋 Posting Order
+        </button>
       </div>
     </div>
 
