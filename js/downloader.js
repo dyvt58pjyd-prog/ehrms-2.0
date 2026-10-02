@@ -61,7 +61,7 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
     const blob = new Blob(['\ufeff', content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.style.display = 'none';
+    if (a.style) a.style.display = 'none';
     a.href = url;
     a.download = filename;
     a.setAttribute('download', filename);
@@ -122,6 +122,26 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
     });
   }
 }
+
+export function generateSVGStamp(topText, bottomText, color = "#002B49") {
+  return `
+    <div style="display: inline-block; border: 1.5px solid ${color}; border-radius: 4px; padding: 4px 10px; margin: 6px 0; font-family: Arial, sans-serif; font-size: 10px; color: ${color}; text-align: center; background: rgba(0, 43, 73, 0.04);">
+      <div style="font-weight: 800; letter-spacing: 0.5px;">★ ${topText} ★</div>
+      <div style="font-size: 8px; text-transform: uppercase; color: #475569;">DIGITALLY VERIFIED RECORD &bull; e-HRMS 2.0</div>
+      <div style="font-size: 9px; font-weight: 700;">${bottomText}</div>
+    </div>
+  `;
+}
+
+export function generateHandSignature(name, color = "#0f172a") {
+  return `
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; color: ${color}; margin: 4px 0 2px 0;">
+      <span style="display: inline-block; border-bottom: 1px solid ${color}; font-weight: bold; letter-spacing: 0.5px;">${name}</span>
+      <div style="font-size: 9px; color: #16a34a; font-weight: 600;">[Digitally Verified via e-Sign DSC]</div>
+    </div>
+  `;
+}
+
 /**
  * Standard Government Document Styling Wrapper
  */
