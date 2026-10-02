@@ -3,11 +3,11 @@
  * Government of India - Ministry of Defence / Department of Military Affairs
  */
 
-const STORAGE_KEY = 'ehrms_2_0_portal_state_v21';
+const STORAGE_KEY = 'ehrms_2_0_portal_state_v22';
 
 const INITIAL_DATA = {
   currentUser: {
-    empId: 'MOD-DMA-2024-8104',
+    empId: '41028104',
     pran: '110194810244',
     gpfNpsNo: 'NPS/DMA/DEL/2024/0810',
     name: 'ANURAG ANIL BAWASKAR',
@@ -1148,7 +1148,7 @@ notifications: [
         cadreLevel: "Group 'A' Gazetted Officer (Class-I / Defence Civil Services)",
         roleInOperation: 'Lead Technical Operations, Cyber Infrastructure Protection & Secure Communications Grid Controller',
         department: 'Ministry of Defence / DRDO',
-        empId: 'MOD-DMA-2024-8104',
+        empId: '41028104',
         station: 'DRDO, Dighi, Pune (Attached to Special Task Force, MoD New Delhi)',
         contact: 'anurag.bawaskar@gov.in'
       },
@@ -1459,7 +1459,7 @@ export const OFFICIAL_PERSONAS = {
     mobile: '8459962390',
     pan: 'EYUPB3666M',
     ddoCode: '10501',
-    empId: 'MOD-DMA-2024-8104',
+    empId: '41028104',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'dashboard',
     badgeClass: 'badge-sanctioned'

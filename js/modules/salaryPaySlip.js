@@ -5,7 +5,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadPaySlip } from '../downloader.js';
+import { downloadPaySlip, downloadForm16, downloadITRV } from '../downloader.js';
 
 function numberToWordsINR(num) {
   const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
@@ -70,6 +70,12 @@ export function renderSalaryPaySlip(container) {
         </button>
         <button class="btn btn-primary" id="btn-download-payslip">
           📥 Download PDF
+        </button>
+        <button class="btn btn-outline" id="btn-download-form16" style="margin-left: 8px; border-color: #0284c7; color: #0284c7; font-weight: bold;">
+          📄 Download Form 16 (TDS Cert & Annexure)
+        </button>
+        <button class="btn btn-outline" id="btn-download-itrv" style="margin-left: 8px; border-color: #ea580c; color: #ea580c; font-weight: bold;">
+          ✅ ITR-V Acknowledgment
         </button>
       </div>
     </div>
@@ -316,6 +322,12 @@ export function renderSalaryPaySlip(container) {
   });
 
   container.querySelector('#btn-print-payslip').addEventListener('click', () => window.print());
+  container.querySelector('#btn-download-itrv')?.addEventListener('click', () => downloadITRV(user));
+  
+  container.querySelector('#btn-download-form16')?.addEventListener('click', () => {
+    downloadForm16(user);
+  });
+
   container.querySelector('#btn-download-payslip').addEventListener('click', () => {
     downloadPaySlip(user, payroll, monthSelect.value);
   });

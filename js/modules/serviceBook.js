@@ -4,7 +4,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadServiceBook } from '../downloader.js';
+import { downloadServiceBook, downloadServiceCertificate, downloadCGHSCertificate, downloadForm26AS, downloadLTCCertificate, downloadAPAR, downloadMACPOrder, downloadNPSStatement, downloadPostingOrder } from '../downloader.js';
 
 export function renderServiceBook(container) {
   const state = store.get();
@@ -29,6 +29,18 @@ export function renderServiceBook(container) {
         </button>
         <button class="btn btn-primary" id="btn-download-esb">
           📥 Download Digitally Certified e-SB (PDF)
+        </button>
+        <button class="btn btn-primary" id="btn-download-service-cert" style="background-color: #1e40af; border-color: #1e3a8a;">
+          📄 Download Service Certificate
+        </button>
+        <button class="btn btn-outline" id="btn-download-cghs" style="margin-left: 8px; border-color: #10b981; color: #10b981;">
+          🏥 CGHS Certificate
+        </button>
+        <button class="btn btn-outline" id="btn-download-f26" style="margin-left: 8px; border-color: #f59e0b; color: #f59e0b;">
+          📑 Form 26AS (Tax Credit)
+        </button>
+        <button class="btn btn-outline" id="btn-download-ltc" style="margin-left: 8px; border-color: #8b5cf6; color: #8b5cf6;">
+          ✈️ LTC Settlement Order
         </button>
       </div>
     </div>
@@ -524,6 +536,19 @@ export function renderServiceBook(container) {
 
   container.querySelector('#btn-download-esb')?.addEventListener('click', () => {
     downloadServiceBook(user, sb);
+  });
+
+  container.querySelector('#btn-download-cghs')?.addEventListener('click', () => downloadCGHSCertificate(user));
+  container.querySelector('#btn-download-f26')?.addEventListener('click', () => downloadForm26AS(user));
+  container.querySelector('#btn-download-ltc')?.addEventListener('click', () => downloadLTCCertificate(user));
+  
+  container.querySelector('#btn-download-apar')?.addEventListener('click', () => downloadAPAR(user));
+  container.querySelector('#btn-download-macp')?.addEventListener('click', () => downloadMACPOrder(user));
+  container.querySelector('#btn-download-nps')?.addEventListener('click', () => downloadNPSStatement(user));
+  container.querySelector('#btn-download-transfer')?.addEventListener('click', () => downloadPostingOrder(user));
+  
+  container.querySelector('#btn-download-service-cert')?.addEventListener('click', () => {
+    downloadServiceCertificate(user);
   });
 
   // Initial render
