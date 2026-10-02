@@ -33,9 +33,10 @@ const server = http.createServer((req, res) => {
 
   const pathname = req.url.split('?')[0];
 
-  if (req.method === 'GET' && pathname === '/api/state') {
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/state') {
     if (fs.existsSync(STATE_FILE)) {
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      if (req.method === 'HEAD') return res.end();
       res.end(fs.readFileSync(STATE_FILE));
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
