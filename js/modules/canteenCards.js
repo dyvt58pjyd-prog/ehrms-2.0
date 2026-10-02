@@ -6,7 +6,8 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, showDownloadToast } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, showDownloadToast } from '../downloader.js';
+import { CSD_LOGO_B64, EMBLEM_B64, MOD_STAMP_B64 } from '../csd_assets.js';
 
 // Module-level interactive state
 let currentTab = 'cards';
@@ -15,6 +16,7 @@ let searchQuery = '';
 let cart = [];
 let selectedCustomerCard = 'LB08260547713500S01';
 let activeModalTxn = null;
+let activeModalView = 'a4';
 
 export function renderCanteenCards(container, initialTab = null) {
   if (initialTab) {
@@ -151,26 +153,56 @@ export function renderCanteenCards(container, initialTab = null) {
     <!-- Tab Content Render Area -->
     <div id="csd-tab-container"></div>
 
-    <!-- Invoice Viewer Modal -->
-    <div id="csd-invoice-modal" class="parichay-modal-overlay" style="display: none; z-index: 10005; background: rgba(15, 23, 42, 0.85); position: fixed; inset: 0; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;">
-      <div style="background: white; border-radius: 8px; width: 100%; max-width: 860px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); position: relative; border: 1px solid #94a3b8;">
-        <div style="background: #002b49; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10;">
-          <div style="font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-            <span>🧾</span> CSD Retail Tax Invoice &bull; Print Preview
+    <!-- Invoice Viewer Modal with Roboto Font, Dual Emblems, Dot Matrix Slip Mode & Custom Date Picker -->
+    <div id="csd-invoice-modal" class="parichay-modal-overlay" style="display: none; z-index: 10005; background: rgba(15, 23, 42, 0.88); position: fixed; inset: 0; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;">
+      <div style="background: #ffffff; border-radius: 8px; width: 100%; max-width: 880px; max-height: 92vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; border: 1.5px solid #002b49;">
+        
+        <!-- Header Toolbar -->
+        <div style="background: #002b49; color: white; padding: 10px 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10; border-bottom: 2.5px solid #ff9933;">
+          
+          <!-- Mode Tabs -->
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px;">
+              <span>🧾</span> CSD Bill
+            </div>
+            <div style="display: flex; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 2px; gap: 2px;">
+              <button id="btn-modal-tab-a4" class="btn btn-xs" style="font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 3px; background: #ffffff; color: #002b49; cursor: pointer; border: none;">
+                📑 Roboto A4 Invoice
+              </button>
+              <button id="btn-modal-tab-slip" class="btn btn-xs" style="font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 3px; background: transparent; color: #ffffff; cursor: pointer; border: none;">
+                📟 Dot Matrix Slip
+              </button>
+            </div>
           </div>
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <button id="btn-modal-print-invoice" class="btn btn-sm btn-primary" style="background: #ff9933; border-color: #e67e00; color: #000; font-weight: 700;">
-              🖨️ Print Invoice
+
+          <!-- Custom Date Picker -->
+          <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.25);">
+            <span style="font-size: 11px; font-weight: 800; color: #fde047;">📅 Bill Date:</span>
+            <input type="datetime-local" id="csd-modal-custom-date" style="font-size: 11.5px; padding: 2px 6px; border-radius: 3px; border: 1px solid #cbd5e1; font-family: 'Roboto Mono', monospace; background: #ffffff; color: #0f172a;">
+            <button id="btn-apply-modal-date" class="btn btn-xs btn-success" style="font-weight: 800; font-size: 10.5px; padding: 3px 8px; background: #16a34a; border-color: #15803d; color: white; cursor: pointer;">
+              ✓ Set Date
             </button>
-            <button id="btn-modal-dl-invoice" class="btn btn-sm btn-outline" style="color: white; border-color: rgba(255,255,255,0.4); font-weight: 700;">
-              📥 Download HTML / PDF
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button id="btn-modal-print-invoice" class="btn btn-sm btn-warning" style="background: #f59e0b; border-color: #d97706; color: #000; font-weight: 800; padding: 4px 10px; font-size: 11px;">
+              🖨️ Print
             </button>
-            <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0 4px;">
+            <button id="btn-modal-dl-a4" class="btn btn-sm btn-primary" style="background: #2563eb; border-color: #1d4ed8; color: white; font-weight: 700; padding: 4px 10px; font-size: 11px;">
+              📥 A4 PDF
+            </button>
+            <button id="btn-modal-dl-slip" class="btn btn-sm btn-success" style="background: #16a34a; border-color: #15803d; color: white; font-weight: 700; padding: 4px 10px; font-size: 11px;">
+              📟 Dot Matrix
+            </button>
+            <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
               &times;
             </button>
           </div>
         </div>
-        <div id="csd-modal-invoice-content" style="padding: 24px;"></div>
+
+        <!-- Render Content -->
+        <div id="csd-modal-invoice-content" style="padding: 20px;"></div>
       </div>
     </div>
   `;
@@ -202,10 +234,69 @@ export function renderCanteenCards(container, initialTab = null) {
     window.print();
   });
 
-  container.querySelector('#btn-modal-dl-invoice')?.addEventListener('click', () => {
+  container.querySelector('#btn-modal-dl-a4')?.addEventListener('click', () => {
     if (activeModalTxn) {
       downloadCsdInvoice(user, activeModalTxn);
+      showDownloadToast('CSD Retail Tax Invoice Downloaded!');
     }
+  });
+
+  container.querySelector('#btn-modal-dl-slip')?.addEventListener('click', () => {
+    if (activeModalTxn) {
+      downloadCsdDotMatrixSlip(user, activeModalTxn);
+      showDownloadToast('CSD Dot Matrix Cash Memo Slip Downloaded!');
+    }
+  });
+
+  // Mode Toggle Buttons
+  container.querySelector('#btn-modal-tab-a4')?.addEventListener('click', () => {
+    activeModalView = 'a4';
+    updateModalTabStyles();
+    renderCurrentModalContent();
+  });
+
+  container.querySelector('#btn-modal-tab-slip')?.addEventListener('click', () => {
+    activeModalView = 'slip';
+    updateModalTabStyles();
+    renderCurrentModalContent();
+  });
+
+  function updateModalTabStyles() {
+    const btnA4 = container.querySelector('#btn-modal-tab-a4');
+    const btnSlip = container.querySelector('#btn-modal-tab-slip');
+    if (!btnA4 || !btnSlip) return;
+    if (activeModalView === 'a4') {
+      btnA4.style.background = '#ffffff';
+      btnA4.style.color = '#002b49';
+      btnSlip.style.background = 'transparent';
+      btnSlip.style.color = '#ffffff';
+    } else {
+      btnSlip.style.background = '#ffffff';
+      btnSlip.style.color = '#002b49';
+      btnA4.style.background = 'transparent';
+      btnA4.style.color = '#ffffff';
+    }
+  }
+
+  // Custom Date Picker Apply
+  container.querySelector('#btn-apply-modal-date')?.addEventListener('click', () => {
+    const input = container.querySelector('#csd-modal-custom-date');
+    if (!input || !input.value || !activeModalTxn) return;
+    const newFormattedDate = input.value.replace('T', ' ') + ':00';
+    activeModalTxn.date = newFormattedDate;
+    
+    // Update in state
+    store.set(s => {
+      const txns = (s.csdBilling && s.csdBilling.transactions) || [];
+      const updated = txns.map(t => t.id === activeModalTxn.id ? { ...t, date: newFormattedDate } : t);
+      return {
+        ...s,
+        csdBilling: { ...s.csdBilling, transactions: updated }
+      };
+    });
+
+    renderCurrentModalContent();
+    showDownloadToast('Bill date updated to ' + newFormattedDate);
   });
 
   // Function to switch tabs
@@ -543,14 +634,21 @@ export function renderCanteenCards(container, initialTab = null) {
               </div>
             ` : ''}
 
-            <!-- Payment Mode -->
+            <!-- Payment Mode (Strict Cash Only Enforcement) -->
             <div style="margin-top: 12px;">
-              <label style="font-size: 10.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">PAYMENT METHOD:</label>
-              <select id="pos-payment-mode" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11.5px; outline: none;">
-                <option value="SBI DSP Defence Debit Card (Auth: 891244)">SBI DSP Defence Debit Card (Auth: 891244)</option>
-                <option value="BHIM UPI / BharatPe CSD Merchant (Txn: 429188201)">BHIM UPI / BharatPe CSD Merchant</option>
-                <option value="Cash at URC POS Counter">Cash at URC POS Counter</option>
+              <label style="font-size: 10.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">PAYMENT METHOD (MANDATORY):</label>
+              <select id="pos-payment-mode" style="width: 100%; padding: 6px 8px; border: 1.5px solid #16a34a; border-radius: 4px; font-size: 11.5px; outline: none; background: #f0fdf4; font-weight: 800; color: #166534;">
+                <option value="HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)" selected>💵 HARD CURRENCY CASH ONLY (Counter 01)</option>
               </select>
+              <div style="font-size: 9.5px; color: #15803d; margin-top: 4px; font-weight: 600;">
+                ⚠️ Policy Directive: Concessional defence billing rate strictly payable in physical cash currency at POS Counter 01.
+              </div>
+            </div>
+
+            <!-- Custom Bill Date & Time -->
+            <div style="margin-top: 10px;">
+              <label style="font-size: 10.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">📅 BILL DATE &amp; TIME (CUSTOM PICKER):</label>
+              <input type="datetime-local" id="pos-custom-bill-date" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11.5px; font-family: 'Roboto Mono', monospace; background: white; color: #0f172a;">
             </div>
 
             <!-- Action Button -->
@@ -639,18 +737,21 @@ export function renderCanteenCards(container, initialTab = null) {
       const billSerial = Math.floor(1000 + Math.random() * 9000);
       const billNo = `CSD/URC/DEL/2026/${String(now.getMonth() + 1).padStart(2, '0')}/${billSerial}`;
       const indentNo = `IND-2026/${String(now.getMonth() + 1).padStart(2, '0')}/${billSerial}`;
-      const paymentMode = tabContainer.querySelector('#pos-payment-mode')?.value || 'SBI DSP Defence Debit Card';
+      const customDateInput = tabContainer.querySelector('#pos-custom-bill-date')?.value;
+      const formattedDate = customDateInput ? customDateInput.replace('T', ' ') + ':00' : now.toISOString().replace('T', ' ').slice(0, 19);
+      const paymentMode = 'HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)';
 
       const newTxn = {
         id: `CSD-TXN-${Date.now()}`,
         billNo,
         indentNo,
-        date: now.toISOString().replace('T', ' ').slice(0, 19),
+        date: formattedDate,
         canteen: csd.canteen || 'URC HQ DELHI AREA (Sena Bhawan)',
-        terminal: 'POS-04 / IP: 192.168.1.104',
-        cashier: 'Havildar Rajesh Kumar',
+        terminal: 'POS-01 / IP: 192.168.1.101',
+        cashier: 'Sub Maj R.K. Yadav',
         manager: 'Sub Maj R.K. Yadav',
         paymentMode,
+        paymentType: 'CASH',
         items: JSON.parse(JSON.stringify(cart)),
         totalTaxable: taxableTotal,
         totalCgst: cgstTotal,
@@ -663,7 +764,10 @@ export function renderCanteenCards(container, initialTab = null) {
         grocDrawn: ent.groceriesDrawn + cartGroceryTotal,
         liqLimit: ent.liquorLimit,
         liqDrawn: ent.liquorDrawn + cartLiquorUnits,
-        status: 'COMPLETED'
+        status: 'COMPLETED',
+        cashTendered: netTotal,
+        cashChange: 0.00,
+        cashVoucherNo: `CSD/CASH/DEL/2026/${String(now.getMonth() + 1).padStart(2, '0')}/${billSerial}`
       };
 
       // Update state
@@ -932,8 +1036,11 @@ export function renderCanteenCards(container, initialTab = null) {
                       <button class="btn btn-sm btn-outline btn-view-invoice" data-id="${t.id}" style="font-weight: 700; margin-right: 4px;">
                         📄 View
                       </button>
-                      <button class="btn btn-sm btn-primary btn-dl-invoice" data-id="${t.id}" style="font-weight: 700; background: #002b49;">
-                        📥 Download
+                      <button class="btn btn-sm btn-primary btn-dl-invoice" data-id="${t.id}" style="font-weight: 700; background: #002b49; margin-right: 4px;">
+                        📥 A4 PDF
+                      </button>
+                      <button class="btn btn-sm btn-success btn-dl-slip" data-id="${t.id}" style="font-weight: 700; background: #16a34a; border-color: #15803d; color: white;">
+                        📟 Slip
                       </button>
                     </td>
                   </tr>
@@ -962,6 +1069,16 @@ export function renderCanteenCards(container, initialTab = null) {
         if (txn) {
           downloadCsdInvoice(user, txn);
           showDownloadToast(`CSD Retail Tax Invoice #${txn.billNo} Downloaded!`);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-slip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        if (txn) {
+          downloadCsdDotMatrixSlip(user, txn);
+          showDownloadToast(`CSD Dot Matrix Cash Memo #${txn.billNo} Downloaded!`);
         }
       });
     });
@@ -1188,23 +1305,43 @@ export function renderCanteenCards(container, initialTab = null) {
   }
 
   // -------------------------------------------------------------
-  // INVOICE MODAL VIEWER
+  // INVOICE MODAL VIEWER (ROBOTO A4 + DOT MATRIX SLIP + CUSTOM DATE)
   // -------------------------------------------------------------
   function openInvoiceModal(txn) {
     activeModalTxn = txn;
+    activeModalView = 'a4';
     const modal = container.querySelector('#csd-invoice-modal');
-    const content = container.querySelector('#csd-modal-invoice-content');
-    if (!modal || !content) return;
+    if (!modal) return;
 
+    // Set custom date picker initial value
+    const dateInput = modal.querySelector('#csd-modal-custom-date');
+    if (dateInput && txn.date) {
+      dateInput.value = txn.date.replace(' ', 'T').slice(0, 16);
+    }
+
+    updateModalTabStyles();
+    renderCurrentModalContent();
+    modal.style.display = 'flex';
+  }
+
+  function renderCurrentModalContent() {
+    const content = container.querySelector('#csd-modal-invoice-content');
+    if (!content || !activeModalTxn) return;
+
+    const txn = activeModalTxn;
+    const items = txn.items || [];
+    
     let totalGross = 0;
     let totalCgst = 0;
     let totalSgst = 0;
     let totalNet = 0;
     let totalMarket = 0;
 
-    const items = txn.items || [];
-    const rows = items.map((it, idx) => {
-      const netVal = it.price * it.qty;
+    items.forEach(it => {
+      const qty = it.qty || 1;
+      const price = it.price || 0;
+      const market = it.marketPrice || (price * 1.15);
+      const netVal = price * qty;
       const taxable = netVal / 1.18;
       const cgst = taxable * 0.09;
       const sgst = taxable * 0.09;
@@ -1212,140 +1349,394 @@ export function renderCanteenCards(container, initialTab = null) {
       totalCgst += cgst;
       totalSgst += sgst;
       totalNet += netVal;
-      totalMarket += ((it.marketPrice || it.price * 1.15) * it.qty);
-      return `
-        <tr>
-          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9px;">${idx + 1}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 8.5px; font-family: monospace;">${(it.id || '').slice(-6)}<br><span style="color:#475569; font-size: 7.5px;">HSN: ${it.hsn || '0405'}</span></td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: left; font-size: 9.5px; font-weight: 700;">${it.name}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: center; font-size: 9.5px;">${it.qty}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px;">₹${(taxable / it.qty).toFixed(2)}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9px; font-weight: 600;">₹${taxable.toFixed(2)}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${cgst.toFixed(2)}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 8px;">9%<br>₹${sgst.toFixed(2)}</td>
-          <td style="border: 1px solid #000; padding: 4px; text-align: right; font-size: 9.5px; font-weight: 700;">₹${netVal.toFixed(2)}</td>
-        </tr>
-      `;
-    }).join('');
+      totalMarket += (market * qty);
+    });
 
     const savings = Math.max(0, totalMarket - totalNet);
     const roundedNet = Math.round(totalNet);
 
-    content.innerHTML = `
-      <!-- A4 Detailed Tax Invoice -->
-      <div style="background: white; border: 1px solid #cbd5e1; padding: 24px; font-family: 'Segoe UI', Arial, sans-serif;">
-        
-        <!-- Header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #002b49; padding-bottom: 8px; margin-bottom: 12px;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="assets/csd_logo.png" style="height: 54px;" alt="CSD Logo" onerror="this.style.display='none'">
-            <div>
-              <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
-              <div style="font-size: 17px; font-weight: 900; color: #002b49; letter-spacing: 0.5px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
-              <div style="font-size: 11.5px; font-weight: 700; color: #dc2626;">TAX INVOICE / RETAIL CASH MEMO &bull; UNIT RUN CANTEEN (URC)</div>
-            </div>
+    if (activeModalView === 'a4') {
+      // ---------------------------------------------------------
+      // VIEW MODE 1: OFFICIAL STATUTORY A4 TAX MEMO (ROBOTO)
+      // ---------------------------------------------------------
+      const rows = items.map((it, idx) => {
+        const qty = it.qty || 1;
+        const price = it.price || 0;
+        const netVal = price * qty;
+        const taxable = netVal / 1.18;
+        const cgst = taxable * 0.09;
+        const sgst = taxable * 0.09;
+        const isSamsung = it.id === '233243' || (it.name && it.name.includes('SAMSUNG GALAXY S25'));
+
+        return `
+          <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#fcfcfc'};">
+            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10px; font-weight: 700;">${idx + 1}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">
+              <strong style="color: #002b49;">${it.id || '233243'}</strong><br>
+              <span style="color: #475569; font-size: 8.5px;">HSN: ${it.hsn || '8517'}</span>
+            </td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: left; font-size: 10.5px;">
+              <div style="font-weight: 800; color: #002b49; font-size: 11px;">${it.name}</div>
+              ${isSamsung ? `
+                <div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; font-size: 8.5px;">
+                  <span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color || 'Silver Shadow'}</span>
+                  <span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade || 'Very Good (A)'}</span>
+                  <span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Brand Box &bull; All Accessories</span>
+                  <span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty Exp: ${it.warrantyExpires || '23-05-2027'}</span>
+                </div>
+                <div style="margin-top: 4px; font-size: 8px; color: #334155; line-height: 1.35; font-style: italic;">
+                  ${it.specs || '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 12MP Front | 4000 mAh Li-Ion'}
+                </div>
+                <div style="margin-top: 3px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #475569; background: #f8fafc; padding: 3px 6px; border: 1px dashed #cbd5e1; border-radius: 2px;">
+                  <strong>IMEI-1:</strong> ${it.imei1 || '358941/08/948210/6'} &bull; <strong>IMEI-2:</strong> ${it.imei2 || '358941/08/948211/4'} &bull; <strong>S/N:</strong> ${it.serialNo || 'R58N90X233243S'}
+                </div>
+              ` : (it.specs ? `<div style="font-size: 8px; color: #64748b; margin-top: 2px;">${it.specs}</div>` : '')}
+            </td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10.5px; font-weight: 700;">${qty}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">₹${(taxable / qty).toFixed(2)}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 10px; font-weight: 700; font-family: 'Roboto Mono', monospace;">₹${taxable.toFixed(2)}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9px; font-family: 'Roboto Mono', monospace;">9%<br>₹${cgst.toFixed(2)}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9px; font-family: 'Roboto Mono', monospace;">9%<br>₹${sgst.toFixed(2)}</td>
+            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 10.5px; font-weight: 800; color: #002b49; font-family: 'Roboto Mono', monospace;">₹${netVal.toFixed(2)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      content.innerHTML = `
+        <div style="font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; position: relative; background: #ffffff; color: #0f172a; padding: 10px;">
+          
+          <!-- Faded Background Watermark -->
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.04; pointer-events: none; z-index: 0;">
+            <img src="${EMBLEM_B64}" style="width: 320px; height: auto;" alt="Watermark">
           </div>
-          <div style="text-align: right; font-size: 8.5px; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; background: #f8fafc;">
-            <div style="font-family: monospace; font-size: 12px; font-weight: 800; color: #002b49;">|| ||| |||| | ||||| ||</div>
-            <div><strong>GSTIN:</strong> 07AAAGC0123D1Z5</div>
-            <div><strong>FMS ID:</strong> FMS-889922 (HQ)</div>
+
+          <div style="position: relative; z-index: 1;">
+            
+            <!-- Header with Dual Logos -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px solid #002b49; padding-bottom: 8px; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="${EMBLEM_B64}" style="height: 60px; width: auto; object-fit: contain;" alt="State Emblem">
+                <div>
+                  <div style="font-size: 10px; font-weight: 800; color: #64748b; letter-spacing: 1px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+                  <div style="font-size: 16px; font-weight: 900; color: #002b49; letter-spacing: 0.5px; margin: 2px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+                  <div style="font-size: 11.5px; font-weight: 800; color: #dc2626; letter-spacing: 0.5px;">TAX INVOICE / RETAIL CASH MEMO &bull; UNIT RUN CANTEEN (URC)</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="${CSD_LOGO_B64}" style="height: 50px; width: auto; object-fit: contain;" alt="CSD Crest">
+                <div style="text-align: right; font-size: 8px; line-height: 1.35; color: #334155; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; background: #f8fafc;">
+                  <div style="font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 800; color: #002b49;">|| ||| |||| | ||||| ||</div>
+                  <div><strong>GSTIN:</strong> 07AAAGC1234F1Z5</div>
+                  <div><strong>URC Code:</strong> URC-DEL-0412</div>
+                  <div><strong>Depot:</strong> DEL-01 (HQ Delhi)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Meta Details Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; border: 1.5px solid #002b49; padding: 8px 10px; font-size: 8.5px; margin-bottom: 8px; background: #fafafa;">
+              <div>
+                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">URC &amp; DEPOT PARTICULARS</div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>URC Depot:</span> <strong>${txn.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'}</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Station HQ:</span> <span>HQ Delhi Area (011)</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Terminal / IP:</span> <span>${txn.terminal || 'POS-01 / 192.168.1.101'}</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Tax Exemption No:</span> <span>EX-2026-DEL-099</span></div>
+              </div>
+              <div>
+                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">TRANSACTION &amp; CASH REF</div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Bill Number:</span> <strong style="color:#b91c1c; font-family:'Roboto Mono', monospace;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Indent No:</span> <span style="font-family:'Roboto Mono', monospace;">${txn.indentNo || 'IND-2026/10/9482'}</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Date &amp; Time:</span> <strong style="color:#002b49;">${txn.date}</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Cashier Name:</span> <span>${txn.cashier || 'Sub Maj R.K. Yadav'}</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Cash Voucher:</span> <strong style="color:#166534; font-family:'Roboto Mono', monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></div>
+              </div>
+              <div>
+                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">SMART CARD BENEFICIARY</div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Card Number:</span> <strong style="font-family:'Roboto Mono', monospace; color:#002b49;">${txn.cardNo || 'LB08260547713500S01'}</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Rank &amp; Name:</span> <strong>${user.name}</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Designation:</span> <span>${user.designation} (Group 'A')</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Department:</span> <span>Ministry of Defence / DMA</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>PAN / PRAN:</span> <span style="font-family:'Roboto Mono', monospace;">${user.pan || 'EYUPB3666M'} / ${user.pran || '110194810244'}</span></div>
+              </div>
+            </div>
+
+            <!-- Table of Items -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px; border: 1.5px solid #002b49;">
+              <thead>
+                <tr style="background: #002b49; color: #ffffff; font-size: 9px;">
+                  <th style="border: 1px solid #334155; padding: 5px; width: 4%; text-align: center;">SNo</th>
+                  <th style="border: 1px solid #334155; padding: 5px; width: 14%; text-align: center;">SKU / HSN</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: left; width: 36%;">Product Details &amp; Hardware Specs</th>
+                  <th style="border: 1px solid #334155; padding: 5px; width: 5%; text-align: center;">Qty</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 9%;">Taxable Rate</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 10%;">Taxable Val</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 7.5%;">CGST (9%)</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 7.5%;">SGST (9%)</th>
+                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 9%;">Net Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows}
+              </tbody>
+            </table>
+
+            <!-- Financial Totals -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; font-size: 8.5px;">
+              <div style="border: 1.5px solid #002b49; padding: 8px; background: #fafafa; border-radius: 4px;">
+                <div style="font-weight: 800; border-bottom: 1.5px solid #002b49; padding-bottom: 3px; margin-bottom: 5px; color: #002b49;">
+                  STATUTORY GST BREAKUP (18% COMPOSITE DEFENCE RATE)
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; text-align: right;">
+                  <tr style="border-bottom: 1px solid #cbd5e1; font-weight: 700; background: #f1f5f9;">
+                    <th style="text-align: left; padding: 3px;">Tax Head</th>
+                    <th style="padding: 3px;">Rate</th>
+                    <th style="padding: 3px;">Taxable Base</th>
+                    <th style="padding: 3px;">Tax Collected</th>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding: 3px;">Central GST (CGST)</td>
+                    <td style="padding: 3px;">9.00%</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; font-weight: 700;">₹${totalCgst.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding: 3px;">State GST (SGST - Delhi)</td>
+                    <td style="padding: 3px;">9.00%</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; font-weight: 700;">₹${totalSgst.toFixed(2)}</td>
+                  </tr>
+                  <tr style="border-top: 1.5px solid #002b49; font-weight: 800; background: #f8fafc;">
+                    <td style="text-align: left; padding: 3px;">Composite Tax Total</td>
+                    <td style="padding: 3px;">18.00%</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
+                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; color: #002b49;">₹${(totalCgst + totalSgst).toFixed(2)}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div style="border: 1.5px solid #002b49; padding: 8px; background: #ffffff; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                    <span>Civil Open Market MRP:</span>
+                    <span style="text-decoration: line-through; color: #64748b; font-family:'Roboto Mono', monospace;">₹${totalMarket.toFixed(2)}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                    <span>Assessable Taxable Base:</span>
+                    <span style="font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                    <span>Composite Taxes (18%):</span>
+                    <span style="font-family:'Roboto Mono', monospace;">₹${(totalCgst + totalSgst).toFixed(2)}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 700; color: #166534;">
+                    <span>Officer Defence Subsidy:</span>
+                    <span style="font-family:'Roboto Mono', monospace;">- ₹${savings.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 900; color: #002b49; border-top: 2px solid #002b49; padding-top: 4px;">
+                    <span>NET PAYABLE AMOUNT:</span>
+                    <span style="font-family:'Roboto Mono', monospace;">₹${roundedNet.toFixed(2)}</span>
+                  </div>
+                  <div style="font-size: 8.5px; font-weight: 800; color: #166534; margin-top: 3px;">
+                    Amount in Words: RUPEES FIFTY FOUR THOUSAND FOUR HUNDRED AND THIRTY SIX ONLY
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MANDATORY HARD CURRENCY CASH ONLY SETTLEMENT BOX -->
+            <div style="border: 2px solid #16a34a; background: #f0fdf4; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #16a34a; padding-bottom: 4px; margin-bottom: 6px;">
+                <div style="font-size: 11px; font-weight: 900; color: #166534; display: flex; align-items: center; gap: 6px;">
+                  <span>💵</span> PAYMENT SETTLEMENT: *** HARD CURRENCY CASH ONLY ***
+                </div>
+                <div style="font-size: 9.5px; font-weight: 800; background: #166534; color: #ffffff; padding: 2px 8px; border-radius: 3px;">
+                  ✓ PHYSICAL CASH TENDERED &bull; PAID IN FULL
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; font-size: 9px;">
+                <div>
+                  <div style="margin-bottom: 2px;">Payment Tender Type: <strong>CASH PAYMENT (STRICTLY NO CARD / NO UPI)</strong></div>
+                  <div style="margin-bottom: 2px;">Total Cash Received: <strong style="font-family:'Roboto Mono', monospace; font-size: 10.5px; color: #002b49;">₹${(txn.cashTendered || roundedNet).toFixed(2)}</strong></div>
+                  <div style="margin-bottom: 2px;">Change Due / Returned: <strong style="font-family:'Roboto Mono', monospace; color: #166534;">₹${(txn.cashChange || 0).toFixed(2)}</strong></div>
+                  <div style="margin-bottom: 2px;">Cash Drawer Registry: <strong>POS-01 / CHEST DRAWER 1</strong></div>
+                  <div>Voucher Reference: <strong style="font-family:'Roboto Mono', monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></div>
+                </div>
+
+                <!-- Currency Denomination Breakdown -->
+                <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 3px; padding: 5px 8px;">
+                  <div style="font-weight: 800; color: #166534; font-size: 8.5px; margin-bottom: 3px; border-bottom: 1px solid #dcfce7; padding-bottom: 2px;">
+                    CURRENCY CASH DENOMINATIONS DEPOSITED IN DRAWER:
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 8px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #1e293b;">
+                    <div>₹500 &times; 108 = ₹54,000.00</div>
+                    <div>₹100 &times; 4 = ₹400.00</div>
+                    <div>₹20 &times; 1 = ₹20.00</div>
+                    <div>₹10 &times; 1 = ₹10.00</div>
+                    <div>₹2 &times; 3 = ₹6.00</div>
+                    <div style="font-weight: 700; color: #166534;">SUM = ₹54,436.00</div>
+                  </div>
+                  <div style="font-size: 7.5px; color: #64748b; margin-top: 3px; border-top: 1px dotted #ccc; padding-top: 2px;">
+                    Counted &amp; Certified by Sub Maj R.K. Yadav (Custodian of Regimental Cash, URC HQ Delhi Area)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Savings Banner -->
+            <div style="margin-bottom: 10px; text-align: center; font-size: 10.5px; font-weight: 800; padding: 6px; border: 2px dashed #15803d; background: #f0fdf4; color: #15803d; border-radius: 4px;">
+              🔥 CSD DEFENCE CONCESSION: YOU SAVED ₹${savings.toFixed(2)} (32.8% DISCOUNT) COMPARED TO OPEN MARKET PRICES! 🔥
+            </div>
+
+            <!-- Signatures & Physical Stamp Block -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 6px; border-top: 1.5px solid #002b49; margin-bottom: 8px;">
+              <div style="text-align: center; width: 190px;">
+                <div style="font-family: 'Brush Script MT', cursive; font-size: 20px; color: #0f172a; margin-bottom: 2px;">${user.name.split(' ')[0]}</div>
+                <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 8px; font-weight: 700;">
+                  Signature of Smart Card Holder<br>
+                  <span style="font-weight: normal; color: #64748b;">(Verified by Chip Pin &amp; Biometric)</span>
+                </div>
+              </div>
+
+              <!-- Cashier Physical Stamp -->
+              <div style="display: flex; align-items: center; gap: 8px; border: 1.5px dashed #b91c1c; padding: 4px 8px; border-radius: 4px; background: #fff5f5;">
+                <img src="${MOD_STAMP_B64}" style="height: 48px; width: auto;" alt="Official Cashier Seal">
+                <div style="font-size: 7.5px; color: #991b1b; line-height: 1.25;">
+                  <strong style="font-size: 8.5px;">URC HQ DELHI AREA</strong><br>
+                  CASH RECEIVED &amp; CLEARED<br>
+                  Date: ${txn.date ? txn.date.split(' ')[0] : '02-10-2026'}<br>
+                  <strong>Cashier: Sub Maj R.K. Yadav</strong>
+                </div>
+              </div>
+
+              <div style="text-align: right; border: 1px solid #86efac; background: #f0fdf4; padding: 6px 10px; border-radius: 4px;">
+                <div style="color: #15803d; font-weight: 800; font-size: 9px;">✓ ADOBE DIGITAL SIGNATURE VERIFIED</div>
+                <div style="font-size: 8px; color: #334155;">${txn.manager || 'Sub Maj R.K. Yadav'} &bull; CSD Manager</div>
+                <div style="font-size: 7.5px; color: #64748b;">${txn.date} +05'30' &bull; Location: New Delhi</div>
+              </div>
+            </div>
+
           </div>
         </div>
+      `;
 
-        <!-- Meta Grid -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; border: 1px solid #000; padding: 8px 10px; font-size: 8.5px; margin-bottom: 10px; background: #fafafa;">
-          <div>
-            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">URC DETAILS</div>
-            <div>URC: <strong>${txn.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'}</strong></div>
-            <div>Station HQ: <span>HQ Delhi Area (011)</span></div>
-            <div>Terminal / IP: <span>${txn.terminal || 'POS-04 / 192.168.1.104'}</span></div>
-          </div>
-          <div>
-            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">BILL DETAILS</div>
-            <div>Bill No: <strong style="color: #b91c1c;">${txn.billNo}</strong></div>
-            <div>Date &amp; Time: <strong>${txn.date}</strong></div>
-            <div>Cashier: <span>${txn.cashier || 'Havildar Rajesh Kumar'}</span></div>
-          </div>
-          <div>
-            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">CARD HOLDER</div>
-            <div>Card No: <strong style="font-family: monospace;">${txn.cardNo || csd.cardNo}</strong></div>
-            <div>Name: <strong>${user.name}</strong></div>
-            <div>Designation: <span>${user.designation}</span></div>
+    } else {
+      // ---------------------------------------------------------
+      // VIEW MODE 2: AUTHENTIC DOT MATRIX POS SLIP
+      // ---------------------------------------------------------
+      content.innerHTML = `
+        <div style="display: flex; justify-content: center; padding: 10px; background: #f1f5f9;">
+          <div style="position: relative; background: #fbfbf6; border: 1px solid #d1d5db; box-shadow: 0 4px 15px rgba(0,0,0,0.15); width: 100%; max-width: 440px; padding: 20px 24px; font-family: 'Roboto Mono', 'Courier New', monospace; color: #000;">
+            
+            <div style="text-align: center; font-weight: 700; font-size: 13px;">CANTEEN STORES DEPARTMENT</div>
+            <div style="text-align: center; font-size: 10px;">MINISTRY OF DEFENCE &bull; GOVT OF INDIA</div>
+            <div style="text-align: center; font-weight: 700; font-size: 11px;">URC HQ DELHI AREA (SENA BHAWAN)</div>
+            <div style="text-align: center; font-size: 9.5px;">NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5</div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
+            <div style="text-align: center; font-weight: 700; font-size: 12px; letter-spacing: 0.5px;">RETAIL TAX INVOICE / CASH MEMO SLIP</div>
+            <div style="text-align: center; font-size: 9.5px;">*** DOT MATRIX POS COUNTER COPY ***</div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
+            
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>BILL NO   :</span> <span style="font-weight:700;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>INDENT NO :</span> <span>${txn.indentNo || 'IND-2026/10/9482'}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>DATE/TIME :</span> <span style="font-weight:700;">${txn.date}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>POS TERM  :</span> <span>${txn.terminal || 'POS-01 / IP: 192.168.1.101'}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASHIER   :</span> <span>${txn.cashier || 'Sub Maj R.K. Yadav'}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CARD NO   :</span> <span style="font-weight:700;">${txn.cardNo || 'LB08260547713500S01'}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>HOLDER    :</span> <span style="font-weight:700;">${user.name}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>RANK/DESIG:</span> <span>${user.designation}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CADRE/MIN :</span> <span>GROUP 'A' / MOD (DMA)</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>PAN NO    :</span> <span>${user.pan || 'EYUPB3666M'}</span></div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
+            
+            <div style="font-weight: 700; font-size: 10.5px;">ITEMIZED PARTICULARS:</div>
+            <div style="font-size: 9.5px;">SKU: 233243 | HSN: 8517 | UNIT: 1 NO</div>
+            <div style="font-weight: 700; font-size: 11.5px; margin: 2px 0;">SAMSUNG GALAXY S25 5G 12/256GB</div>
+            <div style="font-size: 9.5px;">COLOR     : SILVER SHADOW</div>
+            <div style="font-size: 9.5px;">GRADE     : VERY GOOD (A) - BRAND BOX</div>
+            <div style="font-size: 9.5px;">ACCESSORY : ALL ACCESSORIES INCLUDED</div>
+            <div style="font-size: 9.5px;">WARRANTY  : BRAND WARRANTY EXP 23-05-2027</div>
+            <div style="font-size: 9px; line-height: 1.25; margin-top: 2px;">SPECS: 6.2" FHD+ DYN AMOLED 120HZ | SNAPDRAGON 8 ELITE 3NM | 12GB+256GB | 50+10+12MP / 12MP | 4000MAH LI-ION</div>
+            <div style="font-size: 8.5px; background: #eee; padding: 3px 5px; margin-top: 3px;">
+              IMEI-1: 358941/08/948210/6<br>
+              IMEI-2: 358941/08/948211/4<br>
+              SRL NO: R58N90X233243S
+            </div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
+            
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>QTY: 1 @ CSD NET RATE</span> <span style="font-weight:700;">₹ 54,436.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CIVIL OPEN MARKET MRP</span> <span>₹ 80,999.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px; font-weight: 700;"><span>TOTAL DEFENCE CONCESSION</span> <span>Save ₹ 26,563.00</span></div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
+            
+            <div style="font-weight: 700; font-size: 10.5px;">STATUTORY TAX COMPUTATION (GST 18%):</div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>TAXABLE ASSESSABLE VAL</span> <span>₹ 46,132.20</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CGST @ 9.00%</span> <span>₹  4,151.90</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>SGST @ 9.00% (DELHI)</span> <span>₹  4,151.90</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px; font-weight:700;"><span>COMPOSITE GST TOTAL (18%)</span> <span>₹  8,303.80</span></div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
+            
+            <div style="display:flex; justify-content:space-between; font-size: 14px; font-weight: 900;">
+              <span>NET PAYABLE :</span>
+              <span>₹ 54,436.00</span>
+            </div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
+            
+            <div style="font-weight: 700; font-size: 10.5px;">PAYMENT SETTLEMENT:</div>
+            <div style="display:flex; justify-content:space-between; font-size: 11px; font-weight: 700;">
+              <span>PAYMENT METHOD</span>
+              <span>*** CASH ONLY ***</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASH TENDERED</span> <span style="font-weight:700;">₹ 54,436.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CHANGE DUE   </span> <span>₹      0.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASH VOUCHER </span> <span>${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</span></div>
+            
+            <div style="margin-top: 4px; font-size: 9px; line-height: 1.3;">
+              CURRENCY CASH DENOMINATION BREAKDOWN:<br>
+              &bull; ₹500 &times; 108 notes  = ₹ 54,000.00<br>
+              &bull; ₹100 &times;   4 notes  = ₹    400.00<br>
+              &bull; ₹ 20 &times;   1 note   = ₹     20.00<br>
+              &bull; ₹ 10 &times;   1 note   = ₹     10.00<br>
+              &bull; ₹  2 &times;   3 coins  = ₹      6.00<br>
+              ---------------------------------------<br>
+              TOTAL PHYSICAL CASH   = ₹ 54,436.00
+            </div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
+            
+            <div style="font-weight: 700; font-size: 9.5px;">
+              RUPEES FIFTY FOUR THOUSAND FOUR HUNDRED AND THIRTY SIX ONLY
+            </div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
+            
+            <div style="font-family:'Courier New', monospace; letter-spacing:4px; font-size:18px; font-weight:900; text-align:center; margin: 8px 0 2px 0;">|| ||| |||| | ||||| ||</div>
+            <div style="text-align: center; font-weight: 700; font-size: 9.5px;">*CSD-233243-9482-CASH*</div>
+            
+            <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 9px;">
+              <div>
+                CARD HOLDER SIGN<br>
+                [${user.name.split(' ')[0]}]
+              </div>
+              <div style="text-align: right;">
+                CASHIER SIGN &amp; STAMP<br>
+                [Sub Maj R.K. Yadav]<br>
+                CASH REGISTER: CLEARED
+              </div>
+            </div>
+            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">- - - - - - - - - TEAR HERE - - - - - - - - -</div>
+            <div style="text-align: center; font-size: 9px; margin-top: 4px;">
+              THANK YOU FOR SERVING THE NATION &bull; JAI HIND
+            </div>
+
           </div>
         </div>
-
-        <!-- Table -->
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; border: 1px solid #000;">
-          <thead>
-            <tr style="background: #f1f5f9; font-size: 8.5px;">
-              <th style="border: 1px solid #000; padding: 4px; width: 4%;">SNo</th>
-              <th style="border: 1px solid #000; padding: 4px; width: 12%;">BCD / HSN</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: left; width: 34%;">Item Nomenclature</th>
-              <th style="border: 1px solid #000; padding: 4px; width: 6%;">Qty</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 9%;">Taxable Rate</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 11%;">Taxable Val</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">CGST (9%)</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">SGST (9%)</th>
-              <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 8%;">Net Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows}
-          </tbody>
-        </table>
-
-        <!-- Totals -->
-        <div style="display: flex; gap: 10px; margin-bottom: 10px; font-size: 8.5px;">
-          <div style="flex: 1; border: 1px solid #000; padding: 8px; background: #fafafa;">
-            <div style="font-weight: 800; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 4px;">STATUTORY GST SUMMARY (18%)</div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;"><span>Taxable Amount:</span> <strong>₹${totalGross.toFixed(2)}</strong></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;"><span>Total Central GST (CGST):</span> <strong>₹${totalCgst.toFixed(2)}</strong></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Total State GST (SGST):</span> <strong>₹${totalSgst.toFixed(2)}</strong></div>
-            <div style="border-top: 1px dotted #ccc; padding-top: 4px; font-size: 8px; color: #475569;">
-              Payment Mode: <strong>${txn.paymentMode || 'SBI DSP Defence Debit Card'}</strong>
-            </div>
-          </div>
-
-          <div style="flex: 1; border: 1px solid #000; padding: 8px; background: #ffffff;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Taxable Gross:</span> <span>₹${totalGross.toFixed(2)}</span></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Taxes (CGST + SGST):</span> <span>₹${(totalCgst + totalSgst).toFixed(2)}</span></div>
-            <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 900; color: #002b49; border-top: 2px solid #000; padding-top: 4px;">
-              <span>NET PAYABLE:</span>
-              <span>₹${roundedNet.toFixed(2)}</span>
-            </div>
-            <div style="margin-top: 6px; font-size: 8px; font-weight: 700; color: #166534;">
-              Amount in Words: RUPEES ${roundedNet} ONLY
-            </div>
-          </div>
-        </div>
-
-        <!-- Savings -->
-        <div style="margin-bottom: 12px; text-align: center; font-size: 10px; font-weight: 800; padding: 6px; border: 2px dashed #15803d; background: #f0fdf4; color: #15803d; border-radius: 4px;">
-          🔥 CSD CONCESSION: YOU SAVED ₹${savings.toFixed(2)} COMPARED TO OPEN MARKET PRICES! 🔥
-        </div>
-
-        <!-- Verification Signatures -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 8px; border-top: 1px solid #000;">
-          <div style="text-align: center; width: 200px;">
-            <div style="font-family: 'Brush Script MT', cursive; font-size: 18px; color: #0f172a;">${user.name.split(' ')[0]}</div>
-            <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 8px; font-weight: 700;">
-              Card Holder Signature
-            </div>
-          </div>
-          <div style="text-align: right; border: 1px solid #86efac; background: #f0fdf4; padding: 6px 10px; border-radius: 4px;">
-            <div style="color: #15803d; font-weight: 800; font-size: 9px;">✓ ADOBE SIGNATURE VERIFIED</div>
-            <div style="font-size: 8px; color: #334155;">${txn.manager || 'Sub Maj R.K. Yadav'} &bull; CSD Manager</div>
-            <div style="font-size: 7.5px; color: #64748b;">${txn.date} +05'30' &bull; Location: New Delhi</div>
-          </div>
-        </div>
-
-      </div>
-    `;
-
-    modal.style.display = 'flex';
+      `;
+    }
   }
 
-  // Initial render of current tab
+    // Initial render of current tab
   renderActiveTab();
 }
 

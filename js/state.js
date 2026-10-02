@@ -1077,7 +1077,16 @@ notifications: [
         price: 54436.00, 
         marketPrice: 80999.00, 
         unit: 'Unit',
-        specs: '15.75 cm (6.2\") FHD+ | Qualcomm Snapdragon 8 Elite (3nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 4000mAh | Brand Box with All Accessories | Brand Warranty till 23-05-2027 (Condition: Very Good A)'
+        color: 'Silver Shadow',
+        grade: 'Very Good (A)',
+        brandBox: 'Yes',
+        accessories: 'All Accessories Included',
+        warrantyExpires: '23-05-2027',
+        specs: '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)',
+        imei1: '358941/08/948210/6',
+        imei2: '358941/08/948211/4',
+        serialNo: 'R58N90X233243S',
+        sku: '233243'
       },
       { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00, unit: 'Tin' },
       { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00, unit: 'Pack' },
@@ -1100,7 +1109,8 @@ notifications: [
         terminal: 'POS-01 / IP: 192.168.1.101',
         cashier: 'Sub Maj R.K. Yadav',
         manager: 'Sub Maj R.K. Yadav',
-        paymentMode: 'SBI DSP Defence Salary Package Card (Auth: 894102)',
+        paymentMode: 'HARD CURRENCY CASH ONLY (Tendered Exact ₹54,436.00 - Physical Cash Counter 01)',
+        paymentType: 'CASH',
         items: [
           { 
             id: '233243', 
@@ -1109,7 +1119,17 @@ notifications: [
             hsn: '8517', 
             qty: 1, 
             price: 54436.00, 
-            marketPrice: 80999.00 
+            marketPrice: 80999.00,
+            color: 'Silver Shadow',
+            grade: 'Very Good (A)',
+            brandBox: 'Yes',
+            accessories: 'All Accessories Included',
+            warrantyExpires: '23-05-2027',
+            specs: '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)',
+            imei1: '358941/08/948210/6',
+            imei2: '358941/08/948211/4',
+            serialNo: 'R58N90X233243S',
+            sku: '233243'
           }
         ],
         totalTaxable: 46132.20,
@@ -1123,7 +1143,18 @@ notifications: [
         grocDrawn: 2850,
         liqLimit: 10,
         liqDrawn: 2,
-        status: 'COMPLETED'
+        status: 'COMPLETED',
+        cashTendered: 54436.00,
+        cashChange: 0.00,
+        cashDenominations: {
+          '500': 108,
+          '100': 4,
+          '20': 1,
+          '10': 1,
+          '2': 3
+        },
+        cashVoucherNo: 'CSD/CASH/DEL/2026/10/9482',
+        cashReceiptNo: 'RCPT-CSD-2026-9482'
       },
       {
         id: 'CSD-TXN-2026-0901',
@@ -1513,19 +1544,30 @@ class StateManager {
           if (!parsed.csdBilling) {
             parsed.csdBilling = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling));
           } else {
-            // Ensure newly added inventory items like Samsung Galaxy S25 are present
+            // Ensure newly added inventory items like Samsung Galaxy S25 are present and up to date
             const curIds = new Set((parsed.csdBilling.inventory || []).map(i => i.id));
             (INITIAL_DATA.csdBilling.inventory || []).forEach(item => {
               if (!curIds.has(item.id)) {
                 parsed.csdBilling.inventory.unshift(item);
+              } else if (item.id === '233243') {
+                const idx = parsed.csdBilling.inventory.findIndex(i => i.id === '233243');
+                if (idx !== -1) parsed.csdBilling.inventory[idx] = JSON.parse(JSON.stringify(item));
               }
             });
 
-            // Ensure newly added transactions are present
+            // Ensure newly added transactions are present and up to date
             const curTxnIds = new Set((parsed.csdBilling.transactions || []).map(t => t.id));
             (INITIAL_DATA.csdBilling.transactions || []).forEach(txn => {
               if (!curTxnIds.has(txn.id)) {
                 parsed.csdBilling.transactions.unshift(txn);
+              } else if (txn.id === 'CSD-TXN-2026-1002') {
+                const idx = parsed.csdBilling.transactions.findIndex(t => t.id === 'CSD-TXN-2026-1002');
+                if (idx !== -1) {
+                  // Preserve custom user date if set, but update payment and item details
+                  const existingDate = parsed.csdBilling.transactions[idx].date;
+                  parsed.csdBilling.transactions[idx] = JSON.parse(JSON.stringify(txn));
+                  if (existingDate) parsed.csdBilling.transactions[idx].date = existingDate;
+                }
               }
             });
           }

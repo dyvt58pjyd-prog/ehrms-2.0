@@ -1378,7 +1378,16 @@
         "price": 54436,
         "marketPrice": 80999,
         "unit": "Unit",
-        "specs": "15.75 cm (6.2\") FHD+ | Qualcomm Snapdragon 8 Elite (3nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 4000mAh | Brand Box with All Accessories | Brand Warranty till 23-05-2027 (Condition: Very Good A)"
+        "color": "Silver Shadow",
+        "grade": "Very Good (A)",
+        "brandBox": "Yes",
+        "accessories": "All Accessories Included",
+        "warrantyExpires": "23-05-2027",
+        "specs": "15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)",
+        "imei1": "358941/08/948210/6",
+        "imei2": "358941/08/948211/4",
+        "serialNo": "R58N90X233243S",
+        "sku": "233243"
       },
       {
         "id": "8901030311221",
@@ -1491,7 +1500,8 @@
         "terminal": "POS-01 / IP: 192.168.1.101",
         "cashier": "Sub Maj R.K. Yadav",
         "manager": "Sub Maj R.K. Yadav",
-        "paymentMode": "SBI DSP Defence Salary Package Card (Auth: 894102)",
+        "paymentMode": "HARD CURRENCY CASH ONLY (Tendered Exact ₹54,436.00 - Physical Cash Counter 01)",
+        "paymentType": "CASH",
         "items": [
           {
             "id": "233243",
@@ -1500,7 +1510,17 @@
             "hsn": "8517",
             "qty": 1,
             "price": 54436,
-            "marketPrice": 80999
+            "marketPrice": 80999,
+            "color": "Silver Shadow",
+            "grade": "Very Good (A)",
+            "brandBox": "Yes",
+            "accessories": "All Accessories Included",
+            "warrantyExpires": "23-05-2027",
+            "specs": "15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)",
+            "imei1": "358941/08/948210/6",
+            "imei2": "358941/08/948211/4",
+            "serialNo": "R58N90X233243S",
+            "sku": "233243"
           }
         ],
         "totalTaxable": 46132.2,
@@ -1514,7 +1534,18 @@
         "grocDrawn": 2850,
         "liqLimit": 10,
         "liqDrawn": 2,
-        "status": "COMPLETED"
+        "status": "COMPLETED",
+        "cashTendered": 54436,
+        "cashChange": 0,
+        "cashDenominations": {
+          "2": 3,
+          "10": 1,
+          "20": 1,
+          "100": 4,
+          "500": 108
+        },
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9482",
+        "cashReceiptNo": "RCPT-CSD-2026-9482"
       },
       {
         "id": "CSD-TXN-2026-0901",
