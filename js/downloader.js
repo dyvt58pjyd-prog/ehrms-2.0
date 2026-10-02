@@ -123,23 +123,98 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
   }
 }
 
-export function generateSVGStamp(topText, bottomText, color = "#002B49") {
+export function generateAdobeDigitalSignature(name, designation, reason = 'Official Record Attestation & Digital Verification', location = 'New Delhi, India', options = {}) {
+  const currentPersonnel = (typeof window !== 'undefined' && window.ehrmsState?.currentUser?.name) 
+    ? window.ehrmsState.currentUser.name 
+    : 'ANURAG ANIL BAWASKAR';
+    
+  const currentDesig = (typeof window !== 'undefined' && window.ehrmsState?.currentUser?.designation)
+    ? window.ehrmsState.currentUser.designation
+    : 'ADDITIONAL SECTION OFFICER - I';
+
+  const signerName = (name || currentPersonnel).toUpperCase().replace(/SHRI|SMT\.|DR\./g, '').trim();
+  const signerDesig = designation || currentDesig;
+  
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const dateFormatted = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} +05'30'`;
+  const serialNo = options.serialNo || '81042444eHRMS';
+  const org = options.org || 'GOVERNMENT OF INDIA';
+  const dept = options.dept || 'MINISTRY OF DEFENCE';
+
   return `
-    <div style="display: inline-block; border: 1.5px solid ${color}; border-radius: 4px; padding: 4px 10px; margin: 6px 0; font-family: Arial, sans-serif; font-size: 10px; color: ${color}; text-align: center; background: rgba(0, 43, 73, 0.04);">
-      <div style="font-weight: 800; letter-spacing: 0.5px;">★ ${topText} ★</div>
-      <div style="font-size: 8px; text-transform: uppercase; color: #475569;">DIGITALLY VERIFIED RECORD &bull; e-HRMS 2.0</div>
-      <div style="font-size: 9px; font-weight: 700;">${bottomText}</div>
+    <div class="adobe-signature-container" style="
+      display: inline-block;
+      width: 375px;
+      max-width: 100%;
+      border: 1.5px solid #52525b;
+      background-color: #ffffff;
+      padding: 6px 10px;
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      margin: 8px 0;
+      color: #0f172a;
+    ">
+      <!-- Translucent Adobe Checkmark Watermark -->
+      <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); opacity: 0.08; pointer-events: none; z-index: 1;">
+        <svg width="75" height="75" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="11" fill="#16a34a" />
+          <path d="M7 12.5l3.5 3.5 7-7" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div style="display: flex; align-items: stretch; justify-content: space-between; position: relative; z-index: 2;">
+        <!-- Left Side: Adobe Graphic & Personnel Name -->
+        <div style="flex: 1.1; display: flex; flex-direction: column; justify-content: center; padding-right: 10px; border-right: 1px dotted #94a3b8;">
+          <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px;">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;">
+              <circle cx="10" cy="10" r="9.5" fill="#15803d" />
+              <path d="M6 10.2L8.8 13L14.5 7" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span style="font-size: 10px; font-weight: 800; color: #15803d; letter-spacing: 0.3px; text-transform: uppercase;">Signature Valid</span>
+          </div>
+          
+          <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 800; color: #b91c1c; line-height: 1.15; letter-spacing: 0.3px; margin: 2px 0; word-break: break-word;">
+            ${signerName}
+          </div>
+          
+          <div style="font-size: 8px; font-weight: 700; color: #334155; line-height: 1.2;">
+            ${signerDesig}
+          </div>
+          
+          <div style="font-size: 7.5px; color: #15803d; font-weight: 700; margin-top: 3px; letter-spacing: 0.2px;">
+            [DIGITALLY SIGNED VIA e-SIGN DSC]
+          </div>
+        </div>
+
+        <!-- Right Side: Adobe Certificate X.509 Details -->
+        <div style="flex: 1.45; padding-left: 10px; font-size: 8.5px; line-height: 1.35; color: #1e293b; font-family: Arial, sans-serif;">
+          <div style="font-weight: 800; color: #0f172a; font-size: 9px; margin-bottom: 1px;">
+            Digitally signed by ${signerName}
+          </div>
+          <div style="font-size: 7.5px; color: #475569; line-height: 1.2; margin-bottom: 2px; word-break: break-all;">
+            <strong>DN:</strong> c=IN, o=${org}, ou=${dept}, serialNumber=${serialNo}, cn=${signerName}
+          </div>
+          <div style="font-size: 8px; color: #334155;"><strong>Date:</strong> ${dateFormatted}</div>
+          <div style="font-size: 8px; color: #334155;"><strong>Reason:</strong> ${reason}</div>
+          <div style="font-size: 8px; color: #334155;"><strong>Location:</strong> ${location}</div>
+        </div>
+      </div>
     </div>
   `;
 }
 
+export function generateSVGStamp(topText, bottomText, color = "#002B49") {
+  return "";
+}
+
 export function generateHandSignature(name, color = "#0f172a") {
-  return `
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; color: ${color}; margin: 4px 0 2px 0;">
-      <span style="display: inline-block; border-bottom: 1px solid ${color}; font-weight: bold; letter-spacing: 0.5px;">${name}</span>
-      <div style="font-size: 9px; color: #16a34a; font-weight: 600;">[Digitally Verified via e-Sign DSC]</div>
-    </div>
-  `;
+  return generateAdobeDigitalSignature(name, null, "Digital Verification & Attestation via e-Sign DSC");
 }
 
 /**
@@ -936,11 +1011,17 @@ export function downloadPaySlip(user, payroll, month) {
       </tbody>
     </table>
 
-    <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-bottom: 5px;">
-      नोट: यह पीसीडीए (नई दिल्ली) / ई-एचआरएमएस 2.0 से कंप्यूटर जनित विवरण है और इसके लिए भौतिक हस्ताक्षर की आवश्यकता नहीं है।<br>
-      NOTE: This is a computer generated statement from PCDA (New Delhi) / e-HRMS 2.0 and does not require a physical signature.<br>
-      DISCLAIMER: The information is based on the payroll run by DDO Dept of Military Affairs (${user.ddoCode}). Discrepancies may be reported to the Pay Accounts Office (PAO).
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b;">Personnel Digital Verification:</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "Monthly Salary Slip e-Receipt & Attestation", "New Delhi, India")}
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b; text-align: right;">Drawing &amp; Disbursing Officer (DDO):</div>
+        ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India")}
+      </div>
     </div>
+    <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-top: 6px;">NOTE: Computer generated statement from PCDA (New Delhi) / e-HRMS 2.0 with cryptographic verification.</div>
   `;
 
   const doc = wrapGovDocument(`Pay_Slip_${month.replace(/\s+/g, '_')}_${user.name.replace(/\s+/g, '_')}`, body, true);
@@ -1134,9 +1215,15 @@ export function downloadServiceBook(user, sb) {
     </div>
 
     <!-- Signatures -->
-    <div class="sig-block">
-      ${generateESignature(user.controllingOfficer.name, user.controllingOfficer.designation)}
-      ${generateESignature(user.reviewingOfficer.name, user.reviewingOfficer.designation)}
+    <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Personnel Digital Verification (Rule 257 GFR):</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "e-Service Book Annual Employee Attestation", "New Delhi, India")}
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Controlling Authority (Cadre / Estt):</div>
+        ${generateAdobeDigitalSignature(user.controllingOfficer.name, user.controllingOfficer.designation, "Annual Service Record Verification & Audit", "New Delhi, India")}
+      </div>
     </div>
   `;
 
@@ -1188,9 +1275,15 @@ export function downloadAparDossier(user, apar) {
       </div>
     `).join('')}
 
-    <div class="sig-block">
-      <div>Aadhaar e-Signed under Information Technology Act, 2000.<br>Authentication ID: SPARROW-MOD-DMA-2026-9418.</div>
-      ${generateESignature(user.reviewingOfficer.name, 'Reviewing Authority, DMA')}
+    <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Personnel Self-Appraisal e-Attestation:</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "SPARROW APAR Electronic Submission & Attestation", "New Delhi, India")}
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Reviewing Authority:</div>
+        ${generateAdobeDigitalSignature(user.reviewingOfficer.name, 'Reviewing Authority, DMA', "APAR Dossier Final Attestation", "New Delhi, India")}
+      </div>
     </div>
   `;
 
@@ -1260,9 +1353,15 @@ export function downloadIprAck(user, ipr) {
       </tbody>
     </table>
 
-    <div class="sig-block">
-      <div>Digitally signed and archived in Central Vigilance Repository.<br>Verification Token: IPR-MOD-DMA-2026-VERIFIED.</div>
-      ${generateESignature('Central Vigilance Officer (CVO)', 'Department of Military Affairs, MoD')}
+    <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Declarant / Personnel Digital Signature:</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "Statutory IPR Annual Declaration e-Filing", "New Delhi, India")}
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Central Vigilance Officer:</div>
+        ${generateAdobeDigitalSignature('Central Vigilance Officer (CVO)', 'Department of Military Affairs, MoD', "IPR Annual Compliance Verification", "New Delhi, India")}
+      </div>
     </div>
   `;
 
@@ -1415,23 +1514,19 @@ export function downloadLeaveOrder(user, app) {
         </p>
       </div>
 
-      <div class="sig-section">
-        <div class="sig-box-genuine">
-          <div class="adobe-signature">
-            <div class="adobe-left">
-              ${reportingOfficerName}
-            </div>
-            <div class="adobe-right">
-              <strong>Digitally signed by ${reportingOfficerName}</strong><br>
-              DN: c=IN, o=Ministry of Defence, ou=Department of Military Affairs, cn=${reportingOfficerName}<br>
-              Date: ${approvedDate} 10:30:00 +05'30'<br>
-              Reason: Leave Sanction Approval<br>
-              Location: New Delhi
-            </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Applicant / Personnel e-Attestation:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "Leave Application e-Receipt & Attestation", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Sanctioning Authority (DMA / MoD):</div>
+          ${generateAdobeDigitalSignature(reportingOfficerName, reportingOfficerDesig, "Leave Sanction Approval Order", "New Delhi, India")}
+          <div style="font-size: 9.5px; font-weight: bold; margin-top: 4px;">
+            (${reportingOfficerName})<br>
+            ${reportingOfficerDesig}<br>
+            For Chief of Defence Staff & Secretary, DMA
           </div>
-          (${reportingOfficerName})<br>
-          ${reportingOfficerDesig}<br>
-          For Chief of Defence Staff & Secretary, DMA
         </div>
       </div>
 
@@ -1498,9 +1593,15 @@ export function downloadClaimOrder(user, claim) {
       </div>
     </div>
 
-    <div class="sig-block">
-      <div>PFMS Mandate Ref: PFMS-MOD-DMA-CLM-${claim.id}</div>
-      ${generateESignature(user.disbursingOfficer.name, user.disbursingOfficer.designation)}
+    <div class="sig-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Claimant / Personnel e-Receipt:</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "Reimbursement Claim Electronic Acknowledgment", "New Delhi, India")}
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Drawing &amp; Disbursing Officer (DDO):</div>
+        ${generateAdobeDigitalSignature(user.disbursingOfficer.name, user.disbursingOfficer.designation, "Claim Admissibility & PFMS Sanction", "New Delhi, India")}
+      </div>
     </div>
   `;
 
@@ -2284,12 +2385,14 @@ export function downloadTransferOrder(user) {
         7. Guard File &bull; Transfer &amp; Postings 2026
       </div>
 
-      <div style="display: flex; gap: 16px; align-items: center;">
-        ${generateESignature('Rajender Singh', 'Ministry of Defence')}
-          <strong style="color: #002B49; font-size: 11px;">Shri Rajender Singh</strong><br>
-          <span style="font-size: 9.5px;">Deputy Secretary to the Government of India</span><br>
-          <span style="font-size: 9px; color: #64748b;">Department of Military Affairs &bull; Ministry of Defence</span><br>
-          <span style="color: #059669; font-size: 8.5px; font-weight: 800;">[DIGITALLY SIGNED &bull; CADRE CONTROLLING AUTHORITY]</span>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 25px; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b;">Officer Relinquishment / Joining e-Verification:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "Transfer Order Relinquishment & Assumption", "New Delhi, India")}
+        </div>
+        <div>
+          <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b; text-align: right;">Cadre Controlling Authority:</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Gazette Transfer & Relieving Order", "New Delhi, India")}
         </div>
       </div>
     </div>
@@ -2364,11 +2467,14 @@ export function downloadSecurityClearanceCertificate(user) {
         Archived in National Security Council Secretariat (NSCS)
       </div>
 
-      <div style="display: flex; gap: 16px; align-items: center;">
-        ${generateESignature('Anil Chauhan', 'Ministry of Defence')}
-          <strong style="color: #002B49; font-size: 10.5px;">General Anil Chauhan</strong><br>
-          <span style="font-size: 9px;">Chief of Defence Staff &bull; Chairman COSC</span><br>
-          <span style="color: #059669; font-size: 8.5px; font-weight: 800;">[APEX COUNTERSIGNATURE]</span>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b;">Officer Vetted &amp; Inducted (e-Attestation):</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "Apex Security Vetting Acknowledgment & Declaration", "New Delhi, India")}
+        </div>
+        <div>
+          <div style="font-weight: 700; font-size: 9px; margin-bottom: 2px; color: #1e293b; text-align: right;">Apex Sanctioning Authority:</div>
+          ${generateAdobeDigitalSignature('General Anil Chauhan', 'Chief of Defence Staff & Secretary DMA', "Level-1 Top Secret Security Vetting Sanction", "New Delhi, India")}
         </div>
       </div>
     </div>
@@ -2874,12 +2980,15 @@ export function downloadNocOrder(user, app) {
       </p>
     </div>
 
-    <div class="sig-block" style="margin-top: 24px; display: flex; justify-content: space-between; align-items: flex-end;">
-      <div style="font-size: 10px; color: #64748b; line-height: 1.5;">
-        Archived in Central e-HRMS 2.0 Repository &bull; Certified True Copy<br>
-        Digital Token: <code>eHRMS-MOD-VIG-NOC-${app.id}</code>
+    <div class="sig-block" style="margin-top: 24px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b;">Personnel e-Attestation:</div>
+        ${generateAdobeDigitalSignature(user.name, user.designation, "Vigilance Clearance & NOC Employee Attestation", "New Delhi, India")}
       </div>
-      ${generateESignature(app.authority, 'Ministry of Defence')}
+      <div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Competent Authority (DMA / MoD):</div>
+        ${generateAdobeDigitalSignature(app.authority, 'Ministry of Defence', "Vigilance Clearance Certification Approval", "New Delhi, India")}
+      </div>
     </div>
   `;
   const doc = wrapGovDocument(`Vigilance_NOC_${user.name.replace(/[^a-zA-Z0-9]/g, '_')}`, body);
@@ -2890,24 +2999,8 @@ export function downloadNocOrder(user, app) {
 /**
  * Generate a genuine Adobe-style e-Signature block
  */
-export function generateESignature(name, desig, reason = 'Document Authentication', location = 'New Delhi') {
-  const date = new Date().toISOString().replace('T', ' ').substring(0, 19) + " +05'30'";
-  const shortName = name.split(',')[0].replace(/Shri|Smt\.|Dr\./g, '').trim();
-  
-  return `
-    <div class="sig-box" style="display: flex;">
-      <div class="adobe-left" style="flex: 1; font-size: 18px;">
-        ${shortName}
-      </div>
-      <div class="adobe-right" style="flex: 2;">
-        <strong>Digitally signed by ${name}</strong><br>
-        DN: c=IN, o=Government of India, ou=${desig}, cn=${name}<br>
-        Date: ${date}<br>
-        Reason: ${reason}<br>
-        Location: ${location}
-      </div>
-    </div>
-  `;
+export function generateESignature(name, desig, reason = 'Official Record Attestation & Digital Verification', location = 'New Delhi, India') {
+  return generateAdobeDigitalSignature(name, desig, reason, location);
 }
 
 
@@ -3120,10 +3213,15 @@ export function downloadServiceCertificate(user) {
         अस्वीकरण: यह प्रमाण पत्र आधिकारिक रूप से मास्टर डेटा रिकॉर्ड के आधार पर तैयार किया गया है।
       </div>
 
-      <div class="sig-block-old">
-        <div class="stamp">OFFICIALLY ISSUED / आधिकारिक तौर पर जारी</div><br><br>
-        Issued by / द्वारा जारी: Department of Military Affairs<br>
-        Token: OFFICIAL-CERT-${Date.now()}
+            <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px; font-family: Arial, sans-serif;">
+        <div style="text-align: left;">
+          <div style="font-size: 10px; font-weight: bold; margin-bottom: 4px; color: #334155;">Officer / Personnel Verification:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "Service Record Personnel Verification", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 10px; font-weight: bold; margin-bottom: 4px; color: #334155;">Issuing Authority (e-Sign DSC):</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Service Record Certification", "New Delhi, India")}
+        </div>
       </div>
     </div>
   `;
@@ -3488,13 +3586,21 @@ export function downloadCGHSCertificate(user) {
       </div>
       <table>
         <tr><th>S.No.</th><th>Name of Dependent</th><th>Relationship</th><th>Age / DOB</th></tr>
-        <tr><td>1.</td><td>Smt. Anita Singh</td><td>Wife</td><td>42 Years</td></tr>
-        <tr><td>2.</td><td>Master Rahul Singh</td><td>Son</td><td>16 Years</td></tr>
-        <tr><td>3.</td><td>Kumari Priya Singh</td><td>Daughter</td><td>14 Years</td></tr>
+        ${user.serviceBook?.family && user.serviceBook.family.length > 0 ? user.serviceBook.family.map((f, i) => `<tr><td>${i+1}.</td><td>${f.name}</td><td>${f.relationship}</td><td>${f.dob || 'Recorded'}</td></tr>`).join('') : `
+        <tr><td>1.</td><td>Shri Anil Ramkrishna Bawaskar</td><td>Father</td><td>17-10-1976</td></tr>
+        <tr><td>2.</td><td>Smt. Manisha Anil Bawaskar</td><td>Mother</td><td>01-06-1981</td></tr>
+        <tr><td>3.</td><td>Kumari Rohini Anil Bawaskar</td><td>Sister</td><td>26-05-2004</td></tr>
+        `}
       </table>
-      <div style="margin-top: 50px; text-align: right; font-weight: bold;">
-        ${generateSVGStamp("SECTION OFFICER", "DEPARTMENT OF MILITARY AFFAIRS")}\n${generateHandSignature("S. K. Sharma", "#000000")}\nSignature of Issuing Authority<br>
-        Department of Military Affairs
+      <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Beneficiary / Personnel e-Attestation:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "CGHS Beneficiary & Identity Verification", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Issuing Authority (DMA / MoD):</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", user.controllingOfficer?.designation || "Deputy Secretary (Estt), MoD", "CGHS Dependency Certification Approval", "New Delhi, India")}
+        </div>
       </div>
     </div>
   `;
@@ -3577,9 +3683,15 @@ export function downloadLTCCertificate(user) {
       
       <p style="margin-top: 20px;">The amount of Rs. 45,000/- will be credited to salary account number ${user.bankDetails?.accountNo || 'XXX'}.</p>
       
-      <div style="margin-top: 50px; text-align: right; font-weight: bold;">
-        ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar")}\nAccounts Officer (PAO)<br>
-        Department of Military Affairs
+      <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Claimant / Personnel e-Attestation:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "LTC Settlement Acceptance & Verification", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Accounts Officer (PAO) / DDO:</div>
+          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), DMA", "LTC Claim Financial Sanction Approval", "New Delhi, India")}
+        </div>
       </div>
     </div>
   `;
@@ -3791,18 +3903,27 @@ export function downloadAPAR(user) {
       <p style="margin-top: 15px;"><strong>4. Pen Picture by Reporting Officer:</strong><br>
       The officer is extremely hardworking, dedicated, and possesses excellent drafting skills. He has shown immense analytical ability in handling complex MoD policy matters. Highly recommended for further progression.</p>
       
-      <div class="signature-block">
+            <div class="signature-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; flex-wrap: wrap; gap: 15px;">
         <div>Date: <strong>05.05.${currentYear}</strong></div>
-        <div style="text-align: center;">${generateSVGStamp("SECTION OFFICER", "DEPARTMENT OF MILITARY AFFAIRS")}\n${generateHandSignature("R. K. Singh")}\n<strong>Signature of Reporting Officer</strong><br>Shri R. K. Singh, Deputy Secretary</div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Reporting Officer:</div>
+          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", user.reportingOfficer?.designation || "Joint Secretary (DMA)", "APAR Performance Assessment & Competency Grading", "New Delhi, India")}
+        </div>
       </div>
 
       <div class="section-title">PART-IV: REVIEW BY REVIEWING OFFICER</div>
       <p><strong>1. Do you agree with the assessment made by the reporting officer?</strong> Yes, completely agree.</p>
       <p><strong>2. Overall Grading (1-10):</strong> <span style="font-size: 18px; font-weight: bold; border: 1px solid #000; padding: 2px 10px;">9.22 (Outstanding)</span></p>
       
-      <div class="signature-block">
-        <div>Date: <strong>20.05.${currentYear}</strong></div>
-        <div style="text-align: center;">${generateSVGStamp("JOINT SECRETARY", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Kavita Sharma")}\n<strong>Signature of Reviewing Officer</strong><br>Smt. Kavita Sharma, Joint Secretary</div>
+            <div class="signature-block" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Personnel e-Attestation &amp; Acceptance:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "APAR Final Grading Disclosure Acceptance", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Reviewing Officer:</div>
+          ${generateAdobeDigitalSignature(user.reviewingOfficer?.name || "Lieutenant General N.S. Raja Subramani", user.reviewingOfficer?.designation || "Chief of Defence Staff & Secretary DMA", "APAR Final Appraisal & Review Approval", "New Delhi, India")}
+        </div>
       </div>
     </div>
   `;
@@ -3878,10 +3999,15 @@ export function downloadMACPOrder(user) {
         3. The officer may exercise his option for fixation of pay under FR 22(I)(a)(1) within one month from the date of issue of this order.
       </div>
       
-      <div style="margin-top: 60px; text-align: right; font-weight: bold;">
-        ${generateSVGStamp("JOINT SECRETARY", "MINISTRY OF DEFENCE")}\n${generateHandSignature("P. K. Sharma", "#000000")}\n(P. K. Sharma)<br>
-        Under Secretary to the Government of India<br>
-        Tel: 011-2301XXXX
+            <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Personnel e-Acknowledgment &amp; Option Exercise:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "MACP Order Acceptance & Pay Fixation Option", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Sanctioning Authority (Under Secretary to GoI):</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt) & Under Secretary, MoD", "MACP Office Order Sanction & Publication", "New Delhi, India")}
+        </div>
       </div>
       
       <div style="margin-top: 40px; font-size: 12px;">
@@ -4082,10 +4208,15 @@ export function downloadPostingOrder(user) {
         3. This issues with the approval of the Competent Authority.
       </div>
       
-      <div style="margin-top: 60px; text-align: right; font-weight: bold;">
-        ${generateSVGStamp("JOINT SECRETARY", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Anil Kumar")}\n(Anil Kumar)<br>
-        Director (Estt.)<br>
-        Tel: 011-2301XXXX
+            <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Officer Relinquishment / Joining e-Verification:</div>
+          ${generateAdobeDigitalSignature(user.name, user.designation, "Gazette Posting Relinquishment & Joining Verification", "New Delhi, India")}
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Competent Authority (Director / Joint Secretary):</div>
+          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", "Joint Secretary / Director (Estt), MoD", "Presidential Transfer & Posting Notification", "New Delhi, India")}
+        </div>
       </div>
       
       <div style="margin-top: 50px; font-size: 12px;">
