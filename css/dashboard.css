@@ -599,6 +599,23 @@ body.login-view #app-content {
     flex-direction: column;
     min-height: auto;
     border-radius: 16px;
+    margin-bottom: 20px;
+  }
+  .ehrms-left-panel {
+    padding: 30px 20px;
+  }
+  .portal-heading {
+    font-size: 22px !important;
+  }
+  .about-title {
+    font-size: 18px !important;
+  }
+  .about-description {
+    font-size: 11.5px !important;
+  }
+  .white-emblem {
+    width: 36px;
+    height: 58px;
   }
 }
 
