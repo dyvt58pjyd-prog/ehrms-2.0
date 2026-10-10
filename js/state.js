@@ -5,6 +5,14 @@
 
 const STORAGE_KEY = 'ehrms_2_0_portal_state_v22';
 
+// --- Supabase Cloud DB Configuration ---
+const SUPABASE_URL = 'https://awmcbevtzoyrnjkaekoh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_6RYqReYq_gLFoHNq5FBKNQ_gmRKtMze';
+let supabaseClient = null;
+if (typeof window !== 'undefined' && window.supabase) {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
 const INITIAL_DATA = {
   currentUser: {
     empId: '41028104',
@@ -1503,6 +1511,15 @@ class StateManager {
 
   async syncFromServer() {
     try {
+      if (supabaseClient) {
+        const { data, error } = await supabaseClient.from('ehrms_state').select('data').eq('id', 'global_state').single();
+        if (data && data.data) {
+          console.log('🔄 Synced fresh state from Supabase Cloud DB!');
+          this.set(data.data);
+          return;
+        }
+      }
+      
       const res = await fetch('/api/state?ts=' + Date.now(), { cache: 'no-store' });
       if (res.ok) {
         const remoteData = await res.json();
@@ -1638,6 +1655,16 @@ class StateManager {
           }
         }
       }
+      }
+      
+      // Sync to Supabase Cloud DB in real-time
+      if (supabaseClient) {
+        supabaseClient.from('ehrms_state').upsert({ id: 'global_state', data: this.data })
+          .then(res => {
+             if (res.error) console.error("Supabase Sync Error (ensure 'ehrms_state' table exists with 'id' and 'data' columns):", res.error);
+          });
+      }
+
       // Silently sync to backend for permanent storage
       fetch('/api/state', {
         method: 'POST',
@@ -1645,7 +1672,7 @@ class StateManager {
         body: JSON.stringify(this.data)
       }).catch(e => e);
     } catch (e) {
-      console.error('Failed to save state to localStorage:', e);
+      console.error('Failed to save state:', e);
     }
   }
 
