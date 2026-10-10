@@ -179,11 +179,6 @@ export function renderLoginScreen(container, onLoginSuccess) {
               </a>
             </div>
 
-            <div style="text-align: center; margin-top: 16px;">
-              <a href="csd_portal.html" style="font-size: 11px; color: #475569; font-weight: 700; text-decoration: none; border-bottom: 1px dotted #475569;">
-                🛒 CSD Retail Billing Login
-              </a>
-            </div>
           </form>
         </div>
       </div>
