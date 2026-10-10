@@ -1630,6 +1630,36 @@ class StateManager {
             });
           }
 
+          // Make Circulars Live
+          if (Array.isArray(parsed.circulars)) {
+            parsed.circulars = parsed.circulars.map((c, i) => {
+              const d = new Date();
+              d.setDate(d.getDate() - (i * 2)); // Stagger them
+              c.date = `${String(d.getDate()).padStart(2, '0')}-${months[d.getMonth()]}-${d.getFullYear()}`;
+              if (c.id === 'CIR-2026-089') {
+                c.date = todayFormatted;
+                c.isNew = true;
+              }
+              return c;
+            });
+          }
+
+          // Make Tours Live
+          if (Array.isArray(parsed.tours)) {
+            parsed.tours = parsed.tours.map(t => {
+              if (t.id === 'TR-2026-8812' || t.status === 'PENDING_APPROVAL') {
+                const d1 = new Date();
+                const d2 = new Date();
+                d1.setDate(d1.getDate() + 2);
+                d2.setDate(d2.getDate() + 5);
+                t.appliedOn = todayIso;
+                t.startDate = `${d1.getFullYear()}-${String(d1.getMonth()+1).padStart(2, '0')}-${String(d1.getDate()).padStart(2, '0')}`;
+                t.endDate = `${d2.getFullYear()}-${String(d2.getMonth()+1).padStart(2, '0')}-${String(d2.getDate()).padStart(2, '0')}`;
+              }
+              return t;
+            });
+          }
+
           return parsed;
         }
       }

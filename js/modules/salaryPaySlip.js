@@ -23,6 +23,28 @@ function numberToWordsINR(num) {
   return (str.trim() + ' Rupees Only').replace(/\s+/g, ' ');
 }
 
+function generateDynamicMonthsOptions() {
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const now = new Date();
+  let options = '';
+  for (let i = 0; i < 4; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const monthName = months[d.getMonth()];
+    const year = d.getFullYear();
+    const val = `${monthName} ${year}`;
+    let label = val;
+    if (i === 0) {
+      const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+      const shortMon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()];
+      label += ` (Disbursed ${lastDay}-${shortMon}-${year})`;
+    } else if (d.getMonth() === 6) { // July is usually Annual Increment
+      label += ` (With Annual Increment)`;
+    }
+    options += `<option value="${val}" ${i === 0 ? 'selected' : ''}>${label}</option>`;
+  }
+  return options;
+}
+
 export function renderSalaryPaySlip(container) {
   const state = store.get();
   const user = state.currentUser;
@@ -60,10 +82,7 @@ export function renderSalaryPaySlip(container) {
       </div>
       <div class="page-actions">
         <select class="form-control" id="select-payslip-month" style="width: auto; font-weight: 600;">
-          <option value="August 2026" selected>August 2026 (Disbursed 31-Aug-2026)</option>
-          <option value="July 2026">July 2026 (With Annual Increment)</option>
-          <option value="June 2026">June 2026</option>
-          <option value="May 2026">May 2026</option>
+          ${generateDynamicMonthsOptions()}
         </select>
         <button class="btn btn-outline" id="btn-print-payslip">
           🖨️ Print Official Pay Slip
@@ -258,28 +277,28 @@ export function renderSalaryPaySlip(container) {
         </div>
       </div>
 
-      <!-- Year-to-Date (YTD) Cumulative Statement (FY 2026-2027) -->
+      <!-- Year-to-Date (YTD) Cumulative Statement -->
       <div class="payslip-ytd-box">
         <div class="payslip-ytd-header">
-          <span>📊 Financial Year Cumulative Ledger (FY 2026-27: April 2026 to August 2026)</span>
+          <span id="ytd-period-label">📊 Financial Year Cumulative Ledger</span>
           <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Tax Regime: New Tax Regime (Section 115BAC)</span>
         </div>
         <div class="payslip-ytd-grid">
           <div class="payslip-ytd-item">
             <span class="payslip-ytd-label">Gross Earnings YTD:</span>
-            <span class="payslip-ytd-val">₹6,68,040</span>
+            <span class="payslip-ytd-val" id="ytd-gross"></span>
           </div>
           <div class="payslip-ytd-item">
             <span class="payslip-ytd-label">Employee NPS YTD:</span>
-            <span class="payslip-ytd-val">₹53,550</span>
+            <span class="payslip-ytd-val" id="ytd-nps"></span>
           </div>
           <div class="payslip-ytd-item">
             <span class="payslip-ytd-label">Income Tax (TDS) YTD:</span>
-            <span class="payslip-ytd-val">₹18,780</span>
+            <span class="payslip-ytd-val" id="ytd-tds"></span>
           </div>
           <div class="payslip-ytd-item">
             <span class="payslip-ytd-label">Net Disbursed YTD:</span>
-            <span class="payslip-ytd-val" style="color: #166534;">₹5,92,160</span>
+            <span class="payslip-ytd-val" id="ytd-net" style="color: #166534;"></span>
           </div>
         </div>
       </div>
@@ -288,11 +307,11 @@ export function renderSalaryPaySlip(container) {
       <div class="payslip-audit-strip">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 6px; margin-bottom: 6px; font-weight: 600;">
           <span>Treasury Classification: Major Head 2052 (Secretariat-General Services) &bull; Minor Head 090 &bull; Sub Head 02 (DMA) &bull; Object Head 01 (Salaries)</span>
-          <span>Bill No: DMA/ESTT-I/SAL-AUG-2026/0412 (28-Aug-2026)</span>
+          <span id="audit-bill"></span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span>Token No: PAO/MOD/DEL/2026/0941 &bull; Voucher No: PAO-DMA-VR-2026-08104 &bull; PFMS ID: PFMS-MOD-DMA-2026-AUG-8104</span>
-          <span>Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: 31-Aug-2026 10:14 IST</span>
+          <span id="audit-pfms"></span>
+          <span id="audit-credited"></span>
         </div>
       </div>
 
@@ -331,4 +350,57 @@ export function renderSalaryPaySlip(container) {
   container.querySelector('#btn-download-payslip').addEventListener('click', () => {
     downloadPaySlip(user, payroll, monthSelect.value);
   });
+
+  // Dynamically calculate YTD and Audit variables based on current month
+  const selectMonth = container.querySelector('#select-payslip-month');
+  const monthLabel = container.querySelector('#payslip-month-label');
+  const ytdPeriodLabel = container.querySelector('#ytd-period-label');
+  const elYtdGross = container.querySelector('#ytd-gross');
+  const elYtdNps = container.querySelector('#ytd-nps');
+  const elYtdTds = container.querySelector('#ytd-tds');
+  const elYtdNet = container.querySelector('#ytd-net');
+  
+  const elAuditBill = container.querySelector('#audit-bill');
+  const elAuditPfms = container.querySelector('#audit-pfms');
+  const elAuditCred = container.querySelector('#audit-credited');
+
+  function updatePayslipData() {
+    const val = selectMonth.value; // e.g. "October 2026"
+    
+    const parts = val.split(' ');
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const shortNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    
+    const monthName = parts[0];
+    const year = parseInt(parts[1], 10);
+    const monthIndex = monthNames.indexOf(monthName);
+    const shortMon = shortNames[monthIndex];
+    
+    if(monthLabel) monthLabel.textContent = `${monthName.toUpperCase()} ${year}`;
+    
+    let fyStartYear = year;
+    let monthsSinceApril = monthIndex - 3;
+    if (monthsSinceApril < 0) {
+      monthsSinceApril += 12;
+      fyStartYear -= 1;
+    }
+    const numMonths = monthsSinceApril + 1;
+    
+    if(ytdPeriodLabel) ytdPeriodLabel.textContent = `📊 Financial Year Cumulative Ledger (FY ${fyStartYear}-${fyStartYear+1}: April ${fyStartYear} to ${monthName} ${year})`;
+    if(elYtdGross) elYtdGross.textContent = '₹' + (grossPay * numMonths).toLocaleString('en-IN');
+    if(elYtdNps) elYtdNps.textContent = '₹' + (npsTier1 * numMonths).toLocaleString('en-IN');
+    if(elYtdTds) elYtdTds.textContent = '₹' + (tds * numMonths).toLocaleString('en-IN');
+    if(elYtdNet) elYtdNet.textContent = '₹' + (netPay * numMonths).toLocaleString('en-IN');
+    
+    const lastDay = new Date(year, monthIndex + 1, 0).getDate();
+    
+    if(elAuditBill) elAuditBill.textContent = `Bill No: DMA/ESTT-I/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
+    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: PAO/MOD/DEL/${year}/0941 &bull; Voucher No: PAO-DMA-VR-${year}-08104 &bull; PFMS ID: PFMS-MOD-DMA-${year}-${shortMon}-8104`;
+    if(elAuditCred) elAuditCred.innerHTML = `Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${shortMon}-${year} 10:14 IST`;
+  }
+
+  if(selectMonth) {
+    selectMonth.addEventListener('change', updatePayslipData);
+    updatePayslipData();
+  }
 }
