@@ -14,6 +14,7 @@ if (typeof window !== 'undefined' && window.supabase) {
 }
 
 const INITIAL_DATA = {
+  isAuthenticated: false,
   currentUser: {
     empId: '41028104',
     pran: '110194810244',

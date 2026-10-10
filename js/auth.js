@@ -106,8 +106,7 @@ export function renderLoginScreen(container, onLoginSuccess) {
                   type="text" 
                   id="login-username" 
                   class="input-ehrms" 
-                  placeholder="" 
-                  value="anurag.bawaskar" 
+                  placeholder="Enter User ID or Email" 
                   required 
                   autocomplete="username" 
                   autofocus
@@ -130,8 +129,7 @@ export function renderLoginScreen(container, onLoginSuccess) {
                   type="password" 
                   id="login-password" 
                   class="input-ehrms" 
-                  placeholder="Password" 
-                  value="Anurag@2026" 
+                  placeholder="Enter Password" 
                   required 
                   autocomplete="current-password" 
                 />
