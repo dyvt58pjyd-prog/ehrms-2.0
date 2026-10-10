@@ -2081,7 +2081,7 @@ export function downloadCanteenCards(user) {
  * 11B. Download Official CSD Retail Tax Invoice / Cash Receipt (Roboto Edition)
  * Government of India - Ministry of Defence - Canteen Stores Department
  */
-export function downloadCsdInvoice(user, txnData) {
+export function getCsdInvoiceHtml(user, txnData) {
   if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I', pan: 'EYUPB3666M' };
   
   const txn = txnData || {
@@ -2180,7 +2180,7 @@ export function downloadCsdInvoice(user, txnData) {
     totalMarket += (market * qty);
     
     // Check if Samsung Galaxy S25
-    const isSamsung = it.id === '233243' || (it.name && it.name.includes('SAMSUNG GALAXY S25'));
+    const isPremium = it.imei1 || it.serialNo || (it.name && (it.name.includes('SAMSUNG') || it.name.includes('PLAYSTATION')));
     
     return `
       <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#fcfcfc'};">
@@ -2191,18 +2191,20 @@ export function downloadCsdInvoice(user, txnData) {
         </td>
         <td style="border: 1px solid #334155; padding: 6px; text-align: left; font-size: 10.5px;">
           <div style="font-weight: 800; color: #002b49; font-size: 11px;">${it.name}</div>
-          ${isSamsung ? `
+          ${isPremium ? `
             <div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; font-size: 8.5px;">
-              <span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color || 'Silver Shadow'}</span>
-              <span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade || 'Very Good (A)'}</span>
-              <span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Brand Box &bull; All Accessories</span>
-              <span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty Exp: ${it.warrantyExpires || '23-05-2027'}</span>
+              ${it.color ? `<span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color}</span>` : ''}
+              ${it.grade ? `<span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade}</span>` : ''}
+              ${it.brandBox || it.accessories ? `<span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">${it.brandBox ? it.brandBox : ''} ${it.brandBox && it.accessories ? '&bull;' : ''} ${it.accessories ? it.accessories : ''}</span>` : ''}
+              ${it.warrantyExpires ? `<span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty: ${it.warrantyExpires}</span>` : ''}
             </div>
             <div style="margin-top: 4px; font-size: 8px; color: #334155; line-height: 1.35; font-style: italic;">
-              ${it.specs || '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 12MP Front | 4000 mAh Li-Ion'}
+              ${it.specs || ''}
             </div>
             <div style="margin-top: 3px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #475569; background: #f8fafc; padding: 3px 6px; border: 1px dashed #cbd5e1; border-radius: 2px;">
-              <strong>IMEI-1:</strong> ${it.imei1 || '358941/08/948210/6'} &bull; <strong>IMEI-2:</strong> ${it.imei2 || '358941/08/948211/4'} &bull; <strong>S/N:</strong> ${it.serialNo || 'R58N90X233243S'}
+              ${it.imei1 && it.imei1 !== 'N/A' ? `<strong>IMEI-1:</strong> ${it.imei1} &bull; ` : ''}
+              ${it.imei2 && it.imei2 !== 'N/A' ? `<strong>IMEI-2:</strong> ${it.imei2} &bull; ` : ''}
+              <strong>S/N:</strong> ${it.serialNo || 'N/A'}
             </div>
           ` : (it.specs ? `<div style="font-size: 8px; color: #64748b; margin-top: 2px;">${it.specs}</div>` : '')}
         </td>
@@ -2484,13 +2486,32 @@ export function downloadCsdInvoice(user, txnData) {
 
   const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
   const doc = wrapGovDocument(`CSD_Retail_Tax_Invoice_${safeBillNo}`, body, true);
-  triggerDownload(`CSD_Tax_Invoice_${safeBillNo}.html`, doc);
+  return doc;
+}
+
+export function downloadCsdInvoice(user, txnData) {
+  const txn = txnData || {};
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  triggerDownload(`CSD_Tax_Invoice_${safeBillNo}.html`, getCsdInvoiceHtml(user, txnData));
+}
+
+export function printCsdInvoice(user, txnData) {
+  const html = getCsdInvoiceHtml(user, txnData);
+  const printWin = window.open('', '_blank');
+  if (printWin) {
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => { printWin.print(); }, 500);
+  } else {
+    alert('Please allow popups to print.');
+  }
 }
 
 /**
  * 11C. Download Official Dot Matrix Slip (Thermal / Continuous POS Register)
  */
-export function downloadCsdDotMatrixSlip(user, txnData) {
+export function getCsdDotMatrixSlipHtml(user, txnData) {
   if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I', pan: 'EYUPB3666M' };
   
   const txn = txnData || {
@@ -2522,8 +2543,8 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
   <style>
     @page {
-      size: 80mm auto;
-      margin: 3mm;
+      size: A4 portrait;
+      margin: 15mm;
     }
     * { box-sizing: border-box; }
     body {
@@ -2541,8 +2562,8 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
       border: 1px solid #d1d5db;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       width: 100%;
-      max-width: 440px;
-      padding: 24px 20px;
+      min-height: 297mm;
+      padding: 30px 40px;
     }
     /* Sprocket holes on sides */
     .sprocket-holes-left, .sprocket-holes-right {
@@ -2566,19 +2587,20 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
     }
     .slip-content {
-      font-size: 11px;
-      line-height: 1.35;
+      font-size: 14px;
+      line-height: 1.5;
       font-weight: 500;
-      letter-spacing: -0.2px;
-      margin: 0 10px;
+      letter-spacing: 0;
+      margin: 0 20px;
     }
     .center { text-align: center; }
     .bold { font-weight: 700; }
     .divider {
-      margin: 6px 0;
+      margin: 10px 0;
       white-space: pre;
       overflow: hidden;
-      font-size: 11px;
+      font-size: 14px;
+      letter-spacing: 2px;
     }
     .flex-row {
       display: flex;
@@ -2586,11 +2608,11 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
     }
     .barcode {
       font-family: 'Courier New', monospace;
-      letter-spacing: 4px;
-      font-size: 18px;
+      letter-spacing: 6px;
+      font-size: 24px;
       font-weight: 900;
       text-align: center;
-      margin: 8px 0 2px 0;
+      margin: 12px 0 4px 0;
     }
     .print-btn {
       display: block;
@@ -2612,15 +2634,15 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
   </style>
 </head>
 <body>
-  <div style="width: 100%; max-width: 440px;">
+  <div style="width: 100%; max-width: 210mm;">
     <button class="print-btn" onclick="window.print()">🖨️ Print Dot Matrix Slip</button>
     <div class="sprocket-wrapper">
       
       <div class="sprocket-holes-left">
-        ${Array(25).fill('<div class="hole"></div>').join('')}
+        ${Array(40).fill('<div class="hole"></div>').join('')}
       </div>
       <div class="sprocket-holes-right">
-        ${Array(25).fill('<div class="hole"></div>').join('')}
+        ${Array(40).fill('<div class="hole"></div>').join('')}
       </div>
 
       <div class="slip-content">
@@ -2628,10 +2650,10 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
         <div class="center" style="font-size: 10px;">MINISTRY OF DEFENCE &bull; GOVT OF INDIA</div>
         <div class="center bold" style="font-size: 11px;">URC HQ DELHI AREA (SENA BHAWAN)</div>
         <div class="center" style="font-size: 9.5px;">NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5</div>
-        <div class="divider">================================================</div>
+        <div class="divider">========================================================================================================================</div>
         <div class="center bold" style="font-size: 12px; letter-spacing: 0.5px;">RETAIL TAX INVOICE / CASH MEMO SLIP</div>
         <div class="center" style="font-size: 9.5px;">*** DOT MATRIX POS COUNTER COPY ***</div>
-        <div class="divider">================================================</div>
+        <div class="divider">========================================================================================================================</div>
         
         <div class="flex-row"><span>BILL NO   :</span> <span class="bold">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</span></div>
         <div class="flex-row"><span>INDENT NO :</span> <span>${txn.indentNo || 'IND-2026/10/9482'}</span></div>
@@ -2643,40 +2665,70 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
         <div class="flex-row"><span>RANK/DESIG:</span> <span>${user.designation}</span></div>
         <div class="flex-row"><span>CADRE/MIN :</span> <span>GROUP 'A' / MOD (DMA)</span></div>
         <div class="flex-row"><span>PAN NO    :</span> <span>${user.pan || 'EYUPB3666M'}</span></div>
-        <div class="divider">------------------------------------------------</div>
+        <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
         
         <div class="bold">ITEMIZED PARTICULARS:</div>
-        <div style="font-size: 9.5px;">SKU: 233243 | HSN: 8517 | UNIT: 1 NO</div>
-        <div class="bold" style="font-size: 11.5px; margin: 2px 0;">SAMSUNG GALAXY S25 5G 12/256GB</div>
-        <div style="font-size: 9.5px;">COLOR     : SILVER SHADOW</div>
-        <div style="font-size: 9.5px;">GRADE     : VERY GOOD (A) - BRAND BOX</div>
-        <div style="font-size: 9.5px;">ACCESSORY : ALL ACCESSORIES INCLUDED</div>
-        <div style="font-size: 9.5px;">WARRANTY  : BRAND WARRANTY EXP 23-05-2027</div>
-        <div style="font-size: 9px; line-height: 1.25; margin-top: 2px;">SPECS: 6.2" FHD+ DYN AMOLED 120HZ | SNAPDRAGON 8 ELITE 3NM | 12GB+256GB | 50+10+12MP / 12MP | 4000MAH LI-ION</div>
-        <div style="font-size: 9px; background: #eee; padding: 2px 4px; margin-top: 3px;">
-          IMEI-1: 358941/08/948210/6<br>
-          IMEI-2: 358941/08/948211/4<br>
-          SRL NO: R58N90X233243S
-        </div>
-        <div class="divider">------------------------------------------------</div>
+        ${(txn.items && txn.items.length > 0 ? txn.items : [
+          { 
+            id: '233243', 
+            name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', 
+            category: 'Electronics', 
+            hsn: '8517', 
+            qty: 1, 
+            price: 54436.00, 
+            marketPrice: 80999.00,
+            color: 'Silver Shadow',
+            grade: 'Very Good (A)',
+            brandBox: 'Yes',
+            accessories: 'All Accessories Included',
+            warrantyExpires: '23-05-2027',
+            specs: '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)',
+            imei1: '358941/08/948210/6',
+            imei2: '358941/08/948211/4',
+            serialNo: 'R58N90X233243S',
+            sku: '233243'
+          }
+        ]).map(it => {
+          const isPremium = it.imei1 || it.serialNo || (it.name && (it.name.includes('SAMSUNG') || it.name.includes('PLAYSTATION')));
+          return `
+            <div style="font-size: 9.5px;">SKU: ${it.id || 'N/A'} | HSN: ${it.hsn || '8517'} | UNIT: ${it.qty || 1} ${it.unit || 'NO'}</div>
+            <div class="bold" style="font-size: 11.5px; margin: 2px 0;">${it.name}</div>
+            ${isPremium ? `
+              ${it.color ? `<div style="font-size: 9.5px;">COLOR     : ${it.color.toUpperCase()}</div>` : ''}
+              ${it.grade ? `<div style="font-size: 9.5px;">GRADE     : ${it.grade.toUpperCase()} ${it.brandBox ? '- ' + it.brandBox.toUpperCase() : ''}</div>` : ''}
+              ${it.accessories ? `<div style="font-size: 9.5px;">ACCESSORY : ${it.accessories.toUpperCase()}</div>` : ''}
+              ${it.warrantyExpires ? `<div style="font-size: 9.5px;">WARRANTY  : ${it.warrantyExpires.toUpperCase()}</div>` : ''}
+              ${it.specs ? `<div style="font-size: 9px; line-height: 1.25; margin-top: 2px;">SPECS: ${it.specs.toUpperCase()}</div>` : ''}
+              <div style="font-size: 9px; background: #eee; padding: 2px 4px; margin-top: 3px;">
+                ${it.imei1 && it.imei1 !== 'N/A' ? `IMEI-1: ${it.imei1}<br>` : ''}
+                ${it.imei2 && it.imei2 !== 'N/A' ? `IMEI-2: ${it.imei2}<br>` : ''}
+                SRL NO: ${it.serialNo || 'N/A'}
+              </div>
+            ` : `
+              ${it.specs ? `<div style="font-size: 9px; line-height: 1.25; margin-top: 2px;">${it.specs.toUpperCase()}</div>` : ''}
+            `}
+            <div style="margin-top: 4px; font-size: 9.5px; padding-bottom: 4px; margin-bottom: 4px;">QTY: ${it.qty || 1} @ ₹${(it.price || 0).toFixed(2)} = ₹${((it.price || 0) * (it.qty || 1)).toFixed(2)}</div>
+          `;
+        }).join('<div class="divider" style="margin: 4px 0; border-top: 1px dashed #ccc;"></div>')}
+        <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
         
         <div class="flex-row"><span>QTY: 1 @ CSD NET RATE</span> <span class="bold">₹ 54,436.00</span></div>
         <div class="flex-row"><span>CIVIL OPEN MARKET MRP</span> <span>₹ 80,999.00</span></div>
         <div class="flex-row bold" style="color: #000;"><span>TOTAL DEFENCE CONCESSION</span> <span>Save ₹ 26,563.00</span></div>
-        <div class="divider">------------------------------------------------</div>
+        <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
         
         <div class="bold">STATUTORY TAX COMPUTATION (GST 18%):</div>
         <div class="flex-row"><span>TAXABLE ASSESSABLE VAL</span> <span>₹ 46,132.20</span></div>
         <div class="flex-row"><span>CGST @ 9.00%</span> <span>₹  4,151.90</span></div>
         <div class="flex-row"><span>SGST @ 9.00% (DELHI)</span> <span>₹  4,151.90</span></div>
         <div class="flex-row bold"><span>COMPOSITE GST TOTAL (18%)</span> <span>₹  8,303.80</span></div>
-        <div class="divider">================================================</div>
+        <div class="divider">========================================================================================================================</div>
         
         <div class="flex-row bold" style="font-size: 14px;">
           <span>NET PAYABLE :</span>
           <span>₹ 54,436.00</span>
         </div>
-        <div class="divider">================================================</div>
+        <div class="divider">========================================================================================================================</div>
         
         <div class="bold">PAYMENT SETTLEMENT:</div>
         <div class="flex-row bold" style="font-size: 11.5px;">
@@ -2697,12 +2749,12 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
           ---------------------------------------<br>
           TOTAL PHYSICAL CASH   = ₹ 54,436.00
         </div>
-        <div class="divider">------------------------------------------------</div>
+        <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
         
         <div class="bold" style="font-size: 9.5px;">
           RUPEES FIFTY FOUR THOUSAND FOUR HUNDRED AND THIRTY SIX ONLY
         </div>
-        <div class="divider">================================================</div>
+        <div class="divider">========================================================================================================================</div>
         
         <div class="barcode">|| ||| |||| | ||||| ||</div>
         <div class="center bold" style="font-size: 9.5px;">*CSD-233243-9482-CASH*</div>
@@ -2729,7 +2781,26 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
 </body>
 </html>`;
 
-  triggerDownload(`CSD_DotMatrix_Slip_${safeBillNo}.html`, slipHtml);
+  return slipHtml;
+}
+
+export function downloadCsdDotMatrixSlip(user, txnData) {
+  const txn = txnData || {};
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  triggerDownload(`CSD_DotMatrix_Slip_${safeBillNo}.html`, getCsdDotMatrixSlipHtml(user, txnData));
+}
+
+export function printCsdDotMatrixSlip(user, txnData) {
+  const html = getCsdDotMatrixSlipHtml(user, txnData);
+  const printWin = window.open('', '_blank');
+  if (printWin) {
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => { printWin.print(); }, 500);
+  } else {
+    alert('Please allow popups to print.');
+  }
 }
 
 /**
@@ -4887,4 +4958,234 @@ export function downloadPostingOrder(user) {
   `;
   const doc = `<!DOCTYPE html><html><head><title>Transfer_Order_${user.empId}</title></head><body>${body}</body></html>`;
   triggerDownload(`Transfer_Order_${user.empId}.html`, doc);
+}
+
+/**
+ * Download Toll Exemption Order
+ */
+export function downloadTollExemption(user) {
+  if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I' };
+  const currentYear = new Date().getFullYear();
+  const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  const adobeSig = generateAdobeDigitalSignature(
+    'Shri Rajender Singh, Deputy Secretary',
+    'MoD Toll Exemption Cell',
+    'Authorized under Indian Tolls (Army & Air Force) Act',
+    'New Delhi',
+    null
+  );
+
+  const body = `
+    <div style="font-family: 'Times New Roman', Times, serif; color: #000; padding: 5px 20px; line-height: 1.25; font-size: 12px;">
+      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">
+        <img src="${EMBLEM_B64}" style="height: 50px;" alt="Emblem" />
+        <h3 style="margin: 4px 0 2px 0; font-size: 14px; text-transform: uppercase;">Government of India</h3>
+        <h2 style="margin: 0; font-size: 16px; text-transform: uppercase;">Ministry of Defence</h2>
+        <h4 style="margin: 2px 0 0 0; font-size: 13px;">Department of Military Affairs</h4>
+        <p style="margin: 2px 0 0 0; font-size: 11px;">South Block, Secretariat Building, New Delhi - 110011</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 12px;">
+        <div>File No: MoD/DMA/TOLL-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</div>
+        <div>Date: ${dateStr}</div>
+      </div>
+
+      <div style="margin-bottom: 8px;">
+        <strong>To,</strong><br>
+        The Chairman, National Highways Authority of India (NHAI),<br>
+        G 5 & 6, Sector-10, Dwarka, New Delhi-110075<br><br>
+        <strong>And To:</strong><br>
+        All Project Directors (NHAI) / ROs / Concessionaires / Toll Plaza Managers across India.
+      </div>
+
+      <div style="margin-bottom: 10px; margin-left: 30px; font-size: 12px;">
+        <strong>Subject: Exemption from payment of User Fee (Toll) on National Highways in respect of Armed Forces / Ministry of Defence personnel - Official Order reg.</strong>
+      </div>
+
+      <div style="margin-bottom: 6px;">
+        <strong>Sir/Madam,</strong>
+      </div>
+
+      <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
+        I am directed to convey the sanction of the President of India and to refer to the provisions of the <strong>Indian Tolls (Army and Air Force) Act, 1901</strong>, read in conjunction with the Ministry of Road Transport and Highways (MoRTH) Notification No. H-25016/01/2014-Toll and NH Fee Rules 2008.
+      </p>
+
+      <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
+        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri ${user.name}</strong>, holding the substantive post of <strong>${user.designation}</strong> (Group 'A' Gazetted), bearing Employee/Service ID <strong>${user.empId}</strong>, is a serving commissioned officer / gazetted official under the Ministry of Defence, Government of India.
+      </p>
+
+      <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
+        Accordingly, the above-named officer is <strong>exempted from the payment of user fee (Toll)</strong> across all National Highways, State Highways, bridges, tunnels, and Cantonment entry zones within the territorial jurisdiction of India. This exemption applies whether the officer is traveling on official duty or on leave, and covers the vehicle (official or private) being driven by or conveying the officer.
+      </p>
+
+      <div style="margin: 8px 0; padding: 6px; border: 1px solid #000; background-color: #f9f9f9;">
+        <h4 style="margin-top: 0; text-align: center; text-decoration: underline; font-size: 12px; margin-bottom: 4px;">STANDARD OPERATING PROCEDURE FOR TOLL PLAZAS</h4>
+        <ol style="margin-bottom: 0; padding-left: 18px;">
+          <li style="margin-bottom: 2px;">The production of this Exemption Order along with the official Ministry of Defence Identity Card / Smart Card by the officer shall be deemed sufficient proof of entitlement.</li>
+          <li style="margin-bottom: 2px;">Toll plaza staff / concessionaires are directed to immediately open the boom barrier and accord unrestricted free passage without demanding any further documentation or entry in registers that may cause delay.</li>
+          <li>Any obstruction, harassment, or delay caused to the officer during transit will be viewed seriously and constitutes a punishable offense under Section 6 of the Indian Tolls Act, 1901.</li>
+        </ol>
+      </div>
+
+      <p style="text-align: justify; text-indent: 30px; margin-bottom: 15px;">
+        This order is digitally signed, verifiable on the e-HRMS 2.0 portal, and carries the full authority of the Government of India. It is requested that necessary instructions be disseminated to all toll plaza operators under your jurisdiction to ensure strict compliance.
+      </p>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+        <div style="width: 35%; text-align: center;">
+          <img src="${MOD_STAMP_B64}" style="height: 120px;" alt="MoD Stamp" />
+        </div>
+        <div style="width: 60%; text-align: right;">
+          <div style="margin-bottom: 2px;">Yours faithfully,</div>
+          ${adobeSig}
+          <div style="margin-top: 2px; font-weight: bold;">(Rajender Singh)</div>
+          <div>Deputy Secretary to the Government of India</div>
+          <div>Ministry of Defence / Department of Military Affairs</div>
+          <div>Tel: 011-2301XXXX</div>
+        </div>
+      </div>
+
+      <hr style="border-top: 1px dashed #000; margin: 10px 0 5px 0;">
+
+      <div style="font-size: 10px; line-height: 1.2;">
+        <strong>Copy forwarded for information and necessary action to:</strong><br>
+        1. The Secretary, Ministry of Road Transport & Highways, Transport Bhawan, New Delhi.<br>
+        2. Director General of Police (Traffic) of all States/UTs.<br>
+        3. Indian Highway Management Company Limited (IHMCL) for FASTag exemption whitelist mapping.<br>
+        4. Officer Concerned: <strong>Shri ${user.name}</strong>, for carriage during transit.<br>
+        5. Guard File / e-HRMS Master Ledger.
+      </div>
+    </div>
+  `;
+
+  const doc = wrapGovDocument('Toll_Exemption_Order_' + user.empId, body, true);
+  triggerDownload('Toll_Exemption_Order_MoD.html', doc);
+}
+
+
+/**
+ * Download MSRDC Samruddhi Mahamarg Toll Exemption Order
+ */
+export function downloadSamruddhiTollExemption(user) {
+  if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I' };
+  const currentYear = new Date().getFullYear();
+  const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  const adobeSig = generateAdobeDigitalSignature(
+    'Shri Rajender Singh, Deputy Secretary',
+    'MoD Toll Exemption Cell',
+    'Authorized under Indian Tolls (Army & Air Force) Act',
+    'New Delhi',
+    null
+  );
+
+  const body = `
+    <style>
+      @media print {
+        .doc-container {
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          background: transparent !important;
+        }
+      }
+      .dot-matrix {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        color: #111;
+        text-transform: uppercase;
+      }
+      .scanned-effect {
+        font-family: Arial, Helvetica, sans-serif; 
+        color: #000; 
+        padding: 5px 15px; 
+        line-height: 1.15; 
+        font-size: 12px; 
+        position: relative;
+        background-color: #ffffff;
+      }
+    </style>
+    <div class="scanned-effect">
+      <!-- Watermark -->
+      <div style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 100px; color: rgba(220, 38, 38, 0.08); font-weight: 900; white-space: nowrap; z-index: -1; pointer-events: none;">EXEMPTED</div>
+      
+      <div style="text-align: center; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 2px solid #000;">
+        <img src="${EMBLEM_B64}" style="height: 60px; margin-bottom: 2px;" alt="Emblem" />
+        <h3 style="margin: 0; font-size: 13px; text-transform: uppercase;">Government of India</h3>
+        <h2 style="margin: 2px 0; font-size: 16px; text-transform: uppercase; font-weight: 900;">Ministry of Defence</h2>
+        <h4 style="margin: 0; font-size: 12px; font-weight: bold; text-transform: uppercase;">Department of Military Affairs</h4>
+        <h5 style="margin: 2px 0; font-size: 11px; font-weight: normal;">Toll Exemption & Privileges Cell</h5>
+        <p style="margin: 4px 0 0 0; font-size: 10px;">South Block, Secretariat Building, New Delhi - 110011</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 11px;">
+        <div>File No: <span class="dot-matrix">MoD/DMA/MSRDC-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</span></div>
+        <div>VERIFICATION: <span class="dot-matrix">${user.empId}-MSRDC</span></div>
+        <div>Date: <span class="dot-matrix">${dateStr}</span></div>
+      </div>
+
+      <div style="margin-bottom: 6px;">
+        <strong>To,</strong><br>
+        The Vice Chairman & MD, MSRDC, Mumbai-400036<br>
+        <strong>And To:</strong> All Project Directors / Toll Plaza Managers (Samruddhi Mahamarg).
+      </div>
+
+      <div style="margin: 10px 0 10px 30px; font-size: 11px;">
+        <strong>Subject: <u>MANDATORY EXEMPTION FROM PAYMENT OF USER FEE (TOLL) ON SAMRUDDHI MAHAMARG / MSRDC EXPRESSWAYS IN RESPECT OF ARMED FORCES PERSONNEL.</u></strong>
+      </div>
+
+      <div style="margin-bottom: 6px;">
+        <strong>Sir,</strong>
+      </div>
+
+      <p style="text-align: justify; text-indent: 20px; margin-bottom: 4px;">
+        I am directed to convey the sanction of the President of India and to refer to the provisions of the <strong>Indian Tolls (Army and Air Force) Act, 1901</strong>, read in conjunction with the Maharashtra State Government Resolution (GR) No. टोल-1020/प्र.क्र.12/रस्ते-8 and MSRDC Toll Gazette Notifications.
+      </p>
+
+      <p style="text-align: justify; text-indent: 20px; margin-bottom: 4px;">
+        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri <span class="dot-matrix">${user.name}</span></strong>, holding the substantive post of <strong><span class="dot-matrix">Section Officer</span></strong> (Gazetted), bearing Employee/Service ID <strong><span class="dot-matrix">${user.empId}</span></strong>, is a serving officer under the Ministry of Defence, Government of India.
+      </p>
+
+      <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
+        Accordingly, the above-named officer is <strong>completely exempted from the payment of user fee (Toll)</strong> across the Hindu Hrudaysamrat Balasaheb Thackeray Maharashtra Samruddhi Mahamarg and all other Expressways/Bridges under the jurisdiction of MSRDC. This exemption applies whether the officer is traveling on official duty or on leave, and covers the vehicle (official or private) being driven by or conveying the officer.
+      </p>
+
+      <div style="margin: 10px 0;">
+        <h4 style="margin-top: 0; text-align: center; text-decoration: underline; font-size: 11px; margin-bottom: 4px;">STRICT LEGAL WARNING & SOP FOR TOLL PLAZAS</h4>
+        <ol style="margin-bottom: 0; padding-left: 18px; font-weight: 600;">
+          <li style="margin-bottom: 3px;">The production of this Exemption Order along with the official Ministry of Defence Identity Card by the officer is ABSOLUTE PROOF of entitlement.</li>
+          <li style="margin-bottom: 3px;">Toll plaza staff MUST immediately open the boom barrier and accord unrestricted free passage. No physical logbook entry or delay is permitted.</li>
+          <li><strong>PENALTY CLAUSE:</strong> Any refusal, argument, or delay caused to the officer is a direct violation of Section 6 of the Indian Tolls Act, 1901 and will invite immediate police action and contempt proceedings against the concerned Plaza Manager and Concessionaire.</li>
+        </ol>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+        <div style="width: 35%; text-align: center;">
+          <img src="${MOD_STAMP_B64}" style="height: 90px; filter: contrast(1.1) brightness(0.9) grayscale(0.1);" alt="MoD Stamp" />
+        </div>
+        <div style="width: 60%; text-align: right;">
+          <div style="margin-bottom: 2px;">Yours faithfully,</div>
+          <div style="filter: contrast(1.2) grayscale(0.1); transform: scale(0.9); transform-origin: right bottom;">${adobeSig}</div>
+          <div style="margin-top: 2px; font-weight: bold;">(Rajender Singh)</div>
+          <div>Deputy Secretary to the Government of India</div>
+          <div>Ministry of Defence</div>
+        </div>
+      </div>
+
+      <div style="margin: 6px 0 4px 0;"></div>
+
+      <div style="font-size: 9px; line-height: 1.1;">
+        <strong>Copy forwarded for immediate compliance to:</strong><br>
+        1. The Principal Secretary (PWD), Government of Maharashtra, Mantralaya, Mumbai.<br>
+        2. Director General of Police (Traffic), Maharashtra - for enforcement.<br>
+        3. Indian Highway Management Company Limited (IHMCL) for FASTag exemption whitelist mapping.<br>
+        4. Officer Concerned: <strong>Shri <span class="dot-matrix">${user.name}</span></strong>, for carriage during transit.<br>
+      </div>
+    </div>
+  `;
+
+  const doc = wrapGovDocument('Samruddhi_MSRDC_Exemption_' + user.empId, body, true);
+  triggerDownload('Samruddhi_MSRDC_Exemption_MoD.html', doc);
 }

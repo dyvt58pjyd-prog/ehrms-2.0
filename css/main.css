@@ -75,6 +75,30 @@ body.high-contrast {
   --goi-green-soft: #002200;
 }
 
+/* Modern Dark Mode */
+body.dark-mode {
+  --bg-app: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-subtle: #0f172a;
+  --bg-card: #1e293b;
+  --border-light: #334155;
+  --border-medium: #475569;
+  --border-dark: #64748b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+  
+  --goi-navy: #1e293b;
+  --goi-navy-light: #334155;
+  --goi-blue: #3b82f6;
+  --goi-blue-soft: rgba(59, 130, 246, 0.1);
+  --goi-saffron-soft: rgba(249, 115, 22, 0.1);
+  --goi-green-soft: rgba(34, 197, 94, 0.1);
+  
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+}
 body.font-small {
   --base-font-size: 13px;
 }

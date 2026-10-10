@@ -16,6 +16,31 @@ export function renderDocumentVault(container) {
   // Standard comprehensive catalog of all official documents & certificates
   const defaultVaultDocs = [
     {
+      id: 'DOC-TOLL-2026',
+      name: 'NHAI Toll Plaza Exemption Order (MoD)',
+      category: 'Identity & Personal',
+      date: '04-Oct-2026',
+      verified: true,
+      issuer: 'Ministry of Defence / National Highways Authority of India',
+      docNo: 'NHAI/TOLL-EXEMPT/MOD/2026/8104',
+      icon: '🛣️',
+      description: 'Official authorization letter granting exemption from paying user fee at all NHAI toll plazas under Indian Tolls (Army and Air Force) Act & Gazette Notifications.',
+      downloadFn: () => DL.downloadTollExemption(user)
+    },
+    {
+      id: 'DOC-TOLL-MSRDC-2026',
+      name: 'Samruddhi Mahamarg & MSRDC Toll Exemption Order',
+      category: 'Identity & Personal',
+      date: '04-Oct-2026',
+      verified: true,
+      issuer: 'Ministry of Defence / MSRDC Maharashtra',
+      docNo: 'MSRDC/TOLL-EXEMPT/MOD/2026/8104',
+      icon: '🛣️',
+      description: 'Official authorization letter granting exemption from paying user fee on Samruddhi Mahamarg and all MSRDC expressways.',
+      downloadFn: () => DL.downloadSamruddhiTollExemption(user)
+    },
+
+    {
       id: 'DOC-ESB-2026',
       name: 'Digitally Certified e-Service Book (e-SB)',
       category: 'Service Records',

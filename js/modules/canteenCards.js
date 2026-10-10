@@ -6,7 +6,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, showDownloadToast } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast } from '../downloader.js';
 import { CSD_LOGO_B64, EMBLEM_B64, MOD_STAMP_B64 } from '../csd_assets.js';
 
 // Module-level interactive state
@@ -231,7 +231,13 @@ export function renderCanteenCards(container, initialTab = null) {
   });
 
   container.querySelector('#btn-modal-print-invoice')?.addEventListener('click', () => {
-    window.print();
+    if (activeModalView === 'slip' && activeModalTxn) {
+      printCsdDotMatrixSlip(user, activeModalTxn);
+    } else if (activeModalTxn) {
+      printCsdInvoice(user, activeModalTxn);
+    } else {
+      window.print();
+    }
   });
 
   container.querySelector('#btn-modal-dl-a4')?.addEventListener('click', () => {
@@ -807,8 +813,8 @@ export function renderCanteenCards(container, initialTab = null) {
       });
 
       // Trigger authentic download
-      downloadCsdInvoice(user, newTxn);
-      showDownloadToast(`CSD Retail Tax Invoice #${billNo} Generated & Downloaded!`);
+      downloadCsdDotMatrixSlip(user, newTxn);
+      showDownloadToast(`CSD Dot Matrix Retail Slip #${billNo} Generated & Downloaded!`);
 
       // Clear cart
       cart = [];
@@ -1366,31 +1372,33 @@ export function renderCanteenCards(container, initialTab = null) {
         const taxable = netVal / 1.18;
         const cgst = taxable * 0.09;
         const sgst = taxable * 0.09;
-        const isSamsung = it.id === '233243' || (it.name && it.name.includes('SAMSUNG GALAXY S25'));
-
-        return `
-          <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#fcfcfc'};">
-            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10px; font-weight: 700;">${idx + 1}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">
-              <strong style="color: #002b49;">${it.id || '233243'}</strong><br>
-              <span style="color: #475569; font-size: 8.5px;">HSN: ${it.hsn || '8517'}</span>
-            </td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: left; font-size: 10.5px;">
-              <div style="font-weight: 800; color: #002b49; font-size: 11px;">${it.name}</div>
-              ${isSamsung ? `
-                <div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; font-size: 8.5px;">
-                  <span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color || 'Silver Shadow'}</span>
-                  <span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade || 'Very Good (A)'}</span>
-                  <span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Brand Box &bull; All Accessories</span>
-                  <span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty Exp: ${it.warrantyExpires || '23-05-2027'}</span>
-                </div>
-                <div style="margin-top: 4px; font-size: 8px; color: #334155; line-height: 1.35; font-style: italic;">
-                  ${it.specs || '15.75 cm (6.2") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP+10MP+12MP Rear | 12MP Front | 4000 mAh Li-Ion'}
-                </div>
-                <div style="margin-top: 3px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #475569; background: #f8fafc; padding: 3px 6px; border: 1px dashed #cbd5e1; border-radius: 2px;">
-                  <strong>IMEI-1:</strong> ${it.imei1 || '358941/08/948210/6'} &bull; <strong>IMEI-2:</strong> ${it.imei2 || '358941/08/948211/4'} &bull; <strong>S/N:</strong> ${it.serialNo || 'R58N90X233243S'}
-                </div>
-              ` : (it.specs ? `<div style="font-size: 8px; color: #64748b; margin-top: 2px;">${it.specs}</div>` : '')}
+        const isPremium = it.imei1 || it.serialNo || (it.name && (it.name.includes('SAMSUNG') || it.name.includes('PLAYSTATION')));
+    
+    return `
+      <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#fcfcfc'};">
+        <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10px; font-weight: 700;">${idx + 1}</td>
+        <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">
+          <strong style="color: #002b49;">${it.id || '233243'}</strong><br>
+          <span style="color: #475569; font-size: 8.5px;">HSN: ${it.hsn || '8517'}</span>
+        </td>
+        <td style="border: 1px solid #334155; padding: 6px; text-align: left; font-size: 10.5px;">
+          <div style="font-weight: 800; color: #002b49; font-size: 11px;">${it.name}</div>
+          ${isPremium ? `
+            <div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; font-size: 8.5px;">
+              ${it.color ? `<span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color}</span>` : ''}
+              ${it.grade ? `<span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade}</span>` : ''}
+              ${it.brandBox || it.accessories ? `<span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">${it.brandBox ? it.brandBox : ''} ${it.brandBox && it.accessories ? '&bull;' : ''} ${it.accessories ? it.accessories : ''}</span>` : ''}
+              ${it.warrantyExpires ? `<span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty: ${it.warrantyExpires}</span>` : ''}
+            </div>
+            <div style="margin-top: 4px; font-size: 8px; color: #334155; line-height: 1.35; font-style: italic;">
+              ${it.specs || ''}
+            </div>
+            <div style="margin-top: 3px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #475569; background: #f8fafc; padding: 3px 6px; border: 1px dashed #cbd5e1; border-radius: 2px;">
+              ${it.imei1 && it.imei1 !== 'N/A' ? `<strong>IMEI-1:</strong> ${it.imei1} &bull; ` : ''}
+              ${it.imei2 && it.imei2 !== 'N/A' ? `<strong>IMEI-2:</strong> ${it.imei2} &bull; ` : ''}
+              <strong>S/N:</strong> ${it.serialNo || 'N/A'}
+            </div>
+          ` : (it.specs ? `<div style="font-size: 8px; color: #64748b; margin-top: 2px;">${it.specs}</div>` : '')}
             </td>
             <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10.5px; font-weight: 700;">${qty}</td>
             <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">₹${(taxable / qty).toFixed(2)}</td>

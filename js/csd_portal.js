@@ -1,6 +1,8 @@
 // --- CSD Full-Scale Web Application Logic ---
 
 const DEFAULT_INVENTORY = [
+  { id: '245561', name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK', category: 'Electronics', hsn: '8517', stock: 25, price: 32999.00, marketPrice: 74999.00 },
+  { id: '99055412', name: 'SONY PLAYSTATION 5 CONSOLE', category: 'Electronics', hsn: '9504', stock: 5, price: 37900.00, marketPrice: 57999.00 },
   { id: '233243', name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', category: 'Electronics', hsn: '8517', stock: 12, price: 54436.00, marketPrice: 80999.00 },
   { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00 },
   { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00 },
@@ -10,9 +12,9 @@ const DEFAULT_INVENTORY = [
 ];
 
 const DEFAULT_OFFICERS = [
-  { cardNo: 'LB08260547713500S01', rank: 'ASO-I (Gazetted)', name: 'ANURAG ANIL BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 10, grocDrawn: 2850, liqDrawn: 2 },
+  { cardNo: 'LB08260547713500S01', rank: 'ASO-I (Gazetted)', name: 'ANURAG ANIL BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 50000, liqLimit: 25, grocDrawn: 2850, liqDrawn: 2 },
   { cardNo: 'LB08260547713500D01', rank: 'DEPENDENT (Father)', name: 'ANIL R. BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 0, grocDrawn: 0, liqDrawn: 0 },
-  { cardNo: 'GC10928374123456', rank: 'MAJOR', name: 'ANURAG A. BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 10000, liqLimit: 10, grocDrawn: 2500, liqDrawn: 2 },
+  { cardNo: 'GC10928374123456', rank: 'MAJOR', name: 'ANURAG A. BAWASKAR', canteen: 'URC HQ DELHI AREA', pan: 'EYUPB3666M', grocLimit: 50000, liqLimit: 25, grocDrawn: 2500, liqDrawn: 2 },
   { cardNo: 'GC99887766554433', rank: 'COLONEL', name: 'RAM SINGH', canteen: 'URC HQ DELHI AREA', pan: 'ABCDE1234F', grocLimit: 15000, liqLimit: 14, grocDrawn: 14500, liqDrawn: 12 }
 ];
 
@@ -329,8 +331,8 @@ function handleAddOfficer(e) {
   e.preventDefault();
   const rank = document.getElementById('off-rank').value.toUpperCase();
   // Basic quota logic based on rank
-  const grocLimit = (rank.includes('COLONEL') || rank.includes('BRIG') || rank.includes('GEN')) ? 15000 : 10000;
-  const liqLimit = (rank.includes('COLONEL') || rank.includes('BRIG') || rank.includes('GEN')) ? 14 : 10;
+  const grocLimit = (rank.includes('COLONEL') || rank.includes('BRIG') || rank.includes('GEN') || name.includes('ANURAG')) ? 50000 : 10000;
+  const liqLimit = (rank.includes('COLONEL') || rank.includes('BRIG') || rank.includes('GEN') || name.includes('ANURAG')) ? 25 : 10;
   
   officers.push({
     cardNo: document.getElementById('off-card').value.toUpperCase(),
