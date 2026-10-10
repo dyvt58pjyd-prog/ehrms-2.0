@@ -334,12 +334,6 @@ export function renderSalaryPaySlip(container) {
     </div>
   `;
 
-  const monthSelect = container.querySelector('#select-payslip-month');
-  const monthLabel = container.querySelector('#payslip-month-label');
-  monthSelect.addEventListener('change', () => {
-    monthLabel.textContent = monthSelect.value.toUpperCase();
-  });
-
   container.querySelector('#btn-print-payslip').addEventListener('click', () => window.print());
   container.querySelector('#btn-download-itrv')?.addEventListener('click', () => downloadITRV(user));
   
@@ -348,7 +342,7 @@ export function renderSalaryPaySlip(container) {
   });
 
   container.querySelector('#btn-download-payslip').addEventListener('click', () => {
-    downloadPaySlip(user, payroll, monthSelect.value);
+    downloadPaySlip(user, payroll, selectMonth.value);
   });
 
   // Dynamically calculate YTD and Audit variables based on current month
