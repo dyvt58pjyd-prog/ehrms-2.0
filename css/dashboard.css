@@ -538,9 +538,9 @@ body.login-view {
 
 body.login-view .tricolor-stripe,
 body.login-view .accessibility-bar,
-body.login-view .portal-header,
+body.login-view .main-header,
 body.login-view .portal-nav,
-body.login-view .portal-footer {
+body.login-view .gov-footer {
   display: none !important;
 }
 
