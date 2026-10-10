@@ -1655,8 +1655,6 @@ class StateManager {
           }
         }
       }
-      }
-      
       // Sync to Supabase Cloud DB in real-time
       if (supabaseClient) {
         supabaseClient.from('ehrms_state').upsert({ id: 'global_state', data: this.data })
