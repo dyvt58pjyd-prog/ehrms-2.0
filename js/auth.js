@@ -267,8 +267,8 @@ export function renderLoginScreen(container, onLoginSuccess) {
             <div class="persona-option-row" data-role="DDO" data-uid="ddo.10501" data-pwd="DDO@10501">
               <div class="persona-avatar">💰</div>
               <div class="persona-details">
-                <div class="p-name">Shri Pradeep Kumar, SAO <span class="badge-tag">DDO (Cash & Treasury)</span></div>
-                <div class="p-meta">User ID: <strong>ddo.10501</strong> &bull; DDO Code: <strong>10501</strong> &bull; PAO: <strong>001488</strong></div>
+                <div class="p-name">Shri Pradeep Kumar, SAO <span class="badge-tag">DDO (Dept of Defence Finance - CGDA)</span></div>
+                <div class="p-meta">User ID: <strong>ddo.10501</strong> &bull; DDO Code: <strong>10501 (CGDA)</strong> &bull; PAO: <strong>001488</strong></div>
               </div>
               <button type="button" class="btn btn-sm btn-outline">Sign In</button>
             </div>

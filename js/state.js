@@ -95,12 +95,12 @@ const INITIAL_DATA = {
     disbursingOfficer: {
       name: 'Shri Pradeep Kumar, SAO',
       designation: 'Drawing & Disbursing Officer (DDO)',
-      department: 'Department of Military Affairs',
+      department: 'Department of Defence Finance (CGDA)',
       ddoCode: '10501',
       paoCode: '001488',
-      email: 'ddo-dma@gov.in',
-      empId: 'MOD-DMA-DDO-04',
-      room: 'Room 102, Sena Bhawan, New Delhi'
+      email: 'ddo-cgda.finance@gov.in',
+      empId: 'MOD-CGDA-DDO-04',
+      room: 'Defence Finance Wing, CGDA, New Delhi'
     }
   },
 
@@ -190,9 +190,9 @@ const INITIAL_DATA = {
     {
       name: 'Shri Pradeep Kumar, SAO',
       designation: 'Drawing & Disbursing Officer (DDO)',
-      wing: 'Cash & Accounts Branch (DDO Code: 10501)',
-      office: 'Room 102, Sena Bhawan, New Delhi',
-      email: 'ddo-dma@gov.in',
+      wing: 'Department of Defence Finance (CGDA) - DDO Code: 10501',
+      office: 'Defence Finance Wing, CGDA, New Delhi',
+      email: 'ddo-cgda.finance@gov.in',
       phone: '011-23017789',
       roleType: 'DDO'
     }
@@ -613,8 +613,8 @@ const INITIAL_DATA = {
       tokenDate: '29-Aug-2026',
       voucherNo: 'PAO-DMA-VR-2026-08104',
       voucherDate: '31-Aug-2026',
-      ddoCode: '10501 (DDO, Department of Military Affairs)',
-      paoCode: '001488 (PAO, Ministry of Defence, South Block)',
+      ddoCode: '10501 (Department of Defence Finance - CGDA)',
+      paoCode: '001488 (PAO, Ministry of Defence Secretariat / CGDA)',
       pfmsSanctionId: 'PFMS-MOD-DMA-2026-AUG-8104',
       utr: 'SBIN0001818948102'
     }
@@ -1561,8 +1561,8 @@ class StateManager {
           parsed.currentUser.ddoCode = '10501';
           parsed.currentUser.disbursingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.disbursingOfficer));
           if (parsed.payroll && parsed.payroll.accounting) {
-            parsed.payroll.accounting.ddoCode = '10501 (DDO, Department of Military Affairs)';
-            parsed.payroll.accounting.paoCode = '001488 (PAO, Ministry of Defence, South Block)';
+            parsed.payroll.accounting.ddoCode = '10501 (Department of Defence Finance - CGDA)';
+            parsed.payroll.accounting.paoCode = '001488 (PAO, Ministry of Defence Secretariat / CGDA)';
           }
 
           // Ensure all features from INITIAL_DATA are merged if missing in stored state
@@ -1822,21 +1822,21 @@ export const OFFICIAL_PERSONAS = {
     id: 'DDO',
     userId: 'ddo.10501',
     password: 'DDO@10501',
-    allowedIdentifiers: ['ddo.10501', '10501', 'pradeep.kumar', 'ddo-dma@gov.in', 'mod-dma-ddo-04', '011-23017789', '01123017789'],
+    allowedIdentifiers: ['ddo.10501', '10501', 'pradeep.kumar', 'ddo-cgda.finance@gov.in', 'ddo-dma@gov.in', 'mod-cgda-ddo-04', 'mod-dma-ddo-04', '011-23017789', '01123017789'],
     name: 'Shri Pradeep Kumar, SAO',
     hindiName: 'श्री प्रदीप कुमार, व.ले.अ.',
     designation: 'Drawing & Disbursing Officer (DDO)',
     hindiDesignation: 'आहरण एवं संवितरण अधिकारी',
-    roleTitle: 'DDO Cash & Payroll Disbursement',
-    classification: 'Senior Accounts Officer / Defence Accounts Department',
-    department: 'Department of Military Affairs',
+    roleTitle: 'DDO (Department of Defence Finance - CGDA)',
+    classification: 'Senior Accounts Officer / Defence Accounts Department (CGDA)',
+    department: 'Department of Defence Finance (CGDA)',
     ministry: 'Ministry of Defence',
-    office: 'Room 102, Sena Bhawan, New Delhi',
-    email: 'ddo-dma@gov.in',
+    office: 'Defence Finance Wing, CGDA, New Delhi',
+    email: 'ddo-cgda.finance@gov.in',
     phone: '011-23017789',
     ddoCode: '10501',
     paoCode: '001488',
-    empId: 'MOD-DMA-DDO-04',
+    empId: 'MOD-CGDA-DDO-04',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'salary',
     badgeClass: 'badge-clear'

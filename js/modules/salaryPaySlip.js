@@ -121,10 +121,10 @@ export function renderSalaryPaySlip(container) {
         <div><strong>Pay Matrix Level / वेतन स्तर:</strong> ${user.payLevel} (${user.cell})</div>
         <div><strong>PRAN / NPS Acc No / प्रान संख्या:</strong> ${user.pran}</div>
         <div><strong>Permanent Account Number (PAN):</strong> <strong>${user.pan}</strong></div>
-        <div><strong>DDO Code / डीडीओ कोड:</strong> <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> (Cash &amp; Accounts Branch, DMA)</div>
-        <div><strong>Drawing &amp; Disbursing Officer / डीडीओ:</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> (${user.disbursingOfficer?.designation || 'DDO Cash &amp; Accounts'})</div>
-        <div><strong>PAO Code / वेतन व लेखा कार्यालय:</strong> <strong>001488</strong> (PAO, MoD Secretariat, South Block, New Delhi)</div>
-        <div><strong>DDO Office / डीडीओ कार्यालय:</strong> Room 102, Sena Bhawan, New Delhi - 110011</div>
+        <div><strong>DDO Code / डीडीओ कोड:</strong> <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> (Department of Defence Finance - CGDA)</div>
+        <div><strong>Drawing &amp; Disbursing Officer / डीडीओ:</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> (${user.disbursingOfficer?.designation || 'Senior Accounts Officer / DDO, CGDA'})</div>
+        <div><strong>PAO Code / वेतन व लेखा कार्यालय:</strong> <strong>001488</strong> (PAO, MoD Secretariat / CGDA, South Block, New Delhi)</div>
+        <div><strong>DDO Office / डीडीओ कार्यालय:</strong> Office of the CGDA, Department of Defence Finance, New Delhi</div>
         <div><strong>Bank Name &amp; Branch / बैंक व शाखा:</strong> ${user.bankDetails?.bankName || 'SBI'} &bull; ${user.bankDetails?.branch || 'DEFENCE BANKING BRANCH, AFS, BAREILLY'}</div>
         <div><strong>Bank Account No / खाता संख्या:</strong> <strong>${user.bankDetails?.accountNo || '39189241534'}</strong> (${user.bankDetails?.accountType || 'Savings Bank - DSP'})</div>
         <div><strong>IFSC Code / आईएफएससी:</strong> <strong>${user.bankDetails?.ifsc || 'SBIN0001818'}</strong> (MICR: ${user.bankDetails?.micr || '243002018'})</div>
@@ -345,8 +345,8 @@ export function renderSalaryPaySlip(container) {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 16px; font-size: 11.5px; color: #334155;">
-          <div><strong>Disbursing Office:</strong> DDO Cash &amp; Accounts (DDO Code: <strong>10501</strong>), Dept of Military Affairs</div>
-          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>001488</strong> (MoD Secretariat, South Block, New Delhi)</div>
+          <div><strong>Disbursing Office:</strong> Department of Defence Finance (CGDA) &bull; DDO Code: <strong>10501</strong></div>
+          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>001488</strong> (MoD Secretariat / CGDA, South Block, New Delhi)</div>
           <div><strong>Rule Reference:</strong> Rule 257 &amp; 288 of GFR 2017 &bull; Centralized e-Payroll Mandate</div>
           <div><strong>Legal Validity:</strong> Validated Electronic Document under Section 65B of Indian Evidence Act</div>
         </div>
@@ -409,8 +409,8 @@ export function renderSalaryPaySlip(container) {
     const lastDay = new Date(year, monthIndex + 1, 0).getDate();
     const pad = (n) => String(n).padStart(2, '0');
     
-    if(elAuditBill) elAuditBill.textContent = `Bill No: DMA/ESTT-I/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
-    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: TK-10501-${year}-${pad(monthIndex+1)} &bull; Voucher No: PAO-DMA-VR-${year}-08104 &bull; PFMS ID: PFMS-MOD-DMA-${year}-${shortMon}-8104 &bull; DDO Code: 10501`;
+    if(elAuditBill) elAuditBill.textContent = `Bill No: DEF/FIN-CGDA/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
+    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: TK-10501-${year}-${pad(monthIndex+1)} &bull; Voucher No: PAO-CGDA-VR-${year}-08104 &bull; PFMS ID: PFMS-CGDA-FIN-${year}-${shortMon}-8104 &bull; DDO Code: 10501 (Dept of Defence Finance - CGDA)`;
     if(elAuditCred) elAuditCred.innerHTML = `Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${shortMon}-${year} 10:14 IST`;
 
     const elSysRef = container.querySelector('#sys-ref-code');

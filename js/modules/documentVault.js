@@ -62,7 +62,7 @@ export function renderDocumentVault(container) {
       category: 'Tax & Finance',
       date: curMonthVal,
       verified: true,
-      issuer: 'DDO Cash & Payroll (Code: 10501), New Delhi',
+      issuer: 'Department of Defence Finance (CGDA) - DDO Code: 10501',
       docNo: `PCDA/PAY/${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/8104`,
       icon: '💳',
       description: 'Official monthly pay and allowances computation breakdown with 53% DA, HRA, TA, NPS deduction, and PFMS mandate reference.',

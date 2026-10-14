@@ -860,7 +860,7 @@ export function downloadPaySlip(user, payroll, month) {
       </tr>
       <tr>
         <td style="font-weight: bold;">इकाई / आ.सं.अ.<br>UNIT / DDO</td>
-        <td>रक्षा विभाग (सैन्य कार्य विभाग)<br>DEPARTMENT OF MILITARY AFFAIRS (DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'})</td>
+        <td>रक्षा वित्त विभाग (रक्षा लेखा महानियंत्रक)<br>DEPARTMENT OF DEFENCE FINANCE (CGDA) &bull; DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</td>
         <td style="font-weight: bold;">बैंक विवरण<br>BANK DETAILS</td>
         <td>
           A/C: ${user.bankDetails?.accountNo || '39189241534'} (${user.bankDetails?.bankName || 'SBI'})<br>
@@ -1036,9 +1036,9 @@ export function downloadPaySlip(user, payroll, month) {
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: #333;">
-            <span><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} (Cash &amp; Accounts, Dept of Military Affairs)</span>
-            <span><strong>PAO Code:</strong> 001488 (MoD Secretariat, New Delhi)</span>
-            <span><strong>PFMS Ref:</strong> PFMS-MOD-DMA-${psYear}-${pad(psMonth+1)}-8104</span>
+            <span><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} (Department of Defence Finance - CGDA)</span>
+            <span><strong>PAO Code:</strong> 001488 (MoD Secretariat / CGDA, New Delhi)</span>
+            <span><strong>PFMS Ref:</strong> PFMS-CGDA-FIN-${psYear}-${pad(psMonth+1)}-8104</span>
             <span><strong>Generated:</strong> ${lastDay}-${month ? month.substring(0,3).toUpperCase() : 'AUG'}-${psYear}</span>
           </div>
         </div>
@@ -4103,7 +4103,7 @@ export function downloadForm16(user) {
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
             ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
             Full Name: Shri Pradeep Kumar, SAO<br>
-            Designation: Drawing & Disbursing Officer (DDO), DMA
+            Designation: Drawing & Disbursing Officer (DDO), Department of Defence Finance (CGDA)
           </div>
         </div>
       </div>
@@ -4425,11 +4425,11 @@ export function downloadLTCCertificate(user) {
       <div style="margin-top: 45px; text-align: right;">
         <div style="display: inline-block; text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Accounts Officer (PAO) / DDO (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), DMA", "LTC Claim Financial Sanction Approval", "New Delhi, India", "2026.07.24 16:40:15 +05'30'")}
+          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), Dept of Defence Finance (CGDA)", "LTC Claim Financial Sanction Approval", "New Delhi, India", "2026.07.24 16:40:15 +05'30'")}
           <div style="font-size: 12px; font-weight: bold; margin-top: 6px; text-align: right; color: #111; line-height: 1.4;">
             (${user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO"})<br>
-            Accounts Officer (PAO) &amp; DDO<br>
-            Department of Military Affairs, Ministry of Defence
+            Accounts Officer (PAO) &amp; DDO (Code: 10501)<br>
+            Department of Defence Finance (CGDA), Ministry of Defence
           </div>
         </div>
       </div>

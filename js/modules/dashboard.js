@@ -123,7 +123,7 @@ function renderPersonaStatPill(role, serviceYears, yearsToRetire, totalPending, 
       return `
         <div class="stat-pill">
           <div class="val">10501</div>
-          <div class="lbl">DDO Code (DMA)</div>
+          <div class="lbl">DDO Code (CGDA)</div>
         </div>
         <div class="stat-pill" style="border-color: #10b981;">
           <div class="val" style="color: #047857;">₹1.40 Cr</div>
@@ -743,8 +743,8 @@ function renderDdoDashboard(state, user) {
             <span class="gov-card-title">🏦 DDO 10501 Accounting Ledger</span>
           </div>
           <div class="gov-card-body" style="font-size: 12px; line-height: 1.6;">
-            <div><strong>DDO Code:</strong> 10501 (Dept of Military Affairs)</div>
-            <div><strong>PAO Code:</strong> 001488 (MoD Secretariat)</div>
+            <div><strong>DDO Code:</strong> 10501 (Department of Defence Finance - CGDA)</div>
+            <div><strong>PAO Code:</strong> 001488 (MoD Secretariat / CGDA)</div>
             <div><strong>Major Head:</strong> 2052 (Secretariat General)</div>
             <div><strong>Disbursing Bank:</strong> State Bank of India</div>
             <div><strong>TDS TAN:</strong> DELD01824A</div>
@@ -819,7 +819,7 @@ function renderAdminDashboard(state) {
                 <span style="color: #166534; font-weight: 700;">Active (2FA Enforced)</span>
               </div>
               <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 6px;">
-                <span>DDO Code 10501 PFMS Integration Status</span>
+                <span>DDO Code 10501 (CGDA / Defence Finance) PFMS Integration Status</span>
                 <span style="color: #166534; font-weight: 700;">Connected (PAO 001488)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">

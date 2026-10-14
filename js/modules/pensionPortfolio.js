@@ -42,7 +42,7 @@ export function renderPensionPortfolio(container) {
             ${pension.pran}
           </div>
           <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 4px;">
-            Subscriber: <strong>${user.name}</strong> &bull; DDO Reg No: <strong>10501</strong> &bull; PAO: <strong>001488 (MoD)</strong>
+            Subscriber: <strong>${user.name}</strong> &bull; DDO Reg No: <strong>10501 (Dept of Defence Finance - CGDA)</strong> &bull; PAO: <strong>001488 (MoD / CGDA)</strong>
           </div>
         </div>
         <div style="text-align: right;">
@@ -84,7 +84,7 @@ export function renderPensionPortfolio(container) {
           ₹${payroll.govtNpsContribution.toLocaleString('en-IN')}
         </div>
         <div style="font-size: 11px; color: #6d28d9; font-weight: 600; margin-top: 4px;">
-          Disbursed by MoD DDO 10501
+          Disbursed by DDO 10501 (Dept of Defence Finance - CGDA)
         </div>
       </div>
 
