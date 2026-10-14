@@ -1025,28 +1025,28 @@ export function downloadPaySlip(user, payroll, month) {
       }
       const lastDay = new Date(psYear, psMonth + 1, 0).getDate();
       const pad = (n) => String(n).padStart(2, '0');
-      const payslipSignDate = `${psYear}.${pad(psMonth + 1)}.${pad(lastDay)} 17:15:22 +05'30'`;
       return `
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px;">
-          <div style="text-align: left; font-size: 8.5px; color: #475569; line-height: 1.45;">
-            <div><strong>PFMS Accounting Classification:</strong> Major Head 2052 &bull; Sub Head 02 (DMA) &bull; Object Head 01 (Salaries)</div>
-            <div><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} &bull; <strong>PAO Code:</strong> 001488 (MoD Secretariat)</div>
-            <div><strong>PFMS Sanction ID:</strong> PFMS-MOD-DMA-${psYear}-${pad(psMonth+1)}-8104</div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="text-align: center;">
-              <img src="${window.location.origin}/assets/mod_stamp.png" style="height: 75px; width: auto; opacity: 0.88; mix-blend-mode: multiply;" alt="DDO Seal"><br>
-              <span style="font-size: 8px; font-weight: bold; color: #1e293b;">DDO SEAL (10501)</span>
+        <div style="margin-top: 15px; border: 1.5px solid #000; background: #fafafa; padding: 9px 14px; font-family: Arial, sans-serif;">
+          <div style="text-align: center; border-bottom: 1px dashed #777; padding-bottom: 6px; margin-bottom: 6px;">
+            <div style="font-size: 11.5px; font-weight: bold; letter-spacing: 0.5px; color: #000; text-transform: uppercase;">
+              *** THIS IS A COMPUTER-GENERATED PAY SLIP &bull; DOES NOT REQUIRE ANY SIGNATURE ***
             </div>
-            <div style="text-align: right;">
-              <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
-              ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India", payslipSignDate)}
+            <div style="font-size: 10px; color: #333; margin-top: 2px;">
+              यह एक कंप्यूटर जनित पर्ची है, अतः इसमें हस्ताक्षर की आवश्यकता नहीं है।
             </div>
           </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: #333;">
+            <span><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} (Cash &amp; Accounts, Dept of Military Affairs)</span>
+            <span><strong>PAO Code:</strong> 001488 (MoD Secretariat, New Delhi)</span>
+            <span><strong>PFMS Ref:</strong> PFMS-MOD-DMA-${psYear}-${pad(psMonth+1)}-8104</span>
+            <span><strong>Generated:</strong> ${lastDay}-${month ? month.substring(0,3).toUpperCase() : 'AUG'}-${psYear}</span>
+          </div>
+        </div>
+        <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-top: 6px; text-align: center; color: #555;">
+          Official Electronic Disbursement Record &bull; Ministry of Defence &bull; Centralized e-HRMS 2.0 &bull; PFMS Mandate
         </div>
       `;
     })()}
-    <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-top: 6px;">NOTE: Computer generated statement from PCDA (New Delhi) / e-HRMS 2.0 with cryptographic verification.</div>
   `;
 
   const doc = wrapGovDocument(`Pay_Slip_${month.replace(/\s+/g, '_')}_${user.name.replace(/\s+/g, '_')}`, body, true);

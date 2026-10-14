@@ -317,55 +317,38 @@ export function renderSalaryPaySlip(container) {
         </div>
       </div>
 
-      <!-- Government Authentication & Digital Signature Footer -->
-      <div class="payslip-signature-section" style="margin-top: 24px; border-top: 1.5px dashed #cbd5e1; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 260px; font-size: 11.5px; color: var(--text-muted); line-height: 1.55;">
-          <div style="font-weight: 700; color: var(--goi-navy); margin-bottom: 3px;">
-            <i class="fa-solid fa-circle-check" style="color: #16a34a; margin-right: 5px;"></i>
-            STATUTORY DDO CERTIFICATION &amp; DISBURSEMENT SANCTION (RULE 257 GFR 2017)
-          </div>
-          Certified that the government servant named above was on duty / authorized leave during the billing period.<br>
-          Generated through Centralized e-HRMS 2.0 &bull; Public Financial Management System (PFMS), Ministry of Finance.<br>
-          Passed for payment via DDO Cash &amp; Accounts Branch, Dept of Military Affairs (DDO Code: <strong>10501</strong> &bull; PAO: <strong>001488</strong>).
-        </div>
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <!-- Official DDO Seal / Stamp -->
-          <div style="text-align: center; flex-shrink: 0;">
-            <img src="assets/mod_stamp.png" alt="Official DDO Seal" style="height: 82px; width: 82px; object-fit: contain; opacity: 0.9; mix-blend-mode: multiply;">
-            <div style="font-size: 9.5px; font-weight: 700; color: #1e3a8a; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px;">
-              DDO Cash &bull; Code: 10501<br>Dept of Military Affairs
+      <!-- Official Government Computer-Generated Statement Box (No Signature Required) -->
+      <div class="payslip-computer-gen-box" style="margin-top: 22px; border: 1.5px solid #002B49; background: #f8fafc; border-radius: 6px; padding: 14px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 12px; margin-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="background: #e0f2fe; color: #002B49; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">
+              🖥️
             </div>
-          </div>
-
-          <!-- Official Adobe Digital Signature Card -->
-          <div class="adobe-digital-signature" style="
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            border: 1.5px solid #16a34a;
-            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-            padding: 8px 14px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-            text-align: left;
-            min-width: 290px;
-          ">
-            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-              <svg width="42" height="42" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-                <path d="M14 24.5L21 31.5L34 17" stroke="#15803d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div style="font-size: 11px; line-height: 1.45; color: #1e293b;">
-              <div style="font-size: 12.5px; font-weight: 800; color: #15803d; margin-bottom: 2px;">
-                ✓ Signature Valid (e-Sign DSC)
+            <div>
+              <div style="font-size: 13.5px; font-weight: 800; color: #002B49; letter-spacing: 0.4px; text-transform: uppercase;">
+                THIS IS A COMPUTER-GENERATED PAY SLIP &bull; NO SIGNATURE REQUIRED
               </div>
-              <div>Digitally signed by: <strong>PRADEEP KUMAR</strong></div>
-              <div>Designation: <strong>Senior Accounts Officer (DDO)</strong></div>
-              <div id="ddo-sign-timestamp" style="font-size: 10px; color: #334155; font-family: 'Courier New', monospace;">Date: 2026.08.31 17:15:22 +05'30'</div>
-              <div style="font-size: 9.5px; color: #64748b;">DDO Code: <strong>10501</strong> &bull; PAO: <strong>001488 (MoD)</strong></div>
+              <div style="font-size: 11.5px; color: #475569; font-weight: 600; margin-top: 2px;">
+                यह एक कंप्यूटर जनित वेतन पर्ची है, अतः इस पर किसी हस्ताक्षर की आवश्यकता नहीं है।
+              </div>
             </div>
           </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="text-align: right; font-size: 11px; color: #64748b; line-height: 1.45;">
+              <div><strong>System Ref:</strong> e-HRMS2.0/SAL/<span id="sys-ref-code">2026/10501</span></div>
+              <div id="payslip-gen-timestamp">Generated on: 31-Aug-2026 10:14 IST</div>
+            </div>
+            <div style="background: #166534; color: #ffffff; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-shield-halved"></i> PFMS VALIDATED
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 16px; font-size: 11.5px; color: #334155;">
+          <div><strong>Disbursing Office:</strong> DDO Cash &amp; Accounts (DDO Code: <strong>10501</strong>), Dept of Military Affairs</div>
+          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>001488</strong> (MoD Secretariat, South Block, New Delhi)</div>
+          <div><strong>Rule Reference:</strong> Rule 257 &amp; 288 of GFR 2017 &bull; Centralized e-Payroll Mandate</div>
+          <div><strong>Legal Validity:</strong> Validated Electronic Document under Section 65B of Indian Evidence Act</div>
         </div>
       </div>
     </div>
@@ -430,10 +413,10 @@ export function renderSalaryPaySlip(container) {
     if(elAuditPfms) elAuditPfms.innerHTML = `Token No: TK-10501-${year}-${pad(monthIndex+1)} &bull; Voucher No: PAO-DMA-VR-${year}-08104 &bull; PFMS ID: PFMS-MOD-DMA-${year}-${shortMon}-8104 &bull; DDO Code: 10501`;
     if(elAuditCred) elAuditCred.innerHTML = `Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${shortMon}-${year} 10:14 IST`;
 
-    const elDdoSignTimestamp = container.querySelector('#ddo-sign-timestamp');
-    if (elDdoSignTimestamp) {
-      elDdoSignTimestamp.textContent = `Date: ${year}.${pad(monthIndex + 1)}.${pad(lastDay)} 17:15:22 +05'30'`;
-    }
+    const elSysRef = container.querySelector('#sys-ref-code');
+    const elGenTimestamp = container.querySelector('#payslip-gen-timestamp');
+    if (elSysRef) elSysRef.textContent = `${year}/${shortMon}/10501`;
+    if (elGenTimestamp) elGenTimestamp.textContent = `Generated on: ${lastDay}-${shortMon}-${year} 10:14 IST`;
   }
 
   if(selectMonth) {
