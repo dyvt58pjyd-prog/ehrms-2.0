@@ -860,7 +860,7 @@ export function downloadPaySlip(user, payroll, month) {
       </tr>
       <tr>
         <td style="font-weight: bold;">इकाई / आ.सं.अ.<br>UNIT / DDO</td>
-        <td>रक्षा विभाग (सैन्य कार्य विभाग)<br>DEPARTMENT OF MILITARY AFFAIRS (${user.ddoCode})</td>
+        <td>रक्षा विभाग (सैन्य कार्य विभाग)<br>DEPARTMENT OF MILITARY AFFAIRS (DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'})</td>
         <td style="font-weight: bold;">बैंक विवरण<br>BANK DETAILS</td>
         <td>
           A/C: ${user.bankDetails?.accountNo || '39189241534'} (${user.bankDetails?.bankName || 'SBI'})<br>
@@ -1027,10 +1027,21 @@ export function downloadPaySlip(user, payroll, month) {
       const pad = (n) => String(n).padStart(2, '0');
       const payslipSignDate = `${psYear}.${pad(psMonth + 1)}.${pad(lastDay)} 17:15:22 +05'30'`;
       return `
-        <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 15px;">
-          <div style="text-align: right;">
-            <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
-            ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India", payslipSignDate)}
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px;">
+          <div style="text-align: left; font-size: 8.5px; color: #475569; line-height: 1.45;">
+            <div><strong>PFMS Accounting Classification:</strong> Major Head 2052 &bull; Sub Head 02 (DMA) &bull; Object Head 01 (Salaries)</div>
+            <div><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} &bull; <strong>PAO Code:</strong> 001488 (MoD Secretariat)</div>
+            <div><strong>PFMS Sanction ID:</strong> PFMS-MOD-DMA-${psYear}-${pad(psMonth+1)}-8104</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="text-align: center;">
+              <img src="${window.location.origin}/assets/mod_stamp.png" style="height: 75px; width: auto; opacity: 0.88; mix-blend-mode: multiply;" alt="DDO Seal"><br>
+              <span style="font-size: 8px; font-weight: bold; color: #1e293b;">DDO SEAL (10501)</span>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 700; font-size: 9.5px; margin-bottom: 3px; color: #1e293b;">Drawing &amp; Disbursing Officer (DDO):</div>
+              ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", "Drawing & Disbursing Officer (DDO), DMA", "Monthly Salary Disbursement Sanction", "New Delhi, India", payslipSignDate)}
+            </div>
           </div>
         </div>
       `;
@@ -4082,7 +4093,7 @@ export function downloadForm16(user) {
       
       <div style="margin-top: 20px; text-align: justify; font-size: 11px;">
         <strong>Verification</strong><br><br>
-        I, <strong>Shri Rajender Singh, DS (Estt)</strong>, son of Shri Ram Singh working in the capacity of Drawing and Disbursing Officer do hereby certify that a sum of Rs. 1,48,980.00 has been deducted and deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
+        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 001488) do hereby certify that a sum of Rs. 1,48,980.00 has been deducted and deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
         <div style="display: flex; justify-content: space-between; margin-top: 30px;">
           <div>
             Place: <strong>NEW DELHI</strong><br>
@@ -4090,9 +4101,9 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
-            Full Name: Shri Rajender Singh<br>
-            Designation: DS (Estt) & DDO
+            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
+            Full Name: Shri Pradeep Kumar, SAO<br>
+            Designation: Drawing & Disbursing Officer (DDO), DMA
           </div>
         </div>
       </div>
@@ -4264,7 +4275,7 @@ export function downloadForm16(user) {
       
       <div style="margin-top: 15px; text-align: justify; font-size: 11px;">
         <strong>Verification</strong><br><br>
-        I, <strong>Shri Rajender Singh, DS (Estt)</strong>, son of Shri Ram Singh working in the capacity of Drawing and Disbursing Officer do hereby certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
+        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 001488) do hereby certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
         <div style="display: flex; justify-content: space-between; margin-top: 25px;">
           <div>
             Place: <strong>NEW DELHI</strong><br>
@@ -4272,7 +4283,7 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Rajender Singh", "#0f172a", `${currentYear}.05.15 11:45:35 +05'30'`)}\n<strong>Signature of DDO</strong>
+            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:45:35 +05'30'`)}\n<strong>Signature of DDO</strong>
           </div>
         </div>
       </div>

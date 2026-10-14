@@ -42,7 +42,7 @@ const INITIAL_DATA = {
     superannuationDate: '2061-12-31',
     email: 'anurag.bawaskar@gov.in',
     mobile: '+91 84599 62390',
-    ddoCode: '201140',
+    ddoCode: '10501',
     pan: 'EYUPB3666M',
     aadhaarRef: '2444-4759-4810',
     bloodGroup: 'O+ve',
@@ -93,10 +93,10 @@ const INITIAL_DATA = {
       room: 'Room 199-C, South Block, New Delhi'
     },
     disbursingOfficer: {
-      name: 'Shri R. K. Sharma, SAO',
-      designation: 'Senior Accounts Officer (DDO)',
+      name: 'Shri Pradeep Kumar, SAO',
+      designation: 'Drawing & Disbursing Officer (DDO)',
       department: 'Department of Military Affairs',
-      ddoCode: '201140',
+      ddoCode: '10501',
       paoCode: '001488',
       email: 'ddo-dma@gov.in',
       empId: 'MOD-DMA-DDO-04',
@@ -1558,6 +1558,12 @@ class StateManager {
           parsed.currentUser.serviceStatus = INITIAL_DATA.currentUser.serviceStatus;
           parsed.currentUser.office = INITIAL_DATA.currentUser.office;
           parsed.currentUser.department = INITIAL_DATA.currentUser.department;
+          parsed.currentUser.ddoCode = '10501';
+          parsed.currentUser.disbursingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.disbursingOfficer));
+          if (parsed.payroll && parsed.payroll.accounting) {
+            parsed.payroll.accounting.ddoCode = '10501 (DDO, Department of Military Affairs)';
+            parsed.payroll.accounting.paoCode = '001488 (PAO, Ministry of Defence, South Block)';
+          }
 
           // Ensure all features from INITIAL_DATA are merged if missing in stored state
           for (const key of Object.keys(INITIAL_DATA)) {

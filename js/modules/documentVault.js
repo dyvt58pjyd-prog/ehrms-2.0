@@ -13,6 +13,10 @@ export function renderDocumentVault(container) {
   const pension = state.pensionNps || {};
   const sb = state.serviceBook || {};
 
+  const now = new Date();
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const curMonthVal = `${months[now.getMonth()]} ${now.getFullYear()}`;
+
   // Standard comprehensive catalog of all official documents & certificates
   const defaultVaultDocs = [
     {
@@ -56,13 +60,13 @@ export function renderDocumentVault(container) {
       id: 'DOC-PAYSLIP-2026',
       name: '7th CPC Monthly Pay Slip & Entitlement Dossier',
       category: 'Tax & Finance',
-      date: 'September 2026',
+      date: curMonthVal,
       verified: true,
       issuer: 'DDO Cash & Payroll (Code: 10501), New Delhi',
-      docNo: 'PCDA/PAY/2026/09/8104',
+      docNo: `PCDA/PAY/${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/8104`,
       icon: '💳',
       description: 'Official monthly pay and allowances computation breakdown with 53% DA, HRA, TA, NPS deduction, and PFMS mandate reference.',
-      downloadFn: () => DL.downloadPaySlip(user, payroll, 'September 2026')
+      downloadFn: () => DL.downloadPaySlip(user, payroll, curMonthVal)
     },
     {
       id: 'DOC-FORM16-2026',

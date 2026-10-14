@@ -556,7 +556,7 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
       `;
     } else if (style === 'bw') {
       paperCrestCenter.innerHTML = `
-        <img src="assets/emblem_bw.png" alt="State Emblem of India" style="width: 44px; height: 70px; object-fit: contain; margin: 0 auto 2px; display: block;">
+        <img src="assets/emblem.png" alt="State Emblem of India" style="width: 44px; height: 70px; object-fit: contain; margin: 0 auto 2px; display: block; filter: grayscale(100%) brightness(0); opacity: 0.8;">
         <div style="font-size: 8.5px; color: #c00000; font-weight: bold;">सत्यमेव जयते</div>
       `;
     } else if (style === 'dual') {

@@ -624,6 +624,14 @@ function renderBranchOfficerDashboard(state) {
 
 // 4. DDO / Treasury Dashboard (Shri Pradeep Kumar, SAO, DDO Code: 10501)
 function renderDdoDashboard(state, user) {
+  const d = new Date();
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const shorts = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const curMonthName = months[d.getMonth()];
+  const curShortMon = shorts[d.getMonth()];
+  const curYear = d.getFullYear();
+  const curMonthNum = String(d.getMonth() + 1).padStart(2, '0');
+
   return `
     <div class="dashboard-grid">
       <div class="col-8">
@@ -637,10 +645,10 @@ function renderDdoDashboard(state, user) {
           <div class="gov-card-body">
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 14px; margin-bottom: 16px;">
               <div style="font-size: 13px; font-weight: 700; color: #166534;">
-                August 2026 Monthly Salary Bill Disbursed Successfully via PFMS Direct Benefit Transfer (DBT)
+                ${curMonthName} ${curYear} Monthly Salary Bill Disbursed Successfully via PFMS Direct Benefit Transfer (DBT)
               </div>
               <div style="font-size: 11.5px; color: #15803d; margin-top: 4px;">
-                Bill Ref: <strong>DMA/ESTT-I/SAL-AUG-2026/0412</strong> &bull; Token No: <strong>TK-10501-2026-08</strong> &bull; PAO: <strong>001488 (MoD Secretariat)</strong>
+                Bill Ref: <strong>DMA/ESTT-I/SAL-${curShortMon}-${curYear}/0412</strong> &bull; Token No: <strong>TK-10501-${curYear}-${curMonthNum}</strong> &bull; PAO: <strong>001488 (MoD Secretariat)</strong>
               </div>
             </div>
 

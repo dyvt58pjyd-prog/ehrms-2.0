@@ -117,16 +117,18 @@ export function renderSalaryPaySlip(container) {
       <div class="payslip-meta-grid">
         <div><strong>Employee Name / कर्मचारी का नाम:</strong> ${user.name} (${user.hindiName})</div>
         <div><strong>Employee ID / कर्मचारी आईडी:</strong> ${user.empId}</div>
-        <div><strong>Designation & Class / पदनाम व संवर्ग:</strong> ${user.designation} &bull; <strong style="color: var(--goi-navy);">${user.classification || "Group 'A' (Gazetted)"}</strong></div>
+        <div><strong>Designation &amp; Class / पदनाम व संवर्ग:</strong> ${user.designation} &bull; <strong style="color: var(--goi-navy);">${user.classification || "Group 'A' (Gazetted)"}</strong></div>
         <div><strong>Pay Matrix Level / वेतन स्तर:</strong> ${user.payLevel} (${user.cell})</div>
         <div><strong>PRAN / NPS Acc No / प्रान संख्या:</strong> ${user.pran}</div>
         <div><strong>Permanent Account Number (PAN):</strong> <strong>${user.pan}</strong></div>
-        <div><strong>DDO Code / डीडीओ कोड:</strong> ${user.disbursingOfficer.ddoCode || '201140'} (DDO, Dept of Military Affairs)</div>
-        <div><strong>PAO Code / वेतन व लेखा कार्यालय:</strong> 001488 (PAO, MoD, South Block)</div>
-        <div><strong>Bank Name & Branch / बैंक व शाखा:</strong> ${user.bankDetails?.bankName || 'SBI'} &bull; ${user.bankDetails?.branch || 'DEFENCE BANKING BRANCH, AFS, BAREILLY'}</div>
+        <div><strong>DDO Code / डीडीओ कोड:</strong> <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> (Cash &amp; Accounts Branch, DMA)</div>
+        <div><strong>Drawing &amp; Disbursing Officer / डीडीओ:</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> (${user.disbursingOfficer?.designation || 'DDO Cash &amp; Accounts'})</div>
+        <div><strong>PAO Code / वेतन व लेखा कार्यालय:</strong> <strong>001488</strong> (PAO, MoD Secretariat, South Block, New Delhi)</div>
+        <div><strong>DDO Office / डीडीओ कार्यालय:</strong> Room 102, Sena Bhawan, New Delhi - 110011</div>
+        <div><strong>Bank Name &amp; Branch / बैंक व शाखा:</strong> ${user.bankDetails?.bankName || 'SBI'} &bull; ${user.bankDetails?.branch || 'DEFENCE BANKING BRANCH, AFS, BAREILLY'}</div>
         <div><strong>Bank Account No / खाता संख्या:</strong> <strong>${user.bankDetails?.accountNo || '39189241534'}</strong> (${user.bankDetails?.accountType || 'Savings Bank - DSP'})</div>
-        <div><strong>IFSC Code / आईएफएससी:</strong> <strong>${user.bankDetails?.ifsc || 'SBIN0001818'}</strong> (MICR: 243002018)</div>
-        <div><strong>PFMS DBT Mandate / डीबीटी स्थिति:</strong> <span style="color: #166534; font-weight: 700;">✓ Mandate Active &amp; Validated</span></div>
+        <div><strong>IFSC Code / आईएफएससी:</strong> <strong>${user.bankDetails?.ifsc || 'SBIN0001818'}</strong> (MICR: ${user.bankDetails?.micr || '243002018'})</div>
+        <div><strong>PFMS DBT Mandate / डीबीटी स्थिति:</strong> <span style="color: #166534; font-weight: 700;">✓ Mandate Active &amp; Validated (Scheme: ${user.bankDetails?.pfmsSchemeCode || 'PFMS-DEF-CIV-2024'})</span></div>
       </div>
 
       <!-- Earnings vs Deductions Split Table -->
@@ -316,18 +318,53 @@ export function renderSalaryPaySlip(container) {
       </div>
 
       <!-- Government Authentication & Digital Signature Footer -->
-      <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--text-muted);">
-        <div>
-          Certified that the government servant named above was on duty during the entire billing period.<br>
-          Generated through Centralized e-HRMS 2.0 &bull; Public Financial Management System (PFMS), Ministry of Finance.
+      <div class="payslip-signature-section" style="margin-top: 24px; border-top: 1.5px dashed #cbd5e1; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 260px; font-size: 11.5px; color: var(--text-muted); line-height: 1.55;">
+          <div style="font-weight: 700; color: var(--goi-navy); margin-bottom: 3px;">
+            <i class="fa-solid fa-circle-check" style="color: #16a34a; margin-right: 5px;"></i>
+            STATUTORY DDO CERTIFICATION &amp; DISBURSEMENT SANCTION (RULE 257 GFR 2017)
+          </div>
+          Certified that the government servant named above was on duty / authorized leave during the billing period.<br>
+          Generated through Centralized e-HRMS 2.0 &bull; Public Financial Management System (PFMS), Ministry of Finance.<br>
+          Passed for payment via DDO Cash &amp; Accounts Branch, Dept of Military Affairs (DDO Code: <strong>10501</strong> &bull; PAO: <strong>001488</strong>).
         </div>
-        <div style="display: flex; align-items: center; gap: 14px;">
-          
-          <div style="text-align: center; border-top: 1px dashed #94a3b8; padding-top: 6px; width: 260px;">
-          <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong><br>
-          ${user.disbursingOfficer?.designation || 'Drawing & Disbursing Officer (DDO)'}<br>
-          Department of Military Affairs, Ministry of Defence<br>
-          <span style="color: var(--goi-green); font-weight: bold;"><i class="fa-solid fa-certificate"></i> [DIGITALLY SIGNED VIA e-SIGN DSC]</span>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <!-- Official DDO Seal / Stamp -->
+          <div style="text-align: center; flex-shrink: 0;">
+            <img src="assets/mod_stamp.png" alt="Official DDO Seal" style="height: 82px; width: 82px; object-fit: contain; opacity: 0.9; mix-blend-mode: multiply;">
+            <div style="font-size: 9.5px; font-weight: 700; color: #1e3a8a; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px;">
+              DDO Cash &bull; Code: 10501<br>Dept of Military Affairs
+            </div>
+          </div>
+
+          <!-- Official Adobe Digital Signature Card -->
+          <div class="adobe-digital-signature" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1.5px solid #16a34a;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            padding: 8px 14px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            text-align: left;
+            min-width: 290px;
+          ">
+            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+              <svg width="42" height="42" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                <path d="M14 24.5L21 31.5L34 17" stroke="#15803d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div style="font-size: 11px; line-height: 1.45; color: #1e293b;">
+              <div style="font-size: 12.5px; font-weight: 800; color: #15803d; margin-bottom: 2px;">
+                ✓ Signature Valid (e-Sign DSC)
+              </div>
+              <div>Digitally signed by: <strong>PRADEEP KUMAR</strong></div>
+              <div>Designation: <strong>Senior Accounts Officer (DDO)</strong></div>
+              <div id="ddo-sign-timestamp" style="font-size: 10px; color: #334155; font-family: 'Courier New', monospace;">Date: 2026.08.31 17:15:22 +05'30'</div>
+              <div style="font-size: 9.5px; color: #64748b;">DDO Code: <strong>10501</strong> &bull; PAO: <strong>001488 (MoD)</strong></div>
+            </div>
           </div>
         </div>
       </div>
@@ -387,10 +424,16 @@ export function renderSalaryPaySlip(container) {
     if(elYtdNet) elYtdNet.textContent = '₹' + (netPay * numMonths).toLocaleString('en-IN');
     
     const lastDay = new Date(year, monthIndex + 1, 0).getDate();
+    const pad = (n) => String(n).padStart(2, '0');
     
     if(elAuditBill) elAuditBill.textContent = `Bill No: DMA/ESTT-I/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
-    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: PAO/MOD/DEL/${year}/0941 &bull; Voucher No: PAO-DMA-VR-${year}-08104 &bull; PFMS ID: PFMS-MOD-DMA-${year}-${shortMon}-8104`;
+    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: TK-10501-${year}-${pad(monthIndex+1)} &bull; Voucher No: PAO-DMA-VR-${year}-08104 &bull; PFMS ID: PFMS-MOD-DMA-${year}-${shortMon}-8104 &bull; DDO Code: 10501`;
     if(elAuditCred) elAuditCred.innerHTML = `Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${shortMon}-${year} 10:14 IST`;
+
+    const elDdoSignTimestamp = container.querySelector('#ddo-sign-timestamp');
+    if (elDdoSignTimestamp) {
+      elDdoSignTimestamp.textContent = `Date: ${year}.${pad(monthIndex + 1)}.${pad(lastDay)} 17:15:22 +05'30'`;
+    }
   }
 
   if(selectMonth) {
