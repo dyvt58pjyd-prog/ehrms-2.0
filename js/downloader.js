@@ -838,11 +838,12 @@ export function downloadPaySlip(user, payroll, month) {
 
     <div class="cda-header">
       <img src="${window.location.origin}/assets/mod_logo.png" style="width: 55px; height: auto; margin: 0 auto 5px auto; display: block;" alt="MoD Logo">
-      <div class="cda-title" style="margin-bottom: 2px;">कार्यालय प्रधान रक्षा लेखा नियंत्रक (नई दिल्ली)</div>
-      <div class="cda-title">OFFICE OF THE PRINCIPAL CONTROLLER OF DEFENCE ACCOUNTS (NEW DELHI)</div>
-      <div style="font-size: 13px; font-weight: bold; margin-bottom: 2px;">रक्षा मंत्रालय, भारत सरकार</div>
-      <div style="font-size: 12px; margin-bottom: 10px;">MINISTRY OF DEFENCE, GOVERNMENT OF INDIA</div>
-      <div class="cda-subtitle">${month.toUpperCase()} माह के लिए खाता विवरण / STATEMENT OF ACCOUNT FOR THE MONTH OF ${month.toUpperCase()}</div>
+      <div class="cda-title" style="margin-bottom: 2px; font-size: 14px; font-weight: 800; letter-spacing: 0.5px;">कार्यालय रक्षा लेखा महानियंत्रक</div>
+      <div class="cda-title" style="font-size: 13px; font-weight: 800; letter-spacing: 0.5px;">OFFICE OF THE CONTROLLER GENERAL OF DEFENCE ACCOUNTS (CGDA)</div>
+      <div style="font-size: 12px; font-weight: bold; margin-top: 2px;">रक्षा वित्त विभाग &bull; DEPARTMENT OF DEFENCE FINANCE (CGDA)</div>
+      <div style="font-size: 11px; margin-top: 1px;">MINISTRY OF DEFENCE, GOVERNMENT OF INDIA &bull; रक्षा मंत्रालय, भारत सरकार</div>
+      <div style="font-size: 10px; color: #444; margin-top: 2px; margin-bottom: 8px;">उलान बटार मार्ग, पालम, दिल्ली छावनी - 110010 &bull; Ulan Batar Road, Palam, Delhi Cantt - 110010 &bull; Controller Code: 073 (CGDA Civil) &bull; DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</div>
+      <div class="cda-subtitle">${month.toUpperCase()} माह के लिए वेतन पर्ची एवं खाता विवरण / SALARY PAY SLIP &amp; STATEMENT OF ACCOUNT (DAC 2025) FOR ${month.toUpperCase()}</div>
     </div>
 
     <table class="cda-table">
@@ -859,8 +860,8 @@ export function downloadPaySlip(user, payroll, month) {
         <td>${user.pan}</td>
       </tr>
       <tr>
-        <td style="font-weight: bold;">इकाई / आ.सं.अ.<br>UNIT / DDO</td>
-        <td>रक्षा वित्त विभाग (रक्षा लेखा महानियंत्रक)<br>DEPARTMENT OF DEFENCE FINANCE (CGDA) &bull; DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</td>
+        <td style="font-weight: bold;">प्राधिकरण / संवितरण<br>AUTHORITY / DDO</td>
+        <td>रक्षा लेखा महानियंत्रक &bull; रक्षा वित्त विभाग<br>CONTROLLER GENERAL OF DEFENCE ACCOUNTS<br>DEPARTMENT OF DEFENCE FINANCE (CGDA) &bull; DDO Code: ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</td>
         <td style="font-weight: bold;">बैंक विवरण<br>BANK DETAILS</td>
         <td>
           A/C: ${user.bankDetails?.accountNo || '39189241534'} (${user.bankDetails?.bankName || 'SBI'})<br>
@@ -896,37 +897,37 @@ export function downloadPaySlip(user, payroll, month) {
         <table class="cda-table">
           <thead>
             <tr>
-              <th>जमा (आय)<br>CREDITS (EARNINGS)</th>
+              <th>जमा (आय) [DAC 2025 वर्ग I]<br>CREDITS (DAC 2025 OBJ CLASS I)</th>
               <th class="amount">राशि (₹)<br>AMOUNT</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>मूल वेतन<br>BASIC PAY</td>
+              <td>मूल वेतन (ऑब्जेक्ट हेड 01)<br>BASIC PAY (OBJ HEAD 01)</td>
               <td class="amount">${basic.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>महंगाई भत्ता<br>DEARNESS ALLOWANCE (DA)</td>
+              <td>महंगाई भत्ता (ऑब्जेक्ट हेड 07)<br>DEARNESS ALLOWANCE (OBJ HEAD 07)</td>
               <td class="amount">${da.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>मकान किराया भत्ता<br>HOUSE RENT ALLOWANCE (HRA)</td>
+              <td>मकान किराया भत्ता (ऑब्जेक्ट हेड 07)<br>HOUSE RENT ALLOWANCE (OBJ HEAD 07)</td>
               <td class="amount">${hra.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>परिवहन भत्ता<br>TPT ALLOWANCE</td>
+              <td>परिवहन भत्ता (ऑब्जेक्ट हेड 07)<br>TPT ALLOWANCE (OBJ HEAD 07)</td>
               <td class="amount">${ta.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>प.भ. पर म.भ.<br>DA ON TPT ALLOWANCE</td>
+              <td>प.भ. पर म.भ. (ऑब्जेक्ट हेड 07)<br>DA ON TPT ALLOWANCE (OBJ HEAD 07)</td>
               <td class="amount">${daOnTa.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>बाल शिक्षा भत्ता<br>CHILDREN EDU ALLOW (CEA)</td>
+              <td>बाल शिक्षा भत्ता (ऑब्जेक्ट हेड 07)<br>CHILDREN EDU ALLOW (CEA)</td>
               <td class="amount">0.00</td>
             </tr>
             <tr>
-              <td>विशेष कार्य भत्ता<br>SPECIAL DUTY ALLOW (SDA)</td>
+              <td>विशेष कार्य भत्ता (ऑब्जेक्ट हेड 07)<br>SPECIAL DUTY ALLOW (SDA)</td>
               <td class="amount">0.00</td>
             </tr>
             <tr>
@@ -942,29 +943,29 @@ export function downloadPaySlip(user, payroll, month) {
         <table class="cda-table">
           <thead>
             <tr>
-              <th>नामे (कटौती)<br>DEBITS (DEDUCTIONS)</th>
+              <th>नामे (कटौती) [DAC 2025 वसूली]<br>DEBITS (DAC 2025 RECOVERIES)</th>
               <th class="amount">राशि (₹)<br>AMOUNT</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>एन.पी.एस. टियर-I<br>NPS TIER-I</td>
+              <td>एन.पी.एस. टियर-I (पैरा 18.17 / हेड 04)<br>NPS TIER-I (PARA 18.17 / OBJ 04)</td>
               <td class="amount">${nps.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>सी.जी.एच.एस.<br>CGHS</td>
+              <td>सी.जी.एच.एस. (ऑब्जेक्ट हेड 06)<br>CGHS (OBJ HEAD 06 MEDICAL)</td>
               <td class="amount">${cghs.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>सी.जी.ई.जी.आई.एस.<br>CGEGIS</td>
+              <td>सी.जी.ई.जी.आई.एस. (मुख्य शीर्ष 8011)<br>CGEGIS (MAJOR HEAD 8011)</td>
               <td class="amount">${cgegis.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>आयकर (टी.डी.एस.)<br>INCOME TAX (TDS)</td>
+              <td>आयकर (टी.डी.एस.) (मुख्य शीर्ष 0021)<br>INCOME TAX (TDS U/S 192)</td>
               <td class="amount">${tds.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
-              <td>व्यावसायिक कर<br>PROFESSIONAL TAX (PT)</td>
+              <td>व्यावसायिक कर (मुख्य शीर्ष 0028)<br>PROFESSIONAL TAX (PT)</td>
               <td class="amount">${pt.toLocaleString('en-IN')}.00</td>
             </tr>
             <tr>
@@ -1035,15 +1036,18 @@ export function downloadPaySlip(user, payroll, month) {
               यह एक कंप्यूटर जनित पर्ची है, अतः इसमें हस्ताक्षर की आवश्यकता नहीं है।
             </div>
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: #333;">
-            <span><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} (Department of Defence Finance - CGDA)</span>
-            <span><strong>PAO Code:</strong> 001488 (MoD Secretariat / CGDA, New Delhi)</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: #333; flex-wrap: wrap; gap: 4px;">
+            <span><strong>Disbursing Authority:</strong> Controller General of Defence Accounts (CGDA)</span>
+            <span><strong>DDO Code:</strong> ${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'} (DEPARTMENT OF DEFENCE FINANCE)</span>
+            <span><strong>PAO Code:</strong> 001488 (MoD Secretariat / CGDA)</span>
+            <span><strong>Controller Code:</strong> 073 - CGDA (Civil)</span>
+            <span><strong>Accounting Standard:</strong> DAC 2025 (Ch. 3 &amp; App. II)</span>
             <span><strong>PFMS Ref:</strong> PFMS-CGDA-FIN-${psYear}-${pad(psMonth+1)}-8104</span>
             <span><strong>Generated:</strong> ${lastDay}-${month ? month.substring(0,3).toUpperCase() : 'AUG'}-${psYear}</span>
           </div>
         </div>
         <div style="font-family: 'Courier New', Courier, monospace; font-size: 8px; margin-top: 6px; text-align: center; color: #555;">
-          Official Electronic Disbursement Record &bull; Ministry of Defence &bull; Centralized e-HRMS 2.0 &bull; PFMS Mandate
+          Official Electronic Disbursement Record &bull; Controller General of Defence Accounts (CGDA) &bull; DEPARTMENT OF DEFENCE FINANCE &bull; Ministry of Defence &bull; Defence Accounts Code 2025 (DAC 2025)
         </div>
       `;
     })()}

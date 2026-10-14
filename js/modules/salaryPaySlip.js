@@ -102,14 +102,26 @@ export function renderSalaryPaySlip(container) {
     <!-- Official Government Pay Slip Document Card -->
     <div class="payslip-wrapper">
       <div class="payslip-header-center">
-        <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
           <img src="assets/mod_logo.png" alt="MoD Logo" style="height: 70px; width: auto; object-fit: contain;">
         </div>
-        <h3>GOVERNMENT OF INDIA &bull; भारत सरकार</h3>
-        <h4>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h4>
-        <h4>DEPARTMENT OF MILITARY AFFAIRS (DMA), SOUTH BLOCK, NEW DELHI</h4>
-        <div style="margin-top: 6px; font-weight: 700; color: var(--goi-blue); font-size: 14px;">
-          SALARY DISBURSEMENT STATEMENT FOR THE MONTH OF <span id="payslip-month-label">AUGUST 2026</span>
+        <div style="font-size: 16px; font-weight: 800; color: #1e3a8a; letter-spacing: 0.5px; text-transform: uppercase;">
+          कार्यालय रक्षा लेखा महानियंत्रक
+        </div>
+        <div style="font-size: 15px; font-weight: 800; color: #0f172a; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;">
+          Controller General of Defence Accounts
+        </div>
+        <div style="font-size: 13.5px; font-weight: 700; color: #334155; margin-top: 3px;">
+          DEPARTMENT OF DEFENCE FINANCE (CGDA) &bull; DDO Code: <span style="color: #1e3a8a;">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</span>
+        </div>
+        <div style="font-size: 12px; font-weight: 600; color: #64748b; margin-top: 2px;">
+          MINISTRY OF DEFENCE, GOVERNMENT OF INDIA &bull; रक्षा मंत्रालय, भारत सरकार
+        </div>
+        <div style="font-size: 11.5px; color: #64748b; margin-top: 2px;">
+          उलान बटार मार्ग, पालम, दिल्ली छावनी - 110010 &bull; Ulan Batar Road, Palam, Delhi Cantt - 110010
+        </div>
+        <div style="margin-top: 10px; font-weight: 800; color: var(--goi-blue); font-size: 14px; border-top: 1px solid #e2e8f0; padding-top: 8px;">
+          मासिक वेतन विवरण / SALARY DISBURSEMENT STATEMENT FOR THE MONTH OF <span id="payslip-month-label">AUGUST 2026</span>
         </div>
       </div>
 
@@ -121,10 +133,12 @@ export function renderSalaryPaySlip(container) {
         <div><strong>Pay Matrix Level / वेतन स्तर:</strong> ${user.payLevel} (${user.cell})</div>
         <div><strong>PRAN / NPS Acc No / प्रान संख्या:</strong> ${user.pran}</div>
         <div><strong>Permanent Account Number (PAN):</strong> <strong>${user.pan}</strong></div>
-        <div><strong>DDO Code / डीडीओ कोड:</strong> <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> (Department of Defence Finance - CGDA)</div>
+        <div><strong>Issuing Authority / जारीकर्ता प्राधिकरण:</strong> <strong>Controller General of Defence Accounts (CGDA)</strong></div>
+        <div><strong>Department / विभाग:</strong> <strong>DEPARTMENT OF DEFENCE FINANCE (CGDA)</strong></div>
+        <div><strong>DDO Code / डीडीओ कोड:</strong> <strong style="color: var(--goi-navy);">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> &bull; CGDA / Dept of Defence Finance</div>
         <div><strong>Drawing &amp; Disbursing Officer / डीडीओ:</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> (${user.disbursingOfficer?.designation || 'Senior Accounts Officer / DDO, CGDA'})</div>
         <div><strong>PAO Code / वेतन व लेखा कार्यालय:</strong> <strong>001488</strong> (PAO, MoD Secretariat / CGDA, South Block, New Delhi)</div>
-        <div><strong>DDO Office / डीडीओ कार्यालय:</strong> Office of the CGDA, Department of Defence Finance, New Delhi</div>
+        <div><strong>DDO Office / डीडीओ कार्यालय:</strong> Office of the CGDA, Ulan Batar Road, Palam, Delhi Cantt / New Delhi</div>
         <div><strong>Bank Name &amp; Branch / बैंक व शाखा:</strong> ${user.bankDetails?.bankName || 'SBI'} &bull; ${user.bankDetails?.branch || 'DEFENCE BANKING BRANCH, AFS, BAREILLY'}</div>
         <div><strong>Bank Account No / खाता संख्या:</strong> <strong>${user.bankDetails?.accountNo || '39189241534'}</strong> (${user.bankDetails?.accountType || 'Savings Bank - DSP'})</div>
         <div><strong>IFSC Code / आईएफएससी:</strong> <strong>${user.bankDetails?.ifsc || 'SBIN0001818'}</strong> (MICR: ${user.bankDetails?.micr || '243002018'})</div>
@@ -138,7 +152,7 @@ export function renderSalaryPaySlip(container) {
           <table class="payslip-table-mini">
             <thead>
               <tr>
-                <th>EARNINGS HEADS / परिलब्धियां (7th CPC)</th>
+                <th>EARNINGS HEADS / परिलब्धियां (DAC 2025 Object Class I)</th>
                 <th style="text-align: right;">AMOUNT / राशि (₹)</th>
               </tr>
             </thead>
@@ -146,35 +160,35 @@ export function renderSalaryPaySlip(container) {
               <tr>
                 <td>
                   <strong>Basic Pay / मूल वेतन</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">${user.payLevel}, ${user.cell}</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">${user.payLevel}, ${user.cell} &bull; DAC 2025 Object Head 01 (Salaries)</span>
                 </td>
                 <td class="amount">₹${basicPay.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Dearness Allowance (DA) / महंगाई भत्ता</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">@ 53% of Basic Pay (MoF OM effective 01.07.2026)</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">@ 53% of Basic Pay &bull; DAC 2025 Object Head 07 (Allowances)</span>
                 </td>
                 <td class="amount">₹${da.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>House Rent Allowance (HRA) / मकान किराया भत्ता</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">@ 30% for 'X' Class City (Delhi - u/s MoF Rules)</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">@ 30% for 'X' Class City (Delhi) &bull; DAC 2025 Object Head 07</span>
                 </td>
                 <td class="amount">₹${hra.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Transport Allowance (TA) / परिवहन भत्ता</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">Level 7 Higher TPTA City Rate</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">Level 7 Higher TPTA City Rate &bull; DAC 2025 Object Head 07</span>
                 </td>
                 <td class="amount">₹${ta.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>DA on Transport Allowance / परिवहन भत्ते पर डी.ए.</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">@ 53% of Transport Allowance</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">@ 53% of Transport Allowance &bull; DAC 2025 Object Head 07</span>
                 </td>
                 <td class="amount">₹${daOnTa.toLocaleString('en-IN')}</td>
               </tr>
@@ -195,7 +209,7 @@ export function renderSalaryPaySlip(container) {
           <table class="payslip-table-mini">
             <thead>
               <tr>
-                <th>STATUTORY DEDUCTIONS / कटौतियां</th>
+                <th>STATUTORY DEDUCTIONS / कटौतियां (DAC 2025 / Recoveries)</th>
                 <th style="text-align: right;">AMOUNT / राशि (₹)</th>
               </tr>
             </thead>
@@ -203,35 +217,35 @@ export function renderSalaryPaySlip(container) {
               <tr>
                 <td>
                   <strong>NPS Tier-I Employee Contribution / राष्ट्रीय पेंशन प्रणाली</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">10% of (Basic Pay + DA) credited to PRAN ${user.pran}</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">10% of (Basic Pay + DA) to PRAN ${user.pran} &bull; DAC 2025 Para 18.17</span>
                 </td>
                 <td class="amount">₹${npsTier1.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Central Govt Health Scheme (CGHS) / सीजीएचएस</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">Pay Level 7 Contribution (MoHFW OM S.11011/11/2016)</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">Level 7 Statutory Rate &bull; DAC 2025 Object Head 06 (Medical)</span>
                 </td>
                 <td class="amount">₹${cghs.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>CGEGIS (Group 'A' Gazetted Scheme) / समूह बीमा</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">Insurance Fund u/s CGEGIS 1980 Rules (Group 'A')</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">Group 'A' Insurance Fund &bull; Major Head 8011 / DAC 2025</span>
                 </td>
                 <td class="amount">₹${cgegis.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Income Tax (TDS) / आयकर कटौती</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">Section 192 (New Tax Regime u/s 115BAC)</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">Section 192 (New Tax Regime u/s 115BAC) &bull; Major Head 0021</span>
                 </td>
                 <td class="amount">₹${tds.toLocaleString('en-IN')}</td>
               </tr>
               <tr>
                 <td>
-                  <strong>Professional Tax (PT) / व्यवसाय कर</strong><br>
-                  <span style="font-size: 11px; color: var(--text-muted);">Statutory State Professional Tax Deduction</span>
+                  <strong>Professional Tax (PT) / वृत्तिकर</strong><br>
+                  <span style="font-size: 11px; color: var(--text-muted);">State Statutory Recovery &bull; Major Head 0028</span>
                 </td>
                 <td class="amount">₹${pt.toLocaleString('en-IN')}</td>
               </tr>
@@ -308,7 +322,7 @@ export function renderSalaryPaySlip(container) {
       <!-- Government Treasury & PFMS Accounting Classification Audit Strip -->
       <div class="payslip-audit-strip">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 6px; margin-bottom: 6px; font-weight: 600;">
-          <span>Treasury Classification: Major Head 2052 (Secretariat-General Services) &bull; Minor Head 090 &bull; Sub Head 02 (DMA) &bull; Object Head 01 (Salaries)</span>
+          <span>Treasury Classification: Major Head 2052 (Secretariat-General Services) &bull; Minor Head 090 &bull; Sub Head 02 (CGDA / Defence Finance) &bull; Object Head 01 (Salaries)</span>
           <span id="audit-bill"></span>
         </div>
         <div style="display: flex; justify-content: space-between;">
@@ -345,8 +359,10 @@ export function renderSalaryPaySlip(container) {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 16px; font-size: 11.5px; color: #334155;">
-          <div><strong>Disbursing Office:</strong> Department of Defence Finance (CGDA) &bull; DDO Code: <strong>10501</strong></div>
+          <div><strong>Disbursing Authority:</strong> Controller General of Defence Accounts (CGDA)</div>
+          <div><strong>Disbursing Office:</strong> DEPARTMENT OF DEFENCE FINANCE (CGDA) &bull; DDO Code: <strong>10501</strong></div>
           <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>001488</strong> (MoD Secretariat / CGDA, South Block, New Delhi)</div>
+          <div><strong>Accounting Authority:</strong> Defence Accounts Department (DAD), Ministry of Defence</div>
           <div><strong>Rule Reference:</strong> Rule 257 &amp; 288 of GFR 2017 &bull; Centralized e-Payroll Mandate</div>
           <div><strong>Legal Validity:</strong> Validated Electronic Document under Section 65B of Indian Evidence Act</div>
         </div>
