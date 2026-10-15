@@ -269,6 +269,64 @@ function initializeStorage() {
   transactions = JSON.parse(localStorage.getItem('csd_txns')) || generateMockTransactions();
   afdOrders = JSON.parse(localStorage.getItem('csd_afd')) || [];
   saveStorage();
+  syncFromSqlite();
+}
+
+async function syncFromSqlite() {
+  try {
+    const [resInv, resTxn, resOff] = await Promise.all([
+      fetch('/api/csd/inventory').catch(() => null),
+      fetch('/api/csd/transactions').catch(() => null),
+      fetch('/api/csd/officers').catch(() => null)
+    ]);
+
+    if (resInv && resInv.ok) {
+      const dbInv = await resInv.json();
+      if (Array.isArray(dbInv) && dbInv.length > 0) {
+        inventory = dbInv;
+        localStorage.setItem('csd_inventory', JSON.stringify(inventory));
+      }
+    }
+
+    if (resTxn && resTxn.ok) {
+      const dbTxns = await resTxn.json();
+      if (Array.isArray(dbTxns) && dbTxns.length > 0) {
+        // Merge without losing any local mock or real transactions
+        const existingTxnIds = new Set(transactions.map(t => t.id || t.billNo));
+        dbTxns.forEach(t => {
+          const tId = t.id || t.billNo;
+          if (!existingTxnIds.has(tId)) {
+            transactions.unshift(t);
+            existingTxnIds.add(tId);
+          }
+        });
+        localStorage.setItem('csd_txns', JSON.stringify(transactions));
+      }
+    }
+
+    if (resOff && resOff.ok) {
+      const dbOff = await resOff.json();
+      if (Array.isArray(dbOff) && dbOff.length > 0) {
+        officers = dbOff;
+        localStorage.setItem('csd_officers', JSON.stringify(officers));
+      }
+    }
+
+    // Refresh active views if already logged in
+    if (currentUser) {
+      if (currentUser.role === 'admin') {
+        renderAdminInventory();
+        renderAdminAudit();
+        renderAdminPersonnel();
+      } else if (currentUser.role === 'cashier') {
+        renderCatalog();
+      } else if (currentUser.role === 'customer') {
+        renderCustomerProducts();
+      }
+    }
+  } catch (err) {
+    console.warn('SQLite background synchronization notice:', err);
+  }
 }
 
 function saveStorage() {
@@ -276,6 +334,26 @@ function saveStorage() {
   localStorage.setItem('csd_officers', JSON.stringify(officers));
   localStorage.setItem('csd_txns', JSON.stringify(transactions));
   localStorage.setItem('csd_afd', JSON.stringify(afdOrders));
+
+  // Push to server state and SQLite
+  if (typeof fetch !== 'undefined') {
+    fetch('/api/state?ts=' + Date.now(), { cache: 'no-store' })
+      .then(res => res.json())
+      .then(fullState => {
+        if (fullState && fullState.csdBilling) {
+          fullState.csdBilling.inventory = inventory;
+          fullState.csdBilling.transactions = transactions;
+          fullState.csdBilling.officers = officers;
+          fullState.csdBilling.afdOrders = afdOrders;
+          return fetch('/api/state', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fullState)
+          });
+        }
+      })
+      .catch(e => console.warn('Background SQLite state push notice:', e));
+  }
 }
 
 function generateMockTransactions() {
@@ -600,6 +678,12 @@ function handleAddProduct(e) {
   }
 
   saveStorage();
+  fetch('/api/csd/inventory', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newItem)
+  }).catch(e => console.warn('SQLite inventory push notice:', e));
+
   toggleAddProduct();
   renderAdminInventory();
   document.getElementById('form-add-product').reset();
@@ -608,6 +692,9 @@ function handleAddProduct(e) {
 window.deleteProduct = (id) => {
   inventory = inventory.filter(i => i.id !== id);
   saveStorage();
+  fetch('/api/csd/inventory?id=' + encodeURIComponent(id), {
+    method: 'DELETE'
+  }).catch(e => console.warn('SQLite inventory delete notice:', e));
   renderAdminInventory();
 }
 
@@ -891,17 +978,36 @@ function handleCheckout() {
   }
   const hashHex = ('0000000' + (hashVal >>> 0).toString(16)).slice(-8) + 'a1b2c3d4e5f67890aabbccddeeff11223344556677889900aabbccddeeff';
 
-  transactions.push({
+  const newTxn = {
     id: billNo,
+    billNo: billNo,
     cardNo: officer.cardNo,
+    rank: officer.rank || 'ASO-I (Gazetted)',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    terminal: 'POS-01 / IP: 192.168.1.101',
+    cashier: 'Sub Maj R.K. Yadav',
+    manager: 'Sub Maj R.K. Yadav',
     date: new Date().toISOString(),
     total: txTotal,
+    totalNet: txTotal,
+    totalTaxable: txTotal / 1.18,
+    totalCgst: (txTotal - (txTotal / 1.18)) / 2,
+    totalSgst: (txTotal - (txTotal / 1.18)) / 2,
+    items: cart.map(c => ({ ...c })),
     categoryBreakdown: txCats,
     prevHash: prevHash,
-    hash: hashHex
-  });
+    hash: hashHex,
+    status: 'COMPLETED'
+  };
+
+  transactions.push(newTxn);
   
   saveStorage();
+  fetch('/api/csd/transactions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newTxn)
+  }).catch(e => console.warn('SQLite transaction push notice:', e));
   
   // Render specific Bill details for printing (simplified for POS view logic)
   generateReceipt(officer, billNo, txCats);

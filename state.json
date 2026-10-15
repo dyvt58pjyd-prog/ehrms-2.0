@@ -1,1 +1,2477 @@
-{"isAuthenticated":true,"currentUser":{"dob":"2001-12-08","pan":"EYUPB3666M","cell":"Cell 16","name":"ANURAG ANIL BAWASKAR","pran":"110194810244","cadre":"Central Secretariat Service (CSS) / Defence Civil Services (DMA)","email":"anurag.bawaskar@gov.in","empId":"41028104","group":"Group 'A'","avatar":"assets/avatar.svg","dojGov":"2024-11-13","gender":"Male","mobile":"+91 84599 62390","office":"South Block, New Delhi - 110011","ddoCode":"201140","gpfNpsNo":"NPS/DMA/DEL/2024/0810","homeTown":"Nashik","ministry":"Ministry of Defence","payLevel":"Level 7 (₹44,900 - ₹1,42,400)","cghsBenId":"CGHS/DEL/DMA/2444810","hindiName":"अनुराग अनिल बावस्कर","homeState":"Maharashtra","aadhaarRef":"2444-4759-4810","bloodGroup":"O+ve","department":"Department of Military Affairs (DMA)","fatherName":"Shri Anil Ramkrishna Bawaskar","motherName":"Smt. Manisha Anil Bawaskar","bankDetails":{"ifsc":"SBIN0001818","micr":"243002018","branch":"DEFENCE BANKING BRANCH, AFS, BAREILLY","bankName":"SBI (State Bank of India)","accountNo":"39189241534","branchCode":"01818","pfmsStatus":"PFMS Mandate Active & Beneficiary Verified","accountType":"Savings Account (Defence Salary Package - DSP)","accountHolder":"Anurag Anil Bawaskar","pfmsSchemeCode":"PFMS-DEF-CIV-2024"},"designation":"ADDITIONAL SECTION OFFICER - I","maritalStatus":"Single","serviceStatus":"Regular / Commissioned (Group 'A' Gazetted)","classification":"Central Civil Services - Group 'A' (Gazetted)","dojCurrentPost":"2025-12-16","gazettedStatus":"Gazetted Officer (Class-I / Group 'A')","currentBasicPay":70000,"hindiDesignation":"अपर अनुभाग अधिकारी - I","reportingOfficer":{"name":"Shri Anil Kumar Chhapolia","room":"Room 214, Sena Bhawan / South Block, New Delhi","email":"ak.chhapolia@nic.in","empId":"MOD-DMA-JS-01","department":"Department of Military Affairs","designation":"Joint Secretary (Establishment & Coordination)"},"reviewingOfficer":{"name":"Lieutenant General N.S. Raja Subramani","room":"Room 199-C, South Block, New Delhi","email":"cds.dma@gov.in","empId":"MOD-DMA-CDS-01","department":"Department of Military Affairs","designation":"Chief of Defence Staff & Secretary DMA"},"disbursingOfficer":{"name":"Shri R. K. Sharma, SAO","room":"Room 102, Sena Bhawan, New Delhi","email":"ddo-dma@gov.in","empId":"MOD-DMA-DDO-04","ddoCode":"201140","paoCode":"001488","department":"Department of Military Affairs","designation":"Senior Accounts Officer (DDO)"},"controllingOfficer":{"name":"Shri Rajender Singh","room":"Room 106, Sena Bhawan, New Delhi","email":"ds-estt.dma@gov.in","empId":"MOD-DMA-DS-204","department":"Department of Military Affairs","designation":"Deputy Secretary (Establishment)"},"superannuationDate":"2061-12-31"},"dmaOfficersDirectory":[{"name":"General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM","wing":"Apex Command & Executive Leadership","email":"cds.dma@gov.in","phone":"011-23011800","office":"Room 183-A, South Block, New Delhi","roleType":"Secretary","designation":"Chief of Defence Staff (CDS) & Secretary, DMA"},{"name":"Vice Admiral Atul Anand, AVSM, VSM","wing":"Executive & Tri-Services Integration","email":"as-dma@gov.in","phone":"011-23012111","office":"Room 185, South Block, New Delhi","roleType":"Additional Secretary","designation":"Additional Secretary, DMA"},{"name":"Lieutenant General N.S. Raja Subramani","wing":"Civil Establishment, Cadre Administration & Inter-Ministerial Coord","email":"cds.dma@gov.in","phone":"011-23013890","office":"Room 199-C, South Block, New Delhi","roleType":"Joint Secretary (Cadre Admin)","designation":"Chief of Defence Staff & Secretary DMA"},{"name":"Shri Kumar Ravi Kant Singh, IAS","wing":"Defence Works, Infrastructure & Parliamentary Business","email":"krk.singh@ias.nic.in","phone":"011-23014120","office":"Room 189-B, South Block, New Delhi","roleType":"Joint Secretary","designation":"Joint Secretary (Works & Parliament)"},{"name":"Maj Gen G. S. Choudhry","wing":"Indian Army Affairs & Territorial Army Administration","email":"js-army.dma@gov.in","phone":"011-23012980","office":"Room 188-A, South Block, New Delhi","roleType":"Joint Secretary","designation":"Joint Secretary (Army & Territorial Army)"},{"name":"Rear Admiral Kunal Singh Rajkumar","wing":"Indian Navy Affairs & Joint Operations Staff","email":"js-navy.dma@gov.in","phone":"011-23013440","office":"Room 190, South Block, New Delhi","roleType":"Joint Secretary","designation":"Joint Secretary (Navy & Defence Staff)"},{"name":"Air Vice Marshal Vikram Gaur","wing":"Indian Air Force Affairs & Strategic Staff Duties","email":"js-air.dma@gov.in","phone":"011-23014550","office":"Room 192, South Block, New Delhi","roleType":"Joint Secretary","designation":"Joint Secretary (Air & Staff Duties)"},{"name":"Shri Anil Kumar Chhapolia","wing":"Establishment-I, Civil-Military Staffing & Service Records","email":"ak.chhapolia@nic.in","phone":"011-23019812","office":"Room 214, Sena Bhawan, New Delhi","roleType":"Director (Reporting Officer for ASO-I)","designation":"Joint Secretary (Establishment & Coordination)"},{"name":"Shri Rajender Singh","wing":"Section Officer / ASO Cadre Management, Leaves & Scrutiny","email":"ds-estt.dma@gov.in","phone":"011-23015523","office":"Room 106, Sena Bhawan, New Delhi","roleType":"Under Secretary (Branch Officer)","designation":"Deputy Secretary (Establishment)"},{"name":"Shri Pradeep Kumar, SAO","wing":"Cash & Accounts Branch (DDO Code: 10501)","email":"ddo-dma@gov.in","phone":"011-23017789","office":"Room 102, Sena Bhawan, New Delhi","roleType":"DDO","designation":"Drawing & Disbursing Officer (DDO)"}],"activeRole":"EMPLOYEE","language":"EN","highContrast":false,"fontSize":"NORMAL","leaveBalances":{"CL":{"name":"Casual Leave","unit":"days","hindi":"आकस्मिक अवकाश","availed":2,"balance":6,"opening":8,"credited":8},"EL":{"max":300,"name":"Earned Leave","unit":"days","hindi":"अर्जित अवकाश","availed":3,"balance":42,"opening":30,"credited":15},"RH":{"name":"Restricted Holiday","unit":"days","hindi":"प्रतिबंधित अवकाश","availed":0,"balance":2,"opening":2,"credited":2},"CCL":{"name":"Child Care Leave","unit":"days","hindi":"बाल देखरेख अवकाश","availed":0,"balance":0,"opening":0},"HPL":{"name":"Half Pay Leave","unit":"days","hindi":"अर्ध वेतन अवकाश","availed":0,"balance":30,"opening":20,"credited":10},"COMMUTED":{"name":"Commuted Leave","unit":"days","hindi":"रूपांतरित अवकाश","balance":15},"PATERNITY":{"name":"Paternity Leave","unit":"days","hindi":"पितृत्व अवकाश","availed":0,"balance":0}},"leaveApplications":[{"id":"LV-2026-98343","days":3,"type":"EL","reason":"For Outdoor Work, of My Sister regarding her MBA Admission Counselling.","status":"SANCTIONED","endDate":"2026-09-23","typeName":"Earned Leave","appliedOn":"2026-09-08","startDate":"2026-09-21","approvedBy":"Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)","approvedOn":"2026-09-08","stationLeave":true,"workflowRoute":[{"date":"08-Sep-2026 08:15","role":"Applicant","action":"Application Submitted","officer":"Anurag Anil Bawaskar (ASO-I)"},{"date":"08-Sep-2026 08:15","role":"Branch Officer","action":"Scrutinized & Recommended","officer":"Shri Rajender Singh (Deputy Secretary, Estt)"},{"date":"08-Sep-2026 08:16","role":"Sanctioning Authority","action":"Sanctioned via Aadhaar e-Sign","officer":"Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"}],"sanctionOrderNo":"MOD/DMA/ESTT-I/LV/2026/412","emergencyContact":"+91 9822453218","stationLeaveAddress":"Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"},{"id":"LV-2026-00412","days":2,"type":"CL","reason":"Urgent family domestic commitment and personal paperwork at hometown Nashik","status":"SANCTIONED","endDate":"2026-09-16","typeName":"Casual Leave","appliedOn":"2026-09-01","startDate":"2026-09-15","approvedBy":"Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)","approvedOn":"2026-09-02","stationLeave":true,"workflowRoute":[{"date":"01-Sep-2026 10:15","role":"Applicant","action":"Application Submitted","officer":"Anurag Anil Bawaskar (ASO-I)"},{"date":"01-Sep-2026 14:30","role":"Branch Officer","action":"Scrutinized & Recommended","officer":"Shri Rajender Singh (Deputy Secretary, Estt)"},{"date":"02-Sep-2026 11:00","role":"Sanctioning Authority","action":"Sanctioned via Aadhaar e-Sign","officer":"Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"}],"sanctionOrderNo":"MoD/DMA/Estt-I/LV/2026/412","emergencyContact":"+91 9822453218","stationLeaveAddress":"Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"},{"id":"LV-2026-00455","days":1,"type":"RH","reason":"Festive observance (Anant Chaturdashi)","status":"PENDING","endDate":"2026-09-22","typeName":"Restricted Holiday","appliedOn":"2026-09-03","startDate":"2026-09-22","approvedBy":null,"approvedOn":null,"stationLeave":false,"workflowRoute":[{"date":"03-Sep-2026 11:20","role":"Applicant","action":"Application Submitted","officer":"Anurag Anil Bawaskar (ASO-I)"},{"date":"03-Sep-2026 15:45","role":"Branch Officer","action":"Forwarded for Sanction","officer":"Shri Rajender Singh (Deputy Secretary, Estt)"},{"date":"Pending","role":"Sanctioning Authority","action":"Awaiting Sanction & e-Sign","officer":"Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"}],"sanctionOrderNo":null}],"serviceBook":{"family":[{"dob":"1976-10-17","name":"Shri Anil Ramkrishna Bawaskar","dependent":true,"bloodGroup":"O+ve","cghsCardNo":"CGHS/DEL/DMA/2444810-01","occupation":"Reserved Police Sub-Inspector (RSI)","relationship":"Father"},{"dob":"1981-06-01","name":"Smt. Manisha Anil Bawaskar","dependent":true,"bloodGroup":"Blood Group not known","cghsCardNo":"CGHS/DEL/DMA/2444810-02","occupation":"House Wife","relationship":"Mother"},{"dob":"2004-05-26","name":"Kumari Rohini Anil Bawaskar","dependent":true,"bloodGroup":"Blood Group not known","cghsCardNo":"CGHS/DEL/DMA/2444810-03","occupation":"Bachelor of Science","relationship":"Sister"}],"education":[{"inst":"Indian Institute of Technology (IIT) Delhi / NFSU","year":"2023","grade":"First Class with Distinction (9.1 CGPA)","degree":"B.Tech in Computer Science & Cyber Security"},{"inst":"Central Board of Secondary Education (CBSE)","year":"2019","grade":"First Division (94.6%)","degree":"Senior Secondary Certificate (Class XII - Science)"},{"inst":"Central Board of Secondary Education (CBSE)","year":"2017","grade":"First Division (95.2%)","degree":"Secondary School Examination (Class X)"}],"trainings":[{"inst":"Defense Institute of Advanced Technology (DIAT) / DRDO, Pune","course":"Advanced Military Cyber Defense & Tactical InfoSec","status":"Completed","duration":"3 Weeks","completedOn":"2026-02-18","igotCertified":true},{"inst":"CERT-In / MeitY, New Delhi","course":"National Cyber Security Policy & Crisis Management (CERT-In)","status":"Completed","duration":"2 Weeks","completedOn":"2025-01-20","igotCertified":true},{"inst":"AJNIFM / Ministry of Defence","course":"General Financial Rules (GFR 2017) & Defence Procurement Procedures","status":"Completed","duration":"1 Week","completedOn":"2026-05-12","igotCertified":true},{"inst":"NIC / DoPT, New Delhi","course":"e-Office 7.0 and e-HRMS 2.0 Paperless Workflow Master Trainer","status":"Completed","duration":"3 Days","completedOn":"2024-12-05","igotCertified":true}],"nominations":[{"type":"Death-cum-Retirement Gratuity (DCRG)","share":"50%","nominee":"Shri Anil Ramkrishna Bawaskar (Father)","regDate":"2024-11-20","altNominee":"Smt. Manisha Anil Bawaskar (Mother - 50%)"},{"type":"National Pension System (NPS)","share":"50%","nominee":"Smt. Manisha Anil Bawaskar (Mother)","regDate":"2024-11-20","altNominee":"Shri Anil Ramkrishna Bawaskar (Father - 50%)"},{"type":"Central Govt Employees Group Insurance (CGEGIS) - Group A Scheme","share":"100%","nominee":"Smt. Manisha Anil Bawaskar (Mother)","regDate":"2024-11-20","altNominee":"Shri Anil Ramkrishna Bawaskar (Father)"}],"payFixation":[{"cell":"Cell 16","date":"2026-07-01","event":"Pay Fixation under FR 22(I)(a)(1) & Cyber Security Cadre Rationalization","level":"Level 7","orderNo":"MoD/DMA/Pay-Fix/2026/118","remarks":"Sanctioned by Joint Secretary (Estt & Coord, DMA). Protects previous emoluments drawn as CISO (MeitY) & Deputy Security Analyst (Cabinet Secretariat). Next increment due 01.07.2027 (Cell 17: ₹72,100).","basicPay":70000,"sanctionDate":"2026-06-25","ruleReference":"FR 22(I)(a)(1) read with DoPT OM No. 12/3/2009-Pay-I"},{"cell":"Cell 2","date":"2025-07-01","event":"Annual Increment under Rule 10 of CCS (RP) Rules, 2016","level":"Level 7","orderNo":"CabSec/MHA/Pay-Inc/2025/33","remarks":"Granted upon completing 6 months qualifying service in Cabinet Secretariat / MHA. Next increment on 01.07.2026.","basicPay":46200,"sanctionDate":"2025-06-20","ruleReference":"Rule 10 of CCS (Revised Pay) Rules, 2016"},{"cell":"Cell 1","date":"2024-11-13","event":"Initial Commissioning & Entry Pay Fixation","level":"Level 7","orderNo":"MeitY/Estt-I/Direct-Appt/2024/081","remarks":"Commissioned into Central Service as Chief Information Security Officer (MeitY) at entry pay of Pay Level 7.","basicPay":44900,"sanctionDate":"2024-11-13","ruleReference":"Rule 8 of CCS (RP) Rules, 2016"}],"serviceHistory":[{"to":"Till Further Orders","dept":"Department of Defence & DMA, Ministry of Defence, South Block, New Delhi","from":"2026-09-12","post":"Lead Technical Operations Specialist (Special Operation Task Force)","orderNo":"MoD/DoD/OPS-SPL/2026/8104-SEC","remarks":"Special Combined Operational Deployment (Task Force VAJRA-SHAKTI). Location Classified (To be disclosed at Apex Briefing on 12-Sep-2026). Attached to Special Operations Task Force.","payLevel":"Level 7"},{"to":"2025-05-31","dept":"Ministry of Electronics and Information Technology (MeitY), Electronics Niketan, New Delhi","from":"2024-11-13","post":"Chief Information Security Officer","orderNo":"MeitY/CISO/Direct-Appt/2024/781","remarks":"Initial Commissioning / Appointment from 13 November 2024; Critical IT Infrastructure Security & CERT-In Coordination","payLevel":"Level 7"},{"to":"2025-12-15","dept":"Ministry of Home Affairs (MHA) & Cabinet Secretariat, Rashtrapati Bhavan / North Block","from":"2025-06-01","post":"Deputy Security Analyst","orderNo":"CabSec/MHA/Sec-Analyst/2025/104","remarks":"Strategic Threat Intelligence Analysis, Cabinet Briefings & National Security Operations","payLevel":"Level 7"},{"to":"Present","dept":"Defence Research & Development Organisation (DRDO), Dighi, Pune","from":"2026-09-08","post":"Additional Section Officer - I","orderNo":"MoD/DRDO/Estt/2026/102","remarks":"Transferred from Rashtrapati Bhawan, New Delhi. Joint Staff Coordination & Defence Cyber Infrastructure","payLevel":"Level 7"},{"to":"2026-09-07","dept":"Department of Military Affairs, Ministry of Defence, South Block, New Delhi","from":"2025-12-16","post":"Additional Section Officer - I","orderNo":"MoD/DMA/Estt-I/2025/892","remarks":"Tri-Services Military Administration, Joint Staff Coordination & Defence Cyber Infrastructure","payLevel":"Level 7"}],"vigilanceStatus":{"status":"CLEAR","penaltyImposed":"NIL","issuingAuthority":"Lieutenant General N.S. Raja Subramani, Chief of Defence Staff, Department of Military Affairs","lastClearanceDate":"2026-01-15","disciplinaryInquiries":"NIL / Clear & Exemplary Record"}},"tours":[{"id":"TOUR-2026-OPS-09","mode":"Special Operational Military Air / Tactical Movement","origin":"Ministry of Defence, New Delhi","status":"SANCTIONED","endDate":"Till Further Orders","purpose":"Special Combined Operational Deployment (Task Force VAJRA-SHAKTI). Strategic Cyber Defence, Secure Communications & Joint Operations.","appliedOn":"2026-09-10","startDate":"2026-09-12","destination":"RESTRICTED / CLASSIFIED (To be disclosed at Apex Briefing on 12-Sep-2026)","estimatedCost":85000,"sanctionOrder":"MoD/DoD/OPS-SPL/2026/8104-SEC","workflowRoute":[{"date":"10-Sep-2026 11:00","role":"Apex Sanctioning Authority","action":"Operational Movement Sanctioned","officer":"General Anil Chauhan (Chief of Defence Staff)"},{"date":"10-Sep-2026 14:30","role":"Controlling Authority","action":"Movement Warrant & Pass Issued","officer":"Shri Anil Kumar Chhapolia (Joint Secretary, MoD)"}],"advanceRequested":60000,"advanceSanctioned":60000},{"id":"TOUR-2026-081","mode":"Air (Economy) / Vande Bharat Executive","origin":"New Delhi","status":"PENDING_APPROVAL","endDate":"2026-09-27","purpose":"Tri-Services Cyber Command Integration & Review at HQ Western Command","appliedOn":"2026-09-02","startDate":"2026-09-24","destination":"Chandimandir / Chandigarh","estimatedCost":18500,"sanctionOrder":null,"workflowRoute":[{"date":"02-Sep-2026","role":"Applicant","action":"Requisition Submitted","officer":"Anurag Anil Bawaskar (ASO-I)"},{"date":"Pending","role":"Controlling Officer","action":"Awaiting Advance Sanction","officer":"Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"}],"advanceRequested":15000,"advanceSanctioned":15000},{"id":"TOUR-2026-042","mode":"Air (Economy)","origin":"New Delhi","status":"SETTLED","endDate":"2026-06-18","purpose":"National Strategic Security and Defense Information Symposium","appliedOn":"2026-05-20","startDate":"2026-06-15","destination":"Pune, Maharashtra","estimatedCost":24200,"sanctionOrder":"MoD/DMA/TA-DA/2026/042","settledAmount":23900,"advanceRequested":20000,"advanceSanctioned":20000}],"ltc":{"requests":[{"id":"LTC-2025-019","type":"Home Town Concession","status":"SETTLED","travelDates":"2025-10-20 to 2025-10-27","sanctionOrder":"MoD/DMA/LTC/2025/081","advanceRequested":35000,"elEncashmentDays":0,"advanceSanctioned":35000,"totalClaimSettled":38400,"declaredDestination":"Nashik, Maharashtra","familyMembersCovered":["Self (Anurag Anil Bawaskar)","Shri Anil Ramkrishna Bawaskar (Father)","Smt. Manisha Anil Bawaskar (Mother)","Kumari Rohini Anil Bawaskar (Sister)"]}],"entitlement":"Economy Air / 2nd AC Train (CCS LTC Rules Level 7)","currentBlock":"2022-2025 (Grace Period up to Dec 2026)","encashmentAvailedLifetime":0},"claims":[{"id":"CLM-2026-0044","status":"APPROVED","remarks":"Admissible as per CGHS Delhi rate card","category":"Medical Reimbursement (CGHS)","appliedOn":"2026-07-15","description":"Specialist Consultation & Diagnostic Tests at Base Hospital Delhi Cantt (CGHS Empanelled)","sanctionedOn":"2026-07-28","amountClaimed":4250,"amountAdmissible":4250},{"id":"CLM-2025-0102","status":"APPROVED","remarks":"GST Invoice verified for Pay Level 7","category":"Briefcase Allowance","appliedOn":"2025-11-10","description":"Official Executive Bag / Briefcase (Triennial entitlement for Pay Level 7 - ₹5,000)","sanctionedOn":"2025-11-20","amountClaimed":4999,"amountAdmissible":4999},{"id":"CLM-2026-0120","status":"APPROVED","remarks":"Eligible as per MoD E.Coord guidelines","category":"Telephone & Broadband Allowance","appliedOn":"2026-09-01","description":"Monthly residential broadband & official mobile reimbursement for August 2026 (Max ₹1,500 + GST)","sanctionedOn":"2026-09-03","amountClaimed":1650,"amountAdmissible":1650}],"apar":{"cycles":[{"year":"2024-2025","status":"FINALIZED","gradingText":"Outstanding","resumeOfWork":"Commissioned into Central Civil Service on 13 November 2024. Successfully spearheaded critical vulnerability assessments and cyber defensive hardening for defense networks and central ministerial databases.","reportingScore":9.6,"reviewingScore":9.7,"reportingPeriod":"13/11/2024 to 31/03/2025","reportingOfficer":"Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)","reportingRemarks":"An exceptionally brilliant officer with rare technical acuity, high integrity, prompt execution under crisis, and thorough administrative discipline.","reviewingOfficer":"Lieutenant General N.S. Raja Subramani (CDS & Secy, DMA)","reviewingRemarks":"Firmly agree. Shri Bawaskar represents modern civil-military administrative excellence.","selfAppraisalSubmitted":"2025-04-18"},{"year":"2025-2026","status":"IN_PROGRESS","deadline":"30 April 2026","gradingText":"Awaiting Submission","currentStage":"Self-Appraisal Draft","resumeOfWork":"Coordinating joint defence information security protocols and electronic service records automation across DMA wings.","reportingScore":null,"reviewingScore":null,"reportingPeriod":"01/04/2025 to 31/03/2026","reportingOfficer":"Shri Anil Kumar Chhapolia, Joint Secretary (DMA)","reportingRemarks":"","reviewingOfficer":"Lieutenant General N.S. Raja Subramani, CDS (DMA)","reviewingRemarks":"","selfAppraisalSubmitted":null}]},"ipr":{"ackNo":"IPR/DMA/2025/481024","status":"SUBMITTED_AND_ACKNOWLEDGED","filedOn":"2026-01-12","properties":[{"id":1,"description":"Undivided ancestral agricultural plot (0.8 Acres), Ramdaspeth / Umred, District Nashik, Maharashtra","annualIncome":"₹ 36,000","presentValue":"₹ 24,00,000","propertyType":"Agricultural Land (Ancestral Family Share)","relationship":"Self & Father","acquiredInName":"Jointly with Father (Shri Anil Bawaskar)","acquisitionDate":"2016-04-10","modeOfAcquisition":"Ancestral Inheritance / Family Property","priorSanctionObtained":"Inherited - Formally notified to Cadre upon Commissioning in Nov 2024"}],"complianceYear":"2025 (Filing Period: Jan 2026)"},"payroll":{"pan":"EYUPB3666M","ytd":{"period":"April 2026 - August 2026 (5 Months)","govtNps":74970,"tdsPaid":18480,"grossPaid":668040,"employeeNps":53550,"netDisbursed":591160,"financialYear":"2026-2027","totalDeductions":76880},"pran":"110194810244","daRate":0.53,"hraRate":0.3,"basicPay":70000,"netSalary":118232,"taxRegime":"New Tax Regime (Section 115BAC)","accounting":{"utr":"SBIN0001818948102","billNo":"DMA/ESTT-I/SAL-AUG-2026/0412","ddoCode":"10501 (DDO, Department of Military Affairs)","paoCode":"001488 (PAO, Ministry of Defence, South Block)","subHead":"02 - Department of Military Affairs","tokenNo":"PAO/MOD/DEL/2026/0941","billDate":"28-Aug-2026","majorHead":"2052 - Secretariat-General Services","minorHead":"090 - Secretariat","tokenDate":"29-Aug-2026","voucherNo":"PAO-DMA-VR-2026-08104","voucherDate":"31-Aug-2026","detailedHead":"02.00.01 - Salaries (7th CPC)","pfmsSanctionId":"PFMS-MOD-DMA-2026-AUG-8104"},"daOnTaRate":0.53,"grossSalary":133608,"incomeTaxTds":3696,"cghsDeduction":650,"classification":"Central Civil Services - Group 'A' (Gazetted)","cgegisDeduction":120,"professionalTax":200,"totalCostToGovt":148886,"totalDeductions":15376,"npsDeductionRate":0.1,"transportAllowance":3600,"govtNpsContribution":14994,"govtCgegisContribution":84},"circulars":[{"id":"MHA/CIS/2026/89","date":"28-09-2026","file":"MHA_Security_Directive_2026.pdf","isNew":true,"title":"MHA Directive on Physical Security Audits & Biometric Access Control for Critical Installations","subject":"Mandatory directive from Ministry of Home Affairs requiring immediate physical security audits, perimeter access control reinforcement, and transition to Aadhaar-enabled Biometric Access Control (AEBAS) for all High-Security zones in South Block.","category":"Security & Vigilance","authority":"Ministry of Home Affairs (MHA), Internal Security Div","classification":"RESTRICTED"},{"id":"DMA/AFHQ/2026/41","date":"25-09-2026","file":"DMA_AFHQ_Rationalization_2026.pdf","isNew":true,"title":"Rationalization of Armed Forces Headquarters Civil Service (AFHQ CS) Cadre","subject":"Department of Military Affairs order outlining the optimization of Group A and B posts within the AFHQ Civil Service, including the merger of redundant sections and the introduction of a new Digital Transformation task force.","category":"Service Rules & Welfare","authority":"Department of Military Affairs (DMA.gov.in)","classification":"OFFICIAL GAZETTE"},{"id":"MOD/ESTT/2026/OM-12","date":"20-09-2026","file":"MOD_SPARROW_Implementation.pdf","isNew":true,"title":"Implementation of SPARROW for all MoD Civilian Employees (Group B & C)","subject":"Official Memorandum from MoD Establishment mandating the transition of all Group B and C civilian personnel to the Smart Performance Appraisal Report Recording Online Window (SPARROW) system for APAR recording for the current cycle.","category":"Service Rules & Welfare","authority":"Ministry of Defence (MoD.gov.in)","classification":"PUBLIC OM"},{"id":"MoD/DoD/OPS-SPL/2026/8104-SEC","date":"10-09-2026","file":"Order_MoD_DoD_OPS_SPL_2026_8104.pdf","isNew":true,"title":"🚨 TOP SECRET: Operational Directive for Special Task Force (Apex Command to Group 'A' Gazetted Cadre)","subject":"Constitution and Mobilization of 15-Member Strategic Joint Task Force under Ministry of Defence, New Delhi effective 12-Sep-2026 (Duration: Till Further Orders) including Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer (Lead Technical Operations). Operational location strictly classified; disclosure at Apex In-Camera Meeting on 12-Sep-2026 at South Block War Room.","category":"Special Operations & Defence","authority":"Ministry of Defence / Department of Military Affairs","downloadType":"specialOrder","classification":"TOP SECRET","isSpecialOperation":true},{"id":"MoD/DRDO/TRF/2026/102","date":"08-09-2026","file":"Transfer_Order_Anurag_Bawaskar_GroupA_DRDO_Pune.pdf","isNew":true,"title":"Gazette Transfer & Posting Order: Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer, from Rashtrapati Bhavan, New Delhi to DRDO Dighi, Pune","subject":"Official Gazette Transfer Order No. MoD/DRDO/TRF/2026/102: Relieving Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer (Additional Section Officer - I / Chief Information Security Specialist) from President's Secretariat / Cabinet Secretariat, Rashtrapati Bhavan, New Delhi and posting to Defence Research & Development Organisation (DRDO), Dighi, Pune - 411015 with operational attachment to MoD Special Task Force.","category":"Postings & Transfers","authority":"Department of Defence / DRDO Establishment Wing","downloadType":"transferOrder","classification":"OFFICIAL GAZETTE","isTransferOrder":true},{"id":"MoD/SEC-VET/2026/A-01","date":"09-09-2026","file":"Security_Clearance_Level1_Bawaskar.pdf","isNew":true,"title":"Apex Level-1 Top Secret Security Vetting & Clearance Certificate: Shri Anurag Anil Bawaskar","subject":"National Security Multi-Agency Vetting by DIA & IB: Grant of Level-1 Top Secret Compartmented Clearance for cryptographic systems, C4I networks, and War Room operational intelligence under Operation VAJRA-SHAKTI.","category":"Security & Vigilance","authority":"Directorate General of Defence Intelligence & Security (DIA/IB)","downloadType":"securityClearance","classification":"TOP SECRET"},{"id":"MoD/DRDO/CTG/2026/44","date":"09-09-2026","file":"CTG_Sanction_Order_2026_44.pdf","isNew":true,"title":"Sanction Order: Composite Transfer Grant (CTG) & Transportation of Personal Effects (₹1,16,000)","subject":"Financial Sanction under Supplementary Rule (SR 114) for Composite Transfer Grant (80% of Basic Pay = ₹56,000) and containerized relocation allowances (₹60,000) on permanent transfer from Delhi to DRDO Dighi, Pune.","category":"Pay & Allowances","authority":"Department of Defence Finance & Accounts","downloadType":"ctgOrder","classification":"FINANCIAL SANCTION"},{"id":"MoD/FIN/SDA/2026/89","date":"10-09-2026","file":"Special_Duty_Allowance_SDA_89.pdf","isNew":true,"title":"Special Cyber Warfare & Mission Hardship Allowance Sanction Order (20% of Basic Pay - ₹14,000/pm)","subject":"Concurrence of Integrated Financial Adviser (IFA Defence) under DFPDS Rule 8(2) for monthly Special Cyber Risk Allowance of ₹14,000 admissible to Task Force Lead Technical Officers during operational deployment.","category":"Pay & Allowances","authority":"Financial Adviser (Defence Services), Ministry of Defence","downloadType":"specialDutyAllowance","classification":"FINANCIAL SANCTION"},{"id":"DoPT/OM/2026/DA-53","date":"15-07-2026","file":"OM_DA_Revision_53pct_July2026.pdf","isNew":false,"title":"Grant of Dearness Allowance (DA) to Central Government Employees Revised to 53% effective 01.07.2026","subject":"Ministry of Finance Department of Expenditure OM conveying President's sanction for enhancing Dearness Allowance from 50% to 53% of Basic Pay for all Central Civil Services and Defence Civilian Personnel.","category":"Pay & Allowances","authority":"Department of Expenditure, Ministry of Finance","classification":"PUBLIC OM"},{"id":"DoPT/OM/2026/8CPC-TOR","date":"28-08-2026","file":"8th_CPC_Terms_of_Reference_Advisory.pdf","isNew":true,"title":"Preparatory Data Gathering & Pre-Commission Terms of Reference for 8th Central Pay Commission","subject":"Cabinet Secretariat directive on compilation of employee cadre distributions, DA merger thresholds, allowances rationalization, and pension indexation models for Central Civil Services.","category":"Pay & Allowances","authority":"Department of Personnel & Training (DoPT)","classification":"POLICY DIRECTIVE"},{"id":"MOD/CYBER/2026/44","date":"28-06-2026","file":"MOD_Cyber_Directive_2026.pdf","isNew":false,"title":"Enhanced Cyber Hygiene & Defence Network Security Guidelines for MoD Personnel","subject":"Mandatory protocols for Information Security, multi-factor authentication, cryptographic key rotation, and zero-trust intranet architecture across all Department of Military Affairs formations.","category":"Security & Vigilance","authority":"Department of Military Affairs (Cyber Command)","classification":"RESTRICTED"},{"id":"DoPT/OM/2026/eSB-MANDATE","date":"02-09-2026","file":"OM_eSB_Mandatory_Sept2026.pdf","isNew":true,"title":"Mandatory Maintenance of Electronic Service Book (e-SB) on e-HRMS 2.0 without Physical Duplication","subject":"Statutory OM under Rule 257 of GFR 2017: Discontinuation of physical Service Books and transitioning to tamper-evident cryptographic e-Service Books across all Ministries and Departments.","category":"Service Rules & Welfare","authority":"Department of Personnel & Training (DoPT)","classification":"STATUTORY OM"},{"id":"MoD/DRDO/PUNE-EXP/2026/18","date":"04-09-2026","file":"DRDO_Pune_Cyber_Expansion_2026.pdf","isNew":true,"title":"Operational Expansion & High-Performance Computing Cyber Lab Setup at DRDO Dighi, Pune","subject":"Administrative approval and financial sanction for state-of-the-art Quantum Cryptographic Research Lab and Secure Telemetry Grid at DRDO Dighi campus under Chief Information Security Specialist oversight.","category":"Special Operations & Defence","authority":"Defence Research & Development Organisation (DRDO)","classification":"RESTRICTED"},{"id":"DoHFW/CGHS/PUNE/2026/71","date":"20-08-2026","file":"CGHS_Pune_Empanelled_Hospitals_2026.pdf","isNew":false,"title":"Empanelment of Super-Specialty Hospitals & Wellness Centres under CGHS Pune & New Delhi","subject":"Extension of cashless inpatient treatment facilities for Central Government beneficiaries across Pune city (including Ruby Hall Clinic, Jehangir Hospital, Command Hospital) and Delhi NCR.","category":"Service Rules & Welfare","authority":"Ministry of Health & Family Welfare (CGHS Wing)","classification":"PUBLIC OM"},{"id":"DoPT/CEA/2026/09","date":"12-08-2026","file":"CEA_Hostel_Subsidy_Revision_2026.pdf","isNew":false,"title":"Revision of Children Education Allowance (CEA) & Hostel Subsidy Rates Pursuant to 50% DA Threshold","subject":"Automatic 25% upward revision of Children Education Allowance from ₹2,250 to ₹2,812.50 per month per child and Hostel Subsidy from ₹6,750 to ₹8,437.50 per month consequent upon DA crossing 50%.","category":"Pay & Allowances","authority":"Department of Personnel & Training (DoPT)","classification":"PUBLIC OM"},{"id":"MoD/SEC/OSA-1923/2026","date":"01-09-2026","file":"OSA_1923_Compliance_Directive_2026.pdf","isNew":false,"title":"Enforcement Directives under Official Secrets Act 1923: Operations Security & Social Media Silence","subject":"Strict directives issued by Cabinet Secretariat & MoD mandating total social media silence, geolocation masking, and secure communication channels for personnel attached to strategic task forces.","category":"Security & Vigilance","authority":"Ministry of Defence / Cabinet Secretariat","classification":"CONFIDENTIAL"},{"id":"DoPT/LEAVE/2026/11","date":"18-07-2026","file":"DoPT_SCL_Operational_Rules_2026.pdf","isNew":false,"title":"Comprehensive Guidelines on Special Casual Leave (SCL) for Operational Readiness & Field Exercises","subject":"Provisions for grant of up to 30 days Special Casual Leave for civilian technical specialists participating in tri-services war-games, high-altitude acclimatization, and tactical mobilization drills.","category":"Service Rules & Welfare","authority":"Department of Personnel & Training (DoPT)","classification":"PUBLIC OM"},{"id":"MoD/DMA/ESTT/2026/41","date":"06-09-2026","file":"MoD_DMA_Rotational_Postings_2026.pdf","isNew":true,"title":"Comprehensive Cadre Rationalization & Inter-Branch Rotational Postings of Group 'A' Officers","subject":"Establishment-I Branch rotational transfer and attachment directives for Group 'A' Gazetted Officers across Department of Military Affairs, DRDO headquarters, and Integrated Defence Staff formations.","category":"Postings & Transfers","authority":"Department of Military Affairs, MoD","classification":"OFFICIAL GAZETTE"},{"id":"DoPT/CSS/DEP-2026/14","date":"30-08-2026","file":"CSS_Deputation_Circular_August2026.pdf","isNew":false,"title":"Central Staffing Scheme (CSS): Inviting Nominations for Group 'A' Officers for Foreign & Inter-Ministry Deputations","subject":"Circulation of executive vacancies for Deputy Secretary / Under Secretary levels in Ministry of External Affairs, Cabinet Secretariat, and National Technical Research Organisation (NTRO).","category":"Postings & Transfers","authority":"DoPT / Office of Establishment Officer","classification":"PUBLIC CIRCULAR"},{"id":"MoD/C4I/COMM-GRID/2026/03","date":"05-09-2026","file":"C4I_Terminal_Crypto_Directive_2026.pdf","isNew":true,"title":"Tri-Services Secure C4I Terminal Protocols & Cryptographic Key Management Directive","subject":"Standard Operating Procedure (SOP) for Level-1 encrypted tactical communications, automated satellite failover, and hardware security modules (HSM) across forward military formations.","category":"Special Operations & Defence","authority":"Integrated Defence Staff / Joint Communications Electronics Staff","classification":"TOP SECRET"},{"id":"PFRDA/NPS/2026/CRA-08","date":"22-08-2026","file":"PFRDA_NPS_Partial_Withdrawal_Master_2026.pdf","isNew":false,"title":"Streamlined Online Partial Withdrawal Guidelines under NPS & UPS Options for Central Government Servants","subject":"Master Circular from PFRDA on Protean CRA/NSDL online instant partial withdrawal for higher education, critical illness, and house purchase without mandatory physical nodal verification.","category":"Service Rules & Welfare","authority":"Pension Fund Regulatory and Development Authority (PFRDA)","classification":"PUBLIC CIRCULAR"},{"id":"MoD/DRDO/RD-PROJECT/2026/18","date":"07-09-2026","file":"DRDO_Project_Kavach_Sanction_2026.pdf","isNew":true,"title":"Sanction of Project KAVACH-II: Advanced Quantum & Cyber-Physical Defence Grid at DRDO ARDE / R&DE(E) Pune","subject":"Administrative approval and financial sanction of ₹42.8 Crore for implementation of Quantum Key Distribution (QKD) and secure tactical intranet architecture under DRDO Armament and Combat Engineering Cluster, Dighi, Pune.","category":"Special Operations & Defence","authority":"Defence Research & Development Organisation (DRDO)","classification":"RESTRICTED"},{"id":"MoD/ESTT/HOUSING/2026/71","date":"08-09-2026","file":"DRDO_Pune_Housing_Allotment_71.pdf","isNew":true,"title":"Priority Allotment of Type-V Government Residential Accommodation at DRDO Officers Enclave, Pashan Road, Pune","subject":"Directorate of Estates & DRDO Estate Management Unit (EMU) sanction for priority transit & permanent allotment of Type-V residential quarters to Group 'A' Gazetted Officers on operational transfer to DRDO Pune.","category":"Service Rules & Welfare","authority":"DRDO Estate Management Unit (EMU) & Directorate of Estates","classification":"OFFICIAL GAZETTE"},{"id":"DoPT/LTC/2026/33","date":"02-09-2026","file":"DoPT_LTC_Air_Entitlement_2026.pdf","isNew":false,"title":"Air Travel Entitlement on Official Transfer & All-India Leave Travel Concession (AILTC) for Group 'A' Officers","subject":"Guidelines regarding booking of air tickets through authorized travel agents (Balmer Lawrie, Ashoka Travels, IRCTC) and entitlement of Economy/Premium Economy class for Level 7 to Level 14 officers on permanent posting.","category":"Pay & Allowances","authority":"Department of Personnel & Training (DoPT) & Ministry of Civil Aviation","classification":"PUBLIC OM"}],"aebasRecords":[{"date":"2026-09-08","inTime":"08:55 AM","status":"Present","outTime":"--:--","location":"Sena Bhawan Gate 2"},{"date":"2026-09-07","inTime":"09:02 AM","status":"Present","outTime":"05:40 PM","location":"South Block Gate 4"},{"date":"2026-09-06","inTime":"--:--","status":"Sunday","outTime":"--:--","location":"-"},{"date":"2026-09-05","inTime":"--:--","status":"Saturday","outTime":"--:--","location":"-"},{"date":"2026-09-04","inTime":"09:15 AM","status":"Late","outTime":"05:30 PM","location":"Sena Bhawan Gate 1"},{"date":"2026-09-03","inTime":"08:50 AM","status":"Present","outTime":"06:05 PM","location":"Sena Bhawan Gate 2"}],"aebasStats":{"lateDays":1,"avgInTime":"09:01 AM","avgOutTime":"05:45 PM","leavesTaken":0,"totalWorkingDays":22},"cghsClaims":[{"id":"CGHS-DEL-2026-9011","date":"12-Aug-2026","amount":4500,"status":"Settled","patient":"Shri Anil Ramkrishna Bawaskar (Father)","hospital":"Army Hospital (R&R), Delhi Cantt","treatment":"Cardiac Consultation"},{"id":"CGHS-DEL-2026-8422","date":"04-Sep-2026","amount":1200,"status":"Pending Scrutiny","patient":"Anurag Anil Bawaskar (Self)","hospital":"CGHS Wellness Centre, RK Puram","treatment":"Dental Extraction"}],"deputationCirculars":[{"id":"CSS-2026-09","type":"Training","title":"Foreign Training Program at LKY School of Public Policy, Singapore","deadline":"25-Sep-2026","department":"DoPT"},{"id":"DEP-2026-14","type":"Deputation","title":"Vacancy for Under Secretary in Ministry of External Affairs","deadline":"30-Sep-2026","department":"MEA"},{"id":"TRG-2026-41","type":"Training","title":"Mandatory Mid-Career Training Programme (Phase-III) for CSS Officers","deadline":"15-Oct-2026","department":"ISTM"}],"eAwasStatus":{"status":"Waitlisted","appliedFor":"Type-IV","entitlement":"Eligible for Type-IV","waitingListNo":142,"applicationDate":"15-Jan-2025","preferredLocality":["New Moti Bagh","RK Puram","Kidwai Nagar"]},"eOfficeData":{"sent":[{"to":"Shri Rajender Singh, DS (Estt)","date":"06-Sep-2026","type":"File","fileNo":"MoD/DMA/Estt/2026/41","subject":"Posting & Transfer of Group A Gazetted Officers"},{"to":"Gen. N.S. Raja Subramani, CDS","date":"01-Sep-2026","type":"File","fileNo":"MoD/DMA/Trg/2026/08","subject":"Nomination for National Defence College (NDC) Course"}],"inbox":[{"date":"08-Sep-2026","from":"Col. Amit Sharma, Director (Acq)","type":"File","fileNo":"MoD/DMA/Proc/2026/89","subject":"Procurement of High-Altitude Drones for Northern Command","priority":"Immediate"},{"date":"07-Sep-2026","from":"Shri Rajender Singh, DS (Estt)","type":"File","fileNo":"MoD/DMA/Pol/2026/12","subject":"Agnipath Scheme: Review of Implementation Guidelines","priority":"High"},{"date":"08-Sep-2026","from":"Sena Bhawan Dak Section","type":"Receipt","fileNo":"Receipt-10492-2026","subject":"Representation regarding Pay Fixation Anomaly","priority":"Normal"}],"activeFile":{"notes":[{"date":"06-Sep-2026 10:15 AM","text":"The proposal for procurement of 50 High-Altitude Drones has been received from Northern Command. The estimated cost is ₹120 Crores. Financial concurrence is required.","author":"Col. Amit Sharma, Director (Acq)","noteNo":1},{"date":"07-Sep-2026 14:30 PM","text":"File forwarded to ASO-I (DMA) for initial scrutiny and linking of relevant Financial Powers Rules.","author":"Shri Rajender Singh, DS (Estt)","noteNo":2}],"fileNo":"MoD/DMA/Proc/2026/89","subject":"Procurement of High-Altitude Drones for Northern Command"}},"notifications":[{"id":99,"type":"warning","title":"🚨 TOP SECRET: Special Operation Order Issued","message":"MoD Order No. MoD/DoD/OPS-SPL/2026/8104-SEC issued for Special Operation effective 12-Sep-2026 until further orders. Detailed location classified; to be revealed in Apex Briefing on 12-Sep-2026 at South Block.","timestamp":"Just now"},{"id":1,"type":"info","title":"Restricted Holiday Request","message":"Restricted Holiday (RH) for 22-Sep-2026 is pending review with Shri Anil Kumar Chhapolia, Joint Secretary (Estt & Coord, DMA).","timestamp":"2 hours ago"},{"id":2,"type":"success","title":"Casual Leave Sanctioned","message":"CL for 15-16 Sep 2026 sanctioned by Shri Anil Kumar Chhapolia via Order MoD/DMA/Estt-I/LV/2026/412.","timestamp":"Yesterday"},{"id":3,"type":"success","title":"Vigilance Clearance Verified","message":"Top Secret Defence Security Vetting validated by Lieutenant General N.S. Raja Subramani, CDS.","timestamp":"3 days ago"},{"id":4,"type":"success","title":"Salary Disbursed","message":"Pay Level 7 Cell 16 August 2026 salary credited (Net: ₹1,18,232) to SBI A/C 39189241534 (Defence Banking Branch, AFS Bareilly, IFSC: SBIN0001818).","timestamp":"31 Aug 2026"}],"karmayogi":{"courses":[{"id":"IGOT-DMA-01","grade":"A+","score":"96%","title":"Code of Conduct & Ethics for Group 'A' Gazetted Civil Services","status":"COMPLETED","duration":"12 Hours","provider":"DoPT / ISTM New Delhi","cbsCredits":150,"certificateNo":"IGOT-CERT-2026-08104","completedDate":"15-Aug-2026"},{"id":"IGOT-DMA-02","grade":"A","score":"92%","title":"Cyber Security & Information Assurance in Defence Establishments","status":"COMPLETED","duration":"10 Hours","provider":"DMA / CERT-In","cbsCredits":140,"certificateNo":"IGOT-CERT-2026-08142","completedDate":"20-Aug-2026"},{"id":"IGOT-DMA-03","grade":"A+","score":"98%","title":"GFR 2017 & Public Procurement through GeM 4.0","status":"COMPLETED","duration":"8 Hours","provider":"Ministry of Finance / NIFM","cbsCredits":120,"certificateNo":"IGOT-CERT-2026-08199","completedDate":"28-Aug-2026"},{"id":"IGOT-DMA-04","grade":"A","score":"90%","title":"Public Financial Management System (PFMS) & Electronic DBT","status":"COMPLETED","duration":"6 Hours","provider":"Controller General of Accounts (CGA)","cbsCredits":110,"certificateNo":"IGOT-CERT-2026-08221","completedDate":"02-Sep-2026"},{"id":"IGOT-DMA-05","title":"Defence Acquisition Procedure (DAP 2020) & Indigenous Modernisation","status":"IN_PROGRESS","duration":"14 Hours","progress":75,"provider":"Department of Defence Production (DDP)","cbsCredits":100},{"id":"IGOT-DMA-06","title":"Preventive Vigilance & Public Interest Disclosure (PIDPI)","status":"ENROLLED","duration":"6 Hours","progress":10,"provider":"Central Vigilance Commission (CVC)","cbsCredits":80}],"hubLevel":"Level 4 - Advanced Practitioner (DoPT Framework)","cbsCredits":620,"totalHours":48.5,"learningHours":48.5,"enrolledCoursesCount":6,"completedCoursesCount":4},"smartIdCard":{"cardNo":"MOD-ID-2024-8104","validUpto":"12-Nov-2029 (5 Years)","bloodGroup":"O+ve","issuedDate":"13-Nov-2024","rfidAccessId":"DMA-GATE-SOUTH-08104","smartChipUid":"IND-MOD-7F89B241","accessClearance":"Top Secret / Sensitive Defence Documents","emergencyContact":"+91 9822453218 (Shri Anil Ramkrishna Bawaskar, Father - RSI)","issuingAuthority":"Shri Anil Kumar Chhapolia, Joint Secretary (Establishment & Coordination), DMA","securityAccessZone":"ZONE-3 (DRDO / RESEARCH FACILITIES)"},"csdBilling":{"pan":"EYUPB3666M","pin":"1234","name":"ANURAG ANIL BAWASKAR","rank":"ASO-I (Group A Gazetted)","cardNo":"LB08260547713500S01","canteen":"URC HQ DELHI AREA (Sena Bhawan)","afdOrders":[{"id":"AFD-2026-0041","date":"2026-09-10","model":"Maruti Suzuki Grand Vitara Zeta AT","dealer":"Rana Motors CSD Depot, Rama Road, New Delhi","status":"SANCTIONED & P.O. GENERATED","savings":190000,"csdPrice":1435000,"itemType":"Four Wheeler (Car)","civilPrice":1625000,"sanctionAuthority":"Quartermaster General (QMG) Branch / CSD AFD Cell"}],"inventory":[{"id":"606820","sku":"606820","name":"APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)","category":"Electronics","afdCategory":"AFD-II (Electronics / Two-Wheelers)","unit":"Unit","brand":"APPLE INC / INDIA","model":"A3185 (MACBOOK PRO 16)","color":"SPACE BLACK","batchNo":"BAT-2026/10-DEL","serialNo":"C02TM8921APPLE","imei1":"N/A","imei2":"N/A","hsn":"85171300","marketPrice":349900,"price":319900,"gstRate":18,"stock":9,"grade":"Brand New Sealed Box (Grade A)","brandBox":"Brand New Sealed Box (Grade A)","accessories":"All Original Accessories Included","warrantyExpires":"1 Year Official Brand Warranty Pan-India","specs":"16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3"},{"id":"621146","hsn":"85171300","sku":"621146","name":"APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)","unit":"Unit","brand":"APPLE INC / INDIA","color":"SPACE BLACK","grade":"Brand New Sealed Box (Grade A)","imei1":"N/A","imei2":"N/A","model":"A3185 (MACBOOK PRO 16)","price":319900,"specs":"16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3","stock":9,"batchNo":"BAT-2026/10-DEL","gstRate":18,"brandBox":"Brand New Sealed Box (Grade A)","category":"Electronics","serialNo":"C02TM8921APPLE","accessories":"All Original Accessories Included","afdCategory":"AFD-II (Electronics / Two-Wheelers)","marketPrice":349900,"warrantyExpires":"1 Year Official Brand Warranty Pan-India"},{"id":"559533","hsn":"85171300","sku":"559533","name":"APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)","unit":"Unit","brand":"APPLE INC / INDIA","color":"SPACE BLACK","grade":"Brand New Sealed Box (Grade A)","imei1":"N/A","imei2":"N/A","model":"A3185 (MACBOOK PRO 16)","price":319900,"specs":"16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3","stock":10,"batchNo":"BAT-2026/10-DEL","gstRate":18,"brandBox":"Brand New Sealed Box (Grade A)","category":"Electronics","serialNo":"C02TM8921APPLE","accessories":"All Original Accessories Included","afdCategory":"AFD-II (Electronics / Two-Wheelers)","marketPrice":349900,"warrantyExpires":"1 Year Official Brand Warranty Pan-India"},{"id":"245561","hsn":"8517","sku":"245561","name":"SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK","unit":"Unit","color":"Onyx Black","grade":"Very Good (A)","imei1":"358944/09/848210/1","imei2":"358944/09/848211/9","price":32999,"specs":"15.75 cm (6.2\") FHD+ Dynamic AMOLED 2X 120Hz | Exynos 2400 Deca Core | 8GB RAM | 128GB ROM | 50MP+10MP+12MP Rear | 12MP Front | Nightography","stock":25,"brandBox":"Yes","category":"Electronics","serialNo":"R58N90Y245561T","accessories":"All Accessories Included","marketPrice":74999,"warrantyExpires":"24-10-2027"},{"id":"99055412","hsn":"9504","sku":"99055412","name":"SONY PLAYSTATION 5 CONSOLE","unit":"Unit","color":"White","grade":"Very Good (A)","imei1":"N/A","imei2":"N/A","price":37900,"specs":"Ultra-high-speed SSD | Haptic feedback & Adaptive triggers | 3D Audio | Backwards compatibility for PS4 games | Game boost for smoother frame rates | PS VR integration","stock":5,"brandBox":"May not include original box","category":"Electronics","serialNo":"PS5-7X9P2M4K8W","accessories":"All working cables & working controller","marketPrice":57999,"warrantyExpires":"1 Month Warranty"},{"id":"233243","hsn":"8517","sku":"233243","name":"SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW","unit":"Unit","color":"Silver Shadow","grade":"Very Good (A)","imei1":"358941/08/948210/6","imei2":"358941/08/948211/4","price":54436,"specs":"15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)","stock":12,"brandBox":"Yes","category":"Electronics","serialNo":"R58N90X233243S","accessories":"All Accessories Included","marketPrice":80999,"warrantyExpires":"23-05-2027"},{"id":"8901030311221","hsn":"0405","name":"AMUL PURE GHEE 1L TIN","unit":"Tin","price":580,"stock":50,"category":"Groceries","marketPrice":650},{"id":"8901058863283","hsn":"1902","name":"MAGGI 2-MIN NOODLES 12PK","unit":"Pack","price":144,"stock":120,"category":"Groceries","marketPrice":168},{"id":"8901131000100","hsn":"2208","name":"OLD MONK XXX RUM 750ML","unit":"Bottle","price":450,"stock":200,"category":"Liquor","marketPrice":600},{"id":"8806090123456","hsn":"8528","name":"SAMSUNG 32\" SMART LED TV","unit":"Unit","price":12500,"stock":15,"category":"Electronics","marketPrice":15990},{"id":"4902430691234","hsn":"8212","name":"GILLETTE MACH 3 (4 CT)","unit":"Pack","price":425,"stock":80,"category":"Toiletries","marketPrice":495},{"id":"8901725181223","hsn":"0902","name":"TATA TEA GOLD 1KG POUCH","unit":"Pack","price":460,"stock":95,"category":"Groceries","marketPrice":540},{"id":"8901030012224","hsn":"1006","name":"DAWAT BASMATI RICE 5KG","unit":"Bag","price":485,"stock":64,"category":"Groceries","marketPrice":590},{"id":"8901207011400","hsn":"1806","name":"CADBURY CELEBRATIONS BOX","unit":"Box","price":195,"stock":110,"category":"Groceries","marketPrice":250},{"id":"8901063140120","hsn":"3306","name":"COLGATE TOTAL 150G (2PK)","unit":"Pack","price":210,"stock":140,"category":"Toiletries","marketPrice":260},{"id":"8901505001011","hsn":"2208","name":"JOHNNIE WALKER BLACK LABEL 750ML","unit":"Bottle","price":2650,"stock":45,"category":"Liquor","marketPrice":3800}],"entitlements":{"liquorDrawn":2,"liquorLimit":25,"liquorBalance":23,"afdEligibility":"ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)","groceriesDrawn":3335,"groceriesLimit":50000,"groceriesBalance":46665},"transactions":[{"id":"CSD-TXN-1792043251225","billNo":"CSD/URC/DEL/2026/10/3058","indentNo":"IND-2026/10/3058","date":"2026-10-15 05:47:31","canteen":"URC HQ DELHI AREA (Sena Bhawan)","terminal":"POS-01 / IP: 192.168.1.101","cashier":"Sub Maj R.K. Yadav","manager":"Sub Maj R.K. Yadav","paymentMode":"HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)","paymentType":"CASH","items":[{"id":"606820","sku":"606820","name":"APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)","category":"Electronics","afdCategory":"AFD-II (Electronics / Two-Wheelers)","unit":"Unit","brand":"APPLE INC / INDIA","model":"A3185 (MACBOOK PRO 16)","color":"SPACE BLACK","batchNo":"BAT-2026/10-DEL","serialNo":"C02TM8921APPLE","imei1":"N/A","imei2":"N/A","hsn":"85171300","marketPrice":349900,"price":319900,"gstRate":18,"stock":10,"grade":"Brand New Sealed Box (Grade A)","brandBox":"Brand New Sealed Box (Grade A)","accessories":"All Original Accessories Included","warrantyExpires":"1 Year Official Brand Warranty Pan-India","specs":"16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3","qty":1}],"totalTaxable":271101.69491525425,"totalCgst":24399.15254237288,"totalSgst":24399.15254237288,"totalNet":319900,"totalSavings":30000,"cardNo":"LB08260547713500S01","rank":"ADDITIONAL SECTION OFFICER - I","grocLimit":50000,"grocDrawn":3335,"liqLimit":25,"liqDrawn":2,"status":"COMPLETED","cashTendered":319900,"cashChange":0,"cashVoucherNo":"CSD/CASH/DEL/2026/10/3058"},{"id":"CSD-TXN-1792043200003","date":"2026-10-15 05:46:40","rank":"ADDITIONAL SECTION OFFICER - I","items":[{"id":"621146","hsn":"85171300","qty":1,"sku":"621146","name":"APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)","unit":"Unit","brand":"APPLE INC / INDIA","color":"SPACE BLACK","grade":"Brand New Sealed Box (Grade A)","imei1":"N/A","imei2":"N/A","model":"A3185 (MACBOOK PRO 16)","price":319900,"specs":"16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3","stock":10,"batchNo":"BAT-2026/10-DEL","gstRate":18,"brandBox":"Brand New Sealed Box (Grade A)","category":"Electronics","serialNo":"C02TM8921APPLE","accessories":"All Original Accessories Included","afdCategory":"AFD-II (Electronics / Two-Wheelers)","marketPrice":349900,"warrantyExpires":"1 Year Official Brand Warranty Pan-India"}],"billNo":"CSD/URC/DEL/2026/10/7738","cardNo":"LB08260547713500S01","status":"COMPLETED","canteen":"URC HQ DELHI AREA (Sena Bhawan)","cashier":"Sub Maj R.K. Yadav","manager":"Sub Maj R.K. Yadav","indentNo":"IND-2026/10/7738","liqDrawn":2,"liqLimit":25,"terminal":"POS-01 / IP: 192.168.1.101","totalNet":319900,"grocDrawn":3335,"grocLimit":50000,"totalCgst":24399.15254237288,"totalSgst":24399.15254237288,"cashChange":0,"paymentMode":"HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)","paymentType":"CASH","cashTendered":319900,"totalSavings":30000,"totalTaxable":271101.69491525425,"cashVoucherNo":"CSD/CASH/DEL/2026/10/7738"},{"id":"CSD-TXN-1792043088239","date":"2026-10-15 05:44:48","rank":"ADDITIONAL SECTION OFFICER - I","items":[{"id":"8901030012224","hsn":"1006","qty":1,"name":"DAWAT BASMATI RICE 5KG","unit":"Bag","price":485,"stock":65,"category":"Groceries","marketPrice":590}],"billNo":"CSD/URC/DEL/2026/10/7939","cardNo":"LB08260547713500S01","status":"COMPLETED","canteen":"URC HQ DELHI AREA (Sena Bhawan)","cashier":"Sub Maj R.K. Yadav","manager":"Sub Maj R.K. Yadav","indentNo":"IND-2026/10/7939","liqDrawn":2,"liqLimit":25,"terminal":"POS-01 / IP: 192.168.1.101","totalNet":485,"grocDrawn":3335,"grocLimit":50000,"totalCgst":36.99152542372882,"totalSgst":36.99152542372882,"cashChange":0,"paymentMode":"HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)","paymentType":"CASH","cashTendered":485,"totalSavings":105,"totalTaxable":411.0169491525424,"cashVoucherNo":"CSD/CASH/DEL/2026/10/7939"},{"id":"CSD-TXN-2026-1002","date":"2026-10-02 18:45:10","rank":"ASO-I (Group A Gazetted)","items":[{"id":"233243","hsn":"8517","qty":1,"sku":"233243","name":"SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW","color":"Silver Shadow","grade":"Very Good (A)","imei1":"358941/08/948210/6","imei2":"358941/08/948211/4","price":54436,"specs":"15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)","brandBox":"Yes","category":"Electronics","serialNo":"R58N90X233243S","accessories":"All Accessories Included","marketPrice":80999,"warrantyExpires":"23-05-2027"}],"billNo":"CSD/URC/DEL/2026/10/9482","cardNo":"LB08260547713500S01","status":"COMPLETED","canteen":"URC HQ DELHI AREA (Sena Bhawan)","cashier":"Sub Maj R.K. Yadav","manager":"Sub Maj R.K. Yadav","indentNo":"IND-2026/10/9482","liqDrawn":2,"liqLimit":25,"terminal":"POS-01 / IP: 192.168.1.101","totalNet":54436,"grocDrawn":2850,"grocLimit":50000,"totalCgst":4151.9,"totalSgst":4151.9,"cashChange":0,"paymentMode":"HARD CURRENCY CASH ONLY (Tendered Exact ₹54,436.00 - Physical Cash Counter 01)","paymentType":"CASH","cashTendered":54436,"totalSavings":26563,"totalTaxable":46132.2,"cashReceiptNo":"RCPT-CSD-2026-9482","cashVoucherNo":"CSD/CASH/DEL/2026/10/9482","cashDenominations":{"2":3,"10":1,"20":1,"100":4,"500":108}},{"id":"CSD-TXN-2026-0901","date":"2026-09-24 11:32:15","items":[{"id":"8901030311221","hsn":"0405","qty":2,"name":"AMUL PURE GHEE 1L TIN","price":580,"category":"Groceries","marketPrice":650},{"id":"8901725181223","hsn":"0902","qty":1,"name":"TATA TEA GOLD 1KG POUCH","price":460,"category":"Groceries","marketPrice":540},{"id":"4902430691234","hsn":"8212","qty":1,"name":"GILLETTE MACH 3 (4 CT)","price":425,"category":"Toiletries","marketPrice":495}],"billNo":"CSD/URC/DEL/2026/09/8812","status":"COMPLETED","canteen":"URC HQ DELHI AREA (Sena Bhawan)","cashier":"Havildar Rajesh Kumar","manager":"Sub Maj R.K. Yadav","indentNo":"IND-2026/09/8812","terminal":"POS-04 / IP: 192.168.1.104","totalNet":2045,"totalCgst":155.98,"totalSgst":155.98,"paymentMode":"SBI DSP Defence Debit Card (Auth: 891244)","totalSavings":290,"totalTaxable":1733.05},{"id":"CSD-TXN-2026-0814","date":"2026-08-18 16:45:00","items":[{"id":"8901030012224","hsn":"1006","qty":2,"name":"DAWAT BASMATI RICE 5KG","price":485,"category":"Groceries","marketPrice":590},{"id":"8901058863283","hsn":"1902","qty":2,"name":"MAGGI 2-MIN NOODLES 12PK","price":144,"category":"Groceries","marketPrice":168}],"billNo":"CSD/URC/DEL/2026/08/6421","status":"COMPLETED","canteen":"URC HQ DELHI AREA (Sena Bhawan)","cashier":"Naik S.K. Sharma","manager":"Sub Maj R.K. Yadav","indentNo":"IND-2026/08/6421","terminal":"POS-02 / IP: 192.168.1.102","totalNet":1258,"totalCgst":95.95,"totalSgst":95.95,"paymentMode":"UPI / BharatPe CSD Merchant (Txn: 429188201)","totalSavings":258,"totalTaxable":1066.1}],"dependentCardNo":"LB08260547713500D01"},"specialOperationOrder":{"endDate":"Till Further Orders (TFO) / Indefinite Operational Mandate","orderNo":"MoD/DoD/OPS-SPL/2026/8104-SEC","subject":"Constitution and Deployment of High-Level Strategic Joint Operation Task Force for Critical Defence Infrastructure, Cyber Warfare Systems & Tri-Services Integration","ministry":"Ministry of Defence","officers":[{"name":"General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM","contact":"cds.dma@gov.in","station":"South Block, New Delhi","payLevel":"Level 17 (Apex)","cadreLevel":"Apex Leadership (CDS / MoD)","department":"Department of Military Affairs / Ministry of Defence","designation":"Chief of Defence Staff (CDS) & Secretary, DMA","roleInOperation":"Apex Operational Commander & Chairman of Joint Chiefs Committee"},{"name":"Lieutenant General N.S. Raja Subramani, PVSM, AVSM, SM, VSM","contact":"raja.subramani@gov.in","station":"Sena Bhawan / South Block, New Delhi","payLevel":"Level 17","cadreLevel":"Apex Formations Command","department":"Integrated Defence Staff / Indian Army","designation":"Vice Chief of Army Staff / Special Operations Lead","roleInOperation":"Executive Field Formations & Tactical Operations Commander"},{"name":"Shri Anil Kumar Chhapolia","contact":"ak.chhapolia@nic.in","station":"Room 214, Sena Bhawan / South Block, New Delhi","payLevel":"Level 14","cadreLevel":"Senior Administrative Grade (SAG)","department":"Department of Military Affairs, MoD","designation":"Joint Secretary (Establishment & Coordination)","roleInOperation":"Civil-Military Administrative Controller & Inter-Agency Protocol Lead"},{"name":"Col. Devashish Sharma, SM","contact":"dir-ops.mod@gov.in","station":"South Block, New Delhi","payLevel":"Level 13","cadreLevel":"Director / Military Operations Cadre","department":"Department of Defence, South Block, MoD","designation":"Director (Military Operations & Special Projects)","roleInOperation":"Tactical Operations Director & Ground Forces Liaison In-Charge"},{"name":"Shri Rajender Singh","contact":"ds-estt.dma@gov.in","station":"Room 106, Sena Bhawan, New Delhi","payLevel":"Level 12","cadreLevel":"Junior Administrative Grade (JAG)","department":"Department of Military Affairs, MoD","designation":"Deputy Secretary (Establishment & Field Scrutiny)","roleInOperation":"Rapid Mobilization Logistics & Personnel Deployment Scrutiny Officer"},{"name":"Smt. Meenakshi Sundaram","contact":"us-cyber.mod@gov.in","station":"South Block, New Delhi","payLevel":"Level 11","cadreLevel":"Under Secretary Cadre (Branch In-Charge)","department":"Department of Defence / Cyber Command, MoD","designation":"Under Secretary (Cyber Security & Defence Network Assurance)","roleInOperation":"Branch Supervisory Officer & Operational Information Clearance Lead"},{"name":"Shri Vikramaditya Rathore","contact":"so-estt1.dma@gov.in","station":"Room 208, Sena Bhawan, New Delhi","payLevel":"Level 8/10","cadreLevel":"Section Officer Cadre (Group B Gazetted)","department":"Department of Military Affairs, MoD","designation":"Section Officer (Estt-I / Cyber Operations Desk)","roleInOperation":"Section In-Charge & Operational File Routing / Executive Supervisor"},{"name":"Shri Anurag Anil Bawaskar","empId":"41028104","contact":"anurag.bawaskar@gov.in","station":"DRDO, Dighi, Pune (Attached to Special Task Force, MoD New Delhi)","payLevel":"Level 7 (Cell 16)","hindiName":"अनुराग अनिल बावस्कर","cadreLevel":"Group 'A' Gazetted Officer (Class-I / Defence Civil Services)","department":"Ministry of Defence / DRDO","designation":"Additional Section Officer - I / Chief Information Security Specialist","roleInOperation":"Lead Technical Operations, Cyber Infrastructure Protection & Secure Communications Grid Controller"},{"name":"Shri Prateek Sengupta","empId":"MOD-DMA-2024-8119","contact":"prateek.sengupta@gov.in","station":"Sena Bhawan, New Delhi","payLevel":"Level 7","cadreLevel":"Additional Section Officer (Group B Gazetted)","department":"Department of Military Affairs, MoD","designation":"Additional Section Officer - II (Tri-Services Logistics & Movement)","roleInOperation":"Tactical Deployment Logistics, Movement Warrants & Air Passages Officer"},{"name":"Kumari Shweta Deshmukh","empId":"MOD-DMA-2024-8140","contact":"shweta.deshmukh@gov.in","station":"South Block, New Delhi","payLevel":"Level 7","cadreLevel":"Additional Section Officer (Group B Gazetted)","department":"Ministry of Defence / DRDO","designation":"Additional Section Officer (Signals Intelligence & Cryptography)","roleInOperation":"Encrypted Communications Protocol & C4I Terminal Security Analyst"},{"name":"Shri Harish Chandra Joshi","empId":"MOD-DRDO-2025-4102","contact":"hc.joshi@gov.in","station":"DRDO Bhawan, New Delhi","payLevel":"Level 6","cadreLevel":"Technical Cadre (Group B Non-Gazetted)","department":"DRDO / Department of Defence, MoD","designation":"Senior Technical Assistant (Cyber Forensics & Threat Telemetry)","roleInOperation":"Field Hardware Forensics, Secure Hardware Deployment & Diagnostics"},{"name":"Shri Rakesh Kumar Meena","empId":"MOD-DMA-2023-9041","contact":"rk.meena@gov.in","station":"Sena Bhawan, New Delhi","payLevel":"Level 4","cadreLevel":"Senior Secretariat Assistant (CSCS)","department":"Department of Military Affairs, MoD","designation":"Senior Secretariat Assistant (SSA / Senior Clerk)","roleInOperation":"Classified Field Dossiers, Movement Verification & Secretariat Register"},{"name":"Kumari Priya Nair","empId":"MOD-DMA-2023-9088","contact":"priya.nair@gov.in","station":"South Block, New Delhi","payLevel":"Level 4","cadreLevel":"Senior Secretariat Assistant (CSCS)","department":"Ministry of Defence","designation":"Senior Secretariat Assistant (SSA / Data Processing Assistant)","roleInOperation":"Real-time Tele-Traffic Log Ingestion & Secure Field Manifest Processing"},{"name":"Shri Sandeep Verma","empId":"MOD-DMA-2025-1104","contact":"sandeep.verma@gov.in","station":"Sena Bhawan, New Delhi","payLevel":"Level 2","cadreLevel":"Junior Secretariat Assistant (CSCS)","department":"Department of Military Affairs, MoD","designation":"Junior Secretariat Assistant (JSA / Communications Dispatch Clerk)","roleInOperation":"Classified Signal Dispatch, Secure Telegrams & Camp Office Records"},{"name":"Shri Mohammad Tariq Khan","empId":"MOD-DMA-2025-1120","contact":"tariq.khan@gov.in","station":"South Block, New Delhi","payLevel":"Level 2","cadreLevel":"Junior Secretariat Assistant (CSCS)","department":"Ministry of Defence","designation":"Junior Secretariat Assistant (JSA / Secure Movement Courier)","roleInOperation":"VVIP Document Protocol, Physical Secure Courier & Field Camp Logistics"}],"orderDate":"10-Sep-2026","department":"Department of Defence & Department of Military Affairs","directives":["All named officers shall report on immediate operational alert status effective 12th September 2026, 06:00 Hrs IST.","Movement warrants, communication protocols, and mission security passes shall be governed under Level-1 Top Secret Clearance.","Strict radio and electronic data silence shall be maintained regarding deployment coordinates until formal disclosure at the Apex Meeting.","All operational and travel expenses are admissible as Special Operational Sanction under Rule 8(2) of Delegation of Financial Powers to Defence Services (DFPDS)."],"headquarters":"South Block / Sena Bhawan, New Delhi - 110011","effectiveDate":"12-Sep-2026 (06:00 Hrs IST)","classification":"TOP SECRET // OPERATIONAL IMMEDIATE // RESTRICTED","locationStatus":"RESTRICTED / CLASSIFIED (GRID-SEC-ALPHA)","briefingMeeting":{"date":"12-Sep-2026","time":"14:00 Hrs IST (Day after Tomorrow)","chair":"General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM (Chief of Defence Staff)","venue":"Apex Command War Room, South Block, Ministry of Defence, New Delhi"},"operationCodename":"OPERATION VAJRA-SHAKTI (SPECIAL COMBINED DEPLOYMENT)","sanctioningAuthority":{"name":"Shri Anil Kumar Chhapolia","ministry":"Ministry of Defence, New Delhi","designation":"Joint Secretary to the Government of India","countersignedBy":"General Anil Chauhan, CDS & Secretary DMA"},"locationDisclosureNote":"Specific theatre coordinates, forward operational sectors, and ground deployment positions are strictly classified under the Official Secrets Act, 1923. The operational location, sector mandates, and tactical objectives shall be revealed exclusively during the Apex In-Camera Strategic Briefing on 12-September-2026 at 14:00 Hrs (Day after Tomorrow) at Apex War Room, South Block, New Delhi."},"pensionNps":{"cra":"Protean eGov Technologies (NSDL CRA)","pran":"110194810244","nominations":[{"share":"50%","nominee":"Smt. Manisha Anil Bawaskar","relation":"Mother"},{"share":"50%","nominee":"Shri Anil Ramkrishna Bawaskar","relation":"Father"}],"totalCorpus":318640,"assetClasses":[{"code":"Scheme E","name":"Equity (Nifty/Sensex Index)","percentage":50},{"code":"Scheme C","name":"Corporate Bonds / Debentures","percentage":30},{"code":"Scheme G","name":"Central & State Government Securities","percentage":20}],"fundManagers":[{"nav":"₹48.62","name":"SBI Pension Funds Pvt. Ltd.","share":"40%","units":"2,621.5"},{"nav":"₹46.18","name":"LIC Pension Fund Ltd.","share":"35%","units":"2,415.2"},{"nav":"₹47.89","name":"UTI Retirement Solutions Ltd.","share":"25%","units":"1,663.4"}],"monthlyTotal":25704,"overallReturnRate":"12.8% CAGR","tier1AccountStatus":"ACTIVE & KYC VERIFIED","tier2AccountStatus":"INACTIVE","govtTotalContributed":179410,"employeeTotalContributed":139230},"grievances":[{"status":"RESOLVED","slaDays":30,"subject":"Issue & Dispatch of CGHS Plastic Cards for Dependent Parents","category":"CGHS Plastic Health Cards","docketNo":"DMA/E/2026/00142","dateLodged":"2026-08-10","currentStage":"Resolved - Speed Post Consignment Tracking No. ED841029148IN delivered to Sena Bhawan","nodalOfficer":"Shri Rajender Singh, DS (Estt)","resolutionNotes":"CGHS cards verified and handed over. Records updated in Sub-Book 3."}]}
+{
+  "isAuthenticated": true,
+  "currentUser": {
+    "dob": "2001-12-08",
+    "pan": "EYUPB3666M",
+    "cell": "Cell 16",
+    "name": "ANURAG ANIL BAWASKAR",
+    "pran": "110194810244",
+    "cadre": "Central Secretariat Service (CSS) / Defence Civil Services (DMA)",
+    "email": "anurag.bawaskar@gov.in",
+    "empId": "41028104",
+    "group": "Group 'A'",
+    "avatar": "assets/avatar.svg",
+    "dojGov": "2024-11-13",
+    "gender": "Male",
+    "mobile": "+91 84599 62390",
+    "office": "South Block, New Delhi - 110011",
+    "ddoCode": "201140",
+    "gpfNpsNo": "NPS/DMA/DEL/2024/0810",
+    "homeTown": "Nashik",
+    "ministry": "Ministry of Defence",
+    "payLevel": "Level 7 (₹44,900 - ₹1,42,400)",
+    "cghsBenId": "CGHS/DEL/DMA/2444810",
+    "hindiName": "अनुराग अनिल बावस्कर",
+    "homeState": "Maharashtra",
+    "aadhaarRef": "2444-4759-4810",
+    "bloodGroup": "O+ve",
+    "department": "Department of Military Affairs (DMA)",
+    "fatherName": "Shri Anil Ramkrishna Bawaskar",
+    "motherName": "Smt. Manisha Anil Bawaskar",
+    "bankDetails": {
+      "ifsc": "SBIN0001818",
+      "micr": "243002018",
+      "branch": "DEFENCE BANKING BRANCH, AFS, BAREILLY",
+      "bankName": "SBI (State Bank of India)",
+      "accountNo": "39189241534",
+      "branchCode": "01818",
+      "pfmsStatus": "PFMS Mandate Active & Beneficiary Verified",
+      "accountType": "Savings Account (Defence Salary Package - DSP)",
+      "accountHolder": "Anurag Anil Bawaskar",
+      "pfmsSchemeCode": "PFMS-DEF-CIV-2024"
+    },
+    "designation": "ADDITIONAL SECTION OFFICER - I",
+    "maritalStatus": "Single",
+    "serviceStatus": "Regular / Commissioned (Group 'A' Gazetted)",
+    "classification": "Central Civil Services - Group 'A' (Gazetted)",
+    "dojCurrentPost": "2025-12-16",
+    "gazettedStatus": "Gazetted Officer (Class-I / Group 'A')",
+    "currentBasicPay": 70000,
+    "hindiDesignation": "अपर अनुभाग अधिकारी - I",
+    "reportingOfficer": {
+      "name": "Shri Anil Kumar Chhapolia",
+      "room": "Room 214, Sena Bhawan / South Block, New Delhi",
+      "email": "ak.chhapolia@nic.in",
+      "empId": "MOD-DMA-JS-01",
+      "department": "Department of Military Affairs",
+      "designation": "Joint Secretary (Establishment & Coordination)"
+    },
+    "reviewingOfficer": {
+      "name": "Lieutenant General N.S. Raja Subramani",
+      "room": "Room 199-C, South Block, New Delhi",
+      "email": "cds.dma@gov.in",
+      "empId": "MOD-DMA-CDS-01",
+      "department": "Department of Military Affairs",
+      "designation": "Chief of Defence Staff & Secretary DMA"
+    },
+    "disbursingOfficer": {
+      "name": "Shri R. K. Sharma, SAO",
+      "room": "Room 102, Sena Bhawan, New Delhi",
+      "email": "ddo-dma@gov.in",
+      "empId": "MOD-DMA-DDO-04",
+      "ddoCode": "201140",
+      "paoCode": "001488",
+      "department": "Department of Military Affairs",
+      "designation": "Senior Accounts Officer (DDO)"
+    },
+    "controllingOfficer": {
+      "name": "Shri Rajender Singh",
+      "room": "Room 106, Sena Bhawan, New Delhi",
+      "email": "ds-estt.dma@gov.in",
+      "empId": "MOD-DMA-DS-204",
+      "department": "Department of Military Affairs",
+      "designation": "Deputy Secretary (Establishment)"
+    },
+    "superannuationDate": "2061-12-31"
+  },
+  "dmaOfficersDirectory": [
+    {
+      "name": "General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM",
+      "wing": "Apex Command & Executive Leadership",
+      "email": "cds.dma@gov.in",
+      "phone": "011-23011800",
+      "office": "Room 183-A, South Block, New Delhi",
+      "roleType": "Secretary",
+      "designation": "Chief of Defence Staff (CDS) & Secretary, DMA"
+    },
+    {
+      "name": "Vice Admiral Atul Anand, AVSM, VSM",
+      "wing": "Executive & Tri-Services Integration",
+      "email": "as-dma@gov.in",
+      "phone": "011-23012111",
+      "office": "Room 185, South Block, New Delhi",
+      "roleType": "Additional Secretary",
+      "designation": "Additional Secretary, DMA"
+    },
+    {
+      "name": "Lieutenant General N.S. Raja Subramani",
+      "wing": "Civil Establishment, Cadre Administration & Inter-Ministerial Coord",
+      "email": "cds.dma@gov.in",
+      "phone": "011-23013890",
+      "office": "Room 199-C, South Block, New Delhi",
+      "roleType": "Joint Secretary (Cadre Admin)",
+      "designation": "Chief of Defence Staff & Secretary DMA"
+    },
+    {
+      "name": "Shri Kumar Ravi Kant Singh, IAS",
+      "wing": "Defence Works, Infrastructure & Parliamentary Business",
+      "email": "krk.singh@ias.nic.in",
+      "phone": "011-23014120",
+      "office": "Room 189-B, South Block, New Delhi",
+      "roleType": "Joint Secretary",
+      "designation": "Joint Secretary (Works & Parliament)"
+    },
+    {
+      "name": "Maj Gen G. S. Choudhry",
+      "wing": "Indian Army Affairs & Territorial Army Administration",
+      "email": "js-army.dma@gov.in",
+      "phone": "011-23012980",
+      "office": "Room 188-A, South Block, New Delhi",
+      "roleType": "Joint Secretary",
+      "designation": "Joint Secretary (Army & Territorial Army)"
+    },
+    {
+      "name": "Rear Admiral Kunal Singh Rajkumar",
+      "wing": "Indian Navy Affairs & Joint Operations Staff",
+      "email": "js-navy.dma@gov.in",
+      "phone": "011-23013440",
+      "office": "Room 190, South Block, New Delhi",
+      "roleType": "Joint Secretary",
+      "designation": "Joint Secretary (Navy & Defence Staff)"
+    },
+    {
+      "name": "Air Vice Marshal Vikram Gaur",
+      "wing": "Indian Air Force Affairs & Strategic Staff Duties",
+      "email": "js-air.dma@gov.in",
+      "phone": "011-23014550",
+      "office": "Room 192, South Block, New Delhi",
+      "roleType": "Joint Secretary",
+      "designation": "Joint Secretary (Air & Staff Duties)"
+    },
+    {
+      "name": "Shri Anil Kumar Chhapolia",
+      "wing": "Establishment-I, Civil-Military Staffing & Service Records",
+      "email": "ak.chhapolia@nic.in",
+      "phone": "011-23019812",
+      "office": "Room 214, Sena Bhawan, New Delhi",
+      "roleType": "Director (Reporting Officer for ASO-I)",
+      "designation": "Joint Secretary (Establishment & Coordination)"
+    },
+    {
+      "name": "Shri Rajender Singh",
+      "wing": "Section Officer / ASO Cadre Management, Leaves & Scrutiny",
+      "email": "ds-estt.dma@gov.in",
+      "phone": "011-23015523",
+      "office": "Room 106, Sena Bhawan, New Delhi",
+      "roleType": "Under Secretary (Branch Officer)",
+      "designation": "Deputy Secretary (Establishment)"
+    },
+    {
+      "name": "Shri Pradeep Kumar, SAO",
+      "wing": "Cash & Accounts Branch (DDO Code: 10501)",
+      "email": "ddo-dma@gov.in",
+      "phone": "011-23017789",
+      "office": "Room 102, Sena Bhawan, New Delhi",
+      "roleType": "DDO",
+      "designation": "Drawing & Disbursing Officer (DDO)"
+    }
+  ],
+  "activeRole": "EMPLOYEE",
+  "language": "EN",
+  "highContrast": false,
+  "fontSize": "NORMAL",
+  "leaveBalances": {
+    "CL": {
+      "name": "Casual Leave",
+      "unit": "days",
+      "hindi": "आकस्मिक अवकाश",
+      "availed": 2,
+      "balance": 6,
+      "opening": 8,
+      "credited": 8
+    },
+    "EL": {
+      "max": 300,
+      "name": "Earned Leave",
+      "unit": "days",
+      "hindi": "अर्जित अवकाश",
+      "availed": 3,
+      "balance": 42,
+      "opening": 30,
+      "credited": 15
+    },
+    "RH": {
+      "name": "Restricted Holiday",
+      "unit": "days",
+      "hindi": "प्रतिबंधित अवकाश",
+      "availed": 0,
+      "balance": 2,
+      "opening": 2,
+      "credited": 2
+    },
+    "CCL": {
+      "name": "Child Care Leave",
+      "unit": "days",
+      "hindi": "बाल देखरेख अवकाश",
+      "availed": 0,
+      "balance": 0,
+      "opening": 0
+    },
+    "HPL": {
+      "name": "Half Pay Leave",
+      "unit": "days",
+      "hindi": "अर्ध वेतन अवकाश",
+      "availed": 0,
+      "balance": 30,
+      "opening": 20,
+      "credited": 10
+    },
+    "COMMUTED": {
+      "name": "Commuted Leave",
+      "unit": "days",
+      "hindi": "रूपांतरित अवकाश",
+      "balance": 15
+    },
+    "PATERNITY": {
+      "name": "Paternity Leave",
+      "unit": "days",
+      "hindi": "पितृत्व अवकाश",
+      "availed": 0,
+      "balance": 0
+    }
+  },
+  "leaveApplications": [
+    {
+      "id": "LV-2026-98343",
+      "days": 3,
+      "type": "EL",
+      "reason": "For Outdoor Work, of My Sister regarding her MBA Admission Counselling.",
+      "status": "SANCTIONED",
+      "endDate": "2026-09-23",
+      "typeName": "Earned Leave",
+      "appliedOn": "2026-09-08",
+      "startDate": "2026-09-21",
+      "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+      "approvedOn": "2026-09-08",
+      "stationLeave": true,
+      "workflowRoute": [
+        {
+          "date": "08-Sep-2026 08:15",
+          "role": "Applicant",
+          "action": "Application Submitted",
+          "officer": "Anurag Anil Bawaskar (ASO-I)"
+        },
+        {
+          "date": "08-Sep-2026 08:15",
+          "role": "Branch Officer",
+          "action": "Scrutinized & Recommended",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+        },
+        {
+          "date": "08-Sep-2026 08:16",
+          "role": "Sanctioning Authority",
+          "action": "Sanctioned via Aadhaar e-Sign",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+        }
+      ],
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/412",
+      "emergencyContact": "+91 9822453218",
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+    },
+    {
+      "id": "LV-2026-00412",
+      "days": 2,
+      "type": "CL",
+      "reason": "Urgent family domestic commitment and personal paperwork at hometown Nashik",
+      "status": "SANCTIONED",
+      "endDate": "2026-09-16",
+      "typeName": "Casual Leave",
+      "appliedOn": "2026-09-01",
+      "startDate": "2026-09-15",
+      "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+      "approvedOn": "2026-09-02",
+      "stationLeave": true,
+      "workflowRoute": [
+        {
+          "date": "01-Sep-2026 10:15",
+          "role": "Applicant",
+          "action": "Application Submitted",
+          "officer": "Anurag Anil Bawaskar (ASO-I)"
+        },
+        {
+          "date": "01-Sep-2026 14:30",
+          "role": "Branch Officer",
+          "action": "Scrutinized & Recommended",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+        },
+        {
+          "date": "02-Sep-2026 11:00",
+          "role": "Sanctioning Authority",
+          "action": "Sanctioned via Aadhaar e-Sign",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+        }
+      ],
+      "sanctionOrderNo": "MoD/DMA/Estt-I/LV/2026/412",
+      "emergencyContact": "+91 9822453218",
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+    },
+    {
+      "id": "LV-2026-00455",
+      "days": 1,
+      "type": "RH",
+      "reason": "Festive observance (Anant Chaturdashi)",
+      "status": "PENDING",
+      "endDate": "2026-09-22",
+      "typeName": "Restricted Holiday",
+      "appliedOn": "2026-09-03",
+      "startDate": "2026-09-22",
+      "approvedBy": null,
+      "approvedOn": null,
+      "stationLeave": false,
+      "workflowRoute": [
+        {
+          "date": "03-Sep-2026 11:20",
+          "role": "Applicant",
+          "action": "Application Submitted",
+          "officer": "Anurag Anil Bawaskar (ASO-I)"
+        },
+        {
+          "date": "03-Sep-2026 15:45",
+          "role": "Branch Officer",
+          "action": "Forwarded for Sanction",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+        },
+        {
+          "date": "Pending",
+          "role": "Sanctioning Authority",
+          "action": "Awaiting Sanction & e-Sign",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+        }
+      ],
+      "sanctionOrderNo": null
+    }
+  ],
+  "serviceBook": {
+    "family": [
+      {
+        "dob": "1976-10-17",
+        "name": "Shri Anil Ramkrishna Bawaskar",
+        "dependent": true,
+        "bloodGroup": "O+ve",
+        "cghsCardNo": "CGHS/DEL/DMA/2444810-01",
+        "occupation": "Reserved Police Sub-Inspector (RSI)",
+        "relationship": "Father"
+      },
+      {
+        "dob": "1981-06-01",
+        "name": "Smt. Manisha Anil Bawaskar",
+        "dependent": true,
+        "bloodGroup": "Blood Group not known",
+        "cghsCardNo": "CGHS/DEL/DMA/2444810-02",
+        "occupation": "House Wife",
+        "relationship": "Mother"
+      },
+      {
+        "dob": "2004-05-26",
+        "name": "Kumari Rohini Anil Bawaskar",
+        "dependent": true,
+        "bloodGroup": "Blood Group not known",
+        "cghsCardNo": "CGHS/DEL/DMA/2444810-03",
+        "occupation": "Bachelor of Science",
+        "relationship": "Sister"
+      }
+    ],
+    "education": [
+      {
+        "inst": "Indian Institute of Technology (IIT) Delhi / NFSU",
+        "year": "2023",
+        "grade": "First Class with Distinction (9.1 CGPA)",
+        "degree": "B.Tech in Computer Science & Cyber Security"
+      },
+      {
+        "inst": "Central Board of Secondary Education (CBSE)",
+        "year": "2019",
+        "grade": "First Division (94.6%)",
+        "degree": "Senior Secondary Certificate (Class XII - Science)"
+      },
+      {
+        "inst": "Central Board of Secondary Education (CBSE)",
+        "year": "2017",
+        "grade": "First Division (95.2%)",
+        "degree": "Secondary School Examination (Class X)"
+      }
+    ],
+    "trainings": [
+      {
+        "inst": "Defense Institute of Advanced Technology (DIAT) / DRDO, Pune",
+        "course": "Advanced Military Cyber Defense & Tactical InfoSec",
+        "status": "Completed",
+        "duration": "3 Weeks",
+        "completedOn": "2026-02-18",
+        "igotCertified": true
+      },
+      {
+        "inst": "CERT-In / MeitY, New Delhi",
+        "course": "National Cyber Security Policy & Crisis Management (CERT-In)",
+        "status": "Completed",
+        "duration": "2 Weeks",
+        "completedOn": "2025-01-20",
+        "igotCertified": true
+      },
+      {
+        "inst": "AJNIFM / Ministry of Defence",
+        "course": "General Financial Rules (GFR 2017) & Defence Procurement Procedures",
+        "status": "Completed",
+        "duration": "1 Week",
+        "completedOn": "2026-05-12",
+        "igotCertified": true
+      },
+      {
+        "inst": "NIC / DoPT, New Delhi",
+        "course": "e-Office 7.0 and e-HRMS 2.0 Paperless Workflow Master Trainer",
+        "status": "Completed",
+        "duration": "3 Days",
+        "completedOn": "2024-12-05",
+        "igotCertified": true
+      }
+    ],
+    "nominations": [
+      {
+        "type": "Death-cum-Retirement Gratuity (DCRG)",
+        "share": "50%",
+        "nominee": "Shri Anil Ramkrishna Bawaskar (Father)",
+        "regDate": "2024-11-20",
+        "altNominee": "Smt. Manisha Anil Bawaskar (Mother - 50%)"
+      },
+      {
+        "type": "National Pension System (NPS)",
+        "share": "50%",
+        "nominee": "Smt. Manisha Anil Bawaskar (Mother)",
+        "regDate": "2024-11-20",
+        "altNominee": "Shri Anil Ramkrishna Bawaskar (Father - 50%)"
+      },
+      {
+        "type": "Central Govt Employees Group Insurance (CGEGIS) - Group A Scheme",
+        "share": "100%",
+        "nominee": "Smt. Manisha Anil Bawaskar (Mother)",
+        "regDate": "2024-11-20",
+        "altNominee": "Shri Anil Ramkrishna Bawaskar (Father)"
+      }
+    ],
+    "payFixation": [
+      {
+        "cell": "Cell 16",
+        "date": "2026-07-01",
+        "event": "Pay Fixation under FR 22(I)(a)(1) & Cyber Security Cadre Rationalization",
+        "level": "Level 7",
+        "orderNo": "MoD/DMA/Pay-Fix/2026/118",
+        "remarks": "Sanctioned by Joint Secretary (Estt & Coord, DMA). Protects previous emoluments drawn as CISO (MeitY) & Deputy Security Analyst (Cabinet Secretariat). Next increment due 01.07.2027 (Cell 17: ₹72,100).",
+        "basicPay": 70000,
+        "sanctionDate": "2026-06-25",
+        "ruleReference": "FR 22(I)(a)(1) read with DoPT OM No. 12/3/2009-Pay-I"
+      },
+      {
+        "cell": "Cell 2",
+        "date": "2025-07-01",
+        "event": "Annual Increment under Rule 10 of CCS (RP) Rules, 2016",
+        "level": "Level 7",
+        "orderNo": "CabSec/MHA/Pay-Inc/2025/33",
+        "remarks": "Granted upon completing 6 months qualifying service in Cabinet Secretariat / MHA. Next increment on 01.07.2026.",
+        "basicPay": 46200,
+        "sanctionDate": "2025-06-20",
+        "ruleReference": "Rule 10 of CCS (Revised Pay) Rules, 2016"
+      },
+      {
+        "cell": "Cell 1",
+        "date": "2024-11-13",
+        "event": "Initial Commissioning & Entry Pay Fixation",
+        "level": "Level 7",
+        "orderNo": "MeitY/Estt-I/Direct-Appt/2024/081",
+        "remarks": "Commissioned into Central Service as Chief Information Security Officer (MeitY) at entry pay of Pay Level 7.",
+        "basicPay": 44900,
+        "sanctionDate": "2024-11-13",
+        "ruleReference": "Rule 8 of CCS (RP) Rules, 2016"
+      }
+    ],
+    "serviceHistory": [
+      {
+        "to": "Till Further Orders",
+        "dept": "Department of Defence & DMA, Ministry of Defence, South Block, New Delhi",
+        "from": "2026-09-12",
+        "post": "Lead Technical Operations Specialist (Special Operation Task Force)",
+        "orderNo": "MoD/DoD/OPS-SPL/2026/8104-SEC",
+        "remarks": "Special Combined Operational Deployment (Task Force VAJRA-SHAKTI). Location Classified (To be disclosed at Apex Briefing on 12-Sep-2026). Attached to Special Operations Task Force.",
+        "payLevel": "Level 7"
+      },
+      {
+        "to": "2025-05-31",
+        "dept": "Ministry of Electronics and Information Technology (MeitY), Electronics Niketan, New Delhi",
+        "from": "2024-11-13",
+        "post": "Chief Information Security Officer",
+        "orderNo": "MeitY/CISO/Direct-Appt/2024/781",
+        "remarks": "Initial Commissioning / Appointment from 13 November 2024; Critical IT Infrastructure Security & CERT-In Coordination",
+        "payLevel": "Level 7"
+      },
+      {
+        "to": "2025-12-15",
+        "dept": "Ministry of Home Affairs (MHA) & Cabinet Secretariat, Rashtrapati Bhavan / North Block",
+        "from": "2025-06-01",
+        "post": "Deputy Security Analyst",
+        "orderNo": "CabSec/MHA/Sec-Analyst/2025/104",
+        "remarks": "Strategic Threat Intelligence Analysis, Cabinet Briefings & National Security Operations",
+        "payLevel": "Level 7"
+      },
+      {
+        "to": "Present",
+        "dept": "Defence Research & Development Organisation (DRDO), Dighi, Pune",
+        "from": "2026-09-08",
+        "post": "Additional Section Officer - I",
+        "orderNo": "MoD/DRDO/Estt/2026/102",
+        "remarks": "Transferred from Rashtrapati Bhawan, New Delhi. Joint Staff Coordination & Defence Cyber Infrastructure",
+        "payLevel": "Level 7"
+      },
+      {
+        "to": "2026-09-07",
+        "dept": "Department of Military Affairs, Ministry of Defence, South Block, New Delhi",
+        "from": "2025-12-16",
+        "post": "Additional Section Officer - I",
+        "orderNo": "MoD/DMA/Estt-I/2025/892",
+        "remarks": "Tri-Services Military Administration, Joint Staff Coordination & Defence Cyber Infrastructure",
+        "payLevel": "Level 7"
+      }
+    ],
+    "vigilanceStatus": {
+      "status": "CLEAR",
+      "penaltyImposed": "NIL",
+      "issuingAuthority": "Lieutenant General N.S. Raja Subramani, Chief of Defence Staff, Department of Military Affairs",
+      "lastClearanceDate": "2026-01-15",
+      "disciplinaryInquiries": "NIL / Clear & Exemplary Record"
+    }
+  },
+  "tours": [
+    {
+      "id": "TOUR-2026-OPS-09",
+      "mode": "Special Operational Military Air / Tactical Movement",
+      "origin": "Ministry of Defence, New Delhi",
+      "status": "SANCTIONED",
+      "endDate": "Till Further Orders",
+      "purpose": "Special Combined Operational Deployment (Task Force VAJRA-SHAKTI). Strategic Cyber Defence, Secure Communications & Joint Operations.",
+      "appliedOn": "2026-09-10",
+      "startDate": "2026-09-12",
+      "destination": "RESTRICTED / CLASSIFIED (To be disclosed at Apex Briefing on 12-Sep-2026)",
+      "estimatedCost": 85000,
+      "sanctionOrder": "MoD/DoD/OPS-SPL/2026/8104-SEC",
+      "workflowRoute": [
+        {
+          "date": "10-Sep-2026 11:00",
+          "role": "Apex Sanctioning Authority",
+          "action": "Operational Movement Sanctioned",
+          "officer": "General Anil Chauhan (Chief of Defence Staff)"
+        },
+        {
+          "date": "10-Sep-2026 14:30",
+          "role": "Controlling Authority",
+          "action": "Movement Warrant & Pass Issued",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, MoD)"
+        }
+      ],
+      "advanceRequested": 60000,
+      "advanceSanctioned": 60000
+    },
+    {
+      "id": "TOUR-2026-081",
+      "mode": "Air (Economy) / Vande Bharat Executive",
+      "origin": "New Delhi",
+      "status": "PENDING_APPROVAL",
+      "endDate": "2026-09-27",
+      "purpose": "Tri-Services Cyber Command Integration & Review at HQ Western Command",
+      "appliedOn": "2026-09-02",
+      "startDate": "2026-09-24",
+      "destination": "Chandimandir / Chandigarh",
+      "estimatedCost": 18500,
+      "sanctionOrder": null,
+      "workflowRoute": [
+        {
+          "date": "02-Sep-2026",
+          "role": "Applicant",
+          "action": "Requisition Submitted",
+          "officer": "Anurag Anil Bawaskar (ASO-I)"
+        },
+        {
+          "date": "Pending",
+          "role": "Controlling Officer",
+          "action": "Awaiting Advance Sanction",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+        }
+      ],
+      "advanceRequested": 15000,
+      "advanceSanctioned": 15000
+    },
+    {
+      "id": "TOUR-2026-042",
+      "mode": "Air (Economy)",
+      "origin": "New Delhi",
+      "status": "SETTLED",
+      "endDate": "2026-06-18",
+      "purpose": "National Strategic Security and Defense Information Symposium",
+      "appliedOn": "2026-05-20",
+      "startDate": "2026-06-15",
+      "destination": "Pune, Maharashtra",
+      "estimatedCost": 24200,
+      "sanctionOrder": "MoD/DMA/TA-DA/2026/042",
+      "settledAmount": 23900,
+      "advanceRequested": 20000,
+      "advanceSanctioned": 20000
+    }
+  ],
+  "ltc": {
+    "requests": [
+      {
+        "id": "LTC-2025-019",
+        "type": "Home Town Concession",
+        "status": "SETTLED",
+        "travelDates": "2025-10-20 to 2025-10-27",
+        "sanctionOrder": "MoD/DMA/LTC/2025/081",
+        "advanceRequested": 35000,
+        "elEncashmentDays": 0,
+        "advanceSanctioned": 35000,
+        "totalClaimSettled": 38400,
+        "declaredDestination": "Nashik, Maharashtra",
+        "familyMembersCovered": [
+          "Self (Anurag Anil Bawaskar)",
+          "Shri Anil Ramkrishna Bawaskar (Father)",
+          "Smt. Manisha Anil Bawaskar (Mother)",
+          "Kumari Rohini Anil Bawaskar (Sister)"
+        ]
+      }
+    ],
+    "entitlement": "Economy Air / 2nd AC Train (CCS LTC Rules Level 7)",
+    "currentBlock": "2022-2025 (Grace Period up to Dec 2026)",
+    "encashmentAvailedLifetime": 0
+  },
+  "claims": [
+    {
+      "id": "CLM-2026-0044",
+      "status": "APPROVED",
+      "remarks": "Admissible as per CGHS Delhi rate card",
+      "category": "Medical Reimbursement (CGHS)",
+      "appliedOn": "2026-07-15",
+      "description": "Specialist Consultation & Diagnostic Tests at Base Hospital Delhi Cantt (CGHS Empanelled)",
+      "sanctionedOn": "2026-07-28",
+      "amountClaimed": 4250,
+      "amountAdmissible": 4250
+    },
+    {
+      "id": "CLM-2025-0102",
+      "status": "APPROVED",
+      "remarks": "GST Invoice verified for Pay Level 7",
+      "category": "Briefcase Allowance",
+      "appliedOn": "2025-11-10",
+      "description": "Official Executive Bag / Briefcase (Triennial entitlement for Pay Level 7 - ₹5,000)",
+      "sanctionedOn": "2025-11-20",
+      "amountClaimed": 4999,
+      "amountAdmissible": 4999
+    },
+    {
+      "id": "CLM-2026-0120",
+      "status": "APPROVED",
+      "remarks": "Eligible as per MoD E.Coord guidelines",
+      "category": "Telephone & Broadband Allowance",
+      "appliedOn": "2026-09-01",
+      "description": "Monthly residential broadband & official mobile reimbursement for August 2026 (Max ₹1,500 + GST)",
+      "sanctionedOn": "2026-09-03",
+      "amountClaimed": 1650,
+      "amountAdmissible": 1650
+    }
+  ],
+  "apar": {
+    "cycles": [
+      {
+        "year": "2024-2025",
+        "status": "FINALIZED",
+        "gradingText": "Outstanding",
+        "resumeOfWork": "Commissioned into Central Civil Service on 13 November 2024. Successfully spearheaded critical vulnerability assessments and cyber defensive hardening for defense networks and central ministerial databases.",
+        "reportingScore": 9.6,
+        "reviewingScore": 9.7,
+        "reportingPeriod": "13/11/2024 to 31/03/2025",
+        "reportingOfficer": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+        "reportingRemarks": "An exceptionally brilliant officer with rare technical acuity, high integrity, prompt execution under crisis, and thorough administrative discipline.",
+        "reviewingOfficer": "Lieutenant General N.S. Raja Subramani (CDS & Secy, DMA)",
+        "reviewingRemarks": "Firmly agree. Shri Bawaskar represents modern civil-military administrative excellence.",
+        "selfAppraisalSubmitted": "2025-04-18"
+      },
+      {
+        "year": "2025-2026",
+        "status": "IN_PROGRESS",
+        "deadline": "30 April 2026",
+        "gradingText": "Awaiting Submission",
+        "currentStage": "Self-Appraisal Draft",
+        "resumeOfWork": "Coordinating joint defence information security protocols and electronic service records automation across DMA wings.",
+        "reportingScore": null,
+        "reviewingScore": null,
+        "reportingPeriod": "01/04/2025 to 31/03/2026",
+        "reportingOfficer": "Shri Anil Kumar Chhapolia, Joint Secretary (DMA)",
+        "reportingRemarks": "",
+        "reviewingOfficer": "Lieutenant General N.S. Raja Subramani, CDS (DMA)",
+        "reviewingRemarks": "",
+        "selfAppraisalSubmitted": null
+      }
+    ]
+  },
+  "ipr": {
+    "ackNo": "IPR/DMA/2025/481024",
+    "status": "SUBMITTED_AND_ACKNOWLEDGED",
+    "filedOn": "2026-01-12",
+    "properties": [
+      {
+        "id": 1,
+        "description": "Undivided ancestral agricultural plot (0.8 Acres), Ramdaspeth / Umred, District Nashik, Maharashtra",
+        "annualIncome": "₹ 36,000",
+        "presentValue": "₹ 24,00,000",
+        "propertyType": "Agricultural Land (Ancestral Family Share)",
+        "relationship": "Self & Father",
+        "acquiredInName": "Jointly with Father (Shri Anil Bawaskar)",
+        "acquisitionDate": "2016-04-10",
+        "modeOfAcquisition": "Ancestral Inheritance / Family Property",
+        "priorSanctionObtained": "Inherited - Formally notified to Cadre upon Commissioning in Nov 2024"
+      }
+    ],
+    "complianceYear": "2025 (Filing Period: Jan 2026)"
+  },
+  "payroll": {
+    "pan": "EYUPB3666M",
+    "ytd": {
+      "period": "April 2026 - August 2026 (5 Months)",
+      "govtNps": 74970,
+      "tdsPaid": 18480,
+      "grossPaid": 668040,
+      "employeeNps": 53550,
+      "netDisbursed": 591160,
+      "financialYear": "2026-2027",
+      "totalDeductions": 76880
+    },
+    "pran": "110194810244",
+    "daRate": 0.53,
+    "hraRate": 0.3,
+    "basicPay": 70000,
+    "netSalary": 118232,
+    "taxRegime": "New Tax Regime (Section 115BAC)",
+    "accounting": {
+      "utr": "SBIN0001818948102",
+      "billNo": "DMA/ESTT-I/SAL-AUG-2026/0412",
+      "ddoCode": "10501 (DDO, Department of Military Affairs)",
+      "paoCode": "001488 (PAO, Ministry of Defence, South Block)",
+      "subHead": "02 - Department of Military Affairs",
+      "tokenNo": "PAO/MOD/DEL/2026/0941",
+      "billDate": "28-Aug-2026",
+      "majorHead": "2052 - Secretariat-General Services",
+      "minorHead": "090 - Secretariat",
+      "tokenDate": "29-Aug-2026",
+      "voucherNo": "PAO-DMA-VR-2026-08104",
+      "voucherDate": "31-Aug-2026",
+      "detailedHead": "02.00.01 - Salaries (7th CPC)",
+      "pfmsSanctionId": "PFMS-MOD-DMA-2026-AUG-8104"
+    },
+    "daOnTaRate": 0.53,
+    "grossSalary": 133608,
+    "incomeTaxTds": 3696,
+    "cghsDeduction": 650,
+    "classification": "Central Civil Services - Group 'A' (Gazetted)",
+    "cgegisDeduction": 120,
+    "professionalTax": 200,
+    "totalCostToGovt": 148886,
+    "totalDeductions": 15376,
+    "npsDeductionRate": 0.1,
+    "transportAllowance": 3600,
+    "govtNpsContribution": 14994,
+    "govtCgegisContribution": 84
+  },
+  "circulars": [
+    {
+      "id": "MHA/CIS/2026/89",
+      "date": "28-09-2026",
+      "file": "MHA_Security_Directive_2026.pdf",
+      "isNew": true,
+      "title": "MHA Directive on Physical Security Audits & Biometric Access Control for Critical Installations",
+      "subject": "Mandatory directive from Ministry of Home Affairs requiring immediate physical security audits, perimeter access control reinforcement, and transition to Aadhaar-enabled Biometric Access Control (AEBAS) for all High-Security zones in South Block.",
+      "category": "Security & Vigilance",
+      "authority": "Ministry of Home Affairs (MHA), Internal Security Div",
+      "classification": "RESTRICTED"
+    },
+    {
+      "id": "DMA/AFHQ/2026/41",
+      "date": "25-09-2026",
+      "file": "DMA_AFHQ_Rationalization_2026.pdf",
+      "isNew": true,
+      "title": "Rationalization of Armed Forces Headquarters Civil Service (AFHQ CS) Cadre",
+      "subject": "Department of Military Affairs order outlining the optimization of Group A and B posts within the AFHQ Civil Service, including the merger of redundant sections and the introduction of a new Digital Transformation task force.",
+      "category": "Service Rules & Welfare",
+      "authority": "Department of Military Affairs (DMA.gov.in)",
+      "classification": "OFFICIAL GAZETTE"
+    },
+    {
+      "id": "MOD/ESTT/2026/OM-12",
+      "date": "20-09-2026",
+      "file": "MOD_SPARROW_Implementation.pdf",
+      "isNew": true,
+      "title": "Implementation of SPARROW for all MoD Civilian Employees (Group B & C)",
+      "subject": "Official Memorandum from MoD Establishment mandating the transition of all Group B and C civilian personnel to the Smart Performance Appraisal Report Recording Online Window (SPARROW) system for APAR recording for the current cycle.",
+      "category": "Service Rules & Welfare",
+      "authority": "Ministry of Defence (MoD.gov.in)",
+      "classification": "PUBLIC OM"
+    },
+    {
+      "id": "MoD/DoD/OPS-SPL/2026/8104-SEC",
+      "date": "10-09-2026",
+      "file": "Order_MoD_DoD_OPS_SPL_2026_8104.pdf",
+      "isNew": true,
+      "title": "🚨 TOP SECRET: Operational Directive for Special Task Force (Apex Command to Group 'A' Gazetted Cadre)",
+      "subject": "Constitution and Mobilization of 15-Member Strategic Joint Task Force under Ministry of Defence, New Delhi effective 12-Sep-2026 (Duration: Till Further Orders) including Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer (Lead Technical Operations). Operational location strictly classified; disclosure at Apex In-Camera Meeting on 12-Sep-2026 at South Block War Room.",
+      "category": "Special Operations & Defence",
+      "authority": "Ministry of Defence / Department of Military Affairs",
+      "downloadType": "specialOrder",
+      "classification": "TOP SECRET",
+      "isSpecialOperation": true
+    },
+    {
+      "id": "MoD/DRDO/TRF/2026/102",
+      "date": "08-09-2026",
+      "file": "Transfer_Order_Anurag_Bawaskar_GroupA_DRDO_Pune.pdf",
+      "isNew": true,
+      "title": "Gazette Transfer & Posting Order: Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer, from Rashtrapati Bhavan, New Delhi to DRDO Dighi, Pune",
+      "subject": "Official Gazette Transfer Order No. MoD/DRDO/TRF/2026/102: Relieving Shri Anurag Anil Bawaskar, Group 'A' Gazetted Officer (Additional Section Officer - I / Chief Information Security Specialist) from President's Secretariat / Cabinet Secretariat, Rashtrapati Bhavan, New Delhi and posting to Defence Research & Development Organisation (DRDO), Dighi, Pune - 411015 with operational attachment to MoD Special Task Force.",
+      "category": "Postings & Transfers",
+      "authority": "Department of Defence / DRDO Establishment Wing",
+      "downloadType": "transferOrder",
+      "classification": "OFFICIAL GAZETTE",
+      "isTransferOrder": true
+    },
+    {
+      "id": "MoD/SEC-VET/2026/A-01",
+      "date": "09-09-2026",
+      "file": "Security_Clearance_Level1_Bawaskar.pdf",
+      "isNew": true,
+      "title": "Apex Level-1 Top Secret Security Vetting & Clearance Certificate: Shri Anurag Anil Bawaskar",
+      "subject": "National Security Multi-Agency Vetting by DIA & IB: Grant of Level-1 Top Secret Compartmented Clearance for cryptographic systems, C4I networks, and War Room operational intelligence under Operation VAJRA-SHAKTI.",
+      "category": "Security & Vigilance",
+      "authority": "Directorate General of Defence Intelligence & Security (DIA/IB)",
+      "downloadType": "securityClearance",
+      "classification": "TOP SECRET"
+    },
+    {
+      "id": "MoD/DRDO/CTG/2026/44",
+      "date": "09-09-2026",
+      "file": "CTG_Sanction_Order_2026_44.pdf",
+      "isNew": true,
+      "title": "Sanction Order: Composite Transfer Grant (CTG) & Transportation of Personal Effects (₹1,16,000)",
+      "subject": "Financial Sanction under Supplementary Rule (SR 114) for Composite Transfer Grant (80% of Basic Pay = ₹56,000) and containerized relocation allowances (₹60,000) on permanent transfer from Delhi to DRDO Dighi, Pune.",
+      "category": "Pay & Allowances",
+      "authority": "Department of Defence Finance & Accounts",
+      "downloadType": "ctgOrder",
+      "classification": "FINANCIAL SANCTION"
+    },
+    {
+      "id": "MoD/FIN/SDA/2026/89",
+      "date": "10-09-2026",
+      "file": "Special_Duty_Allowance_SDA_89.pdf",
+      "isNew": true,
+      "title": "Special Cyber Warfare & Mission Hardship Allowance Sanction Order (20% of Basic Pay - ₹14,000/pm)",
+      "subject": "Concurrence of Integrated Financial Adviser (IFA Defence) under DFPDS Rule 8(2) for monthly Special Cyber Risk Allowance of ₹14,000 admissible to Task Force Lead Technical Officers during operational deployment.",
+      "category": "Pay & Allowances",
+      "authority": "Financial Adviser (Defence Services), Ministry of Defence",
+      "downloadType": "specialDutyAllowance",
+      "classification": "FINANCIAL SANCTION"
+    },
+    {
+      "id": "DoPT/OM/2026/DA-53",
+      "date": "15-07-2026",
+      "file": "OM_DA_Revision_53pct_July2026.pdf",
+      "isNew": false,
+      "title": "Grant of Dearness Allowance (DA) to Central Government Employees Revised to 53% effective 01.07.2026",
+      "subject": "Ministry of Finance Department of Expenditure OM conveying President's sanction for enhancing Dearness Allowance from 50% to 53% of Basic Pay for all Central Civil Services and Defence Civilian Personnel.",
+      "category": "Pay & Allowances",
+      "authority": "Department of Expenditure, Ministry of Finance",
+      "classification": "PUBLIC OM"
+    },
+    {
+      "id": "DoPT/OM/2026/8CPC-TOR",
+      "date": "28-08-2026",
+      "file": "8th_CPC_Terms_of_Reference_Advisory.pdf",
+      "isNew": true,
+      "title": "Preparatory Data Gathering & Pre-Commission Terms of Reference for 8th Central Pay Commission",
+      "subject": "Cabinet Secretariat directive on compilation of employee cadre distributions, DA merger thresholds, allowances rationalization, and pension indexation models for Central Civil Services.",
+      "category": "Pay & Allowances",
+      "authority": "Department of Personnel & Training (DoPT)",
+      "classification": "POLICY DIRECTIVE"
+    },
+    {
+      "id": "MOD/CYBER/2026/44",
+      "date": "28-06-2026",
+      "file": "MOD_Cyber_Directive_2026.pdf",
+      "isNew": false,
+      "title": "Enhanced Cyber Hygiene & Defence Network Security Guidelines for MoD Personnel",
+      "subject": "Mandatory protocols for Information Security, multi-factor authentication, cryptographic key rotation, and zero-trust intranet architecture across all Department of Military Affairs formations.",
+      "category": "Security & Vigilance",
+      "authority": "Department of Military Affairs (Cyber Command)",
+      "classification": "RESTRICTED"
+    },
+    {
+      "id": "DoPT/OM/2026/eSB-MANDATE",
+      "date": "02-09-2026",
+      "file": "OM_eSB_Mandatory_Sept2026.pdf",
+      "isNew": true,
+      "title": "Mandatory Maintenance of Electronic Service Book (e-SB) on e-HRMS 2.0 without Physical Duplication",
+      "subject": "Statutory OM under Rule 257 of GFR 2017: Discontinuation of physical Service Books and transitioning to tamper-evident cryptographic e-Service Books across all Ministries and Departments.",
+      "category": "Service Rules & Welfare",
+      "authority": "Department of Personnel & Training (DoPT)",
+      "classification": "STATUTORY OM"
+    },
+    {
+      "id": "MoD/DRDO/PUNE-EXP/2026/18",
+      "date": "04-09-2026",
+      "file": "DRDO_Pune_Cyber_Expansion_2026.pdf",
+      "isNew": true,
+      "title": "Operational Expansion & High-Performance Computing Cyber Lab Setup at DRDO Dighi, Pune",
+      "subject": "Administrative approval and financial sanction for state-of-the-art Quantum Cryptographic Research Lab and Secure Telemetry Grid at DRDO Dighi campus under Chief Information Security Specialist oversight.",
+      "category": "Special Operations & Defence",
+      "authority": "Defence Research & Development Organisation (DRDO)",
+      "classification": "RESTRICTED"
+    },
+    {
+      "id": "DoHFW/CGHS/PUNE/2026/71",
+      "date": "20-08-2026",
+      "file": "CGHS_Pune_Empanelled_Hospitals_2026.pdf",
+      "isNew": false,
+      "title": "Empanelment of Super-Specialty Hospitals & Wellness Centres under CGHS Pune & New Delhi",
+      "subject": "Extension of cashless inpatient treatment facilities for Central Government beneficiaries across Pune city (including Ruby Hall Clinic, Jehangir Hospital, Command Hospital) and Delhi NCR.",
+      "category": "Service Rules & Welfare",
+      "authority": "Ministry of Health & Family Welfare (CGHS Wing)",
+      "classification": "PUBLIC OM"
+    },
+    {
+      "id": "DoPT/CEA/2026/09",
+      "date": "12-08-2026",
+      "file": "CEA_Hostel_Subsidy_Revision_2026.pdf",
+      "isNew": false,
+      "title": "Revision of Children Education Allowance (CEA) & Hostel Subsidy Rates Pursuant to 50% DA Threshold",
+      "subject": "Automatic 25% upward revision of Children Education Allowance from ₹2,250 to ₹2,812.50 per month per child and Hostel Subsidy from ₹6,750 to ₹8,437.50 per month consequent upon DA crossing 50%.",
+      "category": "Pay & Allowances",
+      "authority": "Department of Personnel & Training (DoPT)",
+      "classification": "PUBLIC OM"
+    },
+    {
+      "id": "MoD/SEC/OSA-1923/2026",
+      "date": "01-09-2026",
+      "file": "OSA_1923_Compliance_Directive_2026.pdf",
+      "isNew": false,
+      "title": "Enforcement Directives under Official Secrets Act 1923: Operations Security & Social Media Silence",
+      "subject": "Strict directives issued by Cabinet Secretariat & MoD mandating total social media silence, geolocation masking, and secure communication channels for personnel attached to strategic task forces.",
+      "category": "Security & Vigilance",
+      "authority": "Ministry of Defence / Cabinet Secretariat",
+      "classification": "CONFIDENTIAL"
+    },
+    {
+      "id": "DoPT/LEAVE/2026/11",
+      "date": "18-07-2026",
+      "file": "DoPT_SCL_Operational_Rules_2026.pdf",
+      "isNew": false,
+      "title": "Comprehensive Guidelines on Special Casual Leave (SCL) for Operational Readiness & Field Exercises",
+      "subject": "Provisions for grant of up to 30 days Special Casual Leave for civilian technical specialists participating in tri-services war-games, high-altitude acclimatization, and tactical mobilization drills.",
+      "category": "Service Rules & Welfare",
+      "authority": "Department of Personnel & Training (DoPT)",
+      "classification": "PUBLIC OM"
+    },
+    {
+      "id": "MoD/DMA/ESTT/2026/41",
+      "date": "06-09-2026",
+      "file": "MoD_DMA_Rotational_Postings_2026.pdf",
+      "isNew": true,
+      "title": "Comprehensive Cadre Rationalization & Inter-Branch Rotational Postings of Group 'A' Officers",
+      "subject": "Establishment-I Branch rotational transfer and attachment directives for Group 'A' Gazetted Officers across Department of Military Affairs, DRDO headquarters, and Integrated Defence Staff formations.",
+      "category": "Postings & Transfers",
+      "authority": "Department of Military Affairs, MoD",
+      "classification": "OFFICIAL GAZETTE"
+    },
+    {
+      "id": "DoPT/CSS/DEP-2026/14",
+      "date": "30-08-2026",
+      "file": "CSS_Deputation_Circular_August2026.pdf",
+      "isNew": false,
+      "title": "Central Staffing Scheme (CSS): Inviting Nominations for Group 'A' Officers for Foreign & Inter-Ministry Deputations",
+      "subject": "Circulation of executive vacancies for Deputy Secretary / Under Secretary levels in Ministry of External Affairs, Cabinet Secretariat, and National Technical Research Organisation (NTRO).",
+      "category": "Postings & Transfers",
+      "authority": "DoPT / Office of Establishment Officer",
+      "classification": "PUBLIC CIRCULAR"
+    },
+    {
+      "id": "MoD/C4I/COMM-GRID/2026/03",
+      "date": "05-09-2026",
+      "file": "C4I_Terminal_Crypto_Directive_2026.pdf",
+      "isNew": true,
+      "title": "Tri-Services Secure C4I Terminal Protocols & Cryptographic Key Management Directive",
+      "subject": "Standard Operating Procedure (SOP) for Level-1 encrypted tactical communications, automated satellite failover, and hardware security modules (HSM) across forward military formations.",
+      "category": "Special Operations & Defence",
+      "authority": "Integrated Defence Staff / Joint Communications Electronics Staff",
+      "classification": "TOP SECRET"
+    },
+    {
+      "id": "PFRDA/NPS/2026/CRA-08",
+      "date": "22-08-2026",
+      "file": "PFRDA_NPS_Partial_Withdrawal_Master_2026.pdf",
+      "isNew": false,
+      "title": "Streamlined Online Partial Withdrawal Guidelines under NPS & UPS Options for Central Government Servants",
+      "subject": "Master Circular from PFRDA on Protean CRA/NSDL online instant partial withdrawal for higher education, critical illness, and house purchase without mandatory physical nodal verification.",
+      "category": "Service Rules & Welfare",
+      "authority": "Pension Fund Regulatory and Development Authority (PFRDA)",
+      "classification": "PUBLIC CIRCULAR"
+    },
+    {
+      "id": "MoD/DRDO/RD-PROJECT/2026/18",
+      "date": "07-09-2026",
+      "file": "DRDO_Project_Kavach_Sanction_2026.pdf",
+      "isNew": true,
+      "title": "Sanction of Project KAVACH-II: Advanced Quantum & Cyber-Physical Defence Grid at DRDO ARDE / R&DE(E) Pune",
+      "subject": "Administrative approval and financial sanction of ₹42.8 Crore for implementation of Quantum Key Distribution (QKD) and secure tactical intranet architecture under DRDO Armament and Combat Engineering Cluster, Dighi, Pune.",
+      "category": "Special Operations & Defence",
+      "authority": "Defence Research & Development Organisation (DRDO)",
+      "classification": "RESTRICTED"
+    },
+    {
+      "id": "MoD/ESTT/HOUSING/2026/71",
+      "date": "08-09-2026",
+      "file": "DRDO_Pune_Housing_Allotment_71.pdf",
+      "isNew": true,
+      "title": "Priority Allotment of Type-V Government Residential Accommodation at DRDO Officers Enclave, Pashan Road, Pune",
+      "subject": "Directorate of Estates & DRDO Estate Management Unit (EMU) sanction for priority transit & permanent allotment of Type-V residential quarters to Group 'A' Gazetted Officers on operational transfer to DRDO Pune.",
+      "category": "Service Rules & Welfare",
+      "authority": "DRDO Estate Management Unit (EMU) & Directorate of Estates",
+      "classification": "OFFICIAL GAZETTE"
+    },
+    {
+      "id": "DoPT/LTC/2026/33",
+      "date": "02-09-2026",
+      "file": "DoPT_LTC_Air_Entitlement_2026.pdf",
+      "isNew": false,
+      "title": "Air Travel Entitlement on Official Transfer & All-India Leave Travel Concession (AILTC) for Group 'A' Officers",
+      "subject": "Guidelines regarding booking of air tickets through authorized travel agents (Balmer Lawrie, Ashoka Travels, IRCTC) and entitlement of Economy/Premium Economy class for Level 7 to Level 14 officers on permanent posting.",
+      "category": "Pay & Allowances",
+      "authority": "Department of Personnel & Training (DoPT) & Ministry of Civil Aviation",
+      "classification": "PUBLIC OM"
+    }
+  ],
+  "aebasRecords": [
+    {
+      "date": "2026-09-08",
+      "inTime": "08:55 AM",
+      "status": "Present",
+      "outTime": "--:--",
+      "location": "Sena Bhawan Gate 2"
+    },
+    {
+      "date": "2026-09-07",
+      "inTime": "09:02 AM",
+      "status": "Present",
+      "outTime": "05:40 PM",
+      "location": "South Block Gate 4"
+    },
+    {
+      "date": "2026-09-06",
+      "inTime": "--:--",
+      "status": "Sunday",
+      "outTime": "--:--",
+      "location": "-"
+    },
+    {
+      "date": "2026-09-05",
+      "inTime": "--:--",
+      "status": "Saturday",
+      "outTime": "--:--",
+      "location": "-"
+    },
+    {
+      "date": "2026-09-04",
+      "inTime": "09:15 AM",
+      "status": "Late",
+      "outTime": "05:30 PM",
+      "location": "Sena Bhawan Gate 1"
+    },
+    {
+      "date": "2026-09-03",
+      "inTime": "08:50 AM",
+      "status": "Present",
+      "outTime": "06:05 PM",
+      "location": "Sena Bhawan Gate 2"
+    }
+  ],
+  "aebasStats": {
+    "lateDays": 1,
+    "avgInTime": "09:01 AM",
+    "avgOutTime": "05:45 PM",
+    "leavesTaken": 0,
+    "totalWorkingDays": 22
+  },
+  "cghsClaims": [
+    {
+      "id": "CGHS-DEL-2026-9011",
+      "date": "12-Aug-2026",
+      "amount": 4500,
+      "status": "Settled",
+      "patient": "Shri Anil Ramkrishna Bawaskar (Father)",
+      "hospital": "Army Hospital (R&R), Delhi Cantt",
+      "treatment": "Cardiac Consultation"
+    },
+    {
+      "id": "CGHS-DEL-2026-8422",
+      "date": "04-Sep-2026",
+      "amount": 1200,
+      "status": "Pending Scrutiny",
+      "patient": "Anurag Anil Bawaskar (Self)",
+      "hospital": "CGHS Wellness Centre, RK Puram",
+      "treatment": "Dental Extraction"
+    }
+  ],
+  "deputationCirculars": [
+    {
+      "id": "CSS-2026-09",
+      "type": "Training",
+      "title": "Foreign Training Program at LKY School of Public Policy, Singapore",
+      "deadline": "25-Sep-2026",
+      "department": "DoPT"
+    },
+    {
+      "id": "DEP-2026-14",
+      "type": "Deputation",
+      "title": "Vacancy for Under Secretary in Ministry of External Affairs",
+      "deadline": "30-Sep-2026",
+      "department": "MEA"
+    },
+    {
+      "id": "TRG-2026-41",
+      "type": "Training",
+      "title": "Mandatory Mid-Career Training Programme (Phase-III) for CSS Officers",
+      "deadline": "15-Oct-2026",
+      "department": "ISTM"
+    }
+  ],
+  "eAwasStatus": {
+    "status": "Waitlisted",
+    "appliedFor": "Type-IV",
+    "entitlement": "Eligible for Type-IV",
+    "waitingListNo": 142,
+    "applicationDate": "15-Jan-2025",
+    "preferredLocality": [
+      "New Moti Bagh",
+      "RK Puram",
+      "Kidwai Nagar"
+    ]
+  },
+  "eOfficeData": {
+    "sent": [
+      {
+        "to": "Shri Rajender Singh, DS (Estt)",
+        "date": "06-Sep-2026",
+        "type": "File",
+        "fileNo": "MoD/DMA/Estt/2026/41",
+        "subject": "Posting & Transfer of Group A Gazetted Officers"
+      },
+      {
+        "to": "Gen. N.S. Raja Subramani, CDS",
+        "date": "01-Sep-2026",
+        "type": "File",
+        "fileNo": "MoD/DMA/Trg/2026/08",
+        "subject": "Nomination for National Defence College (NDC) Course"
+      }
+    ],
+    "inbox": [
+      {
+        "date": "08-Sep-2026",
+        "from": "Col. Amit Sharma, Director (Acq)",
+        "type": "File",
+        "fileNo": "MoD/DMA/Proc/2026/89",
+        "subject": "Procurement of High-Altitude Drones for Northern Command",
+        "priority": "Immediate"
+      },
+      {
+        "date": "07-Sep-2026",
+        "from": "Shri Rajender Singh, DS (Estt)",
+        "type": "File",
+        "fileNo": "MoD/DMA/Pol/2026/12",
+        "subject": "Agnipath Scheme: Review of Implementation Guidelines",
+        "priority": "High"
+      },
+      {
+        "date": "08-Sep-2026",
+        "from": "Sena Bhawan Dak Section",
+        "type": "Receipt",
+        "fileNo": "Receipt-10492-2026",
+        "subject": "Representation regarding Pay Fixation Anomaly",
+        "priority": "Normal"
+      }
+    ],
+    "activeFile": {
+      "notes": [
+        {
+          "date": "06-Sep-2026 10:15 AM",
+          "text": "The proposal for procurement of 50 High-Altitude Drones has been received from Northern Command. The estimated cost is ₹120 Crores. Financial concurrence is required.",
+          "author": "Col. Amit Sharma, Director (Acq)",
+          "noteNo": 1
+        },
+        {
+          "date": "07-Sep-2026 14:30 PM",
+          "text": "File forwarded to ASO-I (DMA) for initial scrutiny and linking of relevant Financial Powers Rules.",
+          "author": "Shri Rajender Singh, DS (Estt)",
+          "noteNo": 2
+        }
+      ],
+      "fileNo": "MoD/DMA/Proc/2026/89",
+      "subject": "Procurement of High-Altitude Drones for Northern Command"
+    }
+  },
+  "notifications": [
+    {
+      "id": 99,
+      "type": "warning",
+      "title": "🚨 TOP SECRET: Special Operation Order Issued",
+      "message": "MoD Order No. MoD/DoD/OPS-SPL/2026/8104-SEC issued for Special Operation effective 12-Sep-2026 until further orders. Detailed location classified; to be revealed in Apex Briefing on 12-Sep-2026 at South Block.",
+      "timestamp": "Just now"
+    },
+    {
+      "id": 1,
+      "type": "info",
+      "title": "Restricted Holiday Request",
+      "message": "Restricted Holiday (RH) for 22-Sep-2026 is pending review with Shri Anil Kumar Chhapolia, Joint Secretary (Estt & Coord, DMA).",
+      "timestamp": "2 hours ago"
+    },
+    {
+      "id": 2,
+      "type": "success",
+      "title": "Casual Leave Sanctioned",
+      "message": "CL for 15-16 Sep 2026 sanctioned by Shri Anil Kumar Chhapolia via Order MoD/DMA/Estt-I/LV/2026/412.",
+      "timestamp": "Yesterday"
+    },
+    {
+      "id": 3,
+      "type": "success",
+      "title": "Vigilance Clearance Verified",
+      "message": "Top Secret Defence Security Vetting validated by Lieutenant General N.S. Raja Subramani, CDS.",
+      "timestamp": "3 days ago"
+    },
+    {
+      "id": 4,
+      "type": "success",
+      "title": "Salary Disbursed",
+      "message": "Pay Level 7 Cell 16 August 2026 salary credited (Net: ₹1,18,232) to SBI A/C 39189241534 (Defence Banking Branch, AFS Bareilly, IFSC: SBIN0001818).",
+      "timestamp": "31 Aug 2026"
+    }
+  ],
+  "karmayogi": {
+    "courses": [
+      {
+        "id": "IGOT-DMA-01",
+        "grade": "A+",
+        "score": "96%",
+        "title": "Code of Conduct & Ethics for Group 'A' Gazetted Civil Services",
+        "status": "COMPLETED",
+        "duration": "12 Hours",
+        "provider": "DoPT / ISTM New Delhi",
+        "cbsCredits": 150,
+        "certificateNo": "IGOT-CERT-2026-08104",
+        "completedDate": "15-Aug-2026"
+      },
+      {
+        "id": "IGOT-DMA-02",
+        "grade": "A",
+        "score": "92%",
+        "title": "Cyber Security & Information Assurance in Defence Establishments",
+        "status": "COMPLETED",
+        "duration": "10 Hours",
+        "provider": "DMA / CERT-In",
+        "cbsCredits": 140,
+        "certificateNo": "IGOT-CERT-2026-08142",
+        "completedDate": "20-Aug-2026"
+      },
+      {
+        "id": "IGOT-DMA-03",
+        "grade": "A+",
+        "score": "98%",
+        "title": "GFR 2017 & Public Procurement through GeM 4.0",
+        "status": "COMPLETED",
+        "duration": "8 Hours",
+        "provider": "Ministry of Finance / NIFM",
+        "cbsCredits": 120,
+        "certificateNo": "IGOT-CERT-2026-08199",
+        "completedDate": "28-Aug-2026"
+      },
+      {
+        "id": "IGOT-DMA-04",
+        "grade": "A",
+        "score": "90%",
+        "title": "Public Financial Management System (PFMS) & Electronic DBT",
+        "status": "COMPLETED",
+        "duration": "6 Hours",
+        "provider": "Controller General of Accounts (CGA)",
+        "cbsCredits": 110,
+        "certificateNo": "IGOT-CERT-2026-08221",
+        "completedDate": "02-Sep-2026"
+      },
+      {
+        "id": "IGOT-DMA-05",
+        "title": "Defence Acquisition Procedure (DAP 2020) & Indigenous Modernisation",
+        "status": "IN_PROGRESS",
+        "duration": "14 Hours",
+        "progress": 75,
+        "provider": "Department of Defence Production (DDP)",
+        "cbsCredits": 100
+      },
+      {
+        "id": "IGOT-DMA-06",
+        "title": "Preventive Vigilance & Public Interest Disclosure (PIDPI)",
+        "status": "ENROLLED",
+        "duration": "6 Hours",
+        "progress": 10,
+        "provider": "Central Vigilance Commission (CVC)",
+        "cbsCredits": 80
+      }
+    ],
+    "hubLevel": "Level 4 - Advanced Practitioner (DoPT Framework)",
+    "cbsCredits": 620,
+    "totalHours": 48.5,
+    "learningHours": 48.5,
+    "enrolledCoursesCount": 6,
+    "completedCoursesCount": 4
+  },
+  "smartIdCard": {
+    "cardNo": "MOD-ID-2024-8104",
+    "validUpto": "12-Nov-2029 (5 Years)",
+    "bloodGroup": "O+ve",
+    "issuedDate": "13-Nov-2024",
+    "rfidAccessId": "DMA-GATE-SOUTH-08104",
+    "smartChipUid": "IND-MOD-7F89B241",
+    "accessClearance": "Top Secret / Sensitive Defence Documents",
+    "emergencyContact": "+91 9822453218 (Shri Anil Ramkrishna Bawaskar, Father - RSI)",
+    "issuingAuthority": "Shri Anil Kumar Chhapolia, Joint Secretary (Establishment & Coordination), DMA",
+    "securityAccessZone": "ZONE-3 (DRDO / RESEARCH FACILITIES)"
+  },
+  "csdBilling": {
+    "pan": "EYUPB3666M",
+    "pin": "1234",
+    "name": "ANURAG ANIL BAWASKAR",
+    "rank": "ASO-I (Group A Gazetted)",
+    "cardNo": "LB08260547713500S01",
+    "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+    "afdOrders": [
+      {
+        "id": "AFD-2026-0041",
+        "date": "2026-09-10",
+        "model": "Maruti Suzuki Grand Vitara Zeta AT",
+        "dealer": "Rana Motors CSD Depot, Rama Road, New Delhi",
+        "status": "SANCTIONED & P.O. GENERATED",
+        "savings": 190000,
+        "csdPrice": 1435000,
+        "itemType": "Four Wheeler (Car)",
+        "civilPrice": 1625000,
+        "sanctionAuthority": "Quartermaster General (QMG) Branch / CSD AFD Cell"
+      }
+    ],
+    "inventory": [
+      {
+        "id": "606820",
+        "sku": "606820",
+        "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
+        "unit": "UNT",
+        "brand": "APPLE INC / INDIA",
+        "model": "A3185 (MACBOOK PRO 16)",
+        "color": "SPACE BLACK",
+        "hsn": "85171300",
+        "price": 319900,
+        "marketPrice": 349900,
+        "stock": 9,
+        "grade": "Brand New Sealed Box (Grade A)",
+        "accessories": "All Original Accessories Included (140W USB-C Adapter, Braided MagSafe 3 Cable)",
+        "warrantyExpires": "1 Year Official Brand Warranty Pan-India",
+        "specs": "16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3",
+        "serialNo": "C02TM8921APPLE",
+        "imei1": "N/A",
+        "imei2": "N/A",
+        "batchNo": "BAT-2026/10-DEL",
+        "gstRate": 18
+      },
+      {
+        "id": "621146",
+        "sku": "621146",
+        "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
+        "unit": "Unit",
+        "brand": "APPLE INC / INDIA",
+        "model": "A3185 (MACBOOK PRO 16)",
+        "color": "SPACE BLACK",
+        "hsn": "85171300",
+        "price": 319900,
+        "marketPrice": 349900,
+        "stock": 9,
+        "grade": "Brand New Sealed Box (Grade A)",
+        "accessories": "All Original Accessories Included",
+        "warrantyExpires": "1 Year Official Brand Warranty Pan-India",
+        "specs": "16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3",
+        "serialNo": "C02TM8921APPLE",
+        "imei1": "N/A",
+        "imei2": "N/A",
+        "batchNo": "BAT-2026/10-DEL",
+        "gstRate": 18
+      },
+      {
+        "id": "559533",
+        "sku": "559533",
+        "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
+        "unit": "Unit",
+        "brand": "APPLE INC / INDIA",
+        "model": "A3185 (MACBOOK PRO 16)",
+        "color": "SPACE BLACK",
+        "hsn": "85171300",
+        "price": 319900,
+        "marketPrice": 349900,
+        "stock": 10,
+        "grade": "Brand New Sealed Box (Grade A)",
+        "accessories": "All Original Accessories Included",
+        "warrantyExpires": "1 Year Official Brand Warranty Pan-India",
+        "specs": "16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3",
+        "serialNo": "C02TM8921APPLE",
+        "imei1": "N/A",
+        "imei2": "N/A",
+        "batchNo": "BAT-2026/10-DEL",
+        "gstRate": 18
+      },
+      {
+        "id": "281948",
+        "sku": "281948",
+        "name": "APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "UNT",
+        "brand": "APPLE INC / APPLE INDIA PVT LTD",
+        "model": "A3398 / IPHONE 17 PRO MAX (256GB)",
+        "color": "TITANIUM TEAL",
+        "hsn": "85171300",
+        "price": 114900,
+        "marketPrice": 144900,
+        "stock": 15,
+        "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
+        "accessories": "100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS",
+        "warrantyExpires": "28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)",
+        "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS",
+        "serialNo": "G6TF9027IPHONE17",
+        "imei1": "359810/24/849201/8",
+        "imei2": "359810/24/849202/6",
+        "batchNo": "BAT-2026/09-DEL-A17",
+        "gstRate": 18
+      },
+      {
+        "id": "281949",
+        "sku": "281949",
+        "name": "APPLE IPHONE 17 (256GB) - ULTRAVIOLET",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "UNT",
+        "brand": "APPLE INC / APPLE INDIA PVT LTD",
+        "model": "A3391 / IPHONE 17",
+        "color": "ULTRAVIOLET",
+        "hsn": "85171300",
+        "price": 68900,
+        "marketPrice": 89900,
+        "stock": 20,
+        "grade": "SEALED BRAND NEW RETAIL PACK",
+        "accessories": "TYPE-C WOVEN CHARGING CABLE, SIM TRAY PIN, MANUAL",
+        "warrantyExpires": "1 YEAR APPLE PAN-INDIA LIMITED WARRANTY",
+        "specs": "15.75 CM (6.2\") SUPER RETINA XDR OLED 120HZ PROMOTION | APPLE A19 BIONIC 2NM CHIP | 8GB RAM | 256GB ROM | DUAL 48MP FUSION + 48MP ULTRA WIDE CAMERA | 4200 MAH BATTERY",
+        "serialNo": "G6TQ8121IP17UV",
+        "imei1": "359822/15/901284/3",
+        "imei2": "359822/15/901285/0",
+        "batchNo": "BAT-2026/10-DEL",
+        "gstRate": 18
+      },
+      {
+        "id": "233243",
+        "sku": "233243",
+        "name": "SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "UNT",
+        "brand": "SAMSUNG ELECTRONICS INDIA",
+        "model": "SM-S931B/DS (GALAXY S25 5G)",
+        "color": "SILVER SHADOW",
+        "hsn": "85171300",
+        "price": 54436,
+        "marketPrice": 80999,
+        "stock": 12,
+        "grade": "VERY GOOD (A) - BRAND BOX",
+        "accessories": "ALL ACCESSORIES INCLUDED (65W TYPE-C CABLE, EJECTOR PIN)",
+        "warrantyExpires": "23-05-2027 (PAN-INDIA BRAND ONSITE WARRANTY)",
+        "specs": "15.75 CM (6.2\") FULL HD+ DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP REAR CAMERA | 12MP FRONT CAMERA | 4000 MAH LI-ION",
+        "serialNo": "R58N90X233243S",
+        "imei1": "358941/08/948210/6",
+        "imei2": "358941/08/948211/4",
+        "batchNo": "BAT-2026/08-DEL",
+        "gstRate": 18
+      },
+      {
+        "id": "99055412",
+        "sku": "99055412",
+        "name": "SONY PLAYSTATION 5 CONSOLE",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Unit",
+        "brand": "",
+        "model": "",
+        "color": "White",
+        "hsn": "9504",
+        "price": 37900,
+        "marketPrice": 57999,
+        "stock": 5,
+        "grade": "Very Good (A)",
+        "accessories": "All working cables & working controller",
+        "warrantyExpires": "1 Month Warranty",
+        "specs": "Ultra-high-speed SSD | Haptic feedback & Adaptive triggers | 3D Audio | Backwards compatibility for PS4 games | Game boost for smoother frame rates | PS VR integration",
+        "serialNo": "PS5-7X9P2M4K8W",
+        "imei1": "N/A",
+        "imei2": "N/A",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "245561",
+        "sku": "245561",
+        "name": "SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Unit",
+        "brand": "",
+        "model": "",
+        "color": "Onyx Black",
+        "hsn": "8517",
+        "price": 32999,
+        "marketPrice": 74999,
+        "stock": 25,
+        "grade": "Very Good (A)",
+        "accessories": "All Accessories Included",
+        "warrantyExpires": "24-10-2027",
+        "specs": "15.75 cm (6.2\") FHD+ Dynamic AMOLED 2X 120Hz | Exynos 2400 Deca Core | 8GB RAM | 128GB ROM | 50MP+10MP+12MP Rear | 12MP Front | Nightography",
+        "serialNo": "R58N90Y245561T",
+        "imei1": "358944/09/848210/1",
+        "imei2": "358944/09/848211/9",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8806090123456",
+        "sku": "8806090123456",
+        "name": "SAMSUNG 32\" SMART LED TV",
+        "category": "Electronics",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Unit",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "8528",
+        "price": 12500,
+        "marketPrice": 15990,
+        "stock": 15,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901505001011",
+        "sku": "8901505001011",
+        "name": "JOHNNIE WALKER BLACK LABEL 750ML",
+        "category": "Liquor",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Bottle",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "2208",
+        "price": 2650,
+        "marketPrice": 3800,
+        "stock": 45,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901030311221",
+        "sku": "8901030311221",
+        "name": "AMUL PURE GHEE 1L TIN",
+        "category": "Groceries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Tin",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "0405",
+        "price": 580,
+        "marketPrice": 650,
+        "stock": 50,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901030012224",
+        "sku": "8901030012224",
+        "name": "DAWAT BASMATI RICE 5KG",
+        "category": "Groceries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Bag",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "1006",
+        "price": 485,
+        "marketPrice": 590,
+        "stock": 64,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901725181223",
+        "sku": "8901725181223",
+        "name": "TATA TEA GOLD 1KG POUCH",
+        "category": "Groceries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Pack",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "0902",
+        "price": 460,
+        "marketPrice": 540,
+        "stock": 95,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901131000100",
+        "sku": "8901131000100",
+        "name": "OLD MONK XXX RUM 750ML",
+        "category": "Liquor",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Bottle",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "2208",
+        "price": 450,
+        "marketPrice": 600,
+        "stock": 200,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "4902430691234",
+        "sku": "4902430691234",
+        "name": "GILLETTE MACH 3 (4 CT)",
+        "category": "Toiletries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Pack",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "8212",
+        "price": 425,
+        "marketPrice": 495,
+        "stock": 80,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901063140120",
+        "sku": "8901063140120",
+        "name": "COLGATE TOTAL 150G (2PK)",
+        "category": "Toiletries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Pack",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "3306",
+        "price": 210,
+        "marketPrice": 260,
+        "stock": 140,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901207011400",
+        "sku": "8901207011400",
+        "name": "CADBURY CELEBRATIONS BOX",
+        "category": "Groceries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Box",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "1806",
+        "price": 195,
+        "marketPrice": 250,
+        "stock": 110,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      },
+      {
+        "id": "8901058863283",
+        "sku": "8901058863283",
+        "name": "MAGGI 2-MIN NOODLES 12PK",
+        "category": "Groceries",
+        "afdCategory": "AFD-II (DURABLES)",
+        "unit": "Pack",
+        "brand": "",
+        "model": "",
+        "color": "",
+        "hsn": "1902",
+        "price": 144,
+        "marketPrice": 168,
+        "stock": 120,
+        "grade": "",
+        "accessories": "",
+        "warrantyExpires": "",
+        "specs": "",
+        "serialNo": "",
+        "imei1": "",
+        "imei2": "",
+        "batchNo": "",
+        "gstRate": 18
+      }
+    ],
+    "entitlements": {
+      "liquorDrawn": 2,
+      "liquorLimit": 25,
+      "liquorBalance": 23,
+      "afdEligibility": "ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)",
+      "groceriesDrawn": 3335,
+      "groceriesLimit": 50000,
+      "groceriesBalance": 46665
+    },
+    "transactions": [
+      {
+        "id": "CSD-TXN-2026-1015",
+        "billNo": "CSD/URC/DEL/2026/10/9842",
+        "indentNo": "IND-2026/10/9842",
+        "date": "2026-10-15 10:30:00",
+        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "paymentMode": "HARD CURRENCY CASH ONLY (COUNTER 01)",
+        "paymentType": "CASH",
+        "items": [
+          {
+            "id": "281948",
+            "sku": "281948",
+            "name": "APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL",
+            "category": "Electronics",
+            "brand": "APPLE INC / APPLE INDIA PVT LTD",
+            "model": "A3398 / IPHONE 17 PRO MAX (256GB)",
+            "color": "TITANIUM TEAL",
+            "hsn": "85171300",
+            "qty": 1,
+            "unit": "UNT",
+            "price": 114900,
+            "marketPrice": 144900,
+            "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
+            "accessories": "100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS",
+            "warrantyExpires": "28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)",
+            "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS",
+            "imei1": "359810/24/849201/8",
+            "imei2": "359810/24/849202/6",
+            "serialNo": "G6TF9027IPHONE17",
+            "batchNo": "BAT-2026/09-DEL-A17",
+            "afdCategory": "AFD-II (DURABLES)"
+          }
+        ],
+        "totalTaxable": 97372.88,
+        "totalCgst": 8763.56,
+        "totalSgst": 8763.56,
+        "totalNet": 114900,
+        "totalSavings": 30000,
+        "cardNo": "LB08260547713500S01",
+        "rank": "ASO-I (Group A Gazetted)",
+        "grocLimit": 50000,
+        "grocDrawn": 2850,
+        "liqLimit": 25,
+        "liqDrawn": 2,
+        "status": "COMPLETED",
+        "cashTendered": 114900,
+        "cashChange": 0,
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9842",
+        "cashReceiptNo": "RCPT-CSD-2026-9842"
+      },
+      {
+        "id": "CSD-TXN-1792043251225",
+        "date": "2026-10-15 05:47:31",
+        "rank": "ADDITIONAL SECTION OFFICER - I",
+        "items": [
+          {
+            "id": "606820",
+            "hsn": "85171300",
+            "qty": 1,
+            "sku": "606820",
+            "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
+            "unit": "Unit",
+            "brand": "APPLE INC / INDIA",
+            "color": "SPACE BLACK",
+            "grade": "Brand New Sealed Box (Grade A)",
+            "imei1": "N/A",
+            "imei2": "N/A",
+            "model": "A3185 (MACBOOK PRO 16)",
+            "price": 319900,
+            "specs": "16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3",
+            "stock": 10,
+            "batchNo": "BAT-2026/10-DEL",
+            "gstRate": 18,
+            "brandBox": "Brand New Sealed Box (Grade A)",
+            "category": "Electronics",
+            "serialNo": "C02TM8921APPLE",
+            "accessories": "All Original Accessories Included",
+            "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
+            "marketPrice": 349900,
+            "warrantyExpires": "1 Year Official Brand Warranty Pan-India"
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/10/3058",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/3058",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "totalNet": 319900,
+        "grocDrawn": 3335,
+        "grocLimit": 50000,
+        "totalCgst": 24399.15254237288,
+        "totalSgst": 24399.15254237288,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)",
+        "paymentType": "CASH",
+        "cashTendered": 319900,
+        "totalSavings": 30000,
+        "totalTaxable": 271101.69491525425,
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/3058"
+      },
+      {
+        "id": "CSD-TXN-1792043200003",
+        "date": "2026-10-15 05:46:40",
+        "rank": "ADDITIONAL SECTION OFFICER - I",
+        "items": [
+          {
+            "id": "621146",
+            "hsn": "85171300",
+            "qty": 1,
+            "sku": "621146",
+            "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
+            "unit": "Unit",
+            "brand": "APPLE INC / INDIA",
+            "color": "SPACE BLACK",
+            "grade": "Brand New Sealed Box (Grade A)",
+            "imei1": "N/A",
+            "imei2": "N/A",
+            "model": "A3185 (MACBOOK PRO 16)",
+            "price": 319900,
+            "specs": "16.2\" LIQUID RETINA XDR 120HZ | 16-CORE CPU | 40-CORE GPU | 48GB UNIFIED MEMORY | 1TB NVME SSD | 140W MAGSAFE 3",
+            "stock": 10,
+            "batchNo": "BAT-2026/10-DEL",
+            "gstRate": 18,
+            "brandBox": "Brand New Sealed Box (Grade A)",
+            "category": "Electronics",
+            "serialNo": "C02TM8921APPLE",
+            "accessories": "All Original Accessories Included",
+            "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
+            "marketPrice": 349900,
+            "warrantyExpires": "1 Year Official Brand Warranty Pan-India"
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/10/7738",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/7738",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "totalNet": 319900,
+        "grocDrawn": 3335,
+        "grocLimit": 50000,
+        "totalCgst": 24399.15254237288,
+        "totalSgst": 24399.15254237288,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)",
+        "paymentType": "CASH",
+        "cashTendered": 319900,
+        "totalSavings": 30000,
+        "totalTaxable": 271101.69491525425,
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/7738"
+      },
+      {
+        "id": "CSD-TXN-1792043088239",
+        "date": "2026-10-15 05:44:48",
+        "rank": "ADDITIONAL SECTION OFFICER - I",
+        "items": [
+          {
+            "id": "8901030012224",
+            "hsn": "1006",
+            "qty": 1,
+            "name": "DAWAT BASMATI RICE 5KG",
+            "unit": "Bag",
+            "price": 485,
+            "stock": 65,
+            "category": "Groceries",
+            "marketPrice": 590
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/10/7939",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/7939",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "totalNet": 485,
+        "grocDrawn": 3335,
+        "grocLimit": 50000,
+        "totalCgst": 36.99152542372882,
+        "totalSgst": 36.99152542372882,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (Physical Cash Exact Tendered at Counter 01)",
+        "paymentType": "CASH",
+        "cashTendered": 485,
+        "totalSavings": 105,
+        "totalTaxable": 411.0169491525424,
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/7939"
+      },
+      {
+        "id": "CSD-TXN-2026-1002",
+        "date": "2026-10-02 18:45:10",
+        "rank": "ASO-I (Group A Gazetted)",
+        "items": [
+          {
+            "id": "233243",
+            "hsn": "8517",
+            "qty": 1,
+            "sku": "233243",
+            "name": "SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW",
+            "color": "Silver Shadow",
+            "grade": "Very Good (A)",
+            "imei1": "358941/08/948210/6",
+            "imei2": "358941/08/948211/4",
+            "price": 54436,
+            "specs": "15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)",
+            "brandBox": "Yes",
+            "category": "Electronics",
+            "serialNo": "R58N90X233243S",
+            "accessories": "All Accessories Included",
+            "marketPrice": 80999,
+            "warrantyExpires": "23-05-2027"
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/10/9482",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/9482",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "totalNet": 54436,
+        "grocDrawn": 2850,
+        "grocLimit": 50000,
+        "totalCgst": 4151.9,
+        "totalSgst": 4151.9,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (Tendered Exact ₹54,436.00 - Physical Cash Counter 01)",
+        "paymentType": "CASH",
+        "cashTendered": 54436,
+        "totalSavings": 26563,
+        "totalTaxable": 46132.2,
+        "cashReceiptNo": "RCPT-CSD-2026-9482",
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9482",
+        "cashDenominations": {
+          "2": 3,
+          "10": 1,
+          "20": 1,
+          "100": 4,
+          "500": 108
+        }
+      },
+      {
+        "id": "CSD-TXN-2026-0901",
+        "date": "2026-09-24 11:32:15",
+        "items": [
+          {
+            "id": "8901030311221",
+            "hsn": "0405",
+            "qty": 2,
+            "name": "AMUL PURE GHEE 1L TIN",
+            "price": 580,
+            "category": "Groceries",
+            "marketPrice": 650
+          },
+          {
+            "id": "8901725181223",
+            "hsn": "0902",
+            "qty": 1,
+            "name": "TATA TEA GOLD 1KG POUCH",
+            "price": 460,
+            "category": "Groceries",
+            "marketPrice": 540
+          },
+          {
+            "id": "4902430691234",
+            "hsn": "8212",
+            "qty": 1,
+            "name": "GILLETTE MACH 3 (4 CT)",
+            "price": 425,
+            "category": "Toiletries",
+            "marketPrice": 495
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/09/8812",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Havildar Rajesh Kumar",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/09/8812",
+        "terminal": "POS-04 / IP: 192.168.1.104",
+        "totalNet": 2045,
+        "totalCgst": 155.98,
+        "totalSgst": 155.98,
+        "paymentMode": "SBI DSP Defence Debit Card (Auth: 891244)",
+        "totalSavings": 290,
+        "totalTaxable": 1733.05
+      },
+      {
+        "id": "CSD-TXN-2026-0814",
+        "date": "2026-08-18 16:45:00",
+        "items": [
+          {
+            "id": "8901030012224",
+            "hsn": "1006",
+            "qty": 2,
+            "name": "DAWAT BASMATI RICE 5KG",
+            "price": 485,
+            "category": "Groceries",
+            "marketPrice": 590
+          },
+          {
+            "id": "8901058863283",
+            "hsn": "1902",
+            "qty": 2,
+            "name": "MAGGI 2-MIN NOODLES 12PK",
+            "price": 144,
+            "category": "Groceries",
+            "marketPrice": 168
+          }
+        ],
+        "billNo": "CSD/URC/DEL/2026/08/6421",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (Sena Bhawan)",
+        "cashier": "Naik S.K. Sharma",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/08/6421",
+        "terminal": "POS-02 / IP: 192.168.1.102",
+        "totalNet": 1258,
+        "totalCgst": 95.95,
+        "totalSgst": 95.95,
+        "paymentMode": "UPI / BharatPe CSD Merchant (Txn: 429188201)",
+        "totalSavings": 258,
+        "totalTaxable": 1066.1
+      }
+    ],
+    "dependentCardNo": "LB08260547713500D01",
+    "officers": [
+      {
+        "cardNo": "LB08260547713500S01",
+        "rank": "ASO-I (Gazetted)",
+        "name": "ANURAG ANIL BAWASKAR",
+        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
+        "pan": "EYUPB3666M",
+        "grocLimit": 50000,
+        "liqLimit": 25,
+        "grocDrawn": 2850,
+        "liqDrawn": 2
+      },
+      {
+        "cardNo": "GC99887766554433",
+        "rank": "COLONEL",
+        "name": "RAM SINGH",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "ABCDE1234F",
+        "grocLimit": 15000,
+        "liqLimit": 14,
+        "grocDrawn": 14500,
+        "liqDrawn": 12
+      },
+      {
+        "cardNo": "LB08260547713500D01",
+        "rank": "DEPENDENT (Father)",
+        "name": "ANIL R. BAWASKAR",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "EYUPB3666M",
+        "grocLimit": 10000,
+        "liqLimit": 25,
+        "grocDrawn": 0,
+        "liqDrawn": 0
+      },
+      {
+        "cardNo": "GC10928374123456",
+        "rank": "MAJOR",
+        "name": "ANURAG A. BAWASKAR",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "EYUPB3666M",
+        "grocLimit": 50000,
+        "liqLimit": 25,
+        "grocDrawn": 2500,
+        "liqDrawn": 2
+      }
+    ]
+  },
+  "specialOperationOrder": {
+    "endDate": "Till Further Orders (TFO) / Indefinite Operational Mandate",
+    "orderNo": "MoD/DoD/OPS-SPL/2026/8104-SEC",
+    "subject": "Constitution and Deployment of High-Level Strategic Joint Operation Task Force for Critical Defence Infrastructure, Cyber Warfare Systems & Tri-Services Integration",
+    "ministry": "Ministry of Defence",
+    "officers": [
+      {
+        "name": "General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM",
+        "contact": "cds.dma@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 17 (Apex)",
+        "cadreLevel": "Apex Leadership (CDS / MoD)",
+        "department": "Department of Military Affairs / Ministry of Defence",
+        "designation": "Chief of Defence Staff (CDS) & Secretary, DMA",
+        "roleInOperation": "Apex Operational Commander & Chairman of Joint Chiefs Committee"
+      },
+      {
+        "name": "Lieutenant General N.S. Raja Subramani, PVSM, AVSM, SM, VSM",
+        "contact": "raja.subramani@gov.in",
+        "station": "Sena Bhawan / South Block, New Delhi",
+        "payLevel": "Level 17",
+        "cadreLevel": "Apex Formations Command",
+        "department": "Integrated Defence Staff / Indian Army",
+        "designation": "Vice Chief of Army Staff / Special Operations Lead",
+        "roleInOperation": "Executive Field Formations & Tactical Operations Commander"
+      },
+      {
+        "name": "Shri Anil Kumar Chhapolia",
+        "contact": "ak.chhapolia@nic.in",
+        "station": "Room 214, Sena Bhawan / South Block, New Delhi",
+        "payLevel": "Level 14",
+        "cadreLevel": "Senior Administrative Grade (SAG)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Joint Secretary (Establishment & Coordination)",
+        "roleInOperation": "Civil-Military Administrative Controller & Inter-Agency Protocol Lead"
+      },
+      {
+        "name": "Col. Devashish Sharma, SM",
+        "contact": "dir-ops.mod@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 13",
+        "cadreLevel": "Director / Military Operations Cadre",
+        "department": "Department of Defence, South Block, MoD",
+        "designation": "Director (Military Operations & Special Projects)",
+        "roleInOperation": "Tactical Operations Director & Ground Forces Liaison In-Charge"
+      },
+      {
+        "name": "Shri Rajender Singh",
+        "contact": "ds-estt.dma@gov.in",
+        "station": "Room 106, Sena Bhawan, New Delhi",
+        "payLevel": "Level 12",
+        "cadreLevel": "Junior Administrative Grade (JAG)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Deputy Secretary (Establishment & Field Scrutiny)",
+        "roleInOperation": "Rapid Mobilization Logistics & Personnel Deployment Scrutiny Officer"
+      },
+      {
+        "name": "Smt. Meenakshi Sundaram",
+        "contact": "us-cyber.mod@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 11",
+        "cadreLevel": "Under Secretary Cadre (Branch In-Charge)",
+        "department": "Department of Defence / Cyber Command, MoD",
+        "designation": "Under Secretary (Cyber Security & Defence Network Assurance)",
+        "roleInOperation": "Branch Supervisory Officer & Operational Information Clearance Lead"
+      },
+      {
+        "name": "Shri Vikramaditya Rathore",
+        "contact": "so-estt1.dma@gov.in",
+        "station": "Room 208, Sena Bhawan, New Delhi",
+        "payLevel": "Level 8/10",
+        "cadreLevel": "Section Officer Cadre (Group B Gazetted)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Section Officer (Estt-I / Cyber Operations Desk)",
+        "roleInOperation": "Section In-Charge & Operational File Routing / Executive Supervisor"
+      },
+      {
+        "name": "Shri Anurag Anil Bawaskar",
+        "empId": "41028104",
+        "contact": "anurag.bawaskar@gov.in",
+        "station": "DRDO, Dighi, Pune (Attached to Special Task Force, MoD New Delhi)",
+        "payLevel": "Level 7 (Cell 16)",
+        "hindiName": "अनुराग अनिल बावस्कर",
+        "cadreLevel": "Group 'A' Gazetted Officer (Class-I / Defence Civil Services)",
+        "department": "Ministry of Defence / DRDO",
+        "designation": "Additional Section Officer - I / Chief Information Security Specialist",
+        "roleInOperation": "Lead Technical Operations, Cyber Infrastructure Protection & Secure Communications Grid Controller"
+      },
+      {
+        "name": "Shri Prateek Sengupta",
+        "empId": "MOD-DMA-2024-8119",
+        "contact": "prateek.sengupta@gov.in",
+        "station": "Sena Bhawan, New Delhi",
+        "payLevel": "Level 7",
+        "cadreLevel": "Additional Section Officer (Group B Gazetted)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Additional Section Officer - II (Tri-Services Logistics & Movement)",
+        "roleInOperation": "Tactical Deployment Logistics, Movement Warrants & Air Passages Officer"
+      },
+      {
+        "name": "Kumari Shweta Deshmukh",
+        "empId": "MOD-DMA-2024-8140",
+        "contact": "shweta.deshmukh@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 7",
+        "cadreLevel": "Additional Section Officer (Group B Gazetted)",
+        "department": "Ministry of Defence / DRDO",
+        "designation": "Additional Section Officer (Signals Intelligence & Cryptography)",
+        "roleInOperation": "Encrypted Communications Protocol & C4I Terminal Security Analyst"
+      },
+      {
+        "name": "Shri Harish Chandra Joshi",
+        "empId": "MOD-DRDO-2025-4102",
+        "contact": "hc.joshi@gov.in",
+        "station": "DRDO Bhawan, New Delhi",
+        "payLevel": "Level 6",
+        "cadreLevel": "Technical Cadre (Group B Non-Gazetted)",
+        "department": "DRDO / Department of Defence, MoD",
+        "designation": "Senior Technical Assistant (Cyber Forensics & Threat Telemetry)",
+        "roleInOperation": "Field Hardware Forensics, Secure Hardware Deployment & Diagnostics"
+      },
+      {
+        "name": "Shri Rakesh Kumar Meena",
+        "empId": "MOD-DMA-2023-9041",
+        "contact": "rk.meena@gov.in",
+        "station": "Sena Bhawan, New Delhi",
+        "payLevel": "Level 4",
+        "cadreLevel": "Senior Secretariat Assistant (CSCS)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Senior Secretariat Assistant (SSA / Senior Clerk)",
+        "roleInOperation": "Classified Field Dossiers, Movement Verification & Secretariat Register"
+      },
+      {
+        "name": "Kumari Priya Nair",
+        "empId": "MOD-DMA-2023-9088",
+        "contact": "priya.nair@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 4",
+        "cadreLevel": "Senior Secretariat Assistant (CSCS)",
+        "department": "Ministry of Defence",
+        "designation": "Senior Secretariat Assistant (SSA / Data Processing Assistant)",
+        "roleInOperation": "Real-time Tele-Traffic Log Ingestion & Secure Field Manifest Processing"
+      },
+      {
+        "name": "Shri Sandeep Verma",
+        "empId": "MOD-DMA-2025-1104",
+        "contact": "sandeep.verma@gov.in",
+        "station": "Sena Bhawan, New Delhi",
+        "payLevel": "Level 2",
+        "cadreLevel": "Junior Secretariat Assistant (CSCS)",
+        "department": "Department of Military Affairs, MoD",
+        "designation": "Junior Secretariat Assistant (JSA / Communications Dispatch Clerk)",
+        "roleInOperation": "Classified Signal Dispatch, Secure Telegrams & Camp Office Records"
+      },
+      {
+        "name": "Shri Mohammad Tariq Khan",
+        "empId": "MOD-DMA-2025-1120",
+        "contact": "tariq.khan@gov.in",
+        "station": "South Block, New Delhi",
+        "payLevel": "Level 2",
+        "cadreLevel": "Junior Secretariat Assistant (CSCS)",
+        "department": "Ministry of Defence",
+        "designation": "Junior Secretariat Assistant (JSA / Secure Movement Courier)",
+        "roleInOperation": "VVIP Document Protocol, Physical Secure Courier & Field Camp Logistics"
+      }
+    ],
+    "orderDate": "10-Sep-2026",
+    "department": "Department of Defence & Department of Military Affairs",
+    "directives": [
+      "All named officers shall report on immediate operational alert status effective 12th September 2026, 06:00 Hrs IST.",
+      "Movement warrants, communication protocols, and mission security passes shall be governed under Level-1 Top Secret Clearance.",
+      "Strict radio and electronic data silence shall be maintained regarding deployment coordinates until formal disclosure at the Apex Meeting.",
+      "All operational and travel expenses are admissible as Special Operational Sanction under Rule 8(2) of Delegation of Financial Powers to Defence Services (DFPDS)."
+    ],
+    "headquarters": "South Block / Sena Bhawan, New Delhi - 110011",
+    "effectiveDate": "12-Sep-2026 (06:00 Hrs IST)",
+    "classification": "TOP SECRET // OPERATIONAL IMMEDIATE // RESTRICTED",
+    "locationStatus": "RESTRICTED / CLASSIFIED (GRID-SEC-ALPHA)",
+    "briefingMeeting": {
+      "date": "12-Sep-2026",
+      "time": "14:00 Hrs IST (Day after Tomorrow)",
+      "chair": "General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM (Chief of Defence Staff)",
+      "venue": "Apex Command War Room, South Block, Ministry of Defence, New Delhi"
+    },
+    "operationCodename": "OPERATION VAJRA-SHAKTI (SPECIAL COMBINED DEPLOYMENT)",
+    "sanctioningAuthority": {
+      "name": "Shri Anil Kumar Chhapolia",
+      "ministry": "Ministry of Defence, New Delhi",
+      "designation": "Joint Secretary to the Government of India",
+      "countersignedBy": "General Anil Chauhan, CDS & Secretary DMA"
+    },
+    "locationDisclosureNote": "Specific theatre coordinates, forward operational sectors, and ground deployment positions are strictly classified under the Official Secrets Act, 1923. The operational location, sector mandates, and tactical objectives shall be revealed exclusively during the Apex In-Camera Strategic Briefing on 12-September-2026 at 14:00 Hrs (Day after Tomorrow) at Apex War Room, South Block, New Delhi."
+  },
+  "pensionNps": {
+    "cra": "Protean eGov Technologies (NSDL CRA)",
+    "pran": "110194810244",
+    "nominations": [
+      {
+        "share": "50%",
+        "nominee": "Smt. Manisha Anil Bawaskar",
+        "relation": "Mother"
+      },
+      {
+        "share": "50%",
+        "nominee": "Shri Anil Ramkrishna Bawaskar",
+        "relation": "Father"
+      }
+    ],
+    "totalCorpus": 318640,
+    "assetClasses": [
+      {
+        "code": "Scheme E",
+        "name": "Equity (Nifty/Sensex Index)",
+        "percentage": 50
+      },
+      {
+        "code": "Scheme C",
+        "name": "Corporate Bonds / Debentures",
+        "percentage": 30
+      },
+      {
+        "code": "Scheme G",
+        "name": "Central & State Government Securities",
+        "percentage": 20
+      }
+    ],
+    "fundManagers": [
+      {
+        "nav": "₹48.62",
+        "name": "SBI Pension Funds Pvt. Ltd.",
+        "share": "40%",
+        "units": "2,621.5"
+      },
+      {
+        "nav": "₹46.18",
+        "name": "LIC Pension Fund Ltd.",
+        "share": "35%",
+        "units": "2,415.2"
+      },
+      {
+        "nav": "₹47.89",
+        "name": "UTI Retirement Solutions Ltd.",
+        "share": "25%",
+        "units": "1,663.4"
+      }
+    ],
+    "monthlyTotal": 25704,
+    "overallReturnRate": "12.8% CAGR",
+    "tier1AccountStatus": "ACTIVE & KYC VERIFIED",
+    "tier2AccountStatus": "INACTIVE",
+    "govtTotalContributed": 179410,
+    "employeeTotalContributed": 139230
+  },
+  "grievances": [
+    {
+      "status": "RESOLVED",
+      "slaDays": 30,
+      "subject": "Issue & Dispatch of CGHS Plastic Cards for Dependent Parents",
+      "category": "CGHS Plastic Health Cards",
+      "docketNo": "DMA/E/2026/00142",
+      "dateLodged": "2026-08-10",
+      "currentStage": "Resolved - Speed Post Consignment Tracking No. ED841029148IN delivered to Sena Bhawan",
+      "nodalOfficer": "Shri Rajender Singh, DS (Estt)",
+      "resolutionNotes": "CGHS cards verified and handed over. Records updated in Sub-Book 3."
+    }
+  ]
+}

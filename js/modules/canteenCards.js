@@ -61,6 +61,9 @@ export function renderCanteenCards(container, initialTab = null) {
           <button class="btn btn-sm btn-outline" id="btn-switch-pos" style="color: white; border-color: rgba(255,255,255,0.4); font-weight: 700;">
             🛒 POS Terminal
           </button>
+          <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-size: 11.5px; font-weight: 700; padding: 5px 9px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px;" title="Connected to SQLite Database (database.sqlite)">
+            🗄️ SQLite: Active
+          </span>
           <a href="csd_portal.html" target="_blank" class="btn btn-sm" style="background: #138808; color: white; font-weight: 700; text-decoration: none; border-radius: 4px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;" title="Open Standalone Cashier &amp; POS Screen">
             ↗️ Standalone CSD Portal
           </a>

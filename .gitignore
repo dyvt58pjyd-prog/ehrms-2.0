@@ -4,3 +4,6 @@ node_modules/
 scratch/
 *.dmg
 DAC2025.pdf
+*.sqlite-shm
+*.sqlite-wal
+omni-docs

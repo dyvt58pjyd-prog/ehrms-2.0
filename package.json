@@ -13,5 +13,8 @@
     "personnel-management"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^6.0.1"
+  }
 }
