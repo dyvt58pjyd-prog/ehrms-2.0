@@ -1077,6 +1077,54 @@ notifications: [
       afdEligibility: 'ELIGIBLE (Tier-1 Officer / Four Wheeler & White Goods)'
     },
     inventory: [
+      {
+        id: '281948',
+        sku: '281948',
+        name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+        color: 'TITANIUM TEAL',
+        hsn: '85171300',
+        stock: 15,
+        price: 114900.00,
+        marketPrice: 144900.00,
+        unit: 'Unit',
+        gstRate: 18,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
+        warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+        specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS',
+        imei1: '359810/24/849201/8',
+        imei2: '359810/24/849202/6',
+        serialNo: 'G6TF9027IPHONE17',
+        batchNo: 'BAT-2026/09-DEL-A17',
+        afdCategory: 'AFD-II (DURABLES)'
+      },
+      {
+        id: '281949',
+        sku: '281949',
+        name: 'APPLE IPHONE 17 (256GB) - ULTRAVIOLET',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A3391 / IPHONE 17',
+        color: 'ULTRAVIOLET',
+        hsn: '85171300',
+        stock: 20,
+        price: 68900.00,
+        marketPrice: 89900.00,
+        unit: 'Unit',
+        gstRate: 18,
+        grade: 'SEALED BRAND NEW RETAIL PACK',
+        accessories: 'TYPE-C WOVEN CHARGING CABLE, SIM TRAY PIN, MANUAL',
+        warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED WARRANTY',
+        specs: '15.75 CM (6.2") SUPER RETINA XDR OLED 120HZ PROMOTION | APPLE A19 BIONIC 2NM CHIP | 8GB RAM | 256GB ROM | DUAL 48MP FUSION + 48MP ULTRA WIDE CAMERA | 4200 MAH BATTERY',
+        serialNo: 'G6TQ8121IP17UV',
+        imei1: '359822/15/901284/3',
+        imei2: '359822/15/901285/0',
+        batchNo: 'BAT-2026/10-DEL',
+        afdCategory: 'AFD-II (DURABLES)'
+      },
       { 
         id: '245561', 
         name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK', 
@@ -1149,6 +1197,59 @@ notifications: [
       { id: '8901505001011', name: 'JOHNNIE WALKER BLACK LABEL 750ML', category: 'Liquor', hsn: '2208', stock: 45, price: 2650.00, marketPrice: 3800.00, unit: 'Bottle' }
     ],
     transactions: [
+      {
+        id: 'CSD-TXN-2026-1015',
+        billNo: 'CSD/URC/DEL/2026/10/9842',
+        indentNo: 'IND-2026/10/9842',
+        date: '2026-10-15 10:30:00',
+        canteen: 'URC HQ DELHI AREA (Sena Bhawan)',
+        terminal: 'POS-01 / IP: 192.168.1.101',
+        cashier: 'Sub Maj R.K. Yadav',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+        paymentType: 'CASH',
+        items: [
+          {
+            id: '281948',
+            sku: '281948',
+            name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+            category: 'Electronics',
+            brand: 'APPLE INC / APPLE INDIA PVT LTD',
+            model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+            color: 'TITANIUM TEAL',
+            hsn: '85171300',
+            qty: 1,
+            unit: 'UNT',
+            price: 114900.00,
+            marketPrice: 144900.00,
+            grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+            accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
+            warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+            specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS',
+            imei1: '359810/24/849201/8',
+            imei2: '359810/24/849202/6',
+            serialNo: 'G6TF9027IPHONE17',
+            batchNo: 'BAT-2026/09-DEL-A17',
+            afdCategory: 'AFD-II (DURABLES)'
+          }
+        ],
+        totalTaxable: 97372.88,
+        totalCgst: 8763.56,
+        totalSgst: 8763.56,
+        totalNet: 114900.00,
+        totalSavings: 30000.00,
+        cardNo: 'LB08260547713500S01',
+        rank: 'ASO-I (Group A Gazetted)',
+        grocLimit: 50000,
+        grocDrawn: 2850,
+        liqLimit: 25,
+        liqDrawn: 2,
+        status: 'COMPLETED',
+        cashTendered: 114900.00,
+        cashChange: 0.00,
+        cashVoucherNo: 'CSD/CASH/DEL/2026/10/9842',
+        cashReceiptNo: 'RCPT-CSD-2026-9842'
+      },
       {
         id: 'CSD-TXN-2026-1002',
         billNo: 'CSD/URC/DEL/2026/10/9482',
@@ -1608,26 +1709,25 @@ class StateManager {
           if (!parsed.csdBilling) {
             parsed.csdBilling = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling));
           } else {
-            // Ensure newly added inventory items like Samsung Galaxy S25 are present and up to date
+            // Ensure newly added inventory items like iPhone 17 & Samsung Galaxy S25 are present and up to date
             const curIds = new Set((parsed.csdBilling.inventory || []).map(i => i.id));
             (INITIAL_DATA.csdBilling.inventory || []).forEach(item => {
               if (!curIds.has(item.id)) {
                 parsed.csdBilling.inventory.unshift(item);
-              } else if (item.id === '233243') {
-                const idx = parsed.csdBilling.inventory.findIndex(i => i.id === '233243');
+              } else if (item.id === '281948' || item.id === '281949' || item.id === '233243') {
+                const idx = parsed.csdBilling.inventory.findIndex(i => i.id === item.id);
                 if (idx !== -1) parsed.csdBilling.inventory[idx] = JSON.parse(JSON.stringify(item));
               }
             });
 
-            // Ensure newly added transactions are present and up to date
+            // Ensure newly added transactions like iPhone 17 Pro Max bill are present and up to date
             const curTxnIds = new Set((parsed.csdBilling.transactions || []).map(t => t.id));
             (INITIAL_DATA.csdBilling.transactions || []).forEach(txn => {
               if (!curTxnIds.has(txn.id)) {
                 parsed.csdBilling.transactions.unshift(txn);
-              } else if (txn.id === 'CSD-TXN-2026-1002') {
-                const idx = parsed.csdBilling.transactions.findIndex(t => t.id === 'CSD-TXN-2026-1002');
+              } else if (txn.id === 'CSD-TXN-2026-1015' || txn.id === 'CSD-TXN-2026-1002') {
+                const idx = parsed.csdBilling.transactions.findIndex(t => t.id === txn.id);
                 if (idx !== -1) {
-                  // Preserve custom user date if set, but update payment and item details
                   const existingDate = parsed.csdBilling.transactions[idx].date;
                   parsed.csdBilling.transactions[idx] = JSON.parse(JSON.stringify(txn));
                   if (existingDate) parsed.csdBilling.transactions[idx].date = existingDate;
