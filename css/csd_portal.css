@@ -424,20 +424,34 @@ body {
 #receipt-container { display: none; }
 
 @media print {
-  @page { size: A4 portrait; margin: 6mm 4mm; }
+  @page {
+    size: A4 portrait;
+    margin: 3.5mm 5mm;
+  }
   body * { visibility: hidden; }
-  body { background: white !important; margin: 0; padding: 0; }
+  html, body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 289mm !important;
+    overflow: hidden !important;
+  }
   #receipt-container, #receipt-container * { visibility: visible; }
   #receipt-container {
     display: block !important;
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 100% !important;
+    max-height: 288mm !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
     font-family: 'Roboto Mono', 'Courier New', Consolas, monospace !important;
-    font-size: 10px;
+    font-size: 8.5px;
     color: #000;
-    line-height: 1.35;
+    line-height: 1.25;
     padding: 0;
     margin: 0;
     -webkit-print-color-adjust: exact;
@@ -449,7 +463,9 @@ body {
     box-shadow: none !important;
     padding: 0 4mm !important;
     max-width: 100% !important;
-    min-height: auto !important;
+    max-height: 288mm !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
     background: transparent !important;
   }
 }

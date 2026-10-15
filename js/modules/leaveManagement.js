@@ -460,6 +460,14 @@ export function renderLeaveManagement(container) {
       };
     });
 
+    if (typeof fetch !== 'undefined') {
+      fetch('/api/leaves', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newApp)
+      }).catch(e => console.warn('SQLite leave sync notice:', e));
+    }
+
     modal.classList.remove('show');
     alert(`Leave application ${newApp.id} submitted successfully on ${todayIso}!\n\nOfficial DMA Workflow Route:\n1. Applicant: ${user.name} (ASO-I)\n2. Forwarded by: ${user.controllingOfficer.name}, Under Secretary (Estt-I)\n3. Pending Sanction with: ${user.reportingOfficer.name}, Joint Secretary (Establishment & Coordination)\n\nTip: You can sign in as Shri Anil Kumar Chhapolia, Joint Secretary (MSS) with user ID anil.chhapolia to review and sanction this application via Aadhaar e-Sign.`);
     renderLeaveManagement(container);

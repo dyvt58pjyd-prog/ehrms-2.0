@@ -2099,6 +2099,57 @@ export function downloadCanteenCards(user) {
  * Strictly Computer-Generated Document (No Stamps, No Digital Signatures as per Rule 54(2) CGST Rules 2017)
  */
 
+export function generateCode39BarcodeSvg(text, height = 28, displayHeight = 22) {
+  const CODE39 = {
+    '0': '000110100', '1': '100100001', '2': '001100001', '3': '101100000',
+    '4': '000110001', '5': '100110000', '6': '001110000', '7': '000100101',
+    '8': '100100100', '9': '001100100', 'A': '100001001', 'B': '001001001',
+    'C': '101001000', 'D': '000011001', 'E': '100011000', 'F': '001011000',
+    'G': '000001101', 'H': '100001100', 'I': '001001100', 'J': '000011100',
+    'K': '100000011', 'L': '001000011', 'M': '101000010', 'N': '000010011',
+    'O': '100010010', 'P': '001010010', 'Q': '000000111', 'R': '100000110',
+    'S': '001000110', 'T': '000010110', 'U': '110000001', 'V': '011000001',
+    'W': '111000000', 'X': '010010001', 'Y': '110010000', 'Z': '011010000',
+    '-': '010000101', '.': '110000100', ' ': '011000100', '$': '010101000',
+    '/': '010100010', '+': '010001010', '%': '000101010', '*': '010010100'
+  };
+
+  const raw = String(text || 'CSD-BILL').toUpperCase().replace(/[^0-9A-Z\-.\ \$\/\+\%]/g, '-');
+  const clean = '*' + raw + '*';
+  const narrow = 1.2;
+  const wide = 3.2;
+  const quiet = 12;
+
+  let totalWidth = quiet * 2;
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    const pat = CODE39[ch] || CODE39['-'];
+    for (let p = 0; p < 9; p++) {
+      totalWidth += (pat[p] === '1' ? wide : narrow);
+    }
+    if (i < clean.length - 1) totalWidth += narrow;
+  }
+  totalWidth = Math.ceil(totalWidth);
+
+  let x = quiet;
+  const bars = [];
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    const pat = CODE39[ch] || CODE39['-'];
+    for (let p = 0; p < 9; p++) {
+      const isBar = (p % 2 === 0);
+      const w = (pat[p] === '1' ? wide : narrow);
+      if (isBar) {
+        bars.push(`<rect x="${x.toFixed(1)}" y="0" width="${w.toFixed(1)}" height="${height}" fill="#000000" />`);
+      }
+      x += w;
+    }
+    if (i < clean.length - 1) x += narrow;
+  }
+
+  return `<svg viewBox="0 0 ${totalWidth} ${height}" preserveAspectRatio="xMidYMid meet" style="display:block;margin:0 auto;height:${displayHeight}px;max-width:320px;width:100%;background:#ffffff;shape-rendering:crispEdges;" xmlns="http://www.w3.org/2000/svg"><rect width="${totalWidth}" height="${height}" fill="#ffffff"/>${bars.join('')}</svg>`;
+}
+
 function calculateCashDenominations(netAmount) {
   let rem = Math.round(Number(netAmount) || 0);
   const denoms = [500, 200, 100, 50, 20, 10, 5, 2, 1];
@@ -2222,44 +2273,44 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
 
     return `
       <tr style="border-bottom: 1px dashed #94a3b8;">
-        <td style="padding: 5px 3px; vertical-align: top; text-align: center; font-weight: 700;">${String(idx + 1).padStart(2, '0')}</td>
-        <td style="padding: 5px 4px; vertical-align: top;">
+        <td style="padding: 2.5px 2px; vertical-align: top; text-align: center; font-weight: 700;">${String(idx + 1).padStart(2, '0')}</td>
+        <td style="padding: 2.5px 3px; vertical-align: top;">
           <strong style="letter-spacing: 0.5px;">${it.id || it.sku || 'N/A'}</strong><br>
-          <span style="font-size: 8.5px; color: #333;">HSN: ${it.hsn || '85171300'}</span>
+          <span style="font-size: 7.2px; color: #333;">HSN: ${it.hsn || '85171300'}</span>
         </td>
-        <td style="padding: 5px 6px; vertical-align: top;">
-          <div style="font-weight: 800; font-size: 11px; letter-spacing: 0.2px;">${it.name}</div>
+        <td style="padding: 2.5px 4px; vertical-align: top;">
+          <div style="font-weight: 800; font-size: 9.5px; letter-spacing: 0.2px;">${it.name}</div>
           ${hasExtraDetails ? `
-            <div style="font-size: 8.5px; line-height: 1.35; margin-top: 3px; color: #111;">
+            <div style="font-size: 7.2px; line-height: 1.22; margin-top: 1.5px; color: #111;">
               ${it.brand ? `<div><strong>BRAND/MFR :</strong> ${String(it.brand).toUpperCase()}</div>` : ''}
               ${it.model || it.color ? `<div><strong>MODEL/CLR :</strong> ${String(it.model || 'N/A').toUpperCase()} &bull; COLOR: ${String(it.color || 'STANDARD').toUpperCase()}</div>` : ''}
               ${it.batchNo || it.afdCategory ? `<div><strong>BATCH/AFD :</strong> ${String(it.batchNo || 'LOT-2026/DEL').toUpperCase()} &bull; AFD CAT: ${String(it.afdCategory || (it.category === 'Electronics' ? 'AFD-II' : 'NON-AFD')).toUpperCase()}</div>` : ''}
               ${it.serialNo && it.serialNo !== 'N/A' ? `<div><strong>SERIAL NO :</strong> ${String(it.serialNo).toUpperCase()}</div>` : ''}
               ${(it.imei1 && it.imei1 !== 'N/A') || (it.imei2 && it.imei2 !== 'N/A') ? `
-                <div style="background: #f1f5f9; padding: 2px 4px; border: 1px dashed #cbd5e1; margin-top: 2px; font-weight: 700;">
+                <div style="background: #f1f5f9; padding: 1px 3px; border: 1px dashed #cbd5e1; margin-top: 1px; font-weight: 700;">
                   ${it.imei1 && it.imei1 !== 'N/A' ? `IMEI-1: ${it.imei1} &nbsp; ` : ''}
                   ${it.imei2 && it.imei2 !== 'N/A' ? `IMEI-2: ${it.imei2}` : ''}
                 </div>
               ` : ''}
               ${it.grade || it.accessories ? `<div><strong>PKG/GRADE :</strong> ${String(it.grade || 'SEALED PACK').toUpperCase()} ${it.accessories ? '&bull; INCL: ' + String(it.accessories).toUpperCase() : ''}</div>` : ''}
               ${it.warrantyExpires ? `<div><strong>WARRANTY  :</strong> ${String(it.warrantyExpires).toUpperCase()}</div>` : ''}
-              ${it.specs ? `<div style="margin-top: 2px; color: #1e293b;"><strong>SPECS:</strong> ${String(it.specs).toUpperCase()}</div>` : ''}
-              <div style="color: #166534; font-weight: 700; margin-top: 2px;">
+              ${it.specs ? `<div style="margin-top: 1px; color: #1e293b;"><strong>SPECS:</strong> ${String(it.specs).toUpperCase()}</div>` : ''}
+              <div style="color: #166534; font-weight: 700; margin-top: 1px;">
                 OPEN MARKET MRP: ₹${(market * qty).toFixed(2)} &bull; DEFENCE SAVINGS: ₹${((market - price) * qty).toFixed(2)} (${Math.round(((market - price) / market) * 100)}% OFF)
               </div>
             </div>
           ` : `
-            <div style="font-size: 8.5px; color: #166534; font-weight: 700; margin-top: 2px;">
+            <div style="font-size: 7.2px; color: #166534; font-weight: 700; margin-top: 1px;">
               OPEN MARKET MRP: ₹${(market * qty).toFixed(2)} &bull; SAVINGS: ₹${((market - price) * qty).toFixed(2)}
             </div>
           `}
         </td>
-        <td style="padding: 5px 3px; vertical-align: top; text-align: center; white-space: nowrap;">${qty} ${it.unit || 'UNT'}</td>
-        <td style="padding: 5px 3px; vertical-align: top; text-align: right; font-family: monospace;">₹${(taxable / qty).toFixed(2)}</td>
-        <td style="padding: 5px 3px; vertical-align: top; text-align: right; font-family: monospace;">₹${taxable.toFixed(2)}</td>
-        <td style="padding: 5px 4px; vertical-align: top; text-align: right; font-family: monospace;">
-          <strong style="font-size: 11px;">₹${netVal.toFixed(2)}</strong><br>
-          <span style="font-size: 8px; color: #555;">GST ${gstRate}%: ₹${(cgst + sgst).toFixed(2)}</span>
+        <td style="padding: 2.5px 2px; vertical-align: top; text-align: center; white-space: nowrap;">${qty} ${it.unit || 'UNT'}</td>
+        <td style="padding: 2.5px 2px; vertical-align: top; text-align: right; font-family: monospace;">₹${(taxable / qty).toFixed(2)}</td>
+        <td style="padding: 2.5px 2px; vertical-align: top; text-align: right; font-family: monospace;">₹${taxable.toFixed(2)}</td>
+        <td style="padding: 2.5px 3px; vertical-align: top; text-align: right; font-family: monospace;">
+          <strong style="font-size: 9.5px;">₹${netVal.toFixed(2)}</strong><br>
+          <span style="font-size: 7px; color: #555;">GST ${gstRate}%: ₹${(cgst + sgst).toFixed(2)}</span>
         </td>
       </tr>
     `;
@@ -2269,6 +2320,7 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
   const roundedNet = Math.round(totalNet);
   const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
   const denomsList = calculateCashDenominations(txn.cashTendered || roundedNet);
+  const barcodeSvg = generateCode39BarcodeSvg('CSD-' + safeBillNo + '-CASH', 28, 22);
 
   const docTitle = docTypeTitle || 'A4 DOT MATRIX POS TAX INVOICE & CASH MEMO';
 
@@ -2283,17 +2335,23 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
   <style>
     @page {
       size: A4 portrait;
-      margin: 8mm 6mm;
+      margin: 3.5mm 5mm;
     }
     * { box-sizing: border-box; }
-    body {
+    html, body {
       margin: 0;
-      padding: 12px;
-      background: #e2e8f0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      background: #334155;
       font-family: 'Roboto Mono', 'Courier New', Consolas, monospace;
       color: #000000;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 0;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -2302,16 +2360,18 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
       background: #fafaf3;
       border: 1px solid #cbd5e1;
       box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-      width: 100%;
-      max-width: 210mm;
-      min-height: 297mm;
-      padding: 22px 34px;
+      width: 200mm;
+      max-width: 200mm;
+      max-height: 288mm;
+      overflow: hidden;
+      padding: 8px 24px;
       box-sizing: border-box;
+      page-break-inside: avoid;
     }
     .sprocket-holes-left, .sprocket-holes-right {
       position: absolute;
-      top: 8px;
-      bottom: 8px;
+      top: 6px;
+      bottom: 6px;
       width: 14px;
       display: flex;
       flex-direction: column;
@@ -2328,27 +2388,28 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
       border-left: 1px dashed #cbd5e1;
     }
     .hole {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: #94a3b8;
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.45);
     }
     .slip-content {
-      font-size: 10.5px;
-      line-height: 1.38;
+      font-size: 8.5px;
+      line-height: 1.25;
       font-weight: 500;
-      margin: 0 12px;
+      margin: 0 10px;
       color: #000000;
     }
     .center { text-align: center; }
     .bold { font-weight: 800; }
     .divider {
-      margin: 5px 0;
+      margin: 1.5px 0;
       white-space: pre;
       overflow: hidden;
-      font-size: 10px;
-      letter-spacing: 0.5px;
+      font-size: 7.5px;
+      line-height: 0.9;
+      letter-spacing: 0.3px;
       color: #000;
       font-weight: 700;
     }
@@ -2359,48 +2420,40 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
     .grid-2 {
       display: grid;
       grid-template-columns: 1.15fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
     .table-matrix {
       width: 100%;
       border-collapse: collapse;
       font-family: 'Roboto Mono', 'Courier New', monospace;
-      font-size: 10px;
-      margin: 4px 0;
+      font-size: 8.5px;
+      margin: 2px 0;
     }
     .table-matrix th {
       border-top: 1.5px solid #000;
       border-bottom: 1.5px solid #000;
-      padding: 4px 2px;
+      padding: 2.5px 2px;
       text-align: left;
       font-weight: 800;
       background: #f1f5f9;
     }
     .table-matrix td {
-      padding: 4px 2px;
+      padding: 2.5px 2px;
       vertical-align: top;
     }
     .computer-notice {
-      border: 1.5px dashed #000;
+      border: 1.2px dashed #000;
       background: #fbfbf6;
-      padding: 8px 12px;
-      margin: 7px 0;
+      padding: 3px 6px;
+      margin: 2px 0;
       text-align: center;
-      font-size: 9px;
-      line-height: 1.35;
-    }
-    .barcode {
-      font-family: 'Courier New', monospace;
-      letter-spacing: 5px;
-      font-size: 22px;
-      font-weight: 900;
-      text-align: center;
-      margin: 6px 0 2px 0;
+      font-size: 7px;
+      line-height: 1.22;
     }
     .print-btn {
       display: block;
-      margin: 0 auto 12px auto;
-      padding: 8px 24px;
+      margin: 0 auto 8px auto;
+      padding: 6px 20px;
       background: #002b49;
       color: #fff;
       border: none;
@@ -2411,9 +2464,37 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     @media print {
-      body { background: #fff; padding: 0; }
-      .print-btn, .sprocket-holes-left, .sprocket-holes-right { display: none; }
-      .sprocket-wrapper { border: none; box-shadow: none; width: 100%; max-width: 100%; padding: 0; min-height: auto; }
+      @page {
+        size: A4 portrait;
+        margin: 3.5mm 5mm;
+      }
+      html, body {
+        background: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 289mm !important;
+        overflow: hidden !important;
+      }
+      .print-btn, .sprocket-holes-left, .sprocket-holes-right {
+        display: none !important;
+      }
+      .sprocket-wrapper {
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 4mm !important;
+        margin: 0 !important;
+        max-height: 288mm !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+      }
+      .slip-content {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
     }
   </style>
 </head>
@@ -2434,14 +2515,14 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
       <div class="slip-content">
         
         <!-- Defence CSD Header -->
-        <div class="center bold" style="font-size: 13.5px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
-        <div class="center bold" style="font-size: 16px; letter-spacing: 1px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
-        <div class="center bold" style="font-size: 12.5px;">UNIT RUN CANTEEN (URC) &bull; HQ DELHI AREA</div>
-        <div class="center" style="font-size: 9.5px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: URC-DEL-0412</div>
-        <div class="center" style="font-size: 9px; color: #222;">DEPOT: DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT) &bull; STATION: HQ DELHI AREA (011) &bull; REGIMENTAL CASH CHEST: RCC-01</div>
+        <div class="center bold" style="font-size: 11.5px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+        <div class="center bold" style="font-size: 13.5px; letter-spacing: 0.8px; margin: 0.5px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+        <div class="center bold" style="font-size: 10.5px;">UNIT RUN CANTEEN (URC) &bull; HQ DELHI AREA</div>
+        <div class="center" style="font-size: 8px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: URC-DEL-0412</div>
+        <div class="center" style="font-size: 7.5px; color: #222;">DEPOT: DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT) &bull; STATION: HQ DELHI AREA (011) &bull; REGIMENTAL CASH CHEST: RCC-01</div>
         <div class="divider">========================================================================================================================</div>
-        <div class="center bold" style="font-size: 12.5px; letter-spacing: 0.5px;">${docTitle}</div>
-        <div class="center" style="font-size: 9px; font-weight: 700;">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
+        <div class="center bold" style="font-size: 10.5px; letter-spacing: 0.5px;">${docTitle}</div>
+        <div class="center" style="font-size: 7.5px; font-weight: 700;">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
         <div class="divider">========================================================================================================================</div>
         
         <!-- Metadata Double Column -->
@@ -2467,14 +2548,14 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         </div>
 
         <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
-        <div style="font-size: 9px; line-height: 1.35;">
+        <div style="font-size: 7.5px; line-height: 1.25;">
           <strong>ENTITLEMENT QUOTA (OCT 2026):</strong> GROCERY LIMIT: ₹${txn.grocLimit || 50000} | DRAWN: ₹${txn.grocDrawn || 2850} | REMAINING: ₹${(txn.grocLimit || 50000) - (txn.grocDrawn || 2850)}<br>
           LIQUOR LIMIT: ${txn.liqLimit || 25} UNITS | DRAWN: ${txn.liqDrawn || 2} UNITS | REMAINING: ${(txn.liqLimit || 25) - (txn.liqDrawn || 2)} UNITS | AFD ELIGIBILITY: <strong>AUTHORIZED (TIER-1 OFFICER)</strong>
         </div>
         <div class="divider">------------------------------------------------------------------------------------------------------------------------</div>
 
         <!-- Itemized Particulars -->
-        <div class="bold" style="font-size: 11px; margin-bottom: 2px;">ITEMIZED PARTICULARS &amp; DETAILED SPECIFICATIONS:</div>
+        <div class="bold" style="font-size: 9.5px; margin-bottom: 1.5px;">ITEMIZED PARTICULARS &amp; DETAILED SPECIFICATIONS:</div>
         <table class="table-matrix">
           <thead>
             <tr>
@@ -2497,34 +2578,34 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         <!-- Tax Matrix & Financial Totals -->
         <div class="grid-2" style="align-items: start;">
           <div>
-            <div class="bold" style="font-size: 9.5px; margin-bottom: 2px;">STATUTORY GST COMPUTATION MATRIX:</div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; font-family: monospace;">
+            <div class="bold" style="font-size: 8px; margin-bottom: 1px;">STATUTORY GST COMPUTATION MATRIX:</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 7.5px; font-family: monospace;">
               <tr style="border-bottom: 1px solid #000; font-weight: 700;">
-                <th style="text-align: left; padding: 2px 0;">TAX HEAD</th>
-                <th style="padding: 2px 4px; text-align: center;">RATE</th>
-                <th style="padding: 2px 4px; text-align: right;">ASSESSABLE BASE</th>
-                <th style="padding: 2px 0; text-align: right;">TAX COLLECTED</th>
+                <th style="text-align: left; padding: 1px 0;">TAX HEAD</th>
+                <th style="padding: 1px 3px; text-align: center;">RATE</th>
+                <th style="padding: 1px 3px; text-align: right;">ASSESSABLE BASE</th>
+                <th style="padding: 1px 0; text-align: right;">TAX COLLECTED</th>
               </tr>
               <tr>
-                <td style="padding: 2px 0;">Central GST (CGST)</td>
-                <td style="padding: 2px 4px; text-align: center;">9.00%</td>
-                <td style="padding: 2px 4px; text-align: right;">₹${totalGross.toFixed(2)}</td>
-                <td style="padding: 2px 0; text-align: right; font-weight: 700;">₹${totalCgst.toFixed(2)}</td>
+                <td style="padding: 1px 0;">Central GST (CGST)</td>
+                <td style="padding: 1px 3px; text-align: center;">9.00%</td>
+                <td style="padding: 1px 3px; text-align: right;">₹${totalGross.toFixed(2)}</td>
+                <td style="padding: 1px 0; text-align: right; font-weight: 700;">₹${totalCgst.toFixed(2)}</td>
               </tr>
               <tr>
-                <td style="padding: 2px 0;">State GST (SGST - Delhi)</td>
-                <td style="padding: 2px 4px; text-align: center;">9.00%</td>
-                <td style="padding: 2px 4px; text-align: right;">₹${totalGross.toFixed(2)}</td>
-                <td style="padding: 2px 0; text-align: right; font-weight: 700;">₹${totalSgst.toFixed(2)}</td>
+                <td style="padding: 1px 0;">State GST (SGST - Delhi)</td>
+                <td style="padding: 1px 3px; text-align: center;">9.00%</td>
+                <td style="padding: 1px 3px; text-align: right;">₹${totalGross.toFixed(2)}</td>
+                <td style="padding: 1px 0; text-align: right; font-weight: 700;">₹${totalSgst.toFixed(2)}</td>
               </tr>
               <tr style="border-top: 1px solid #000; font-weight: 800;">
-                <td style="padding: 2px 0;">COMPOSITE GST TOTAL</td>
-                <td style="padding: 2px 4px; text-align: center;">18.00%</td>
-                <td style="padding: 2px 4px; text-align: right;">₹${totalGross.toFixed(2)}</td>
-                <td style="padding: 2px 0; text-align: right;">₹${(totalCgst + totalSgst).toFixed(2)}</td>
+                <td style="padding: 1px 0;">COMPOSITE GST TOTAL</td>
+                <td style="padding: 1px 3px; text-align: center;">18.00%</td>
+                <td style="padding: 1px 3px; text-align: right;">₹${totalGross.toFixed(2)}</td>
+                <td style="padding: 1px 0; text-align: right;">₹${(totalCgst + totalSgst).toFixed(2)}</td>
               </tr>
             </table>
-            <div style="font-size: 7.5px; margin-top: 3px; color: #444;">
+            <div style="font-size: 6.8px; margin-top: 1.5px; color: #444;">
               Tax collected under reverse charge mechanism applicable to MoD CSD Unit Run Canteens under Section 9(3) CGST Act 2017.
             </div>
           </div>
@@ -2534,12 +2615,12 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
             <div class="flex-row"><span>ASSESSABLE TAXABLE VALUE    :</span> <span>₹ ${totalGross.toFixed(2)}</span></div>
             <div class="flex-row"><span>COMPOSITE TAXES (CGST+SGST) :</span> <span>₹ ${(totalCgst + totalSgst).toFixed(2)}</span></div>
             <div class="flex-row bold" style="color: #166534;"><span>TOTAL DEFENCE CONCESSION    :</span> <span>- ₹ ${savings.toFixed(2)}</span></div>
-            <div class="divider" style="margin: 2px 0;">----------------------------------------------------------------------------------------</div>
-            <div class="flex-row bold" style="font-size: 13px;">
+            <div class="divider" style="margin: 1.5px 0;">----------------------------------------------------------------------------------------</div>
+            <div class="flex-row bold" style="font-size: 11px;">
               <span>NET AMOUNT PAYABLE :</span>
               <span>₹ ${roundedNet.toFixed(2)}</span>
             </div>
-            <div class="bold" style="font-size: 8.5px; color: #166534; margin-top: 2px;">
+            <div class="bold" style="font-size: 7.5px; color: #166534; margin-top: 1px;">
               RUPEES ${numberToWordsINR(roundedNet).toUpperCase()} ONLY
             </div>
           </div>
@@ -2547,25 +2628,25 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
 
         <!-- Physical Cash Tendered & Denomination Breakdown -->
         <div class="divider">========================================================================================================================</div>
-        <div class="bold" style="font-size: 9.5px;">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
-        <div class="flex-row" style="font-size: 9px; margin-top: 2px;">
+        <div class="bold" style="font-size: 8px;">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
+        <div class="flex-row" style="font-size: 7.5px; margin-top: 1px;">
           <span>PAYMENT METHOD: <strong>HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)</strong></span>
           <span>STATUS: <strong>PAID IN FULL &bull; CASH CLEARED</strong></span>
         </div>
-        <div class="flex-row" style="font-size: 8.5px; margin-top: 2px;">
-          <span>CASH TENDERED AT POS-01 : <strong style="font-size: 9.5px;">₹ ${(txn.cashTendered || roundedNet).toFixed(2)}</strong></span>
+        <div class="flex-row" style="font-size: 7.5px; margin-top: 1px;">
+          <span>CASH TENDERED AT POS-01 : <strong style="font-size: 8.5px;">₹ ${(txn.cashTendered || roundedNet).toFixed(2)}</strong></span>
           <span>CHANGE DUE / RETURNED : <strong>₹ ${(txn.cashChange || 0).toFixed(2)}</strong></span>
           <span>TREASURY VOUCHER : <strong style="font-family: monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></span>
         </div>
 
-        <div style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; margin-top: 4px; font-size: 8.5px;">
-          <div class="bold" style="margin-bottom: 2px; font-size: 8px;">PHYSICAL CASH CURRENCY DENOMINATIONS DEPOSITED INTO URC REGIMENTAL CASH CHEST:</div>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 10px; font-family: monospace; font-size: 8px;">
+        <div style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 2.5px 6px; margin-top: 2px; font-size: 7.2px;">
+          <div class="bold" style="margin-bottom: 1px; font-size: 7.2px;">PHYSICAL CASH CURRENCY DENOMINATIONS DEPOSITED INTO URC REGIMENTAL CASH CHEST:</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px 8px; font-family: monospace; font-size: 7.2px;">
             ${denomsList.map(item => `
               <div>${item.denom >= 10 ? '₹' + item.denom : ' ₹' + item.denom} &times; ${String(item.count).padStart(3, ' ')} = ₹${item.amount.toFixed(2).padStart(9, ' ')}</div>
             `).join('')}
           </div>
-          <div style="font-size: 7.5px; color: #555; margin-top: 3px; border-top: 1px dotted #999; padding-top: 2px;">
+          <div style="font-size: 6.8px; color: #555; margin-top: 1px; border-top: 1px dotted #999; padding-top: 1px;">
             Counted, certified and secured in safe by Sub Maj R.K. Yadav (Custodian of Regimental Cash, URC HQ Delhi Area, Sena Bhawan).
           </div>
         </div>
@@ -2573,10 +2654,10 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         <!-- COMPUTER-GENERATED NOTICE (NO PHYSICAL STAMPS OR DIGITAL SIGNATURES AS REQUESTED) -->
         <div class="divider">========================================================================================================================</div>
         <div class="computer-notice">
-          <div class="bold" style="font-size: 10px; letter-spacing: 0.5px;">
+          <div class="bold" style="font-size: 8.5px; letter-spacing: 0.5px;">
             *** THIS IS A COMPUTER-GENERATED TAX INVOICE &amp; CASH MEMO &bull; REQUIRES NO PHYSICAL SIGNATURE OR STAMP ***
           </div>
-          <div style="font-size: 8px; line-height: 1.4; color: #222; margin-top: 3px;">
+          <div style="font-size: 7.2px; line-height: 1.25; color: #222; margin-top: 1.5px;">
             Issued in strict terms of Proviso to Rule 54(2) of Central Goods and Services Tax Rules, 2017 &amp; MoD CSD Directive No. 41.<br>
             Electronically authenticated via Unit Run Canteen POS Terminal <strong>POS-01 (URC Sena Bhawan)</strong> &bull; <strong>NO PHYSICAL SIGNATURE OR STAMP REQUIRED</strong>.<br>
             <strong>SYSTEM AUDIT LOG:</strong> CR-DEL-04 / NODE-8104 / GENERATED AT: ${txn.date || new Date().toISOString()} &bull; <strong>REGIMENTAL CHEST REF:</strong> RCC-DEL-01<br>
@@ -2585,15 +2666,18 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         </div>
         <div class="divider">========================================================================================================================</div>
 
-        <div style="font-size: 7.5px; color: #333; line-height: 1.35; text-align: justify;">
+        <div style="font-size: 6.8px; color: #333; line-height: 1.2; text-align: justify;">
           <strong>Statutory Directive under Essential Commodities Act &amp; MoD Regulations:</strong> Goods sold under CSD quota are strictly for the bonafide personal consumption of authorized defence civilian personnel and their verified family dependents. Commercial resale or unauthorized transfer of CSD goods is a severe cognizable offense under Section 7 of the Essential Commodities Act, 1955 and Service Conduct Rules. Warranty valid through authorized brand service centres nationwide.
         </div>
 
-        <div class="barcode">|| ||| |||| | ||||| ||</div>
-        <div class="center bold" style="font-size: 9px; font-family: monospace;">*CSD-${safeBillNo}-CASH*</div>
+        <!-- TRUE CODE-39 VECTOR SVG BARCODE -->
+        <div style="text-align: center; margin: 3px auto 1px auto; width: 100%;">
+          ${barcodeSvg}
+          <div class="center bold" style="font-size: 8px; font-family: 'Roboto Mono', monospace; letter-spacing: 1.5px; margin-top: 1px; color: #000;">*CSD-${safeBillNo}-CASH*</div>
+        </div>
 
-        <div class="divider" style="text-align: center;">- - - - - - - - - - - - - - - - - - - - TEAR OFF SLIP / COUNTERFOIL - - - - - - - - - - - - - - - - - - - -</div>
-        <div class="center bold" style="font-size: 9px; margin-top: 2px;">
+        <div class="divider" style="text-align: center; margin: 1px 0;">- - - - - - - - - - - - - - - - - - - - TEAR OFF SLIP / COUNTERFOIL - - - - - - - - - - - - - - - - - - - -</div>
+        <div class="center bold" style="font-size: 8px; margin-top: 1px;">
           THANK YOU FOR SERVING THE NATION &bull; JAI HIND
         </div>
       </div>

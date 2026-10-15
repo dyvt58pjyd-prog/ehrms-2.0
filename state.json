@@ -181,174 +181,256 @@
   "highContrast": false,
   "fontSize": "NORMAL",
   "leaveBalances": {
-    "CL": {
-      "name": "Casual Leave",
-      "unit": "days",
-      "hindi": "आकस्मिक अवकाश",
-      "availed": 2,
-      "balance": 6,
-      "opening": 8,
-      "credited": 8
-    },
-    "EL": {
-      "max": 300,
-      "name": "Earned Leave",
-      "unit": "days",
-      "hindi": "अर्जित अवकाश",
-      "availed": 3,
-      "balance": 42,
-      "opening": 30,
-      "credited": 15
-    },
-    "RH": {
-      "name": "Restricted Holiday",
-      "unit": "days",
-      "hindi": "प्रतिबंधित अवकाश",
-      "availed": 0,
-      "balance": 2,
-      "opening": 2,
-      "credited": 2
-    },
     "CCL": {
       "name": "Child Care Leave",
-      "unit": "days",
       "hindi": "बाल देखरेख अवकाश",
+      "opening": 0,
+      "credited": 0,
       "availed": 0,
       "balance": 0,
-      "opening": 0
+      "unit": "days"
     },
-    "HPL": {
-      "name": "Half Pay Leave",
-      "unit": "days",
-      "hindi": "अर्ध वेतन अवकाश",
-      "availed": 0,
-      "balance": 30,
-      "opening": 20,
-      "credited": 10
+    "CL": {
+      "name": "Casual Leave",
+      "hindi": "आकस्मिक अवकाश",
+      "opening": 8,
+      "credited": 8,
+      "availed": 3,
+      "balance": 5,
+      "unit": "days"
     },
     "COMMUTED": {
       "name": "Commuted Leave",
-      "unit": "days",
       "hindi": "रूपांतरित अवकाश",
-      "balance": 15
+      "opening": 15,
+      "credited": 0,
+      "availed": 2,
+      "balance": 13,
+      "unit": "days"
+    },
+    "EL": {
+      "name": "Earned Leave",
+      "hindi": "अर्जित अवकाश",
+      "opening": 30,
+      "credited": 15,
+      "availed": 3,
+      "balance": 42,
+      "unit": "days",
+      "max": 300
+    },
+    "HPL": {
+      "name": "Half Pay Leave",
+      "hindi": "अर्ध वेतन अवकाश",
+      "opening": 20,
+      "credited": 10,
+      "availed": 0,
+      "balance": 26,
+      "unit": "days"
     },
     "PATERNITY": {
       "name": "Paternity Leave",
-      "unit": "days",
       "hindi": "पितृत्व अवकाश",
+      "opening": 0,
+      "credited": 0,
       "availed": 0,
-      "balance": 0
+      "balance": 0,
+      "unit": "days"
+    },
+    "RH": {
+      "name": "Restricted Holiday",
+      "hindi": "प्रतिबंधित अवकाश",
+      "opening": 2,
+      "credited": 2,
+      "availed": 1,
+      "balance": 1,
+      "unit": "days"
     }
   },
   "leaveApplications": [
     {
-      "id": "LV-2026-98343",
-      "days": 3,
-      "type": "EL",
-      "reason": "For Outdoor Work, of My Sister regarding her MBA Admission Counselling.",
+      "id": "LV-2026-10088",
+      "type": "CL",
+      "typeName": "Casual Leave",
+      "startDate": "2026-10-12",
+      "endDate": "2026-10-12",
+      "days": 1,
+      "reason": "Personal banking and official asset registration appointment",
+      "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
       "status": "SANCTIONED",
-      "endDate": "2026-09-23",
-      "typeName": "Earned Leave",
-      "appliedOn": "2026-09-08",
-      "startDate": "2026-09-21",
+      "appliedOn": "2026-10-10",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
-      "approvedOn": "2026-09-08",
-      "stationLeave": true,
+      "approvedOn": "2026-10-10",
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/501",
       "workflowRoute": [
         {
-          "date": "08-Sep-2026 08:15",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "10-Oct-2026 09:10"
         },
         {
-          "date": "08-Sep-2026 08:15",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Scrutinized & Recommended",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "10-Oct-2026 11:20"
         },
         {
-          "date": "08-Sep-2026 08:16",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "10-Oct-2026 11:45"
         }
-      ],
-      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/412",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+      ]
     },
     {
-      "id": "LV-2026-00412",
+      "id": "LV-2026-10042",
+      "type": "COMMUTED",
+      "typeName": "Commuted Leave (Medical)",
+      "startDate": "2026-10-05",
+      "endDate": "2026-10-06",
       "days": 2,
-      "type": "CL",
-      "reason": "Urgent family domestic commitment and personal paperwork at hometown Nashik",
+      "reason": "Viral flu and seasonal fever; medical fitness certificate submitted from CGHS Wellness Centre, RK Puram",
+      "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
       "status": "SANCTIONED",
-      "endDate": "2026-09-16",
-      "typeName": "Casual Leave",
-      "appliedOn": "2026-09-01",
-      "startDate": "2026-09-15",
+      "appliedOn": "2026-10-04",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
-      "approvedOn": "2026-09-02",
-      "stationLeave": true,
+      "approvedOn": "2026-10-04",
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/MED/2026/89",
       "workflowRoute": [
         {
-          "date": "01-Sep-2026 10:15",
           "role": "Applicant",
-          "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
+          "action": "Application Submitted with CGHS AMA Certificate",
+          "date": "04-Oct-2026 08:30"
         },
         {
-          "date": "01-Sep-2026 14:30",
           "role": "Branch Officer",
-          "action": "Scrutinized & Recommended",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
+          "action": "Medical Scrutiny Verified",
+          "date": "04-Oct-2026 09:15"
         },
         {
-          "date": "02-Sep-2026 11:00",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "04-Oct-2026 09:45"
         }
-      ],
-      "sanctionOrderNo": "MoD/DMA/Estt-I/LV/2026/412",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+      ]
     },
     {
       "id": "LV-2026-00455",
-      "days": 1,
       "type": "RH",
-      "reason": "Festive observance (Anant Chaturdashi)",
-      "status": "PENDING",
-      "endDate": "2026-09-22",
       "typeName": "Restricted Holiday",
-      "appliedOn": "2026-09-03",
       "startDate": "2026-09-22",
-      "approvedBy": null,
-      "approvedOn": null,
+      "endDate": "2026-09-22",
+      "days": 1,
+      "reason": "Festive observance (Anant Chaturdashi)",
       "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-03",
+      "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+      "approvedOn": "2026-09-04",
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/RH/2026/09",
       "workflowRoute": [
         {
-          "date": "03-Sep-2026 11:20",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "03-Sep-2026 11:20"
         },
         {
-          "date": "03-Sep-2026 15:45",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Forwarded for Sanction",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "03-Sep-2026 15:45"
         },
         {
-          "date": "Pending",
           "role": "Sanctioning Authority",
-          "action": "Awaiting Sanction & e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
+          "action": "Sanctioned via Aadhaar e-Sign",
+          "date": "04-Sep-2026 09:30"
         }
-      ],
-      "sanctionOrderNo": null
+      ]
+    },
+    {
+      "id": "LV-2026-98343",
+      "type": "EL",
+      "typeName": "Earned Leave",
+      "startDate": "2026-09-21",
+      "endDate": "2026-09-23",
+      "days": 3,
+      "reason": "For Outdoor Work, of My Sister regarding her MBA Admission Counselling.",
+      "stationLeave": true,
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-08",
+      "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+      "approvedOn": "2026-09-08",
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/412",
+      "workflowRoute": [
+        {
+          "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
+          "action": "Application Submitted",
+          "date": "08-Sep-2026 08:15"
+        },
+        {
+          "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
+          "action": "Scrutinized & Recommended",
+          "date": "08-Sep-2026 08:15"
+        },
+        {
+          "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
+          "action": "Sanctioned via Aadhaar e-Sign",
+          "date": "08-Sep-2026 08:16"
+        }
+      ]
+    },
+    {
+      "id": "LV-2026-00412",
+      "type": "CL",
+      "typeName": "Casual Leave",
+      "startDate": "2026-09-15",
+      "endDate": "2026-09-16",
+      "days": 2,
+      "reason": "Urgent family domestic commitment and personal paperwork at hometown Nashik",
+      "stationLeave": true,
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-01",
+      "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
+      "approvedOn": "2026-09-02",
+      "sanctionOrderNo": "MoD/DMA/Estt-I/LV/2026/412",
+      "workflowRoute": [
+        {
+          "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
+          "action": "Application Submitted",
+          "date": "01-Sep-2026 10:15"
+        },
+        {
+          "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
+          "action": "Scrutinized & Recommended",
+          "date": "01-Sep-2026 14:30"
+        },
+        {
+          "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
+          "action": "Sanctioned via Aadhaar e-Sign",
+          "date": "02-Sep-2026 11:00"
+        }
+      ]
     }
   ],
   "serviceBook": {
@@ -1061,45 +1143,136 @@
   ],
   "aebasRecords": [
     {
-      "date": "2026-09-08",
-      "inTime": "08:55 AM",
-      "status": "Present",
+      "date": "2026-10-15",
+      "inTime": "08:52 AM",
       "outTime": "--:--",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
-      "date": "2026-09-07",
-      "inTime": "09:02 AM",
+      "date": "2026-10-14",
+      "inTime": "08:55 AM",
+      "outTime": "05:48 PM",
       "status": "Present",
+      "location": "Sena Bhawan Gate 2"
+    },
+    {
+      "date": "2026-10-13",
+      "inTime": "09:02 AM",
       "outTime": "05:40 PM",
+      "status": "Present",
       "location": "South Block Gate 4"
     },
     {
-      "date": "2026-09-06",
+      "date": "2026-10-12",
       "inTime": "--:--",
-      "status": "Sunday",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
+      "location": "Order: MOD/DMA/ESTT-I/LV/2026/501"
+    },
+    {
+      "date": "2026-10-11",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Sunday",
       "location": "-"
     },
     {
-      "date": "2026-09-05",
+      "date": "2026-10-10",
       "inTime": "--:--",
-      "status": "Saturday",
       "outTime": "--:--",
+      "status": "Saturday",
       "location": "-"
+    },
+    {
+      "date": "2026-10-09",
+      "inTime": "08:50 AM",
+      "outTime": "06:05 PM",
+      "status": "Present",
+      "location": "Sena Bhawan Gate 2"
+    },
+    {
+      "date": "2026-10-08",
+      "inTime": "09:05 AM",
+      "outTime": "05:35 PM",
+      "status": "Present",
+      "location": "Sena Bhawan Gate 1"
+    },
+    {
+      "date": "2026-10-07",
+      "inTime": "09:12 AM",
+      "outTime": "05:30 PM",
+      "status": "Present",
+      "location": "Sena Bhawan Gate 2"
+    },
+    {
+      "date": "2026-10-06",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - Commuted)",
+      "location": "CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89"
+    },
+    {
+      "date": "2026-10-05",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - Commuted)",
+      "location": "CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89"
+    },
+    {
+      "date": "2026-09-23",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL)",
+      "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
+    },
+    {
+      "date": "2026-09-22",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL/RH)",
+      "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
+    },
+    {
+      "date": "2026-09-21",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL)",
+      "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
+    },
+    {
+      "date": "2026-09-16",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
+      "location": "Order: MoD/DMA/Estt-I/LV/2026/412"
+    },
+    {
+      "date": "2026-09-15",
+      "inTime": "--:--",
+      "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
+      "location": "Order: MoD/DMA/Estt-I/LV/2026/412"
+    },
+    {
+      "date": "2026-09-08",
+      "inTime": "08:55 AM",
+      "outTime": "05:40 PM",
+      "status": "Present",
+      "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-09-04",
       "inTime": "09:15 AM",
-      "status": "Late",
       "outTime": "05:30 PM",
+      "status": "Late",
       "location": "Sena Bhawan Gate 1"
     },
     {
       "date": "2026-09-03",
       "inTime": "08:50 AM",
-      "status": "Present",
       "outTime": "06:05 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     }
   ],
@@ -1107,7 +1280,7 @@
     "lateDays": 1,
     "avgInTime": "09:01 AM",
     "avgOutTime": "05:45 PM",
-    "leavesTaken": 0,
+    "leavesTaken": 9,
     "totalWorkingDays": 22
   },
   "cghsClaims": [
@@ -1699,7 +1872,7 @@
         "hsn": "2208",
         "price": 450,
         "marketPrice": 600,
-        "stock": 200,
+        "stock": 199,
         "grade": "",
         "accessories": "",
         "warrantyExpires": "",
@@ -2158,6 +2331,54 @@
         "paymentMode": "UPI / BharatPe CSD Merchant (Txn: 429188201)",
         "totalSavings": 258,
         "totalTaxable": 1066.1
+      },
+      {
+        "id": "TXN-460039",
+        "billNo": "TXN-460039",
+        "cardNo": "LB08260547713500S01",
+        "rank": "ASO-I (Gazetted)",
+        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
+        "terminal": "POS-01 / IP: 192.168.1.101",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "date": "2026-10-15T06:18:46.845Z",
+        "total": 450,
+        "totalNet": 450,
+        "totalTaxable": 381.35593220338984,
+        "totalCgst": 34.32203389830508,
+        "totalSgst": 34.32203389830508,
+        "items": [
+          {
+            "id": "8901131000100",
+            "sku": "8901131000100",
+            "name": "OLD MONK XXX RUM 750ML",
+            "category": "Liquor",
+            "afdCategory": "AFD-II (DURABLES)",
+            "unit": "Bottle",
+            "brand": "",
+            "model": "",
+            "color": "",
+            "hsn": "2208",
+            "price": 450,
+            "marketPrice": 600,
+            "stock": 200,
+            "grade": "",
+            "accessories": "",
+            "warrantyExpires": "",
+            "specs": "",
+            "serialNo": "",
+            "imei1": "",
+            "imei2": "",
+            "batchNo": "",
+            "gstRate": 18,
+            "qty": 1
+          }
+        ],
+        "categoryBreakdown": {
+          "Liquor": 450
+        },
+        "hash": "129e5ca3a1b2c3d4e5f67890aabbccddeeff11223344556677889900aabbccddeeff",
+        "status": "COMPLETED"
       }
     ],
     "dependentCardNo": "LB08260547713500D01",
@@ -2171,7 +2392,7 @@
         "grocLimit": 50000,
         "liqLimit": 25,
         "grocDrawn": 2850,
-        "liqDrawn": 2
+        "liqDrawn": 3
       },
       {
         "cardNo": "GC99887766554433",

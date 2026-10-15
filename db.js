@@ -130,6 +130,64 @@ class DatabaseManager {
         created_at TEXT NOT NULL
       );
     `);
+
+    // 6. Leave Applications Table
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS leave_applications (
+        id TEXT PRIMARY KEY,
+        officer_emp_id TEXT NOT NULL,
+        type TEXT NOT NULL,
+        type_name TEXT NOT NULL,
+        start_date TEXT NOT NULL,
+        end_date TEXT NOT NULL,
+        days REAL NOT NULL,
+        reason TEXT NOT NULL,
+        station_leave INTEGER DEFAULT 0,
+        station_leave_address TEXT,
+        emergency_contact TEXT,
+        status TEXT NOT NULL,
+        applied_on TEXT NOT NULL,
+        approved_by TEXT,
+        approved_on TEXT,
+        sanction_order_no TEXT,
+        workflow_json TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+    `);
+
+    // 7. Leave Balances Ledger Table (CCS Leave Rules 1972)
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS leave_balances (
+        officer_emp_id TEXT NOT NULL,
+        leave_type TEXT NOT NULL,
+        name TEXT NOT NULL,
+        hindi_name TEXT,
+        opening REAL NOT NULL DEFAULT 0,
+        credited REAL NOT NULL DEFAULT 0,
+        availed REAL NOT NULL DEFAULT 0,
+        balance REAL NOT NULL DEFAULT 0,
+        max_cap REAL,
+        unit TEXT DEFAULT 'days',
+        updated_at TEXT NOT NULL,
+        PRIMARY KEY (officer_emp_id, leave_type)
+      );
+    `);
+
+    // 8. AEBAS Attendance & Leave Ledger Table
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS aebas_records (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        officer_emp_id TEXT NOT NULL,
+        date TEXT NOT NULL,
+        in_time TEXT,
+        out_time TEXT,
+        status TEXT NOT NULL,
+        location TEXT,
+        leave_ref_id TEXT,
+        created_at TEXT NOT NULL
+      );
+    `);
   }
 
   seedInitialData() {
@@ -335,13 +393,16 @@ class DatabaseManager {
       state.csdBilling.transactions[existingTxnIdx] = { ...state.csdBilling.transactions[existingTxnIdx], ...DEFAULT_IPHONE17_TXN };
     }
 
+    // Seed and Synchronize Official Leave Applications & Balances for Anurag Anil Bawaskar
+    this.seedOfficialLeaves(state);
+
     // Persist unified state to SQLite and write file backup
     this.saveState(state);
     try {
       fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf8');
     } catch {}
 
-    console.log('✅ SQLite database initialized and verified with latest iPhone 17 & CSD relational records');
+    console.log('✅ SQLite database initialized and verified with latest iPhone 17, CSD records, and Leave Management Ledger');
   }
 
   // --- App State Methods ---
@@ -648,6 +709,424 @@ class DatabaseManager {
     );
   }
 
+  // --- Leave Management & CCS Leave Rules 1972 Methods ---
+  seedOfficialLeaves(state) {
+    const EMP_ID = 'MOD-DMA-2024-8104';
+    const now = new Date().toISOString();
+
+    // 1. Initial Opening/Credited Entitlements
+    const baselineBalances = [
+      { type: 'CL', name: 'Casual Leave', hindi: 'आकस्मिक अवकाश', opening: 8, credited: 8, maxCap: null },
+      { type: 'EL', name: 'Earned Leave', hindi: 'अर्जित अवकाश', opening: 30, credited: 15, maxCap: 300 },
+      { type: 'RH', name: 'Restricted Holiday', hindi: 'प्रतिबंधित अवकाश', opening: 2, credited: 2, maxCap: null },
+      { type: 'HPL', name: 'Half Pay Leave', hindi: 'अर्ध वेतन अवकाश', opening: 20, credited: 10, maxCap: null },
+      { type: 'COMMUTED', name: 'Commuted Leave', hindi: 'रूपांतरित अवकाश', opening: 15, credited: 0, maxCap: null },
+      { type: 'CCL', name: 'Child Care Leave', hindi: 'बाल देखरेख अवकाश', opening: 0, credited: 0, maxCap: null },
+      { type: 'PATERNITY', name: 'Paternity Leave', hindi: 'पितृत्व अवकाश', opening: 0, credited: 0, maxCap: null }
+    ];
+
+    const stmtBal = this.db.prepare(`
+      INSERT INTO leave_balances (
+        officer_emp_id, leave_type, name, hindi_name, opening, credited, availed, balance, max_cap, unit, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'days', ?)
+      ON CONFLICT(officer_emp_id, leave_type) DO UPDATE SET
+        opening = excluded.opening,
+        credited = excluded.credited,
+        updated_at = excluded.updated_at
+    `);
+
+    for (const b of baselineBalances) {
+      stmtBal.run(EMP_ID, b.type, b.name, b.hindi, b.opening, b.credited, 0, b.opening + b.credited, b.maxCap, now);
+    }
+
+    // 2. Official Leaves Taken by Anurag Anil Bawaskar
+    const officialLeaves = [
+      {
+        id: 'LV-2026-00412',
+        officerEmpId: EMP_ID,
+        type: 'CL',
+        typeName: 'Casual Leave',
+        startDate: '2026-09-15',
+        endDate: '2026-09-16',
+        days: 2,
+        reason: 'Urgent family domestic commitment and personal paperwork at hometown Nashik',
+        stationLeave: 1,
+        stationLeaveAddress: 'Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)',
+        emergencyContact: '+91 9822453218',
+        status: 'SANCTIONED',
+        appliedOn: '2026-09-01',
+        approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+        approvedOn: '2026-09-02',
+        sanctionOrderNo: 'MoD/DMA/Estt-I/LV/2026/412',
+        workflowJson: JSON.stringify([
+          { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '01-Sep-2026 10:15' },
+          { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Scrutinized & Recommended', date: '01-Sep-2026 14:30' },
+          { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '02-Sep-2026 11:00' }
+        ])
+      },
+      {
+        id: 'LV-2026-98343',
+        officerEmpId: EMP_ID,
+        type: 'EL',
+        typeName: 'Earned Leave',
+        startDate: '2026-09-21',
+        endDate: '2026-09-23',
+        days: 3,
+        reason: 'For Outdoor Work, of My Sister regarding her MBA Admission Counselling.',
+        stationLeave: 1,
+        stationLeaveAddress: 'Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)',
+        emergencyContact: '+91 9822453218',
+        status: 'SANCTIONED',
+        appliedOn: '2026-09-08',
+        approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+        approvedOn: '2026-09-08',
+        sanctionOrderNo: 'MOD/DMA/ESTT-I/LV/2026/412',
+        workflowJson: JSON.stringify([
+          { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '08-Sep-2026 08:15' },
+          { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Scrutinized & Recommended', date: '08-Sep-2026 08:15' },
+          { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '08-Sep-2026 08:16' }
+        ])
+      },
+      {
+        id: 'LV-2026-00455',
+        officerEmpId: EMP_ID,
+        type: 'RH',
+        typeName: 'Restricted Holiday',
+        startDate: '2026-09-22',
+        endDate: '2026-09-22',
+        days: 1,
+        reason: 'Festive observance (Anant Chaturdashi)',
+        stationLeave: 0,
+        stationLeaveAddress: '',
+        emergencyContact: '+91 9822453218',
+        status: 'SANCTIONED',
+        appliedOn: '2026-09-03',
+        approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+        approvedOn: '2026-09-04',
+        sanctionOrderNo: 'MOD/DMA/ESTT-I/RH/2026/09',
+        workflowJson: JSON.stringify([
+          { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '03-Sep-2026 11:20' },
+          { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Forwarded for Sanction', date: '03-Sep-2026 15:45' },
+          { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '04-Sep-2026 09:30' }
+        ])
+      },
+      {
+        id: 'LV-2026-10042',
+        officerEmpId: EMP_ID,
+        type: 'COMMUTED',
+        typeName: 'Commuted Leave (Medical)',
+        startDate: '2026-10-05',
+        endDate: '2026-10-06',
+        days: 2,
+        reason: 'Viral flu and seasonal fever; medical fitness certificate submitted from CGHS Wellness Centre, RK Puram',
+        stationLeave: 0,
+        stationLeaveAddress: '',
+        emergencyContact: '+91 9822453218',
+        status: 'SANCTIONED',
+        appliedOn: '2026-10-04',
+        approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+        approvedOn: '2026-10-04',
+        sanctionOrderNo: 'MOD/DMA/ESTT-I/MED/2026/89',
+        workflowJson: JSON.stringify([
+          { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted with CGHS AMA Certificate', date: '04-Oct-2026 08:30' },
+          { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Medical Scrutiny Verified', date: '04-Oct-2026 09:15' },
+          { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '04-Oct-2026 09:45' }
+        ])
+      },
+      {
+        id: 'LV-2026-10088',
+        officerEmpId: EMP_ID,
+        type: 'CL',
+        typeName: 'Casual Leave',
+        startDate: '2026-10-12',
+        endDate: '2026-10-12',
+        days: 1,
+        reason: 'Personal banking and official asset registration appointment',
+        stationLeave: 0,
+        stationLeaveAddress: '',
+        emergencyContact: '+91 9822453218',
+        status: 'SANCTIONED',
+        appliedOn: '2026-10-10',
+        approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+        approvedOn: '2026-10-10',
+        sanctionOrderNo: 'MOD/DMA/ESTT-I/LV/2026/501',
+        workflowJson: JSON.stringify([
+          { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '10-Oct-2026 09:10' },
+          { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Scrutinized & Recommended', date: '10-Oct-2026 11:20' },
+          { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '10-Oct-2026 11:45' }
+        ])
+      }
+    ];
+
+    const stmtApp = this.db.prepare(`
+      INSERT INTO leave_applications (
+        id, officer_emp_id, type, type_name, start_date, end_date, days, reason,
+        station_leave, station_leave_address, emergency_contact, status, applied_on,
+        approved_by, approved_on, sanction_order_no, workflow_json, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET
+        status = excluded.status,
+        approved_by = excluded.approved_by,
+        approved_on = excluded.approved_on,
+        sanction_order_no = excluded.sanction_order_no,
+        updated_at = excluded.updated_at
+    `);
+
+    for (const app of officialLeaves) {
+      stmtApp.run(
+        app.id,
+        app.officerEmpId,
+        app.type,
+        app.typeName,
+        app.startDate,
+        app.endDate,
+        app.days,
+        app.reason,
+        app.stationLeave,
+        app.stationLeaveAddress || '',
+        app.emergencyContact || '',
+        app.status,
+        app.appliedOn,
+        app.approvedBy || '',
+        app.approvedOn || '',
+        app.sanctionOrderNo || '',
+        app.workflowJson || '[]',
+        now,
+        now
+      );
+    }
+
+    // 3. Seed AEBAS Attendance Records matching leave dates
+    this.db.exec(`DELETE FROM aebas_records WHERE officer_emp_id = '${EMP_ID}'`);
+    const aebasRecords = [
+      { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-10-14', inTime: '08:55 AM', outTime: '05:48 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-10-13', inTime: '09:02 AM', outTime: '05:40 PM', status: 'Present', location: 'South Block Gate 4' },
+      { date: '2026-10-12', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/501', leaveRef: 'LV-2026-10088' },
+      { date: '2026-10-11', inTime: '--:--', outTime: '--:--', status: 'Sunday', location: '-' },
+      { date: '2026-10-10', inTime: '--:--', outTime: '--:--', status: 'Saturday', location: '-' },
+      { date: '2026-10-09', inTime: '08:50 AM', outTime: '06:05 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-10-08', inTime: '09:05 AM', outTime: '05:35 PM', status: 'Present', location: 'Sena Bhawan Gate 1' },
+      { date: '2026-10-07', inTime: '09:12 AM', outTime: '05:30 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-10-06', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89', leaveRef: 'LV-2026-10042' },
+      { date: '2026-10-05', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89', leaveRef: 'LV-2026-10042' },
+      { date: '2026-09-23', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412', leaveRef: 'LV-2026-98343' },
+      { date: '2026-09-22', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL/RH)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412', leaveRef: 'LV-2026-98343' },
+      { date: '2026-09-21', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412', leaveRef: 'LV-2026-98343' },
+      { date: '2026-09-16', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412', leaveRef: 'LV-2026-00412' },
+      { date: '2026-09-15', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412', leaveRef: 'LV-2026-00412' },
+      { date: '2026-09-08', inTime: '08:55 AM', outTime: '05:40 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-09-04', inTime: '09:15 AM', outTime: '05:30 PM', status: 'Late', location: 'Sena Bhawan Gate 1' },
+      { date: '2026-09-03', inTime: '08:50 AM', outTime: '06:05 PM', status: 'Present', location: 'Sena Bhawan Gate 2' }
+    ];
+
+    const stmtAebas = this.db.prepare(`
+      INSERT INTO aebas_records (officer_emp_id, date, in_time, out_time, status, location, leave_ref_id, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const a of aebasRecords) {
+      stmtAebas.run(EMP_ID, a.date, a.inTime, a.outTime, a.status, a.location || '-', a.leaveRef || null, now);
+    }
+
+    // 4. Calculate live balances and synchronize
+    this.calculateAndSyncLeaveBalances(EMP_ID, state);
+  }
+
+  calculateAndSyncLeaveBalances(empId = 'MOD-DMA-2024-8104', state = null) {
+    const now = new Date().toISOString();
+
+    // Sum availed days for each type from SANCTIONED leaves
+    const availedRows = this.db.prepare(`
+      SELECT type, SUM(days) as total_availed
+      FROM leave_applications
+      WHERE officer_emp_id = ? AND status = 'SANCTIONED'
+      GROUP BY type
+    `).all(empId);
+
+    const availedMap = {};
+    for (const row of availedRows) {
+      availedMap[row.type] = Number(row.total_availed) || 0;
+    }
+
+    // Total leaves taken across all categories
+    const totRow = this.db.prepare(`
+      SELECT SUM(days) as grand_total
+      FROM leave_applications
+      WHERE officer_emp_id = ? AND status = 'SANCTIONED'
+    `).get(empId);
+    const grandTotalLeavesTaken = Number(totRow ? totRow.grand_total : 0) || 0;
+
+    // Update leave_balances table
+    const allBalances = this.db.prepare(`SELECT * FROM leave_balances WHERE officer_emp_id = ?`).all(empId);
+    const updateStmt = this.db.prepare(`
+      UPDATE leave_balances
+      SET availed = ?, balance = ?, updated_at = ?
+      WHERE officer_emp_id = ? AND leave_type = ?
+    `);
+
+    const updatedBalancesObj = {};
+    for (const b of allBalances) {
+      const type = b.leave_type;
+      let availed = availedMap[type] || 0;
+      let balance = 0;
+
+      if (type === 'CL' || type === 'RH') {
+        balance = Math.max(0, (b.credited || b.opening) - availed);
+      } else if (type === 'COMMUTED') {
+        balance = Math.max(0, (b.opening || 15) - availed);
+      } else if (type === 'HPL') {
+        const commutedAvailed = availedMap['COMMUTED'] || 0;
+        const totalHplDebited = (availed) + (commutedAvailed * 2);
+        balance = Math.max(0, (b.opening + b.credited) - totalHplDebited);
+      } else {
+        balance = Math.max(0, (b.opening + b.credited) - availed);
+        if (b.max_cap && balance > b.max_cap) balance = b.max_cap;
+      }
+
+      updateStmt.run(availed, balance, now, empId, type);
+
+      updatedBalancesObj[type] = {
+        name: b.name,
+        hindi: b.hindi_name,
+        opening: b.opening,
+        credited: b.credited,
+        availed: availed,
+        balance: balance,
+        unit: b.unit || 'days',
+        ...(b.max_cap ? { max: b.max_cap } : {})
+      };
+    }
+
+    // Sync to state object
+    const targetState = state || this.getState();
+    if (targetState) {
+      targetState.leaveBalances = updatedBalancesObj;
+      targetState.leaveApplications = this.getLeaveApplications(empId);
+      if (!targetState.aebasStats) targetState.aebasStats = {};
+      targetState.aebasStats.leavesTaken = grandTotalLeavesTaken;
+      targetState.aebasRecords = this.getAebasRecords(empId);
+
+      this.saveState(targetState);
+      const STATE_FILE = path.join(__dirname, 'state.json');
+      try {
+        fs.writeFileSync(STATE_FILE, JSON.stringify(targetState, null, 2), 'utf8');
+      } catch {}
+    }
+
+    return {
+      balances: updatedBalancesObj,
+      totalLeavesTaken: grandTotalLeavesTaken
+    };
+  }
+
+  getLeaveApplications(empId = 'MOD-DMA-2024-8104') {
+    return this.db.prepare(`
+      SELECT * FROM leave_applications
+      WHERE officer_emp_id = ?
+      ORDER BY start_date DESC
+    `).all(empId).map(r => {
+      let workflowRoute = [];
+      try { workflowRoute = JSON.parse(r.workflow_json || '[]'); } catch {}
+      return {
+        id: r.id,
+        type: r.type,
+        typeName: r.type_name,
+        startDate: r.start_date,
+        endDate: r.end_date,
+        days: r.days,
+        reason: r.reason,
+        stationLeave: Boolean(r.station_leave),
+        stationLeaveAddress: r.station_leave_address,
+        emergencyContact: r.emergency_contact,
+        status: r.status,
+        appliedOn: r.applied_on,
+        approvedBy: r.approved_by,
+        approvedOn: r.approved_on,
+        sanctionOrderNo: r.sanction_order_no,
+        workflowRoute
+      };
+    });
+  }
+
+  getLeaveBalances(empId = 'MOD-DMA-2024-8104') {
+    const rows = this.db.prepare(`SELECT * FROM leave_balances WHERE officer_emp_id = ?`).all(empId);
+    const result = {};
+    for (const r of rows) {
+      result[r.leave_type] = {
+        name: r.name,
+        hindi: r.hindi_name,
+        opening: r.opening,
+        credited: r.credited,
+        availed: r.availed,
+        balance: r.balance,
+        unit: r.unit,
+        ...(r.max_cap ? { max: r.max_cap } : {})
+      };
+    }
+    return result;
+  }
+
+  saveLeaveApplication(app, empId = 'MOD-DMA-2024-8104') {
+    if (!app || !app.id) return;
+    const now = new Date().toISOString();
+    const stmt = this.db.prepare(`
+      INSERT INTO leave_applications (
+        id, officer_emp_id, type, type_name, start_date, end_date, days, reason,
+        station_leave, station_leave_address, emergency_contact, status, applied_on,
+        approved_by, approved_on, sanction_order_no, workflow_json, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET
+        type = excluded.type,
+        type_name = excluded.type_name,
+        start_date = excluded.start_date,
+        end_date = excluded.end_date,
+        days = excluded.days,
+        reason = excluded.reason,
+        station_leave = excluded.station_leave,
+        station_leave_address = excluded.station_leave_address,
+        emergency_contact = excluded.emergency_contact,
+        status = excluded.status,
+        approved_by = excluded.approved_by,
+        approved_on = excluded.approved_on,
+        sanction_order_no = excluded.sanction_order_no,
+        workflow_json = excluded.workflow_json,
+        updated_at = excluded.updated_at
+    `);
+
+    stmt.run(
+      String(app.id),
+      String(app.officerEmpId || empId),
+      String(app.type || 'CL'),
+      String(app.typeName || 'Casual Leave'),
+      String(app.startDate || now.slice(0, 10)),
+      String(app.endDate || now.slice(0, 10)),
+      Number(app.days) || 1,
+      String(app.reason || ''),
+      app.stationLeave ? 1 : 0,
+      String(app.stationLeaveAddress || ''),
+      String(app.emergencyContact || ''),
+      String(app.status || 'PENDING'),
+      String(app.appliedOn || now.slice(0, 10)),
+      String(app.approvedBy || ''),
+      String(app.approvedOn || ''),
+      String(app.sanctionOrderNo || ''),
+      typeof app.workflowRoute === 'string' ? app.workflowRoute : JSON.stringify(app.workflowRoute || []),
+      now,
+      now
+    );
+
+    return this.calculateAndSyncLeaveBalances(empId);
+  }
+
+  getAebasRecords(empId = 'MOD-DMA-2024-8104') {
+    return this.db.prepare(`
+      SELECT date, in_time as inTime, out_time as outTime, status, location
+      FROM aebas_records
+      WHERE officer_emp_id = ?
+      ORDER BY date DESC
+    `).all(empId);
+  }
+
   // --- Database Stats Diagnostic ---
   getStats() {
     const statSize = fs.existsSync(DB_PATH) ? fs.statSync(DB_PATH).size : 0;
@@ -655,6 +1134,9 @@ class DatabaseManager {
     const countInv = this.db.prepare('SELECT COUNT(*) as count FROM csd_inventory').get().count;
     const countTxn = this.db.prepare('SELECT COUNT(*) as count FROM csd_transactions').get().count;
     const countOff = this.db.prepare('SELECT COUNT(*) as count FROM csd_officers').get().count;
+    const countLeaves = this.db.prepare('SELECT COUNT(*) as count FROM leave_applications').get().count;
+    const countBalances = this.db.prepare('SELECT COUNT(*) as count FROM leave_balances').get().count;
+    const countAebas = this.db.prepare('SELECT COUNT(*) as count FROM aebas_records').get().count;
 
     return {
       engine: 'SQLite (node:sqlite DatabaseSync)',
@@ -665,7 +1147,10 @@ class DatabaseManager {
         app_state: countState,
         csd_inventory: countInv,
         csd_transactions: countTxn,
-        csd_officers: countOff
+        csd_officers: countOff,
+        leave_applications: countLeaves,
+        leave_balances: countBalances,
+        aebas_records: countAebas
       },
       healthy: true,
       timestamp: new Date().toISOString()

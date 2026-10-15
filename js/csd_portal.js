@@ -286,6 +286,26 @@ async function syncFromSqlite() {
         inventory = dbInv;
         localStorage.setItem('csd_inventory', JSON.stringify(inventory));
       }
+    } else {
+      // Fallback for static GitHub Pages hosting (dyvt58pjyd-prog.github.io)
+      const resState = await fetch('./state.json?ts=' + Date.now()).catch(() => null);
+      if (resState && resState.ok) {
+        const fullState = await resState.json();
+        if (fullState && fullState.csdBilling) {
+          if (Array.isArray(fullState.csdBilling.inventory) && fullState.csdBilling.inventory.length > 0) {
+            inventory = fullState.csdBilling.inventory;
+            localStorage.setItem('csd_inventory', JSON.stringify(inventory));
+          }
+          if (Array.isArray(fullState.csdBilling.transactions) && fullState.csdBilling.transactions.length > 0) {
+            transactions = fullState.csdBilling.transactions;
+            localStorage.setItem('csd_txns', JSON.stringify(transactions));
+          }
+          if (Array.isArray(fullState.csdBilling.officers) && fullState.csdBilling.officers.length > 0) {
+            officers = fullState.csdBilling.officers;
+            localStorage.setItem('csd_officers', JSON.stringify(officers));
+          }
+        }
+      }
     }
 
     if (resTxn && resTxn.ok) {
@@ -1085,6 +1105,11 @@ function generateReceipt(customerCard, billNo, txCats) {
   const elBarcode = document.getElementById('receipt-barcode-code');
   if (elBarcode) elBarcode.innerText = safeBillNo.replace(/[^a-zA-Z0-9]/g, '_');
 
+  const elBarcodeContainer = document.getElementById('receipt-barcode-svg-container');
+  if (elBarcodeContainer) {
+    elBarcodeContainer.innerHTML = generateCode39BarcodeSvg('CSD-' + safeBillNo + '-CASH', 28, 22);
+  }
+
   const elAuditTs = document.getElementById('receipt-audit-timestamp');
   if (elAuditTs) elAuditTs.innerText = formattedDate;
 
@@ -1229,4 +1254,55 @@ function generateReceipt(customerCard, billNo, txCats) {
       <div>${item.denom >= 10 ? '₹' + item.denom : ' ₹' + item.denom} &times; ${String(item.count).padStart(3, ' ')} = ₹${item.amount.toFixed(2).padStart(9, ' ')}</div>
     `).join('');
   }
+}
+
+function generateCode39BarcodeSvg(text, height = 28, displayHeight = 22) {
+  const CODE39 = {
+    '0': '000110100', '1': '100100001', '2': '001100001', '3': '101100000',
+    '4': '000110001', '5': '100110000', '6': '001110000', '7': '000100101',
+    '8': '100100100', '9': '001100100', 'A': '100001001', 'B': '001001001',
+    'C': '101001000', 'D': '000011001', 'E': '100011000', 'F': '001011000',
+    'G': '000001101', 'H': '100001100', 'I': '001001100', 'J': '000011100',
+    'K': '100000011', 'L': '001000011', 'M': '101000010', 'N': '000010011',
+    'O': '100010010', 'P': '001010010', 'Q': '000000111', 'R': '100000110',
+    'S': '001000110', 'T': '000010110', 'U': '110000001', 'V': '011000001',
+    'W': '111000000', 'X': '010010001', 'Y': '110010000', 'Z': '011010000',
+    '-': '010000101', '.': '110000100', ' ': '011000100', '$': '010101000',
+    '/': '010100010', '+': '010001010', '%': '000101010', '*': '010010100'
+  };
+
+  const raw = String(text || 'CSD-BILL').toUpperCase().replace(/[^0-9A-Z\-.\ \$\/\+\%]/g, '-');
+  const clean = '*' + raw + '*';
+  const narrow = 1.2;
+  const wide = 3.2;
+  const quiet = 12;
+
+  let totalWidth = quiet * 2;
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    const pat = CODE39[ch] || CODE39['-'];
+    for (let p = 0; p < 9; p++) {
+      totalWidth += (pat[p] === '1' ? wide : narrow);
+    }
+    if (i < clean.length - 1) totalWidth += narrow;
+  }
+  totalWidth = Math.ceil(totalWidth);
+
+  let x = quiet;
+  const bars = [];
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    const pat = CODE39[ch] || CODE39['-'];
+    for (let p = 0; p < 9; p++) {
+      const isBar = (p % 2 === 0);
+      const w = (pat[p] === '1' ? wide : narrow);
+      if (isBar) {
+        bars.push(`<rect x="${x.toFixed(1)}" y="0" width="${w.toFixed(1)}" height="${height}" fill="#000000" />`);
+      }
+      x += w;
+    }
+    if (i < clean.length - 1) x += narrow;
+  }
+
+  return `<svg viewBox="0 0 ${totalWidth} ${height}" preserveAspectRatio="xMidYMid meet" style="display:block;margin:0 auto;height:${displayHeight}px;max-width:320px;width:100%;background:#ffffff;shape-rendering:crispEdges;" xmlns="http://www.w3.org/2000/svg"><rect width="${totalWidth}" height="${height}" fill="#ffffff"/>${bars.join('')}</svg>`;
 }

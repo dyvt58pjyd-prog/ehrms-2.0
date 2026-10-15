@@ -196,6 +196,54 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // --- Leaves Management REST Endpoints (SQLite-backed) ---
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/leaves') {
+    const apps = db.getLeaveApplications();
+    const balances = db.getLeaveBalances();
+    const state = db.getState();
+    const payload = {
+      applications: apps,
+      balances: balances,
+      stats: state?.aebasStats || {}
+    };
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    if (req.method === 'HEAD') return res.end();
+    return res.end(JSON.stringify(payload, null, 2));
+  }
+
+  if (req.method === 'POST' && pathname === '/api/leaves') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+      try {
+        const app = JSON.parse(body);
+        const calc = db.saveLeaveApplication(app);
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, app, calc }));
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: e.message }));
+      }
+    });
+    return;
+  }
+
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/leaves/balances') {
+    const balances = db.getLeaveBalances();
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    if (req.method === 'HEAD') return res.end();
+    return res.end(JSON.stringify(balances, null, 2));
+  }
+
+  // --- AEBAS Attendance REST Endpoints (SQLite-backed) ---
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/aebas') {
+    const records = db.getAebasRecords();
+    const state = db.getState();
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    if (req.method === 'HEAD') return res.end();
+    return res.end(JSON.stringify({ records, stats: state?.aebasStats || {} }, null, 2));
+  }
+
   let filePath = path.join(__dirname, pathname === '/' ? 'index.html' : pathname);
 
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {

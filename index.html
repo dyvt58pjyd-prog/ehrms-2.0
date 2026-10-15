@@ -24,10 +24,10 @@
 <body>
 <script>
   window.addEventListener('error', function(e) {
-    fetch('/log_error_get?msg=' + encodeURIComponent(e.message + ' at ' + e.filename + ':' + e.lineno));
+    fetch('/log_error_get?msg=' + encodeURIComponent(e.message + ' at ' + e.filename + ':' + e.lineno)).catch(() => {});
   });
   window.addEventListener('unhandledrejection', function(e) {
-    fetch('/log_error_get?msg=' + encodeURIComponent(e.reason ? e.reason.message : e.reason));
+    fetch('/log_error_get?msg=' + encodeURIComponent(e.reason ? e.reason.message : e.reason)).catch(() => {});
   });
 </script>
 

@@ -205,16 +205,82 @@ const INITIAL_DATA = {
 
   // Central Civil Services (CCS Leave Rules, 1972)
   leaveBalances: {
-    CL: { name: 'Casual Leave', hindi: 'आकस्मिक अवकाश', opening: 8, credited: 8, availed: 2, balance: 6, unit: 'days' },
-    RH: { name: 'Restricted Holiday', hindi: 'प्रतिबंधित अवकाश', opening: 2, credited: 2, availed: 0, balance: 2, unit: 'days' },
+    CL: { name: 'Casual Leave', hindi: 'आकस्मिक अवकाश', opening: 8, credited: 8, availed: 3, balance: 5, unit: 'days' },
+    RH: { name: 'Restricted Holiday', hindi: 'प्रतिबंधित अवकाश', opening: 2, credited: 2, availed: 1, balance: 1, unit: 'days' },
     EL: { name: 'Earned Leave', hindi: 'अर्जित अवकाश', opening: 30, credited: 15, availed: 3, balance: 42, max: 300, unit: 'days' },
-    HPL: { name: 'Half Pay Leave', hindi: 'अर्ध वेतन अवकाश', opening: 20, credited: 10, availed: 0, balance: 30, unit: 'days' },
-    COMMUTED: { name: 'Commuted Leave', hindi: 'रूपांतरित अवकाश', balance: 15, unit: 'days' },
+    HPL: { name: 'Half Pay Leave', hindi: 'अर्ध वेतन अवकाश', opening: 20, credited: 10, availed: 0, balance: 26, unit: 'days' },
+    COMMUTED: { name: 'Commuted Leave', hindi: 'रूपांतरित अवकाश', opening: 15, credited: 0, availed: 2, balance: 13, unit: 'days' },
     CCL: { name: 'Child Care Leave', hindi: 'बाल देखरेख अवकाश', opening: 0, availed: 0, balance: 0, unit: 'days' },
     PATERNITY: { name: 'Paternity Leave', hindi: 'पितृत्व अवकाश', availed: 0, balance: 0, unit: 'days' }
   },
 
   leaveApplications: [
+    {
+      id: 'LV-2026-10088',
+      type: 'CL',
+      typeName: 'Casual Leave',
+      startDate: '2026-10-12',
+      endDate: '2026-10-12',
+      days: 1,
+      reason: 'Personal banking and official asset registration appointment',
+      stationLeave: false,
+      stationLeaveAddress: '',
+      emergencyContact: '+91 9822453218',
+      status: 'SANCTIONED',
+      appliedOn: '2026-10-10',
+      approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+      approvedOn: '2026-10-10',
+      sanctionOrderNo: 'MOD/DMA/ESTT-I/LV/2026/501',
+      workflowRoute: [
+        { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '10-Oct-2026 09:10' },
+        { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Scrutinized & Recommended', date: '10-Oct-2026 11:20' },
+        { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '10-Oct-2026 11:45' }
+      ]
+    },
+    {
+      id: 'LV-2026-10042',
+      type: 'COMMUTED',
+      typeName: 'Commuted Leave (Medical)',
+      startDate: '2026-10-05',
+      endDate: '2026-10-06',
+      days: 2,
+      reason: 'Viral flu and seasonal fever; medical fitness certificate submitted from CGHS Wellness Centre, RK Puram',
+      stationLeave: false,
+      stationLeaveAddress: '',
+      emergencyContact: '+91 9822453218',
+      status: 'SANCTIONED',
+      appliedOn: '2026-10-04',
+      approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+      approvedOn: '2026-10-04',
+      sanctionOrderNo: 'MOD/DMA/ESTT-I/MED/2026/89',
+      workflowRoute: [
+        { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted with CGHS AMA Certificate', date: '04-Oct-2026 08:30' },
+        { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Medical Scrutiny Verified', date: '04-Oct-2026 09:15' },
+        { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '04-Oct-2026 09:45' }
+      ]
+    },
+    {
+      id: 'LV-2026-00455',
+      type: 'RH',
+      typeName: 'Restricted Holiday',
+      startDate: '2026-09-22',
+      endDate: '2026-09-22',
+      days: 1,
+      reason: 'Festive observance (Anant Chaturdashi)',
+      stationLeave: false,
+      stationLeaveAddress: '',
+      emergencyContact: '+91 9822453218',
+      status: 'SANCTIONED',
+      appliedOn: '2026-09-03',
+      approvedBy: 'Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)',
+      approvedOn: '2026-09-04',
+      sanctionOrderNo: 'MOD/DMA/ESTT-I/RH/2026/09',
+      workflowRoute: [
+        { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '03-Sep-2026 11:20' },
+        { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Forwarded for Sanction', date: '03-Sep-2026 15:45' },
+        { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '04-Sep-2026 09:30' }
+      ]
+    },
     {
       id: 'LV-2026-98343',
       type: 'EL',
@@ -257,26 +323,6 @@ const INITIAL_DATA = {
         { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '01-Sep-2026 10:15' },
         { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Scrutinized & Recommended', date: '01-Sep-2026 14:30' },
         { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Sanctioned via Aadhaar e-Sign', date: '02-Sep-2026 11:00' }
-      ]
-    },
-    {
-      id: 'LV-2026-00455',
-      type: 'RH',
-      typeName: 'Restricted Holiday',
-      startDate: '2026-09-22',
-      endDate: '2026-09-22',
-      days: 1,
-      reason: 'Festive observance (Anant Chaturdashi)',
-      stationLeave: false,
-      status: 'PENDING',
-      appliedOn: '2026-09-03',
-      approvedBy: null,
-      approvedOn: null,
-      sanctionOrderNo: null,
-      workflowRoute: [
-        { role: 'Applicant', officer: 'Anurag Anil Bawaskar (ASO-I)', action: 'Application Submitted', date: '03-Sep-2026 11:20' },
-        { role: 'Branch Officer', officer: 'Shri Rajender Singh (Deputy Secretary, Estt)', action: 'Forwarded for Sanction', date: '03-Sep-2026 15:45' },
-        { role: 'Sanctioning Authority', officer: 'Shri Anil Kumar Chhapolia (Joint Secretary, DMA)', action: 'Awaiting Sanction & e-Sign', date: 'Pending' }
       ]
     }
   ],
@@ -899,10 +945,23 @@ const INITIAL_DATA = {
   
   // AEBAS (Biometric Attendance)
   aebasRecords: [
-    { date: '2026-09-08', inTime: '08:55 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
-    { date: '2026-09-07', inTime: '09:02 AM', outTime: '05:40 PM', status: 'Present', location: 'South Block Gate 4' },
-    { date: '2026-09-06', inTime: '--:--', outTime: '--:--', status: 'Sunday', location: '-' },
-    { date: '2026-09-05', inTime: '--:--', outTime: '--:--', status: 'Saturday', location: '-' },
+    { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
+    { date: '2026-10-14', inTime: '08:55 AM', outTime: '05:48 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+    { date: '2026-10-13', inTime: '09:02 AM', outTime: '05:40 PM', status: 'Present', location: 'South Block Gate 4' },
+    { date: '2026-10-12', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/501' },
+    { date: '2026-10-11', inTime: '--:--', outTime: '--:--', status: 'Sunday', location: '-' },
+    { date: '2026-10-10', inTime: '--:--', outTime: '--:--', status: 'Saturday', location: '-' },
+    { date: '2026-10-09', inTime: '08:50 AM', outTime: '06:05 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+    { date: '2026-10-08', inTime: '09:05 AM', outTime: '05:35 PM', status: 'Present', location: 'Sena Bhawan Gate 1' },
+    { date: '2026-10-07', inTime: '09:12 AM', outTime: '05:30 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+    { date: '2026-10-06', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89' },
+    { date: '2026-10-05', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89' },
+    { date: '2026-09-23', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-22', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL/RH)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-21', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-16', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412' },
+    { date: '2026-09-15', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412' },
+    { date: '2026-09-08', inTime: '08:55 AM', outTime: '05:40 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
     { date: '2026-09-04', inTime: '09:15 AM', outTime: '05:30 PM', status: 'Late', location: 'Sena Bhawan Gate 1' },
     { date: '2026-09-03', inTime: '08:50 AM', outTime: '06:05 PM', status: 'Present', location: 'Sena Bhawan Gate 2' }
   ],
@@ -910,7 +969,7 @@ const INITIAL_DATA = {
     avgInTime: '09:01 AM',
     avgOutTime: '05:45 PM',
     lateDays: 1,
-    leavesTaken: 0,
+    leavesTaken: 9,
     totalWorkingDays: 22
   },
 
@@ -1622,8 +1681,12 @@ class StateManager {
         }
       }
       
-      const res = await fetch('/api/state?ts=' + Date.now(), { cache: 'no-store' });
-      if (res.ok) {
+      let res = await fetch('/api/state?ts=' + Date.now(), { cache: 'no-store' }).catch(() => null);
+      if (!res || !res.ok) {
+        // Fallback for static GitHub Pages hosting
+        res = await fetch('./state.json?ts=' + Date.now(), { cache: 'no-store' }).catch(() => null);
+      }
+      if (res && res.ok) {
         const remoteData = await res.json();
         if (remoteData && remoteData.currentUser) {
           // If remote is different from local, adopt remote and force re-render
