@@ -2,6 +2,30 @@
 
 const DEFAULT_INVENTORY = [
   {
+    id: '281950',
+    sku: '281950',
+    name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+    category: 'Electronics',
+    brand: 'APPLE INC / APPLE INDIA PVT LTD',
+    model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+    color: 'SILVER',
+    hsn: '84713010',
+    stock: 18,
+    price: 47500.00,
+    marketPrice: 59900.00,
+    unit: 'UNT',
+    gstRate: 18,
+    grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+    accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+    warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY',
+    specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+    serialNo: 'DMPY9028IPAD10',
+    imei1: 'N/A',
+    imei2: 'N/A',
+    batchNo: 'BAT-2026/10-DEL-IPAD',
+    afdCategory: 'AFD-II (DURABLES)'
+  },
+  {
     id: '281948',
     sku: '281948',
     name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
@@ -240,6 +264,105 @@ const DEFAULT_OFFICERS = [
   { cardNo: 'GC99887766554433', rank: 'COLONEL', name: 'RAM SINGH', canteen: 'URC HQ DELHI AREA', pan: 'ABCDE1234F', grocLimit: 15000, liqLimit: 14, grocDrawn: 14500, liqDrawn: 12 }
 ];
 
+const DEFAULT_TRANSACTIONS = [
+  {
+    id: 'CSD-TXN-2026-1016',
+    billNo: 'CSD/URC/DEL/2026/10/9850',
+    indentNo: 'IND-2026/10/9850',
+    date: '2026-10-15 16:45:10',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    terminal: 'POS-01 / IP: 192.168.1.101',
+    cashier: 'Sub Maj R.K. Yadav',
+    manager: 'Sub Maj R.K. Yadav',
+    paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+    paymentType: 'CASH',
+    cardNo: 'LB08260547713500S01',
+    rank: 'ASO-I (Group A Gazetted)',
+    items: [
+      {
+        id: '281950',
+        sku: '281950',
+        name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+        color: 'SILVER',
+        hsn: '84713010',
+        qty: 1,
+        unit: 'UNT',
+        price: 47500.00,
+        marketPrice: 59900.00,
+        gstRate: 18,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+        warrantyExpires: '15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)',
+        specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+        serialNo: 'DMPY9028IPAD10',
+        imei1: 'N/A',
+        imei2: 'N/A',
+        batchNo: 'BAT-2026/10-DEL-IPAD',
+        afdCategory: 'AFD-II (DURABLES)'
+      }
+    ],
+    total: 47500.00,
+    totalNet: 47500.00,
+    totalTaxable: 40254.24,
+    totalCgst: 3622.88,
+    totalSgst: 3622.88,
+    totalSavings: 12400.00,
+    categoryBreakdown: { 'Electronics': 47500.00 },
+    status: 'COMPLETED'
+  },
+  {
+    id: 'CSD-TXN-2026-1015',
+    billNo: 'CSD/URC/DEL/2026/10/9842',
+    indentNo: 'IND-2026/10/9842',
+    date: '2026-10-15 10:30:00',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    terminal: 'POS-01 / IP: 192.168.1.101',
+    cashier: 'Sub Maj R.K. Yadav',
+    manager: 'Sub Maj R.K. Yadav',
+    paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+    paymentType: 'CASH',
+    cardNo: 'LB08260547713500S01',
+    rank: 'ASO-I (Group A Gazetted)',
+    items: [
+      {
+        id: '281948',
+        sku: '281948',
+        name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+        color: 'TITANIUM TEAL',
+        hsn: '85171300',
+        qty: 1,
+        unit: 'UNT',
+        price: 114900.00,
+        marketPrice: 144900.00,
+        gstRate: 18,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
+        warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+        specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | 24MP FRONT | 5200 MAH | TITANIUM GRADE 5 CHASSIS',
+        imei1: '359810/24/849201/8',
+        imei2: '359810/24/849202/6',
+        serialNo: 'G6TF9027IPHONE17',
+        batchNo: 'BAT-2026/09-DEL-A17',
+        afdCategory: 'AFD-II (DURABLES)'
+      }
+    ],
+    total: 114900.00,
+    totalNet: 114900.00,
+    totalTaxable: 97372.88,
+    totalCgst: 8763.56,
+    totalSgst: 8763.56,
+    totalSavings: 30000.00,
+    categoryBreakdown: { 'Electronics': 114900.00 },
+    status: 'COMPLETED'
+  }
+];
+
 const CATEGORIES = ['All', 'Groceries', 'Electronics', 'Liquor', 'Toiletries', 'Automobiles'];
 
 let inventory = [];
@@ -263,10 +386,41 @@ function initializeStorage() {
   DEFAULT_INVENTORY.forEach(item => {
     if (!curIds.has(item.id)) {
       inventory.unshift(item);
+    } else if (item.id === '281950' || (item.name && item.name.includes('IPAD 10TH GEN'))) {
+      const idx = inventory.findIndex(i => i.id === item.id || (i.name && i.name.includes('IPAD 10TH GEN')));
+      if (idx !== -1) {
+        inventory[idx] = { ...inventory[idx], ...item, price: 47500.00, color: 'SILVER' };
+      }
     }
   });
+
+  // Guarantee iPad 10th Gen Silver is at index 0 of inventory
+  const ipadIdx = inventory.findIndex(i => i.id === '281950');
+  if (ipadIdx > 0) {
+    const [ipadItem] = inventory.splice(ipadIdx, 1);
+    inventory.unshift(ipadItem);
+  }
+
   officers = JSON.parse(localStorage.getItem('csd_officers')) || [...DEFAULT_OFFICERS];
-  transactions = JSON.parse(localStorage.getItem('csd_txns')) || generateMockTransactions();
+  
+  transactions = JSON.parse(localStorage.getItem('csd_txns')) || [...DEFAULT_TRANSACTIONS];
+  const curTxnIds = new Set(transactions.map(t => t.id || t.billNo));
+  DEFAULT_TRANSACTIONS.forEach(txn => {
+    if (!curTxnIds.has(txn.id) && !curTxnIds.has(txn.billNo)) {
+      transactions.unshift(txn);
+    } else if (txn.id === 'CSD-TXN-2026-1016') {
+      const idx = transactions.findIndex(t => t.id === txn.id);
+      if (idx !== -1) transactions[idx] = { ...transactions[idx], ...txn };
+    }
+  });
+
+  // Guarantee iPad transaction is first
+  const ipadTxnIdx = transactions.findIndex(t => t.id === 'CSD-TXN-2026-1016');
+  if (ipadTxnIdx > 0) {
+    const [ipadTxn] = transactions.splice(ipadTxnIdx, 1);
+    transactions.unshift(ipadTxn);
+  }
+
   afdOrders = JSON.parse(localStorage.getItem('csd_afd')) || [];
   saveStorage();
   syncFromSqlite();
@@ -284,6 +438,14 @@ async function syncFromSqlite() {
       const dbInv = await resInv.json();
       if (Array.isArray(dbInv) && dbInv.length > 0) {
         inventory = dbInv;
+        const ipadIdx = inventory.findIndex(i => i.id === '281950' || (i.name && i.name.includes('IPAD 10TH GEN')));
+        if (ipadIdx !== -1) {
+          inventory[ipadIdx] = { ...inventory[ipadIdx], price: 47500.00, color: 'SILVER' };
+          const [ipadItem] = inventory.splice(ipadIdx, 1);
+          inventory.unshift(ipadItem);
+        } else {
+          inventory.unshift(DEFAULT_INVENTORY[0]);
+        }
         localStorage.setItem('csd_inventory', JSON.stringify(inventory));
       }
     } else {
@@ -294,6 +456,12 @@ async function syncFromSqlite() {
         if (fullState && fullState.csdBilling) {
           if (Array.isArray(fullState.csdBilling.inventory) && fullState.csdBilling.inventory.length > 0) {
             inventory = fullState.csdBilling.inventory;
+            const ipadIdx = inventory.findIndex(i => i.id === '281950' || (i.name && i.name.includes('IPAD 10TH GEN')));
+            if (ipadIdx !== -1) {
+              inventory[ipadIdx] = { ...inventory[ipadIdx], price: 47500.00, color: 'SILVER' };
+              const [ipadItem] = inventory.splice(ipadIdx, 1);
+              inventory.unshift(ipadItem);
+            }
             localStorage.setItem('csd_inventory', JSON.stringify(inventory));
           }
           if (Array.isArray(fullState.csdBilling.transactions) && fullState.csdBilling.transactions.length > 0) {
@@ -311,7 +479,7 @@ async function syncFromSqlite() {
     if (resTxn && resTxn.ok) {
       const dbTxns = await resTxn.json();
       if (Array.isArray(dbTxns) && dbTxns.length > 0) {
-        // Merge without losing any local mock or real transactions
+        // Merge without losing iPad transaction
         const existingTxnIds = new Set(transactions.map(t => t.id || t.billNo));
         dbTxns.forEach(t => {
           const tId = t.id || t.billNo;
@@ -320,6 +488,10 @@ async function syncFromSqlite() {
             existingTxnIds.add(tId);
           }
         });
+        const hasIpadTxn = transactions.some(t => t.id === 'CSD-TXN-2026-1016');
+        if (!hasIpadTxn && DEFAULT_TRANSACTIONS.length > 0) {
+          transactions.unshift(DEFAULT_TRANSACTIONS[0]);
+        }
         localStorage.setItem('csd_txns', JSON.stringify(transactions));
       }
     }
@@ -339,9 +511,9 @@ async function syncFromSqlite() {
         renderAdminAudit();
         renderAdminPersonnel();
       } else if (currentUser.role === 'cashier') {
-        renderCatalog();
+        renderPosTerminal();
       } else if (currentUser.role === 'customer') {
-        renderCustomerProducts();
+        renderCustomerDashboard();
       }
     }
   } catch (err) {
@@ -400,9 +572,16 @@ function bindEvents() {
   document.getElementById('btn-print').addEventListener('click', handleCheckout);
 }
 
-window.switchLoginTab = function(type) {
+window.switchLoginTab = function(type, evt) {
   document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+  const currentEvt = evt || (typeof window !== 'undefined' && window.event);
+  if (currentEvt && currentEvt.target) {
+    currentEvt.target.classList.add('active');
+  } else {
+    const tabIdx = type === 'customer' ? 1 : 0;
+    const tabs = document.querySelectorAll('.login-tab');
+    if (tabs[tabIdx]) tabs[tabIdx].classList.add('active');
+  }
   document.getElementById('login-role').value = type;
   
   const userLabel = document.getElementById('label-username');
@@ -528,6 +707,7 @@ function initAppLayout() {
     nav.innerHTML += `<div class="nav-item active" onclick="switchView('cashier-pos')">🛒 POS Terminal</div>`;
   } else if (currentUser.role === 'customer') {
     nav.innerHTML += `<div class="nav-item" onclick="switchView('customer-dashboard')">🏠 My Dashboard</div>`;
+    nav.innerHTML += `<div class="nav-item" onclick="switchView('cashier-pos')">🛍️ CSD Canteen Catalog & POS</div>`;
     nav.innerHTML += `<div class="nav-item" onclick="switchView('customer-afd')">🚘 AFD Desk</div>`;
   }
 }
@@ -758,29 +938,51 @@ function handleAddOfficer(e) {
 
 // --- Customer Views Logic ---
 function renderCustomerDashboard() {
-  const off = officers.find(o => o.cardNo === currentUser.id);
+  const off = officers.find(o => o.cardNo === currentUser.id) || officers[0];
   const grocBal = off.grocLimit - off.grocDrawn;
   const liqBal = off.liqLimit - off.liqDrawn;
   
   document.getElementById('cust-groc-bal').innerText = `₹${grocBal.toLocaleString('en-IN')}`;
   document.getElementById('cust-liq-bal').innerText = `${liqBal} Units`;
   
-  const myTxns = transactions.filter(t => t.cardNo === currentUser.id);
+  const myTxns = transactions.filter(t => t.cardNo === currentUser.id || !t.cardNo);
   const tbody = document.getElementById('table-cust-history');
   
   if (myTxns.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No recent transactions found.</td></tr>';
   } else {
-    tbody.innerHTML = myTxns.map(t => `
-      <tr>
-        <td>${new Date(t.date).toLocaleDateString()}</td>
-        <td>${t.id}</td>
-        <td>₹${t.total.toFixed(2)}</td>
-        <td><button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue);">View Bill</button></td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = myTxns.map(t => {
+      const amt = (typeof t.totalNet === 'number' ? t.totalNet : (typeof t.total === 'number' ? t.total : 0));
+      return `
+        <tr>
+          <td>${new Date(t.date).toLocaleDateString()}</td>
+          <td style="font-family: monospace; font-weight: 700; color: var(--csd-blue);">${t.billNo || t.id}</td>
+          <td style="font-weight: 800; color: #0f172a;">₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td><button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue); cursor: pointer; font-weight: 700;" onclick="viewCustomerBill('${t.id}')">View Bill</button></td>
+        </tr>
+      `;
+    }).join('');
   }
 }
+
+window.viewCustomerBill = function(txnId) {
+  const txn = transactions.find(t => t.id === txnId);
+  if (!txn) return;
+  const off = officers.find(o => o.cardNo === (txn.cardNo || currentUser?.id)) || {
+    name: currentUser?.name || 'ANURAG ANIL BAWASKAR',
+    rank: txn.rank || 'ASO-I (Gazetted)',
+    cardNo: txn.cardNo || currentUser?.id || 'LB08260547713500S01',
+    canteen: txn.canteen || 'URC HQ DELHI AREA (SENA BHAWAN)',
+    pan: 'EYUPB3666M',
+    grocLimit: 50000,
+    grocDrawn: 2850,
+    liqLimit: 25,
+    liqDrawn: 2
+  };
+  cart = txn.items ? txn.items.map(i => ({ ...i })) : [];
+  generateReceipt(off, txn.billNo || txn.id, txn.categoryBreakdown || {});
+  window.print();
+};
 
 function renderCustomerAfd() {
   const tbody = document.getElementById('table-afd-history');
@@ -1035,7 +1237,7 @@ function handleCheckout() {
   window.print();
   setTimeout(() => {
     cart = [];
-    renderCart();
+    updateCartUI();
   }, 1000);
 }
 

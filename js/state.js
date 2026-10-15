@@ -1137,6 +1137,30 @@ notifications: [
     },
     inventory: [
       {
+        id: '281950',
+        sku: '281950',
+        name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+        color: 'SILVER',
+        hsn: '84713010',
+        stock: 18,
+        price: 47500.00,
+        marketPrice: 59900.00,
+        unit: 'Unit',
+        gstRate: 18,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+        warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY',
+        specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+        serialNo: 'DMPY9028IPAD10',
+        imei1: 'N/A',
+        imei2: 'N/A',
+        batchNo: 'BAT-2026/10-DEL-IPAD',
+        afdCategory: 'AFD-II (DURABLES)'
+      },
+      {
         id: '281948',
         sku: '281948',
         name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
@@ -1256,6 +1280,59 @@ notifications: [
       { id: '8901505001011', name: 'JOHNNIE WALKER BLACK LABEL 750ML', category: 'Liquor', hsn: '2208', stock: 45, price: 2650.00, marketPrice: 3800.00, unit: 'Bottle' }
     ],
     transactions: [
+      {
+        id: 'CSD-TXN-2026-1016',
+        billNo: 'CSD/URC/DEL/2026/10/9850',
+        indentNo: 'IND-2026/10/9850',
+        date: '2026-10-15 16:45:10',
+        canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+        terminal: 'POS-01 / IP: 192.168.1.101',
+        cashier: 'Sub Maj R.K. Yadav',
+        manager: 'Sub Maj R.K. Yadav',
+        paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+        paymentType: 'CASH',
+        items: [
+          {
+            id: '281950',
+            sku: '281950',
+            name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+            category: 'Electronics',
+            brand: 'APPLE INC / APPLE INDIA PVT LTD',
+            model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+            color: 'SILVER',
+            hsn: '84713010',
+            qty: 1,
+            unit: 'UNT',
+            price: 47500.00,
+            marketPrice: 59900.00,
+            grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+            accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+            warrantyExpires: '15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)',
+            specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+            serialNo: 'DMPY9028IPAD10',
+            imei1: 'N/A',
+            imei2: 'N/A',
+            batchNo: 'BAT-2026/10-DEL-IPAD',
+            afdCategory: 'AFD-II (DURABLES)'
+          }
+        ],
+        totalTaxable: 40254.24,
+        totalCgst: 3622.88,
+        totalSgst: 3622.88,
+        totalNet: 47500.00,
+        totalSavings: 12400.00,
+        cardNo: 'LB08260547713500S01',
+        rank: 'ASO-I (Group A Gazetted)',
+        grocLimit: 50000,
+        grocDrawn: 2850,
+        liqLimit: 25,
+        liqDrawn: 2,
+        status: 'COMPLETED',
+        cashTendered: 47500.00,
+        cashChange: 0.00,
+        cashVoucherNo: 'CSD/CASH/DEL/2026/10/9850',
+        cashReceiptNo: 'RCPT-CSD-2026-9850'
+      },
       {
         id: 'CSD-TXN-2026-1015',
         billNo: 'CSD/URC/DEL/2026/10/9842',
@@ -1676,7 +1753,31 @@ class StateManager {
         const { data, error } = await supabaseClient.from('ehrms_state').select('data').eq('id', 'global_state').single();
         if (data && data.data) {
           console.log('🔄 Synced fresh state from Supabase Cloud DB!');
-          this.set(data.data);
+          const cloudData = data.data;
+          // Protect CSD inventory and transactions from being overwritten by stale/empty Supabase data
+          if (!cloudData.csdBilling || !Array.isArray(cloudData.csdBilling.inventory) || cloudData.csdBilling.inventory.length === 0) {
+            cloudData.csdBilling = JSON.parse(JSON.stringify(this.data.csdBilling || INITIAL_DATA.csdBilling));
+          } else {
+            const hasIpad = cloudData.csdBilling.inventory.some(i => i.id === '281950');
+            if (!hasIpad) {
+              const ipadDef = INITIAL_DATA.csdBilling.inventory.find(i => i.id === '281950');
+              if (ipadDef) cloudData.csdBilling.inventory.unshift(JSON.parse(JSON.stringify(ipadDef)));
+            } else {
+              const idx = cloudData.csdBilling.inventory.findIndex(i => i.id === '281950');
+              cloudData.csdBilling.inventory[idx].price = 47500.00;
+              cloudData.csdBilling.inventory[idx].color = 'SILVER';
+              if (idx > 0) {
+                const [ipad] = cloudData.csdBilling.inventory.splice(idx, 1);
+                cloudData.csdBilling.inventory.unshift(ipad);
+              }
+            }
+            if (!cloudData.csdBilling.transactions) cloudData.csdBilling.transactions = [];
+            const hasIpadTxn = cloudData.csdBilling.transactions.some(t => t.id === 'CSD-TXN-2026-1016');
+            if (!hasIpadTxn && INITIAL_DATA.csdBilling.transactions && INITIAL_DATA.csdBilling.transactions.length > 0) {
+              cloudData.csdBilling.transactions.unshift(JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling.transactions[0])));
+            }
+          }
+          this.set(cloudData);
           return;
         }
       }
@@ -1689,7 +1790,20 @@ class StateManager {
       if (res && res.ok) {
         const remoteData = await res.json();
         if (remoteData && remoteData.currentUser) {
-          // If remote is different from local, adopt remote and force re-render
+          if (!remoteData.csdBilling || !Array.isArray(remoteData.csdBilling.inventory) || remoteData.csdBilling.inventory.length === 0) {
+            remoteData.csdBilling = JSON.parse(JSON.stringify(this.data.csdBilling || INITIAL_DATA.csdBilling));
+          } else {
+            const hasIpad = remoteData.csdBilling.inventory.some(i => i.id === '281950');
+            if (!hasIpad) {
+              const ipadDef = INITIAL_DATA.csdBilling.inventory.find(i => i.id === '281950');
+              if (ipadDef) remoteData.csdBilling.inventory.unshift(JSON.parse(JSON.stringify(ipadDef)));
+            }
+            if (!remoteData.csdBilling.transactions) remoteData.csdBilling.transactions = [];
+            const hasIpadTxn = remoteData.csdBilling.transactions.some(t => t.id === 'CSD-TXN-2026-1016');
+            if (!hasIpadTxn && INITIAL_DATA.csdBilling.transactions && INITIAL_DATA.csdBilling.transactions.length > 0) {
+              remoteData.csdBilling.transactions.unshift(JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling.transactions[0])));
+            }
+          }
           if (JSON.stringify(remoteData) !== JSON.stringify(this.data)) {
             this.set(remoteData);
             if (window.ehrmsApp) {
@@ -1772,23 +1886,30 @@ class StateManager {
           if (!parsed.csdBilling) {
             parsed.csdBilling = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling));
           } else {
-            // Ensure newly added inventory items like iPhone 17 & Samsung Galaxy S25 are present and up to date
+            // Ensure newly added inventory items like iPad 10th Gen, iPhone 17 & Samsung Galaxy S25 are present and up to date
             const curIds = new Set((parsed.csdBilling.inventory || []).map(i => i.id));
             (INITIAL_DATA.csdBilling.inventory || []).forEach(item => {
               if (!curIds.has(item.id)) {
                 parsed.csdBilling.inventory.unshift(item);
-              } else if (item.id === '281948' || item.id === '281949' || item.id === '233243') {
+              } else if (item.id === '281950' || item.id === '281948' || item.id === '281949' || item.id === '233243') {
                 const idx = parsed.csdBilling.inventory.findIndex(i => i.id === item.id);
                 if (idx !== -1) parsed.csdBilling.inventory[idx] = JSON.parse(JSON.stringify(item));
               }
             });
 
-            // Ensure newly added transactions like iPhone 17 Pro Max bill are present and up to date
+            // Ensure iPad 281950 is always at index 0
+            const ipadIdx = parsed.csdBilling.inventory.findIndex(i => i.id === '281950');
+            if (ipadIdx > 0) {
+              const [ipad] = parsed.csdBilling.inventory.splice(ipadIdx, 1);
+              parsed.csdBilling.inventory.unshift(ipad);
+            }
+
+            // Ensure newly added transactions like iPad 10th Gen & iPhone 17 Pro Max bill are present and up to date
             const curTxnIds = new Set((parsed.csdBilling.transactions || []).map(t => t.id));
             (INITIAL_DATA.csdBilling.transactions || []).forEach(txn => {
               if (!curTxnIds.has(txn.id)) {
                 parsed.csdBilling.transactions.unshift(txn);
-              } else if (txn.id === 'CSD-TXN-2026-1015' || txn.id === 'CSD-TXN-2026-1002') {
+              } else if (txn.id === 'CSD-TXN-2026-1016' || txn.id === 'CSD-TXN-2026-1015' || txn.id === 'CSD-TXN-2026-1002') {
                 const idx = parsed.csdBilling.transactions.findIndex(t => t.id === txn.id);
                 if (idx !== -1) {
                   const existingDate = parsed.csdBilling.transactions[idx].date;
@@ -1797,6 +1918,13 @@ class StateManager {
                 }
               }
             });
+
+            // Ensure iPad transaction is always at index 0
+            const ipadTxnIdx = parsed.csdBilling.transactions.findIndex(t => t.id === 'CSD-TXN-2026-1016');
+            if (ipadTxnIdx > 0) {
+              const [ipadTxn] = parsed.csdBilling.transactions.splice(ipadTxnIdx, 1);
+              parsed.csdBilling.transactions.unshift(ipadTxn);
+            }
           }
 
           // Make Circulars Live
@@ -1883,6 +2011,36 @@ class StateManager {
       this.data = updater(this.data);
     } else {
       this.data = { ...this.data, ...updater };
+    }
+    // Guarantee iPad is never lost from csdBilling
+    if (this.data && this.data.csdBilling) {
+      if (!this.data.csdBilling.inventory || this.data.csdBilling.inventory.length === 0) {
+        this.data.csdBilling.inventory = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling.inventory));
+      } else {
+        const idx = this.data.csdBilling.inventory.findIndex(i => i.id === '281950');
+        if (idx === -1) {
+          const def = INITIAL_DATA.csdBilling.inventory.find(i => i.id === '281950');
+          if (def) this.data.csdBilling.inventory.unshift(JSON.parse(JSON.stringify(def)));
+        } else {
+          this.data.csdBilling.inventory[idx].price = 47500.00;
+          this.data.csdBilling.inventory[idx].color = 'SILVER';
+          if (idx > 0) {
+            const [ipad] = this.data.csdBilling.inventory.splice(idx, 1);
+            this.data.csdBilling.inventory.unshift(ipad);
+          }
+        }
+      }
+      if (!this.data.csdBilling.transactions || this.data.csdBilling.transactions.length === 0) {
+        this.data.csdBilling.transactions = JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling.transactions));
+      } else {
+        const tIdx = this.data.csdBilling.transactions.findIndex(t => t.id === 'CSD-TXN-2026-1016');
+        if (tIdx === -1 && INITIAL_DATA.csdBilling.transactions) {
+          this.data.csdBilling.transactions.unshift(JSON.parse(JSON.stringify(INITIAL_DATA.csdBilling.transactions[0])));
+        } else if (tIdx > 0) {
+          const [ipadTxn] = this.data.csdBilling.transactions.splice(tIdx, 1);
+          this.data.csdBilling.transactions.unshift(ipadTxn);
+        }
+      }
     }
     this.saveState();
     this.notify();

@@ -214,6 +214,30 @@ class DatabaseManager {
     // Core default inventory items to guarantee SQLite catalog completeness
     const DEFAULT_CATALOG = [
       {
+        id: '281950',
+        sku: '281950',
+        name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+        color: 'SILVER',
+        hsn: '84713010',
+        stock: 18,
+        price: 47500.00,
+        marketPrice: 59900.00,
+        unit: 'UNT',
+        gstRate: 18,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+        warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY',
+        specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+        serialNo: 'DMPY9028IPAD10',
+        imei1: 'N/A',
+        imei2: 'N/A',
+        batchNo: 'BAT-2026/10-DEL-IPAD',
+        afdCategory: 'AFD-II (DURABLES)'
+      },
+      {
         id: '281948',
         sku: '281948',
         name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
@@ -329,6 +353,69 @@ class DatabaseManager {
       { cardNo: 'GC99887766554433', rank: 'COLONEL', name: 'RAM SINGH', canteen: 'URC HQ DELHI AREA', pan: 'ABCDE1234F', grocLimit: 15000, liqLimit: 14, grocDrawn: 14500, liqDrawn: 12 }
     ];
     DEFAULT_OFFICERS.forEach(off => this.saveCsdOfficer(off));
+
+    // Default Apple iPad 10th Gen Silver Transaction
+    const DEFAULT_IPAD_TXN = {
+      id: 'CSD-TXN-2026-1016',
+      billNo: 'CSD/URC/DEL/2026/10/9850',
+      indentNo: 'IND-2026/10/9850',
+      date: '2026-10-15 16:45:10',
+      canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+      terminal: 'POS-01 / IP: 192.168.1.101',
+      cashier: 'Sub Maj R.K. Yadav',
+      manager: 'Sub Maj R.K. Yadav',
+      paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+      paymentType: 'CASH',
+      items: [
+        {
+          id: '281950',
+          sku: '281950',
+          name: 'APPLE IPAD 10TH GEN (10.9", WI-FI, 256GB) - SILVER',
+          category: 'Electronics',
+          brand: 'APPLE INC / APPLE INDIA PVT LTD',
+          model: 'A2696 / IPAD 10TH GEN (WI-FI, 256GB)',
+          color: 'SILVER',
+          hsn: '84713010',
+          qty: 1,
+          unit: 'UNT',
+          price: 47500.00,
+          marketPrice: 59900.00,
+          grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+          accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
+          warrantyExpires: '15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)',
+          specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
+          serialNo: 'DMPY9028IPAD10',
+          imei1: 'N/A',
+          imei2: 'N/A',
+          batchNo: 'BAT-2026/10-DEL-IPAD',
+          afdCategory: 'AFD-II (DURABLES)'
+        }
+      ],
+      totalTaxable: 40254.24,
+      totalCgst: 3622.88,
+      totalSgst: 3622.88,
+      totalNet: 47500.00,
+      totalSavings: 12400.00,
+      cardNo: 'LB08260547713500S01',
+      rank: 'ASO-I (Group A Gazetted)',
+      grocLimit: 50000,
+      grocDrawn: 2850,
+      liqLimit: 25,
+      liqDrawn: 2,
+      status: 'COMPLETED',
+      cashTendered: 47500.00,
+      cashChange: 0.00,
+      cashVoucherNo: 'CSD/CASH/DEL/2026/10/9850',
+      cashReceiptNo: 'RCPT-CSD-2026-9850'
+    };
+    this.saveCsdTransaction(DEFAULT_IPAD_TXN);
+
+    const existingIpadTxnIdx = state.csdBilling.transactions.findIndex(t => t.id === DEFAULT_IPAD_TXN.id);
+    if (existingIpadTxnIdx === -1) {
+      state.csdBilling.transactions.unshift(DEFAULT_IPAD_TXN);
+    } else {
+      state.csdBilling.transactions[existingIpadTxnIdx] = { ...state.csdBilling.transactions[existingIpadTxnIdx], ...DEFAULT_IPAD_TXN };
+    }
 
     // Default iPhone 17 Pro Max Transaction
     const DEFAULT_IPHONE17_TXN = {
@@ -456,7 +543,7 @@ class DatabaseManager {
 
   // --- CSD Inventory Methods ---
   getCsdInventory() {
-    const rows = this.db.prepare('SELECT * FROM csd_inventory ORDER BY price DESC').all();
+    const rows = this.db.prepare("SELECT * FROM csd_inventory ORDER BY CASE WHEN id = '281950' THEN 0 ELSE 1 END, price DESC").all();
     return rows.map(r => ({
       id: r.id,
       sku: r.sku || r.id,
@@ -551,7 +638,7 @@ class DatabaseManager {
 
   // --- CSD Transactions Methods ---
   getCsdTransactions() {
-    const rows = this.db.prepare('SELECT * FROM csd_transactions ORDER BY date DESC').all();
+    const rows = this.db.prepare("SELECT * FROM csd_transactions ORDER BY CASE WHEN id = 'CSD-TXN-2026-1016' THEN 0 ELSE 1 END, date DESC").all();
     return rows.map(r => {
       let items = [];
       try { items = JSON.parse(r.items_json); } catch {}
