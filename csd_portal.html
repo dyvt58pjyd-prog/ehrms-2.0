@@ -100,28 +100,140 @@
           <button class="btn-csd btn-primary" style="width: auto;" onclick="toggleAddProduct()">+ Add Product</button>
         </div>
         
-        <div class="content-card" id="card-add-product" style="display: none; margin-bottom: 24px; border-left: 4px solid var(--csd-blue);">
-          <h3>Add New Product</h3>
+        <div class="content-card" id="card-add-product" style="display: none; margin-bottom: 24px; border-left: 4px solid var(--csd-blue); background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
+            <div>
+              <h3 style="margin: 0; color: var(--csd-navy); font-size: 16px;">Add New CSD Inventory Product / Detailed POS Catalog Item</h3>
+              <p style="margin: 4px 0 0 0; font-size: 11.5px; color: #64748b;">All specifications, serial numbers, warranty, and tax fields entered below will be printed on the official A4 Dot Matrix Bill.</p>
+            </div>
+            <button type="button" class="btn-header" style="background:#0284c7; color:#fff; border:none; font-size:11px;" onclick="generatePortalSku()">🎲 Auto-Gen SKU</button>
+          </div>
+
           <form id="form-add-product">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="form-group"><label>Product Name</label><input type="text" id="prod-name" required></div>
-              <div class="form-group">
-                <label>Category</label>
+            <!-- Section 1: Core Identification -->
+            <div style="font-weight: 700; font-size: 12px; color: var(--csd-navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">1. Item Identification &amp; Classification</div>
+            <div style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>SKU / CSD Index No *</label>
+                <input type="text" id="prod-sku" placeholder="e.g. 233243" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Full Item Nomenclature *</label>
+                <input type="text" id="prod-name" placeholder="e.g. SAMSUNG GALAXY S25 5G (12/256GB)" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>CSD Category *</label>
                 <select id="prod-category" required>
-                  <option value="Groceries">Groceries</option>
                   <option value="Electronics">Electronics</option>
+                  <option value="Groceries">Groceries</option>
                   <option value="Liquor">Liquor</option>
                   <option value="Toiletries">Toiletries</option>
                   <option value="Automobiles">Automobiles</option>
                 </select>
               </div>
-              <div class="form-group"><label>HSN Code</label><input type="text" id="prod-hsn" required></div>
-              <div class="form-group"><label>Stock Level</label><input type="number" id="prod-stock" required min="1"></div>
-              <div class="form-group"><label>CSD Price (₹)</label><input type="number" id="prod-price" required step="0.01"></div>
-              <div class="form-group"><label>Market Price (₹)</label><input type="number" id="prod-market" required step="0.01"></div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>AFD Classification *</label>
+                <select id="prod-afd">
+                  <option value="AFD-II (DURABLES)">AFD-II (Durables)</option>
+                  <option value="AFD-I (VEHICLES)">AFD-I (Vehicles)</option>
+                  <option value="NON-AFD (GENERAL)">Non-AFD (General)</option>
+                </select>
+              </div>
             </div>
-            <button type="submit" class="btn-csd btn-primary" style="width: auto;">Save Product</button>
-            <button type="button" class="btn-csd" style="width: auto; background: transparent; color: var(--csd-gray);" onclick="toggleAddProduct()">Cancel</button>
+
+            <!-- Section 2: Technical Specs & Hardware Serial -->
+            <div style="font-weight: 700; font-size: 12px; color: var(--csd-navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">2. Brand, Hardware Identity &amp; Serialisation</div>
+            <div style="display: grid; grid-template-columns: 1.2fr 1.2fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Brand / Manufacturer</label>
+                <input type="text" id="prod-brand" placeholder="e.g. SAMSUNG ELECTRONICS INDIA">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Model / Variant</label>
+                <input type="text" id="prod-model" placeholder="e.g. SM-S931B/DS">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Color / Finish</label>
+                <input type="text" id="prod-color" placeholder="e.g. SILVER SHADOW">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Batch / Lot No</label>
+                <input type="text" id="prod-batch" placeholder="e.g. BAT-2026/08-DEL">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1.2fr 1.2fr; gap: 12px; margin-bottom: 14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Hardware Serial No (S/N)</label>
+                <input type="text" id="prod-serial" placeholder="e.g. R58N90X233243S">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Cellular Primary IMEI 1</label>
+                <input type="text" id="prod-imei1" placeholder="e.g. 358941/08/948210/6">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Cellular Secondary IMEI 2</label>
+                <input type="text" id="prod-imei2" placeholder="e.g. 358941/08/948211/4">
+              </div>
+            </div>
+
+            <!-- Section 3: Commercial & Tax Details -->
+            <div style="font-weight: 700; font-size: 12px; color: var(--csd-navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">3. Tax, Pricing &amp; Stock</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr 1.2fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>HSN / SAC Code *</label>
+                <input type="text" id="prod-hsn" placeholder="e.g. 85171300" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Unit of Measure *</label>
+                <select id="prod-unit">
+                  <option value="UNT">UNT (Unit)</option>
+                  <option value="PCS">PCS (Pieces)</option>
+                  <option value="PKT">PKT (Packet)</option>
+                  <option value="BTL">BTL (Bottle)</option>
+                  <option value="BOX">BOX (Box)</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>CSD Concessional Rate (₹) *</label>
+                <input type="number" id="prod-price" placeholder="54436.00" required step="0.01">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Civil Open Market MRP (₹) *</label>
+                <input type="number" id="prod-market" placeholder="80999.00" required step="0.01">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Stock Qty *</label>
+                <input type="number" id="prod-stock" value="10" required min="1">
+              </div>
+            </div>
+
+            <!-- Section 4: Packaging, Warranty & Detailed Specs -->
+            <div style="font-weight: 700; font-size: 12px; color: var(--csd-navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">4. Packaging, Warranty &amp; Hardware Specs</div>
+            <div style="display: grid; grid-template-columns: 1.2fr 1.8fr 1.5fr; gap: 12px; margin-bottom: 14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Box Grade / Condition</label>
+                <input type="text" id="prod-grade" placeholder="e.g. VERY GOOD (A) - BRAND BOX">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Included In-Box Accessories</label>
+                <input type="text" id="prod-accessories" placeholder="e.g. 65W TYPE-C CABLE, SIM PIN, MANUAL">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Warranty Terms</label>
+                <input type="text" id="prod-warranty" placeholder="e.g. 1 YEAR PAN-INDIA BRAND ONSITE">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label>Detailed Technical Specifications (Printed directly on A4 Dot Matrix Bill)</label>
+              <textarea id="prod-specs" rows="2" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11.5px;" placeholder="e.g. 15.75 CM (6.2&quot;) DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP CAMERA | 4000 MAH LI-ION"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button type="submit" class="btn-csd btn-primary" style="width: auto; padding: 10px 24px; font-size: 13px;">💾 Save Product to CSD Inventory</button>
+              <button type="button" class="btn-csd" style="width: auto; background: #e2e8f0; color: #334155; padding: 10px 18px; font-size: 13px;" onclick="toggleAddProduct()">Cancel</button>
+            </div>
           </form>
         </div>
         
@@ -290,127 +402,240 @@
     </div>
   </div>
 
-  <!-- Hidden Print Template (A4 Detailed Invoice) -->
+  <!-- A4 Continuous Dot Matrix Invoice Print Template (No Stamps, No Digital Signatures - Rule 54(2) CGST Rules) -->
   <div id="receipt-container">
-    <div class="invoice-header">
-      <img src="assets/csd_logo.png" alt="CSD Logo" class="invoice-logo">
-      <div class="invoice-title">
-        <h1>CANTEEN STORES DEPARTMENT</h1>
-        <h2>TAX INVOICE / RETAIL INVOICE</h2>
-        <p>Issued Under Authority of Ministry of Defence, Govt. of India</p>
-      </div>
-      <div class="invoice-qr" id="receipt-qr">Auth QR</div>
-    </div>
-    
-    <div class="invoice-meta-grid" style="grid-template-columns: 1fr 1fr 1fr; font-size: 8px; margin-bottom: 10px;">
-      <div class="meta-col">
-        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">URC & Terminal Details</h4>
-        <div><span>URC Name:</span> <span id="receipt-canteen-name"></span></div>
-        <div><span>CSD Index No:</span> <span id="receipt-csd-index"></span></div>
-        <div><span>Station HQ:</span> <span id="receipt-station-hq"></span></div>
-        <div><span>Supply Depot:</span> <span id="receipt-supply-depot"></span></div>
-        <div><span>GSTIN / TIN:</span> <span>07AAAGC0123D1Z5 / <span id="receipt-state-tin"></span></span></div>
-        <div><span>Tax Exempt No:</span> <span id="receipt-tax-exemption-no"></span></div>
-        <div><span>FMS ID / Fiscal:</span> <span id="receipt-fms-id"></span> / <span id="receipt-fiscal-year"></span></div>
-        <div><span>Terminal IP:</span> <span id="receipt-pos-terminal-ip"></span></div>
-        <div><span>Terminal MAC:</span> <span id="receipt-pos-mac"></span></div>
-      </div>
-      <div class="meta-col">
-        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">Transaction Details</h4>
-        <div><span>Bill / Indent No:</span> <span id="receipt-bill-no"></span> / <span id="receipt-indent-no"></span></div>
-        <div><span>Date & Time:</span> <span id="receipt-date"></span></div>
-        <div><span>Session ID:</span> <span id="receipt-session-id"></span></div>
-        <div><span>Software Ver:</span> <span id="receipt-software-version"></span></div>
-        <div><span>Audit Hash:</span> <span id="receipt-audit-hash"></span></div>
-        <div><span>Cashier ID:</span> <span id="receipt-cashier-name"></span></div>
-        <div><span>Manager Name:</span> <span id="receipt-manager-name"></span></div>
-        <div><span>Central TIN:</span> <span id="receipt-central-tin"></span></div>
-        <div><span>Barcode Data:</span> <span id="receipt-barcode-data"></span></div>
-      </div>
-      <div class="meta-col">
-        <h4 style="margin:0 0 4px 0; border-bottom:1px solid #000;">Smart Card Holder Profile</h4>
-        <div><span>Smart Card No:</span> <span id="receipt-cust-card"></span></div>
-        <div><span>Card Status/Exp:</span> <span id="receipt-card-status"></span> / <span id="receipt-card-expiry"></span></div>
-        <div><span>Rank & Name:</span> <span id="receipt-cust-name"></span></div>
-        <div><span>PAN / Blood:</span> <span id="receipt-cust-pan"></span> / <span id="receipt-cust-blood-group"></span></div>
-        <div><span>DOB / DDO:</span> <span id="receipt-cust-dob"></span> / <span>10501 (HQ)</span></div>
-        <div><span>Serving Status:</span> <span>SERVING ACTIVE</span></div>
-        <div><span>Dependents:</span> <span id="receipt-cust-dependents"></span></div>
-        <div><span>AFD Eligibility:</span> <span id="receipt-afd-status"></span></div>
-        <div><span>Last Purchase:</span> <span id="receipt-last-purchase"></span></div>
-      </div>
-    </div>
-    
-    <div class="info-box" style="padding: 5px;">
-      <h4 style="margin-bottom: 3px;">Monthly Entitlement / Quota Limits</h4>
-      <div class="info-grid">
-        <div><strong>Groceries Limit:</strong> <span id="receipt-quota-groc-limit"></span></div>
-        <div><strong>Groceries Drawn:</strong> <span id="receipt-quota-groc-drawn"></span></div>
-        <div><strong>Groceries Balance:</strong> <span id="receipt-quota-groc-bal"></span></div>
-        <div><strong>Liquor Limit:</strong> <span id="receipt-quota-liq-limit"></span></div>
-        <div><strong>Liquor Drawn:</strong> <span id="receipt-quota-liq-drawn"></span></div>
-        <div><strong>Liquor Balance:</strong> <span id="receipt-quota-liq-bal"></span></div>
-      </div>
-    </div>
-    
-    <table class="invoice-table">
-      <thead>
-        <tr>
-          <th style="width: 5%;">SNo</th>
-          <th style="width: 10%;">BCD/HSN</th>
-          <th class="text-left" style="width: 35%;">Item Nomenclature</th>
-          <th style="width: 8%;">Qty</th>
-          <th style="width: 10%;">Rate(₹)</th>
-          <th style="width: 12%;">Taxable Amt</th>
-          <th style="width: 10%;">CGST(%)</th>
-          <th style="width: 10%;">SGST(%)</th>
-        </tr>
-      </thead>
-      <tbody id="receipt-items-body"></tbody>
-    </table>
-    
-    <div style="overflow: hidden;">
-      <div class="tax-summary-box">
-        <h4 style="margin: 0 0 5px 0;">Tax Summary</h4>
-        <table class="invoice-table" style="margin-bottom: 10px;">
-          <tr><th>Tax %</th><th>Taxable</th><th>CGST</th><th>SGST</th></tr>
-          <tbody id="receipt-tax-summary-body"></tbody>
-        </table>
-        
-        <h4 style="margin: 0 0 5px 0;">Payment Details</h4>
-        <div style="font-size: 10px;">
-          <div><strong>Mode:</strong> <span id="receipt-pay-mode"></span></div>
-          <div><strong>Ref / Txn ID:</strong> <span id="receipt-pay-ref"></span></div>
-          <div><strong>Auth Code:</strong> <span id="receipt-pay-auth"></span></div>
-        </div>
-        
-        <h4 style="margin: 10px 0 5px 0;">Category Summary</h4>
-        <div style="font-size: 10px;" id="receipt-category-summary"></div>
-      </div>
+    <div class="sprocket-wrapper" style="position: relative; background: #fafaf3; border: 1px solid #cbd5e1; width: 100%; max-width: 210mm; min-height: 297mm; padding: 22px 34px; box-sizing: border-box; font-family: 'Roboto Mono', 'Courier New', monospace; color: #000;">
       
-      <div class="totals-box">
-        <div><span>Total Taxable Amount:</span> <span id="receipt-total-gross"></span></div>
-        <div><span>Total CGST:</span> <span id="receipt-total-cgst"></span></div>
-        <div><span>Total SGST:</span> <span id="receipt-total-sgst"></span></div>
-        <div class="grand-total"><span>NET PAYABLE:</span> <span id="receipt-total-net"></span></div>
-        <div style="font-size: 10px; margin-top: 5px;"><span>Amount in Words:</span> <span id="receipt-amount-words"></span></div>
+      <!-- Tractor feed sprocket holes (left & right) -->
+      <div class="sprocket-holes-left" style="position: absolute; top: 8px; bottom: 8px; width: 14px; left: 4px; border-right: 1px dashed #cbd5e1; display: flex; flex-direction: column; justify-content: space-between; align-items: center; opacity: 0.55;">
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
       </div>
-    </div>
+      <div class="sprocket-holes-right" style="position: absolute; top: 8px; bottom: 8px; width: 14px; right: 4px; border-left: 1px dashed #cbd5e1; display: flex; flex-direction: column; justify-content: space-between; align-items: center; opacity: 0.55;">
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+        <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
+      </div>
 
-    <div class="savings-banner">
-      🔥 YOU SAVED <span id="receipt-savings"></span> vs MARKET PRICE! 🔥
-    </div>
-    
-    <div class="signatures">
-      <div class="sig-line">Signature of Smart Card Holder</div>
-      <div class="sig-line">Auth Signatory / Cashier</div>
-    </div>
+      <div class="slip-content" style="font-size: 10.5px; line-height: 1.38; font-weight: 500; margin: 0 12px; color: #000000;">
+        <!-- Header -->
+        <div style="text-align: center; font-weight: 800; font-size: 13.5px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+        <div style="text-align: center; font-weight: 800; font-size: 16px; letter-spacing: 1px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+        <div style="text-align: center; font-weight: 800; font-size: 12.5px;">UNIT RUN CANTEEN (URC) &bull; <span id="receipt-canteen-name">HQ DELHI AREA (SENA BHAWAN)</span></div>
+        <div style="text-align: center; font-size: 9.5px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: <span id="receipt-state-tin">URC-DEL-0412</span></div>
+        <div style="text-align: center; font-size: 9px; color: #222;">DEPOT: <span id="receipt-supply-depot">DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT)</span> &bull; STATION: <span id="receipt-station-hq">HQ DELHI AREA (011)</span> &bull; REGIMENTAL CASH CHEST: RCC-01</div>
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="text-align: center; font-weight: 800; font-size: 12.5px; letter-spacing: 0.5px;">RETAIL TAX INVOICE / CASH MEMO &bull; OFFICIAL A4 DOT MATRIX BILL</div>
+        <div style="text-align: center; font-size: 9px; font-weight: 700;">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        
+        <!-- Metadata 2 Columns -->
+        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px;">
+          <div>
+            <div style="display: flex; justify-content: space-between;"><span>BILL NUMBER   :</span> <strong id="receipt-bill-no">CSD/URC/DEL/2026/10/9482</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>INDENT REF    :</span> <span id="receipt-indent-no">IND-2026/10/9482</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>BILL DATE/TIME:</span> <strong id="receipt-date">2026-10-02 18:45:10</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>POS TERMINAL  :</span> <span>POS-01 / IP: <span id="receipt-pos-terminal-ip">192.168.1.101</span></span></div>
+            <div style="display: flex; justify-content: space-between;"><span>CASHIER REG   :</span> <span id="receipt-cashier-name">Sub Maj R.K. Yadav</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>CASH VOUCHER  :</span> <strong id="receipt-cash-voucher">CSD/CASH/DEL/2026/10/9482</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>PAYMENT METHOD:</span> <strong>*** HARD CURRENCY CASH ONLY ***</strong></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between;"><span>SMART CARD NO :</span> <strong id="receipt-cust-card">LB08260547713500S01</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>CARD HOLDER   :</span> <strong id="receipt-cust-name">ANURAG ANIL BAWASKAR</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>RANK / DESIG  :</span> <span id="receipt-cust-rank">ADDITIONAL SECTION OFFICER - I</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>CADRE / GROUP :</span> <span>GROUP 'A' GAZETTED / LEVEL 7</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>DDO CODE / PAO:</span> <span>10501 (DEFENCE FINANCE - CGDA)</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>PAN / PRAN    :</span> <span><span id="receipt-cust-pan">EYUPB3666M</span> / 110194810244</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>CSD CHIP AUTH :</span> <span>CHIP PIN &amp; BIOMETRIC VERIFIED</span></div>
+          </div>
+        </div>
 
-    <div class="invoice-footer">
-      <div style="text-align: center; font-size: 8px; margin-bottom: 5px;">Canteen Timings: <span id="receipt-canteen-timings">0900 hrs to 1700 hrs</span> | CSD Helpline: 1800-273-4357</div>
-      <p><strong>Declaration:</strong> Goods sold under CSD quota are strictly for personal consumption of authorized personnel and their dependents. Resale is a punishable offense under law. Goods once sold will not be exchanged or taken back unless defective (within 7 days of purchase). Warranty on electronics is subject to original manufacturer terms.</p>
-      <p>System Generated Invoice &bull; e-HRMS 2.0 Integration &bull; Security Hash: <span id="receipt-qr-hash"></span> &bull; Thank you for your service to the Nation.</p>
-      <p style="text-align: center; margin-top: 10px;">--- END OF INVOICE ---</p>
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">------------------------------------------------------------------------------------------------------------------------</div>
+        <div style="font-size: 9px; line-height: 1.35;">
+          <strong>ENTITLEMENT QUOTA (OCT 2026):</strong> GROCERY LIMIT: <span id="receipt-quota-groc-limit">₹50,000</span> | DRAWN: <span id="receipt-quota-groc-drawn">₹2,850</span> | REMAINING: <span id="receipt-quota-groc-bal">₹47,150</span><br>
+          LIQUOR LIMIT: <span id="receipt-quota-liq-limit">25</span> UNITS | DRAWN: <span id="receipt-quota-liq-drawn">2</span> UNITS | REMAINING: <span id="receipt-quota-liq-bal">23</span> UNITS | AFD ELIGIBILITY: <strong id="receipt-afd-status">AUTHORIZED (TIER-1 OFFICER)</strong>
+        </div>
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">------------------------------------------------------------------------------------------------------------------------</div>
+
+        <!-- Itemized Particulars -->
+        <div style="font-weight: 800; font-size: 11px; margin-bottom: 2px;">ITEMIZED PARTICULARS &amp; DETAILED SPECIFICATIONS:</div>
+        <table class="invoice-table" style="width: 100%; border-collapse: collapse; font-family: 'Roboto Mono', 'Courier New', monospace; font-size: 10px; margin: 4px 0;">
+          <thead>
+            <tr>
+              <th style="width: 4%; text-align: center; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">SNO</th>
+              <th style="width: 14%; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">INDEX / HSN</th>
+              <th style="width: 43%; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9; text-align: left;">ITEM NOMENCLATURE &amp; TECHNICAL SPECIFICATIONS</th>
+              <th style="width: 7%; text-align: center; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">QTY</th>
+              <th style="width: 10%; text-align: right; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">RATE (₹)</th>
+              <th style="width: 10%; text-align: right; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">TAXABLE</th>
+              <th style="width: 12%; text-align: right; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; background: #f1f5f9;">NET AMT (₹)</th>
+            </tr>
+          </thead>
+          <tbody id="receipt-items-body"></tbody>
+        </table>
+
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        
+        <!-- Tax Matrix & Financial Totals -->
+        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; align-items: start;">
+          <div>
+            <div style="font-weight: 800; font-size: 9.5px; margin-bottom: 2px;">STATUTORY GST COMPUTATION MATRIX:</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; font-family: monospace;">
+              <tr style="border-bottom: 1px solid #000; font-weight: 700;">
+                <th style="text-align: left; padding: 2px 0;">TAX HEAD</th>
+                <th style="padding: 2px 4px; text-align: center;">RATE</th>
+                <th style="padding: 2px 4px; text-align: right;">ASSESSABLE BASE</th>
+                <th style="padding: 2px 0; text-align: right;">TAX COLLECTED</th>
+              </tr>
+              <tr>
+                <td style="padding: 2px 0;">Central GST (CGST)</td>
+                <td style="padding: 2px 4px; text-align: center;">9.00%</td>
+                <td style="padding: 2px 4px; text-align: right;" id="receipt-tax-base-cgst">₹0.00</td>
+                <td style="padding: 2px 0; text-align: right; font-weight: 700;" id="receipt-total-cgst">₹0.00</td>
+              </tr>
+              <tr>
+                <td style="padding: 2px 0;">State GST (SGST - Delhi)</td>
+                <td style="padding: 2px 4px; text-align: center;">9.00%</td>
+                <td style="padding: 2px 4px; text-align: right;" id="receipt-tax-base-sgst">₹0.00</td>
+                <td style="padding: 2px 0; text-align: right; font-weight: 700;" id="receipt-total-sgst">₹0.00</td>
+              </tr>
+              <tr style="border-top: 1px solid #000; font-weight: 800;">
+                <td style="padding: 2px 0;">COMPOSITE GST TOTAL</td>
+                <td style="padding: 2px 4px; text-align: center;">18.00%</td>
+                <td style="padding: 2px 4px; text-align: right;" id="receipt-total-gross">₹0.00</td>
+                <td style="padding: 2px 0; text-align: right;" id="receipt-total-gst">₹0.00</td>
+              </tr>
+            </table>
+            <div style="font-size: 7.5px; margin-top: 3px; color: #444;">
+              Tax collected under reverse charge mechanism applicable to MoD CSD Unit Run Canteens under Section 9(3) CGST Act 2017.
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between;"><span>CIVIL OPEN MARKET MRP TOTAL :</span> <span style="text-decoration: line-through;" id="receipt-market-total">₹ 0.00</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>ASSESSABLE TAXABLE VALUE    :</span> <span id="receipt-summary-taxable">₹ 0.00</span></div>
+            <div style="display: flex; justify-content: space-between;"><span>COMPOSITE TAXES (CGST+SGST) :</span> <span id="receipt-summary-taxes">₹ 0.00</span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 800; color: #166534;"><span>TOTAL DEFENCE CONCESSION    :</span> <span>- <span id="receipt-savings">₹ 0.00</span></span></div>
+            <div style="margin: 2px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">----------------------------------------------------------------------------------------</div>
+            <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 13px;">
+              <span>NET AMOUNT PAYABLE :</span>
+              <span id="receipt-total-net">₹ 0.00</span>
+            </div>
+            <div style="font-weight: 800; font-size: 8.5px; color: #166534; margin-top: 2px;" id="receipt-amount-words">
+              RUPEES ZERO ONLY
+            </div>
+          </div>
+        </div>
+
+        <!-- Physical Cash Tendered & Denomination Breakdown -->
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="font-weight: 800; font-size: 9.5px;">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
+        <div style="display: flex; justify-content: space-between; font-size: 9px; margin-top: 2px;">
+          <span>PAYMENT METHOD: <strong>HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)</strong></span>
+          <span>STATUS: <strong>PAID IN FULL &bull; CASH CLEARED</strong></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 8.5px; margin-top: 2px;">
+          <span>CASH TENDERED AT POS-01 : <strong style="font-size: 9.5px;" id="receipt-cash-tendered">₹ 0.00</strong></span>
+          <span>CHANGE DUE / RETURNED : <strong>₹ 0.00</strong></span>
+          <span>TREASURY VOUCHER : <strong style="font-family: monospace;" id="receipt-cash-voucher-sub">CSD/CASH/DEL/2026/10/9482</strong></span>
+        </div>
+
+        <div style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 8px; margin-top: 4px; font-size: 8.5px;">
+          <div style="font-weight: 800; margin-bottom: 2px; font-size: 8px;">PHYSICAL CASH CURRENCY DENOMINATIONS DEPOSITED INTO URC REGIMENTAL CASH CHEST:</div>
+          <div id="receipt-denominations-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 10px; font-family: monospace; font-size: 8px;"></div>
+          <div style="font-size: 7.5px; color: #555; margin-top: 3px; border-top: 1px dotted #999; padding-top: 2px;">
+            Counted, certified and secured in safe by Sub Maj R.K. Yadav (Custodian of Regimental Cash, URC HQ Delhi Area, Sena Bhawan).
+          </div>
+        </div>
+
+        <!-- COMPUTER-GENERATED NOTICE (NO PHYSICAL STAMPS OR DIGITAL SIGNATURES AS REQUESTED) -->
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="border: 1.5px dashed #000; background: #fbfbf6; padding: 8px 12px; margin: 7px 0; text-align: center; font-size: 9px; line-height: 1.35;">
+          <div style="font-weight: 800; font-size: 10px; letter-spacing: 0.5px;">
+            *** THIS IS A COMPUTER-GENERATED TAX INVOICE &amp; CASH MEMO &bull; REQUIRES NO PHYSICAL SIGNATURE OR STAMP ***
+          </div>
+          <div style="font-size: 8px; line-height: 1.4; color: #222; margin-top: 3px;">
+            Issued in strict terms of Proviso to Rule 54(2) of Central Goods and Services Tax Rules, 2017 &amp; MoD CSD Directive No. 41.<br>
+            Electronically authenticated via Unit Run Canteen POS Terminal <strong>POS-01 (URC Sena Bhawan)</strong> &bull; <strong>NO PHYSICAL SIGNATURE OR STAMP REQUIRED</strong>.<br>
+            <strong>SYSTEM AUDIT LOG:</strong> CR-DEL-04 / NODE-8104 / GENERATED AT: <span id="receipt-audit-timestamp">2026-10-02 18:45:10</span> &bull; <strong>REGIMENTAL CHEST REF:</strong> RCC-DEL-01<br>
+            <strong>CRYPTOGRAPHIC AUDIT CHECKSUM:</strong> <span id="receipt-audit-hash">SHA256-4B81A09E-D882-41CF-99E1-00481EF092A1</span> &bull; <strong>CASH DRAWER ID:</strong> CR-88319-X
+          </div>
+        </div>
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+
+        <div style="font-size: 7.5px; color: #333; line-height: 1.35; text-align: justify;">
+          <strong>Statutory Directive under Essential Commodities Act &amp; MoD Regulations:</strong> Goods sold under CSD quota are strictly for the bonafide personal consumption of authorized defence civilian personnel and their verified family dependents. Commercial resale or unauthorized transfer of CSD goods is a severe cognizable offense under Section 7 of the Essential Commodities Act, 1955 and Service Conduct Rules. Warranty valid through authorized brand service centres nationwide.
+        </div>
+
+        <div style="font-family: 'Courier New', monospace; letter-spacing: 5px; font-size: 22px; font-weight: 900; text-align: center; margin: 6px 0 2px 0;">|| ||| |||| | ||||| ||</div>
+        <div style="text-align: center; font-weight: 800; font-size: 9px; font-family: monospace;">*CSD-<span id="receipt-barcode-code">BILL-9482</span>-CASH*</div>
+
+        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700; text-align: center;">- - - - - - - - - - - - - - - - - - - - TEAR OFF SLIP / COUNTERFOIL - - - - - - - - - - - - - - - - - - - -</div>
+        <div style="text-align: center; font-weight: 800; font-size: 9px; margin-top: 2px;">
+          THANK YOU FOR SERVING THE NATION &bull; JAI HIND
+        </div>
+      </div>
+
     </div>
   </div>
 

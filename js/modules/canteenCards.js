@@ -6,8 +6,8 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast } from '../downloader.js';
-import { CSD_LOGO_B64, EMBLEM_B64, MOD_STAMP_B64 } from '../csd_assets.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml } from '../downloader.js';
+import { CSD_LOGO_B64, EMBLEM_B64 } from '../csd_assets.js';
 
 // Module-level interactive state
 let currentTab = 'cards';
@@ -167,10 +167,10 @@ export function renderCanteenCards(container, initialTab = null) {
             </div>
             <div style="display: flex; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 2px; gap: 2px;">
               <button id="btn-modal-tab-a4" class="btn btn-xs" style="font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 3px; background: #ffffff; color: #002b49; cursor: pointer; border: none;">
-                📑 Roboto A4 Invoice
+                📑 A4 Dot Matrix Bill
               </button>
               <button id="btn-modal-tab-slip" class="btn btn-xs" style="font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 3px; background: transparent; color: #ffffff; cursor: pointer; border: none;">
-                📟 Dot Matrix Slip
+                📟 Continuous Slip
               </button>
             </div>
           </div>
@@ -190,10 +190,10 @@ export function renderCanteenCards(container, initialTab = null) {
               🖨️ Print
             </button>
             <button id="btn-modal-dl-a4" class="btn btn-sm btn-primary" style="background: #2563eb; border-color: #1d4ed8; color: white; font-weight: 700; padding: 4px 10px; font-size: 11px;">
-              📥 A4 PDF
+              📥 A4 Bill
             </button>
             <button id="btn-modal-dl-slip" class="btn btn-sm btn-success" style="background: #16a34a; border-color: #15803d; color: white; font-weight: 700; padding: 4px 10px; font-size: 11px;">
-              📟 Dot Matrix
+              📟 POS Slip
             </button>
             <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
               &times;
@@ -202,7 +202,178 @@ export function renderCanteenCards(container, initialTab = null) {
         </div>
 
         <!-- Render Content -->
-        <div id="csd-modal-invoice-content" style="padding: 20px;"></div>
+        <div id="csd-modal-invoice-content" style="padding: 10px;"></div>
+      </div>
+    </div>
+
+    <!-- Add New Item / Custom Bill Item Modal with Comprehensive Specifications -->
+    <div id="csd-add-item-modal" class="parichay-modal-overlay" style="display: none; z-index: 10006; background: rgba(15, 23, 42, 0.88); position: fixed; inset: 0; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;">
+      <div style="background: #ffffff; border-radius: 8px; width: 100%; max-width: 860px; max-height: 92vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; border: 1.5px solid #002b49;">
+        
+        <!-- Header -->
+        <div style="background: #002b49; color: white; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; border-bottom: 2.5px solid #16a34a;">
+          <div>
+            <div style="font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+              <span>➕</span> Add Item to CSD Inventory &amp; Bill (Extended Specifications)
+            </div>
+            <div style="font-size: 11px; color: #cbd5e1; margin-top: 2px;">
+              Fill complete defence inventory nomenclature, brand, model, serial no, IMEI, hardware specifications, and concessional pricing.
+            </div>
+          </div>
+          <button id="btn-close-add-item-modal" style="background: transparent; border: none; color: white; font-size: 24px; cursor: pointer; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+
+        <!-- Form -->
+        <form id="form-csd-add-item" style="padding: 20px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">PRODUCT NOMENCLATURE &amp; EXTENDED TITLE *</label>
+              <input type="text" id="new-item-name" required placeholder="e.g. APPLE IPHONE 16 PRO MAX 256GB - DESERT TITANIUM" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12.5px; font-weight: 600; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">CSD INDEX NO / SKU *</label>
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="new-item-sku" placeholder="Auto / e.g. 294812" style="flex: 1; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; font-weight: 700; box-sizing: border-box;">
+                <button type="button" id="btn-gen-sku" class="btn btn-xs btn-outline" style="font-weight: 700; font-size: 10px; padding: 4px 8px;">🎲 Gen</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">CATEGORY</label>
+              <select id="new-item-category" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+                <option value="Electronics" selected>Electronics</option>
+                <option value="Groceries">Groceries</option>
+                <option value="Liquor">Liquor</option>
+                <option value="Toiletries">Toiletries</option>
+                <option value="Automobiles">Automobiles / AFD</option>
+                <option value="General Durables">General Durables / White Goods</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">AFD CLASSIFICATION</label>
+              <select id="new-item-afd" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+                <option value="Non-AFD (General Stores)">Non-AFD (General Stores)</option>
+                <option value="AFD-II (Electronics / Two-Wheelers)" selected>AFD-II (Electronics / Two-Wheelers)</option>
+                <option value="AFD-I (Four-Wheelers / Cars)">AFD-I (Four-Wheelers / Cars)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">UNIT OF MEASURE (UOM)</label>
+              <select id="new-item-unit" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+                <option value="Unit" selected>Unit / Nos</option>
+                <option value="Pack">Pack</option>
+                <option value="Bottle">Bottle</option>
+                <option value="Tin">Tin</option>
+                <option value="Bag">Bag</option>
+                <option value="Box">Box</option>
+                <option value="Kg">Kg</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">BRAND / MANUFACTURER</label>
+              <input type="text" id="new-item-brand" placeholder="e.g. Apple Inc. / Foxconn" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">MODEL / VARIANT</label>
+              <input type="text" id="new-item-model" placeholder="e.g. A3296 (256GB)" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">COLOR / FINISH</label>
+              <input type="text" id="new-item-color" placeholder="e.g. Desert Titanium" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">BATCH / LOT NO</label>
+              <input type="text" id="new-item-batch" placeholder="e.g. BAT-2026/09-DEL" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">SERIAL NUMBER (S/N)</label>
+              <input type="text" id="new-item-serial" placeholder="e.g. F2LW8990PQ19" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">HSN / SAC CODE *</label>
+              <input type="text" id="new-item-hsn" required value="85171300" placeholder="e.g. 85171300" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">IMEI 1 (MOBILE/DURABLE)</label>
+              <input type="text" id="new-item-imei1" placeholder="e.g. 359871/10/884210/1" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">IMEI 2 (MOBILE/DURABLE)</label>
+              <input type="text" id="new-item-imei2" placeholder="e.g. 359871/10/884211/9" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">STOCK INVENTORY QTY</label>
+              <input type="number" id="new-item-stock" value="10" min="1" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 700; box-sizing: border-box;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #b91c1c; display: block; margin-bottom: 4px;">CIVIL OPEN MARKET MRP (₹) *</label>
+              <input type="number" id="new-item-market" step="0.01" required placeholder="144900.00" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 13px; font-weight: 700; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #166534; display: block; margin-bottom: 4px;">CSD CONCESSIONAL RATE (₹) *</label>
+              <input type="number" id="new-item-price" step="0.01" required placeholder="118500.00" style="width: 100%; padding: 8px 10px; border: 1.5px solid #16a34a; border-radius: 4px; font-size: 13px; font-weight: 800; color: #166534; font-family: monospace; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">GST RATE SLAB</label>
+              <select id="new-item-gstrate" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 700; box-sizing: border-box;">
+                <option value="18" selected>18% (9% CGST + 9% SGST)</option>
+                <option value="12">12% (6% CGST + 6% SGST)</option>
+                <option value="28">28% (14% CGST + 14% SGST)</option>
+                <option value="5">5% (2.5% CGST + 2.5% SGST)</option>
+                <option value="0">0% (GST Exempted)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">PACKAGE GRADE / BOX</label>
+              <input type="text" id="new-item-grade" value="Brand New Sealed Box (Grade A)" placeholder="e.g. Brand New Sealed Box" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">INCLUDED ACCESSORIES</label>
+              <input type="text" id="new-item-accessories" value="All Original Accessories Included" placeholder="e.g. 65W GaN Charger, Type-C Cable" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">WARRANTY PERIOD &amp; TERMS</label>
+              <input type="text" id="new-item-warranty" value="1 Year Official Brand Warranty Pan-India" placeholder="e.g. 1 Year Official Brand Warranty" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">DETAILED HARDWARE &amp; TECHNICAL SPECIFICATIONS (APPEARS ON A4 BILL)</label>
+            <textarea id="new-item-specs" rows="3" placeholder="e.g. 6.9 inch Super Retina XDR OLED 120Hz ProMotion | A18 Pro 3nm Bionic Chip | 48MP Fusion + 48MP Ultra Wide + 12MP 5x Telephoto | Titanium Frame | 4685 mAh Battery | Ceramic Shield" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box; resize: vertical;"></textarea>
+          </div>
+
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="new-item-add-cart" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="new-item-add-cart" style="font-size: 12.5px; font-weight: 700; color: #166534; cursor: pointer;">
+              🛒 Add directly to current active POS bill / cart immediately upon saving
+            </label>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" id="btn-cancel-add-item" class="btn btn-outline" style="font-weight: 700; padding: 10px 18px;">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="background: #16a34a; border-color: #15803d; font-weight: 800; padding: 10px 22px; font-size: 13px; color: white;">
+              💾 Save &amp; Add to CSD Inventory
+            </button>
+          </div>
+        </form>
+
       </div>
     </div>
   `;
@@ -228,6 +399,108 @@ export function renderCanteenCards(container, initialTab = null) {
   const invoiceModal = container.querySelector('#csd-invoice-modal');
   container.querySelector('#btn-close-invoice-modal')?.addEventListener('click', () => {
     invoiceModal.style.display = 'none';
+  });
+
+  // Add Item Modal Bindings
+  const addItemModal = container.querySelector('#csd-add-item-modal');
+  container.querySelector('#btn-close-add-item-modal')?.addEventListener('click', () => {
+    if (addItemModal) addItemModal.style.display = 'none';
+  });
+  container.querySelector('#btn-cancel-add-item')?.addEventListener('click', () => {
+    if (addItemModal) addItemModal.style.display = 'none';
+  });
+  container.querySelector('#btn-gen-sku')?.addEventListener('click', () => {
+    if (addItemModal) {
+      addItemModal.querySelector('#new-item-sku').value = String(Math.floor(100000 + Math.random() * 900000));
+    }
+  });
+
+  container.querySelector('#form-csd-add-item')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!addItemModal) return;
+
+    const name = addItemModal.querySelector('#new-item-name').value.trim();
+    const sku = addItemModal.querySelector('#new-item-sku').value.trim() || String(Math.floor(100000 + Math.random() * 900000));
+    const category = addItemModal.querySelector('#new-item-category').value;
+    const afdCategory = addItemModal.querySelector('#new-item-afd').value;
+    const unit = addItemModal.querySelector('#new-item-unit').value;
+    const brand = addItemModal.querySelector('#new-item-brand').value.trim();
+    const model = addItemModal.querySelector('#new-item-model').value.trim();
+    const color = addItemModal.querySelector('#new-item-color').value.trim();
+    const batchNo = addItemModal.querySelector('#new-item-batch').value.trim() || `BAT-${new Date().getFullYear()}/${String(new Date().getMonth() + 1).padStart(2, '0')}-DEL`;
+    const serialNo = addItemModal.querySelector('#new-item-serial').value.trim() || 'N/A';
+    const imei1 = addItemModal.querySelector('#new-item-imei1').value.trim() || 'N/A';
+    const imei2 = addItemModal.querySelector('#new-item-imei2').value.trim() || 'N/A';
+    const hsn = addItemModal.querySelector('#new-item-hsn').value.trim() || '85171300';
+    const marketPrice = parseFloat(addItemModal.querySelector('#new-item-market').value) || 0;
+    const price = parseFloat(addItemModal.querySelector('#new-item-price').value) || 0;
+    const gstRate = parseFloat(addItemModal.querySelector('#new-item-gstrate').value) || 18;
+    const stock = parseInt(addItemModal.querySelector('#new-item-stock').value) || 10;
+    const grade = addItemModal.querySelector('#new-item-grade').value.trim() || 'Brand New Sealed Box (Grade A)';
+    const accessories = addItemModal.querySelector('#new-item-accessories').value.trim() || 'All Original Accessories Included';
+    const warrantyExpires = addItemModal.querySelector('#new-item-warranty').value.trim() || '1 Year Official Brand Warranty Pan-India';
+    const specs = addItemModal.querySelector('#new-item-specs').value.trim();
+    const addToCart = addItemModal.querySelector('#new-item-add-cart').checked;
+
+    const newItem = {
+      id: sku,
+      sku: sku,
+      name,
+      category,
+      afdCategory,
+      unit,
+      brand,
+      model,
+      color,
+      batchNo,
+      serialNo,
+      imei1,
+      imei2,
+      hsn,
+      marketPrice: marketPrice || (price * 1.25),
+      price,
+      gstRate,
+      stock,
+      grade,
+      brandBox: grade,
+      accessories,
+      warrantyExpires,
+      specs
+    };
+
+    // Update store state inventory
+    store.set(s => {
+      const curInv = (s.csdBilling && s.csdBilling.inventory) || [];
+      return {
+        ...s,
+        csdBilling: {
+          ...s.csdBilling,
+          inventory: [newItem, ...curInv]
+        }
+      };
+    });
+
+    if (addToCart) {
+      const ex = cart.find(c => c.id === newItem.id);
+      if (ex) {
+        ex.qty += 1;
+      } else {
+        cart.unshift({ ...newItem, qty: 1 });
+      }
+    }
+
+    showDownloadToast(`✓ Item "${newItem.name}" added to CSD inventory & bill!`);
+    addItemModal.style.display = 'none';
+
+    // Reset form
+    addItemModal.querySelector('#form-csd-add-item').reset();
+    addItemModal.querySelector('#new-item-add-cart').checked = true;
+
+    // Re-render POS tab if active
+    if (currentTab === 'pos') {
+      const tabContainer = container.querySelector('#csd-tab-container');
+      if (tabContainer) renderPosTab(tabContainer);
+    }
   });
 
   container.querySelector('#btn-modal-print-invoice')?.addEventListener('click', () => {
@@ -485,10 +758,13 @@ export function renderCanteenCards(container, initialTab = null) {
         <!-- Left: Catalog & Filters -->
         <div>
           <!-- Search & Filter Header -->
-          <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
-            <div style="display: flex; gap: 12px; margin-bottom: 14px;">
-              <input type="text" id="csd-pos-search" placeholder="🔍 Search by product name, barcode (BCD), or HSN..." value="${searchQuery}" style="flex: 1; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none;">
+          <div style="background: white; border: 1.5px solid #002b49; border-radius: 8px; padding: 16px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <div style="display: flex; gap: 12px; margin-bottom: 14px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="csd-pos-search" placeholder="🔍 Search by product name, barcode (BCD), HSN, or Brand..." value="${searchQuery}" style="flex: 1; min-width: 260px; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none;">
               <button class="btn btn-sm btn-outline" id="btn-clear-pos-search" style="font-weight: 600;">Clear</button>
+              <button class="btn btn-sm" id="btn-open-add-item-modal" style="background: #16a34a; border: 1px solid #15803d; color: white; font-weight: 800; padding: 10px 16px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(22,163,74,0.3); white-space: nowrap;">
+                <span>➕</span> Add Item to CSD / Custom Bill Item
+              </button>
             </div>
 
             <!-- Categories -->
@@ -505,7 +781,7 @@ export function renderCanteenCards(container, initialTab = null) {
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;">
             ${filteredItems.length === 0 ? `
               <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #64748b; background: white; border-radius: 8px; border: 1px dashed #cbd5e1;">
-                No items match your search criteria. Try a different category or search term.
+                No items match your search criteria. Click "Add Item to CSD" above to add new items.
               </div>
             ` : filteredItems.map(it => {
               const saveVal = (it.marketPrice || it.price * 1.15) - it.price;
@@ -515,18 +791,29 @@ export function renderCanteenCards(container, initialTab = null) {
                   <div>
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                       <span style="font-size: 10.5px; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 10px;">
-                        ${it.category}
+                        ${it.category} ${it.afdCategory && it.afdCategory.includes('AFD') ? '&bull; ' + it.afdCategory.split(' ')[0] : ''}
                       </span>
                       <span style="font-size: 10px; font-family: monospace; color: #64748b;">
-                        HSN: ${it.hsn}
+                        HSN: ${it.hsn || '8517'}
                       </span>
                     </div>
-                    <div style="font-size: 13.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px; line-height: 1.35;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0f172a; margin-bottom: 4px; line-height: 1.35;">
                       ${it.name}
                     </div>
-                    <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">
-                      BCD: <span style="font-family: monospace;">${it.id}</span> &bull; Stock: <strong>${it.stock}</strong>
+                    ${(it.brand || it.model || it.color) ? `
+                      <div style="font-size: 11px; color: #0369a1; font-weight: 600; margin-bottom: 4px;">
+                        ${it.brand ? it.brand : ''} ${it.model ? '&bull; ' + it.model : ''} ${it.color ? '&bull; ' + it.color : ''}
+                      </div>
+                    ` : ''}
+                    <div style="font-size: 10.5px; color: #64748b; margin-bottom: 6px;">
+                      BCD: <span style="font-family: monospace; font-weight: 700;">${it.id}</span> &bull; Stock: <strong>${it.stock || 10}</strong>
+                      ${it.serialNo && it.serialNo !== 'N/A' ? `&bull; S/N: <span style="font-family: monospace;">${it.serialNo}</span>` : ''}
                     </div>
+                    ${it.specs ? `
+                      <div style="font-size: 10px; color: #475569; margin-bottom: 10px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${it.specs}">
+                        ${it.specs}
+                      </div>
+                    ` : ''}
                   </div>
 
                   <div>
@@ -534,7 +821,7 @@ export function renderCanteenCards(container, initialTab = null) {
                       <span style="font-size: 18px; font-weight: 900; color: #002b49;">₹${it.price.toFixed(2)}</span>
                       <del style="font-size: 12px; color: #94a3b8;">₹${(it.marketPrice || it.price * 1.15).toFixed(2)}</del>
                     </div>
-                    <div style="font-size: 11px; font-weight: 700; color: #16a34a; margin-bottom: 12px;">
+                    <div style="font-size: 11px; font-weight: 700; color: #166534; margin-bottom: 12px;">
                       Save ₹${saveVal.toFixed(2)} (${Math.round((saveVal / (it.marketPrice || it.price * 1.15)) * 100)}% Off)
                     </div>
 
@@ -676,6 +963,14 @@ export function renderCanteenCards(container, initialTab = null) {
     tabContainer.querySelector('#btn-clear-pos-search')?.addEventListener('click', () => {
       searchQuery = '';
       renderPosTab(tabContainer);
+    });
+
+    tabContainer.querySelector('#btn-open-add-item-modal')?.addEventListener('click', () => {
+      const addModal = container.querySelector('#csd-add-item-modal');
+      if (addModal) {
+        addModal.querySelector('#new-item-sku').value = String(Math.floor(100000 + Math.random() * 900000));
+        addModal.style.display = 'flex';
+      }
     });
 
     tabContainer.querySelectorAll('.csd-cat-pill').forEach(btn => {
@@ -1335,412 +1630,20 @@ export function renderCanteenCards(container, initialTab = null) {
     if (!content || !activeModalTxn) return;
 
     const txn = activeModalTxn;
-    const items = txn.items || [];
-    
-    let totalGross = 0;
-    let totalCgst = 0;
-    let totalSgst = 0;
-    let totalNet = 0;
-    let totalMarket = 0;
+    const docTitle = activeModalView === 'a4' 
+      ? 'RETAIL TAX INVOICE / CASH MEMO &bull; OFFICIAL A4 DOT MATRIX BILL' 
+      : 'RETAIL TAX INVOICE &bull; CONTINUOUS DOT MATRIX POS REGISTER';
+    const fullHtml = generateA4DotMatrixBillHtml(user, txn, docTitle);
 
-    items.forEach(it => {
-      const qty = it.qty || 1;
-      const price = it.price || 0;
-      const market = it.marketPrice || (price * 1.15);
-      const netVal = price * qty;
-      const taxable = netVal / 1.18;
-      const cgst = taxable * 0.09;
-      const sgst = taxable * 0.09;
-      totalGross += taxable;
-      totalCgst += cgst;
-      totalSgst += sgst;
-      totalNet += netVal;
-      totalMarket += (market * qty);
-    });
+    const parser = new DOMParser();
+    const parsedDoc = parser.parseFromString(fullHtml, 'text/html');
+    const styleTag = parsedDoc.querySelector('style');
+    const sprocketWrapper = parsedDoc.querySelector('.sprocket-wrapper');
 
-    const savings = Math.max(0, totalMarket - totalNet);
-    const roundedNet = Math.round(totalNet);
-
-    if (activeModalView === 'a4') {
-      // ---------------------------------------------------------
-      // VIEW MODE 1: OFFICIAL STATUTORY A4 TAX MEMO (ROBOTO)
-      // ---------------------------------------------------------
-      const rows = items.map((it, idx) => {
-        const qty = it.qty || 1;
-        const price = it.price || 0;
-        const netVal = price * qty;
-        const taxable = netVal / 1.18;
-        const cgst = taxable * 0.09;
-        const sgst = taxable * 0.09;
-        const isPremium = it.imei1 || it.serialNo || (it.name && (it.name.includes('SAMSUNG') || it.name.includes('PLAYSTATION')));
-    
-    return `
-      <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#fcfcfc'};">
-        <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10px; font-weight: 700;">${idx + 1}</td>
-        <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">
-          <strong style="color: #002b49;">${it.id || '233243'}</strong><br>
-          <span style="color: #475569; font-size: 8.5px;">HSN: ${it.hsn || '8517'}</span>
-        </td>
-        <td style="border: 1px solid #334155; padding: 6px; text-align: left; font-size: 10.5px;">
-          <div style="font-weight: 800; color: #002b49; font-size: 11px;">${it.name}</div>
-          ${isPremium ? `
-            <div style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; font-size: 8.5px;">
-              ${it.color ? `<span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Color: ${it.color}</span>` : ''}
-              ${it.grade ? `<span style="background: #dbeafe; color: #1e40af; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Grade: ${it.grade}</span>` : ''}
-              ${it.brandBox || it.accessories ? `<span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">${it.brandBox ? it.brandBox : ''} ${it.brandBox && it.accessories ? '&bull;' : ''} ${it.accessories ? it.accessories : ''}</span>` : ''}
-              ${it.warrantyExpires ? `<span style="background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700;">Warranty: ${it.warrantyExpires}</span>` : ''}
-            </div>
-            <div style="margin-top: 4px; font-size: 8px; color: #334155; line-height: 1.35; font-style: italic;">
-              ${it.specs || ''}
-            </div>
-            <div style="margin-top: 3px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #475569; background: #f8fafc; padding: 3px 6px; border: 1px dashed #cbd5e1; border-radius: 2px;">
-              ${it.imei1 && it.imei1 !== 'N/A' ? `<strong>IMEI-1:</strong> ${it.imei1} &bull; ` : ''}
-              ${it.imei2 && it.imei2 !== 'N/A' ? `<strong>IMEI-2:</strong> ${it.imei2} &bull; ` : ''}
-              <strong>S/N:</strong> ${it.serialNo || 'N/A'}
-            </div>
-          ` : (it.specs ? `<div style="font-size: 8px; color: #64748b; margin-top: 2px;">${it.specs}</div>` : '')}
-            </td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: center; font-size: 10.5px; font-weight: 700;">${qty}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9.5px; font-family: 'Roboto Mono', monospace;">₹${(taxable / qty).toFixed(2)}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 10px; font-weight: 700; font-family: 'Roboto Mono', monospace;">₹${taxable.toFixed(2)}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9px; font-family: 'Roboto Mono', monospace;">9%<br>₹${cgst.toFixed(2)}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 9px; font-family: 'Roboto Mono', monospace;">9%<br>₹${sgst.toFixed(2)}</td>
-            <td style="border: 1px solid #334155; padding: 6px; text-align: right; font-size: 10.5px; font-weight: 800; color: #002b49; font-family: 'Roboto Mono', monospace;">₹${netVal.toFixed(2)}</td>
-          </tr>
-        `;
-      }).join('');
-
-      content.innerHTML = `
-        <div style="font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; position: relative; background: #ffffff; color: #0f172a; padding: 10px;">
-          
-          <!-- Faded Background Watermark -->
-          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.04; pointer-events: none; z-index: 0;">
-            <img src="${EMBLEM_B64}" style="width: 320px; height: auto;" alt="Watermark">
-          </div>
-
-          <div style="position: relative; z-index: 1;">
-            
-            <!-- Header with Dual Logos -->
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px solid #002b49; padding-bottom: 8px; margin-bottom: 10px;">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <img src="${EMBLEM_B64}" style="height: 60px; width: auto; object-fit: contain;" alt="State Emblem">
-                <div>
-                  <div style="font-size: 10px; font-weight: 800; color: #64748b; letter-spacing: 1px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
-                  <div style="font-size: 16px; font-weight: 900; color: #002b49; letter-spacing: 0.5px; margin: 2px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
-                  <div style="font-size: 11.5px; font-weight: 800; color: #dc2626; letter-spacing: 0.5px;">TAX INVOICE / RETAIL CASH MEMO &bull; UNIT RUN CANTEEN (URC)</div>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <img src="${CSD_LOGO_B64}" style="height: 50px; width: auto; object-fit: contain;" alt="CSD Crest">
-                <div style="text-align: right; font-size: 8px; line-height: 1.35; color: #334155; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; background: #f8fafc;">
-                  <div style="font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 800; color: #002b49;">|| ||| |||| | ||||| ||</div>
-                  <div><strong>GSTIN:</strong> 07AAAGC1234F1Z5</div>
-                  <div><strong>URC Code:</strong> URC-DEL-0412</div>
-                  <div><strong>Depot:</strong> DEL-01 (HQ Delhi)</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Meta Details Grid -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; border: 1.5px solid #002b49; padding: 8px 10px; font-size: 8.5px; margin-bottom: 8px; background: #fafafa;">
-              <div>
-                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">URC &amp; DEPOT PARTICULARS</div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>URC Depot:</span> <strong>${txn.canteen || 'URC HQ DELHI AREA (Sena Bhawan)'}</strong></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Station HQ:</span> <span>HQ Delhi Area (011)</span></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Terminal / IP:</span> <span>${txn.terminal || 'POS-01 / 192.168.1.101'}</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>Tax Exemption No:</span> <span>EX-2026-DEL-099</span></div>
-              </div>
-              <div>
-                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">TRANSACTION &amp; CASH REF</div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Bill Number:</span> <strong style="color:#b91c1c; font-family:'Roboto Mono', monospace;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</strong></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Indent No:</span> <span style="font-family:'Roboto Mono', monospace;">${txn.indentNo || 'IND-2026/10/9482'}</span></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Date &amp; Time:</span> <strong style="color:#002b49;">${txn.date}</strong></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Cashier Name:</span> <span>${txn.cashier || 'Sub Maj R.K. Yadav'}</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>Cash Voucher:</span> <strong style="color:#166534; font-family:'Roboto Mono', monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></div>
-              </div>
-              <div>
-                <div style="font-weight: 800; border-bottom: 1px solid #002b49; padding-bottom: 2px; margin-bottom: 4px; color: #002b49;">SMART CARD BENEFICIARY</div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Card Number:</span> <strong style="font-family:'Roboto Mono', monospace; color:#002b49;">${txn.cardNo || 'LB08260547713500S01'}</strong></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Rank &amp; Name:</span> <strong>${user.name}</strong></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Designation:</span> <span>${user.designation} (Group 'A')</span></div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Department:</span> <span>Ministry of Defence / DMA</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>PAN / PRAN:</span> <span style="font-family:'Roboto Mono', monospace;">${user.pan || 'EYUPB3666M'} / ${user.pran || '110194810244'}</span></div>
-              </div>
-            </div>
-
-            <!-- Table of Items -->
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px; border: 1.5px solid #002b49;">
-              <thead>
-                <tr style="background: #002b49; color: #ffffff; font-size: 9px;">
-                  <th style="border: 1px solid #334155; padding: 5px; width: 4%; text-align: center;">SNo</th>
-                  <th style="border: 1px solid #334155; padding: 5px; width: 14%; text-align: center;">SKU / HSN</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: left; width: 36%;">Product Details &amp; Hardware Specs</th>
-                  <th style="border: 1px solid #334155; padding: 5px; width: 5%; text-align: center;">Qty</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 9%;">Taxable Rate</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 10%;">Taxable Val</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 7.5%;">CGST (9%)</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 7.5%;">SGST (9%)</th>
-                  <th style="border: 1px solid #334155; padding: 5px; text-align: right; width: 9%;">Net Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows}
-              </tbody>
-            </table>
-
-            <!-- Financial Totals -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; font-size: 8.5px;">
-              <div style="border: 1.5px solid #002b49; padding: 8px; background: #fafafa; border-radius: 4px;">
-                <div style="font-weight: 800; border-bottom: 1.5px solid #002b49; padding-bottom: 3px; margin-bottom: 5px; color: #002b49;">
-                  STATUTORY GST BREAKUP (18% COMPOSITE DEFENCE RATE)
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; text-align: right;">
-                  <tr style="border-bottom: 1px solid #cbd5e1; font-weight: 700; background: #f1f5f9;">
-                    <th style="text-align: left; padding: 3px;">Tax Head</th>
-                    <th style="padding: 3px;">Rate</th>
-                    <th style="padding: 3px;">Taxable Base</th>
-                    <th style="padding: 3px;">Tax Collected</th>
-                  </tr>
-                  <tr>
-                    <td style="text-align: left; padding: 3px;">Central GST (CGST)</td>
-                    <td style="padding: 3px;">9.00%</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; font-weight: 700;">₹${totalCgst.toFixed(2)}</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: left; padding: 3px;">State GST (SGST - Delhi)</td>
-                    <td style="padding: 3px;">9.00%</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; font-weight: 700;">₹${totalSgst.toFixed(2)}</td>
-                  </tr>
-                  <tr style="border-top: 1.5px solid #002b49; font-weight: 800; background: #f8fafc;">
-                    <td style="text-align: left; padding: 3px;">Composite Tax Total</td>
-                    <td style="padding: 3px;">18.00%</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</td>
-                    <td style="padding: 3px; font-family:'Roboto Mono', monospace; color: #002b49;">₹${(totalCgst + totalSgst).toFixed(2)}</td>
-                  </tr>
-                </table>
-              </div>
-
-              <div style="border: 1.5px solid #002b49; padding: 8px; background: #ffffff; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                    <span>Civil Open Market MRP:</span>
-                    <span style="text-decoration: line-through; color: #64748b; font-family:'Roboto Mono', monospace;">₹${totalMarket.toFixed(2)}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                    <span>Assessable Taxable Base:</span>
-                    <span style="font-family:'Roboto Mono', monospace;">₹${totalGross.toFixed(2)}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                    <span>Composite Taxes (18%):</span>
-                    <span style="font-family:'Roboto Mono', monospace;">₹${(totalCgst + totalSgst).toFixed(2)}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 700; color: #166534;">
-                    <span>Officer Defence Subsidy:</span>
-                    <span style="font-family:'Roboto Mono', monospace;">- ₹${savings.toFixed(2)}</span>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 900; color: #002b49; border-top: 2px solid #002b49; padding-top: 4px;">
-                    <span>NET PAYABLE AMOUNT:</span>
-                    <span style="font-family:'Roboto Mono', monospace;">₹${roundedNet.toFixed(2)}</span>
-                  </div>
-                  <div style="font-size: 8.5px; font-weight: 800; color: #166534; margin-top: 3px;">
-                    Amount in Words: RUPEES FIFTY FOUR THOUSAND FOUR HUNDRED AND THIRTY SIX ONLY
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- MANDATORY HARD CURRENCY CASH ONLY SETTLEMENT BOX -->
-            <div style="border: 2px solid #16a34a; background: #f0fdf4; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #16a34a; padding-bottom: 4px; margin-bottom: 6px;">
-                <div style="font-size: 11px; font-weight: 900; color: #166534; display: flex; align-items: center; gap: 6px;">
-                  <span>💵</span> PAYMENT SETTLEMENT: *** HARD CURRENCY CASH ONLY ***
-                </div>
-                <div style="font-size: 9.5px; font-weight: 800; background: #166534; color: #ffffff; padding: 2px 8px; border-radius: 3px;">
-                  ✓ PHYSICAL CASH TENDERED &bull; PAID IN FULL
-                </div>
-              </div>
-
-              <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; font-size: 9px;">
-                <div>
-                  <div style="margin-bottom: 2px;">Payment Tender Type: <strong>CASH PAYMENT (STRICTLY NO CARD / NO UPI)</strong></div>
-                  <div style="margin-bottom: 2px;">Total Cash Received: <strong style="font-family:'Roboto Mono', monospace; font-size: 10.5px; color: #002b49;">₹${(txn.cashTendered || roundedNet).toFixed(2)}</strong></div>
-                  <div style="margin-bottom: 2px;">Change Due / Returned: <strong style="font-family:'Roboto Mono', monospace; color: #166534;">₹${(txn.cashChange || 0).toFixed(2)}</strong></div>
-                  <div style="margin-bottom: 2px;">Cash Drawer Registry: <strong>POS-01 / CHEST DRAWER 1</strong></div>
-                  <div>Voucher Reference: <strong style="font-family:'Roboto Mono', monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></div>
-                </div>
-
-                <!-- Currency Denomination Breakdown -->
-                <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 3px; padding: 5px 8px;">
-                  <div style="font-weight: 800; color: #166534; font-size: 8.5px; margin-bottom: 3px; border-bottom: 1px solid #dcfce7; padding-bottom: 2px;">
-                    CURRENCY CASH DENOMINATIONS DEPOSITED IN DRAWER:
-                  </div>
-                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 8px; font-family: 'Roboto Mono', monospace; font-size: 8px; color: #1e293b;">
-                    <div>₹500 &times; 108 = ₹54,000.00</div>
-                    <div>₹100 &times; 4 = ₹400.00</div>
-                    <div>₹20 &times; 1 = ₹20.00</div>
-                    <div>₹10 &times; 1 = ₹10.00</div>
-                    <div>₹2 &times; 3 = ₹6.00</div>
-                    <div style="font-weight: 700; color: #166534;">SUM = ₹54,436.00</div>
-                  </div>
-                  <div style="font-size: 7.5px; color: #64748b; margin-top: 3px; border-top: 1px dotted #ccc; padding-top: 2px;">
-                    Counted &amp; Certified by Sub Maj R.K. Yadav (Custodian of Regimental Cash, URC HQ Delhi Area)
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Savings Banner -->
-            <div style="margin-bottom: 10px; text-align: center; font-size: 10.5px; font-weight: 800; padding: 6px; border: 2px dashed #15803d; background: #f0fdf4; color: #15803d; border-radius: 4px;">
-              🔥 CSD DEFENCE CONCESSION: YOU SAVED ₹${savings.toFixed(2)} (32.8% DISCOUNT) COMPARED TO OPEN MARKET PRICES! 🔥
-            </div>
-
-            <!-- Signatures & Physical Stamp Block -->
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 6px; border-top: 1.5px solid #002b49; margin-bottom: 8px;">
-              <div style="text-align: center; width: 190px;">
-                <div style="font-family: 'Brush Script MT', cursive; font-size: 20px; color: #0f172a; margin-bottom: 2px;">${user.name.split(' ')[0]}</div>
-                <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 8px; font-weight: 700;">
-                  Signature of Smart Card Holder<br>
-                  <span style="font-weight: normal; color: #64748b;">(Verified by Chip Pin &amp; Biometric)</span>
-                </div>
-              </div>
-
-              <!-- Cashier Physical Stamp -->
-              <div style="display: flex; align-items: center; gap: 8px; border: 1.5px dashed #b91c1c; padding: 4px 8px; border-radius: 4px; background: #fff5f5;">
-                <img src="${MOD_STAMP_B64}" style="height: 48px; width: auto;" alt="Official Cashier Seal">
-                <div style="font-size: 7.5px; color: #991b1b; line-height: 1.25;">
-                  <strong style="font-size: 8.5px;">URC HQ DELHI AREA</strong><br>
-                  CASH RECEIVED &amp; CLEARED<br>
-                  Date: ${txn.date ? txn.date.split(' ')[0] : '02-10-2026'}<br>
-                  <strong>Cashier: Sub Maj R.K. Yadav</strong>
-                </div>
-              </div>
-
-              <div style="text-align: right; border: 1px solid #86efac; background: #f0fdf4; padding: 6px 10px; border-radius: 4px;">
-                <div style="color: #15803d; font-weight: 800; font-size: 9px;">✓ ADOBE DIGITAL SIGNATURE VERIFIED</div>
-                <div style="font-size: 8px; color: #334155;">${txn.manager || 'Sub Maj R.K. Yadav'} &bull; CSD Manager</div>
-                <div style="font-size: 7.5px; color: #64748b;">${txn.date} +05'30' &bull; Location: New Delhi</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      `;
-
+    if (sprocketWrapper) {
+      content.innerHTML = (styleTag ? styleTag.outerHTML : '') + sprocketWrapper.outerHTML;
     } else {
-      // ---------------------------------------------------------
-      // VIEW MODE 2: AUTHENTIC DOT MATRIX POS SLIP
-      // ---------------------------------------------------------
-      content.innerHTML = `
-        <div style="display: flex; justify-content: center; padding: 10px; background: #f1f5f9;">
-          <div style="position: relative; background: #fbfbf6; border: 1px solid #d1d5db; box-shadow: 0 4px 15px rgba(0,0,0,0.15); width: 100%; max-width: 440px; padding: 20px 24px; font-family: 'Roboto Mono', 'Courier New', monospace; color: #000;">
-            
-            <div style="text-align: center; font-weight: 700; font-size: 13px;">CANTEEN STORES DEPARTMENT</div>
-            <div style="text-align: center; font-size: 10px;">MINISTRY OF DEFENCE &bull; GOVT OF INDIA</div>
-            <div style="text-align: center; font-weight: 700; font-size: 11px;">URC HQ DELHI AREA (SENA BHAWAN)</div>
-            <div style="text-align: center; font-size: 9.5px;">NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5</div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
-            <div style="text-align: center; font-weight: 700; font-size: 12px; letter-spacing: 0.5px;">RETAIL TAX INVOICE / CASH MEMO SLIP</div>
-            <div style="text-align: center; font-size: 9.5px;">*** DOT MATRIX POS COUNTER COPY ***</div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
-            
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>BILL NO   :</span> <span style="font-weight:700;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>INDENT NO :</span> <span>${txn.indentNo || 'IND-2026/10/9482'}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>DATE/TIME :</span> <span style="font-weight:700;">${txn.date}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>POS TERM  :</span> <span>${txn.terminal || 'POS-01 / IP: 192.168.1.101'}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASHIER   :</span> <span>${txn.cashier || 'Sub Maj R.K. Yadav'}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CARD NO   :</span> <span style="font-weight:700;">${txn.cardNo || 'LB08260547713500S01'}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>HOLDER    :</span> <span style="font-weight:700;">${user.name}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>RANK/DESIG:</span> <span>${user.designation}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CADRE/MIN :</span> <span>GROUP 'A' / MOD (DMA)</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>PAN NO    :</span> <span>${user.pan || 'EYUPB3666M'}</span></div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
-            
-            <div style="font-weight: 700; font-size: 10.5px;">ITEMIZED PARTICULARS:</div>
-            <div style="font-size: 9.5px;">SKU: 233243 | HSN: 8517 | UNIT: 1 NO</div>
-            <div style="font-weight: 700; font-size: 11.5px; margin: 2px 0;">SAMSUNG GALAXY S25 5G 12/256GB</div>
-            <div style="font-size: 9.5px;">COLOR     : SILVER SHADOW</div>
-            <div style="font-size: 9.5px;">GRADE     : VERY GOOD (A) - BRAND BOX</div>
-            <div style="font-size: 9.5px;">ACCESSORY : ALL ACCESSORIES INCLUDED</div>
-            <div style="font-size: 9.5px;">WARRANTY  : BRAND WARRANTY EXP 23-05-2027</div>
-            <div style="font-size: 9px; line-height: 1.25; margin-top: 2px;">SPECS: 6.2" FHD+ DYN AMOLED 120HZ | SNAPDRAGON 8 ELITE 3NM | 12GB+256GB | 50+10+12MP / 12MP | 4000MAH LI-ION</div>
-            <div style="font-size: 8.5px; background: #eee; padding: 3px 5px; margin-top: 3px;">
-              IMEI-1: 358941/08/948210/6<br>
-              IMEI-2: 358941/08/948211/4<br>
-              SRL NO: R58N90X233243S
-            </div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
-            
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>QTY: 1 @ CSD NET RATE</span> <span style="font-weight:700;">₹ 54,436.00</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CIVIL OPEN MARKET MRP</span> <span>₹ 80,999.00</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px; font-weight: 700;"><span>TOTAL DEFENCE CONCESSION</span> <span>Save ₹ 26,563.00</span></div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
-            
-            <div style="font-weight: 700; font-size: 10.5px;">STATUTORY TAX COMPUTATION (GST 18%):</div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>TAXABLE ASSESSABLE VAL</span> <span>₹ 46,132.20</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CGST @ 9.00%</span> <span>₹  4,151.90</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>SGST @ 9.00% (DELHI)</span> <span>₹  4,151.90</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px; font-weight:700;"><span>COMPOSITE GST TOTAL (18%)</span> <span>₹  8,303.80</span></div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
-            
-            <div style="display:flex; justify-content:space-between; font-size: 14px; font-weight: 900;">
-              <span>NET PAYABLE :</span>
-              <span>₹ 54,436.00</span>
-            </div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
-            
-            <div style="font-weight: 700; font-size: 10.5px;">PAYMENT SETTLEMENT:</div>
-            <div style="display:flex; justify-content:space-between; font-size: 11px; font-weight: 700;">
-              <span>PAYMENT METHOD</span>
-              <span>*** CASH ONLY ***</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASH TENDERED</span> <span style="font-weight:700;">₹ 54,436.00</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CHANGE DUE   </span> <span>₹      0.00</span></div>
-            <div style="display:flex; justify-content:space-between; font-size: 10.5px;"><span>CASH VOUCHER </span> <span>${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</span></div>
-            
-            <div style="margin-top: 4px; font-size: 9px; line-height: 1.3;">
-              CURRENCY CASH DENOMINATION BREAKDOWN:<br>
-              &bull; ₹500 &times; 108 notes  = ₹ 54,000.00<br>
-              &bull; ₹100 &times;   4 notes  = ₹    400.00<br>
-              &bull; ₹ 20 &times;   1 note   = ₹     20.00<br>
-              &bull; ₹ 10 &times;   1 note   = ₹     10.00<br>
-              &bull; ₹  2 &times;   3 coins  = ₹      6.00<br>
-              ---------------------------------------<br>
-              TOTAL PHYSICAL CASH   = ₹ 54,436.00
-            </div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">------------------------------------------------</div>
-            
-            <div style="font-weight: 700; font-size: 9.5px;">
-              RUPEES FIFTY FOUR THOUSAND FOUR HUNDRED AND THIRTY SIX ONLY
-            </div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">================================================</div>
-            
-            <div style="font-family:'Courier New', monospace; letter-spacing:4px; font-size:18px; font-weight:900; text-align:center; margin: 8px 0 2px 0;">|| ||| |||| | ||||| ||</div>
-            <div style="text-align: center; font-weight: 700; font-size: 9.5px;">*CSD-233243-9482-CASH*</div>
-            
-            <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 9px;">
-              <div>
-                CARD HOLDER SIGN<br>
-                [${user.name.split(' ')[0]}]
-              </div>
-              <div style="text-align: right;">
-                CASHIER SIGN &amp; STAMP<br>
-                [Sub Maj R.K. Yadav]<br>
-                CASH REGISTER: CLEARED
-              </div>
-            </div>
-            <div style="margin: 6px 0; overflow: hidden; font-size: 11px;">- - - - - - - - - TEAR HERE - - - - - - - - -</div>
-            <div style="text-align: center; font-size: 9px; margin-top: 4px;">
-              THANK YOU FOR SERVING THE NATION &bull; JAI HIND
-            </div>
-
-          </div>
-        </div>
-      `;
+      content.innerHTML = fullHtml;
     }
   }
 

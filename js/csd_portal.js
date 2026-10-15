@@ -1,14 +1,188 @@
 // --- CSD Full-Scale Web Application Logic ---
 
 const DEFAULT_INVENTORY = [
-  { id: '245561', name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK', category: 'Electronics', hsn: '8517', stock: 25, price: 32999.00, marketPrice: 74999.00 },
-  { id: '99055412', name: 'SONY PLAYSTATION 5 CONSOLE', category: 'Electronics', hsn: '9504', stock: 5, price: 37900.00, marketPrice: 57999.00 },
-  { id: '233243', name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', category: 'Electronics', hsn: '8517', stock: 12, price: 54436.00, marketPrice: 80999.00 },
-  { id: '8901030311221', name: 'AMUL PURE GHEE 1L TIN', category: 'Groceries', hsn: '0405', stock: 50, price: 580.00, marketPrice: 650.00 },
-  { id: '8901058863283', name: 'MAGGI 2-MIN NOODLES 12PK', category: 'Groceries', hsn: '1902', stock: 120, price: 144.00, marketPrice: 168.00 },
-  { id: '8901131000100', name: 'OLD MONK XXX RUM 750ML', category: 'Liquor', hsn: '2208', stock: 200, price: 450.00, marketPrice: 600.00 },
-  { id: '8806090123456', name: 'SAMSUNG 32" SMART LED TV', category: 'Electronics', hsn: '8528', stock: 15, price: 12500.00, marketPrice: 15990.00 },
-  { id: '4902430691234', name: 'GILLETTE MACH 3 (4 CT)', category: 'Toiletries', hsn: '8212', stock: 80, price: 425.00, marketPrice: 495.00 }
+  {
+    id: '233243',
+    sku: '233243',
+    name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW',
+    category: 'Electronics',
+    brand: 'SAMSUNG ELECTRONICS INDIA',
+    model: 'SM-S931B/DS (GALAXY S25 5G)',
+    color: 'SILVER SHADOW',
+    hsn: '85171300',
+    stock: 12,
+    price: 54436.00,
+    marketPrice: 80999.00,
+    unit: 'UNT',
+    gstRate: 18,
+    grade: 'VERY GOOD (A) - BRAND BOX',
+    accessories: 'ALL ACCESSORIES INCLUDED (65W TYPE-C CABLE, EJECTOR PIN)',
+    warrantyExpires: '23-05-2027 (PAN-INDIA BRAND ONSITE WARRANTY)',
+    specs: '15.75 CM (6.2") FULL HD+ DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP REAR CAMERA | 12MP FRONT CAMERA | 4000 MAH LI-ION',
+    imei1: '358941/08/948210/6',
+    imei2: '358941/08/948211/4',
+    serialNo: 'R58N90X233243S',
+    batchNo: 'BAT-2026/08-DEL',
+    afdCategory: 'AFD-II (DURABLES)'
+  },
+  {
+    id: '245561',
+    sku: '245561',
+    name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK',
+    category: 'Electronics',
+    brand: 'SAMSUNG ELECTRONICS INDIA',
+    model: 'SM-S921B/DS',
+    color: 'ONYX BLACK',
+    hsn: '85171300',
+    stock: 25,
+    price: 32999.00,
+    marketPrice: 74999.00,
+    unit: 'UNT',
+    gstRate: 18,
+    grade: 'SEALED BRAND PACK',
+    accessories: 'DATA CABLE, SIM TOOL',
+    warrantyExpires: '1 YEAR BRAND WARRANTY',
+    specs: '6.2" DYNAMIC AMOLED 2X | EXYNOS 2400 | 8GB RAM | 128GB ROM | 50MP TRIPLE CAMERA',
+    imei1: '359124/11/498211/2',
+    imei2: '359124/11/498212/0',
+    serialNo: 'R58N81Y245561A',
+    batchNo: 'BAT-2026/05-DEL',
+    afdCategory: 'AFD-II (DURABLES)'
+  },
+  {
+    id: '99055412',
+    sku: '99055412',
+    name: 'SONY PLAYSTATION 5 CONSOLE (SLIM EDITION)',
+    category: 'Electronics',
+    brand: 'SONY INTERACTIVE ENTERTAINMENT',
+    model: 'CFI-2000A01 (DISC EDITION)',
+    color: 'GLACIER WHITE',
+    hsn: '95045000',
+    stock: 5,
+    price: 37900.00,
+    marketPrice: 57999.00,
+    unit: 'UNT',
+    gstRate: 18,
+    grade: 'ORIGINAL FACTORY SEALED',
+    accessories: 'DUALSENSE CONTROLLER, HDMI 2.1 CABLE, STAND',
+    warrantyExpires: '1 YEAR SONY INDIA WARRANTY',
+    specs: 'CUSTOM AMD ZEN 2 8-CORE | RDNA 2 GPU 10.28 TFLOPS | 16GB GDDR6 | 1TB NVME SSD | 4K 120HZ HDR',
+    imei1: 'N/A',
+    imei2: 'N/A',
+    serialNo: 'AK8921094821',
+    batchNo: 'LOT-2026/JPN',
+    afdCategory: 'AFD-II (DURABLES)'
+  },
+  {
+    id: '8901030311221',
+    sku: '8901030311221',
+    name: 'AMUL PURE GHEE 1L TIN',
+    category: 'Groceries',
+    brand: 'GCMMF LTD (AMUL)',
+    model: '1 LITRE TIN CANISTER',
+    color: 'GOLDEN YELLOW',
+    hsn: '04059020',
+    stock: 50,
+    price: 580.00,
+    marketPrice: 650.00,
+    unit: 'TIN',
+    gstRate: 12,
+    grade: 'AGMARK SPECIAL GRADE',
+    accessories: 'SEALED TIN LID',
+    warrantyExpires: 'EXP: 09 MONTHS FROM MFG',
+    specs: '100% PURE COW/BUFFALO MILK FAT | ENERGY 900 KCAL/100G | VITAMIN A & D ENRICHED',
+    serialNo: 'AGM-948201',
+    batchNo: 'B-DEL26/09',
+    afdCategory: 'NON-AFD (GENERAL)'
+  },
+  {
+    id: '8901058863283',
+    sku: '8901058863283',
+    name: 'MAGGI 2-MIN NOODLES 12PK (840G)',
+    category: 'Groceries',
+    brand: 'NESTLE INDIA LTD',
+    model: 'MASALA FAMILY PACK',
+    color: 'STANDARD',
+    hsn: '19023010',
+    stock: 120,
+    price: 144.00,
+    marketPrice: 168.00,
+    unit: 'PKT',
+    gstRate: 12,
+    grade: 'SEALED MULTIPACK',
+    accessories: '12 TASTEMAKER SACHETS INCLUDED',
+    warrantyExpires: 'BEST BEFORE 9 MONTHS',
+    specs: 'FORTIFIED WITH IRON & ROASTED SPICES',
+    serialNo: 'N/A',
+    batchNo: 'LOT-NESTLE-DEL',
+    afdCategory: 'NON-AFD (GENERAL)'
+  },
+  {
+    id: '8901131000100',
+    sku: '8901131000100',
+    name: 'OLD MONK XXX RUM 750ML',
+    category: 'Liquor',
+    brand: 'MOHAN MEAKIN LTD',
+    model: 'XXX VERY OLD VATTED RUM',
+    color: 'DARK AMBER',
+    hsn: '22084011',
+    stock: 200,
+    price: 450.00,
+    marketPrice: 600.00,
+    unit: 'BTL',
+    gstRate: 18,
+    grade: 'FOR DEFENCE SERVICES ONLY',
+    accessories: 'MONO CARTON',
+    warrantyExpires: 'N/A',
+    specs: '42.8% V/V (75 PROOF) | AGED 7 YEARS IN OAK CASKS',
+    serialNo: 'EXC-DEL-26-8921',
+    batchNo: 'LOT-KAS-2026',
+    afdCategory: 'NON-AFD (LIQUOR)'
+  },
+  {
+    id: '8806090123456',
+    sku: '8806090123456',
+    name: 'SAMSUNG 32" SMART LED TV T4340',
+    category: 'Electronics',
+    brand: 'SAMSUNG ELECTRONICS INDIA',
+    model: 'UA32T4340AKXXL',
+    color: 'GLOSSY BLACK',
+    hsn: '85287217',
+    stock: 15,
+    price: 12500.00,
+    marketPrice: 15990.00,
+    unit: 'UNT',
+    gstRate: 18,
+    grade: 'FACTORY SEALED BOX',
+    accessories: 'REMOTE CONTROL, WALL MOUNT BRACKET, POWER CORD',
+    warrantyExpires: '1 YEAR COMPREHENSIVE + 1 YEAR PANEL',
+    specs: '32" HD READY (1366X768) | HDR | PURCOLOR | 20W STEREO SPEAKERS DOLBY DIGITAL PLUS | TIZEN OS',
+    serialNo: 'SAMTV32-902188',
+    batchNo: 'B-DEL-2026/07',
+    afdCategory: 'AFD-II (DURABLES)'
+  },
+  {
+    id: '4902430691234',
+    sku: '4902430691234',
+    name: 'GILLETTE MACH 3 CARTRIDGES (4 CT)',
+    category: 'Toiletries',
+    brand: 'PROCTER & GAMBLE INDIA',
+    model: 'MACH 3 TURBO 4S',
+    color: 'STANDARD',
+    hsn: '82122010',
+    stock: 80,
+    price: 425.00,
+    marketPrice: 495.00,
+    unit: 'PKT',
+    gstRate: 18,
+    grade: 'GENUINE RETAIL BLISTER PACK',
+    accessories: '4 CARTRIDGES',
+    warrantyExpires: 'N/A',
+    specs: '3 DURACOMFORT BLADES WITH LUBRASTRIP',
+    serialNo: 'N/A',
+    batchNo: 'P&G-2026-DEL',
+    afdCategory: 'NON-AFD (GENERAL)'
+  }
 ];
 
 const DEFAULT_OFFICERS = [
@@ -286,18 +460,97 @@ function renderAdminInventory() {
   `).join('');
 }
 
+window.generatePortalSku = () => {
+  const el = document.getElementById('prod-sku');
+  if (el) el.value = String(Math.floor(100000 + Math.random() * 900000));
+};
+
+function calculateCashDenominations(netAmount) {
+  const denoms = [500, 200, 100, 50, 20, 10, 5, 2, 1];
+  let remaining = Math.round(Number(netAmount) || 0);
+  const result = [];
+  for (const d of denoms) {
+    if (remaining <= 0) {
+      result.push({ denom: d, count: 0, amount: 0 });
+      continue;
+    }
+    const count = Math.floor(remaining / d);
+    remaining = remaining % d;
+    result.push({ denom: d, count, amount: count * d });
+  }
+  return result;
+}
+
+function numberToWordsINR(num) {
+  const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+  const n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+  if (!n) return '';
+  let str = '';
+  str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Crore ' : '';
+  str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Lakh ' : '';
+  str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + ' Thousand ' : '';
+  str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + ' Hundred ' : '';
+  str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+  return str.trim() || 'Zero';
+}
+
 function handleAddProduct(e) {
   e.preventDefault();
-  const id = Date.now().toString().slice(-13);
-  inventory.push({
+  const id = (document.getElementById('prod-sku')?.value || Date.now().toString().slice(-6)).trim();
+  const name = (document.getElementById('prod-name')?.value || '').trim().toUpperCase();
+  const category = document.getElementById('prod-category')?.value || 'Electronics';
+  const afdCategory = document.getElementById('prod-afd')?.value || 'AFD-II (DURABLES)';
+  const unit = document.getElementById('prod-unit')?.value || 'UNT';
+  const brand = (document.getElementById('prod-brand')?.value || '').trim().toUpperCase();
+  const model = (document.getElementById('prod-model')?.value || '').trim().toUpperCase();
+  const color = (document.getElementById('prod-color')?.value || '').trim().toUpperCase();
+  const batchNo = (document.getElementById('prod-batch')?.value || '').trim().toUpperCase();
+  const serialNo = (document.getElementById('prod-serial')?.value || '').trim().toUpperCase();
+  const imei1 = (document.getElementById('prod-imei1')?.value || '').trim();
+  const imei2 = (document.getElementById('prod-imei2')?.value || '').trim();
+  const hsn = (document.getElementById('prod-hsn')?.value || '85171300').trim();
+  const price = parseFloat(document.getElementById('prod-price')?.value) || 0;
+  const marketPrice = parseFloat(document.getElementById('prod-market')?.value) || (price * 1.25);
+  const stock = parseInt(document.getElementById('prod-stock')?.value) || 10;
+  const grade = (document.getElementById('prod-grade')?.value || '').trim().toUpperCase();
+  const accessories = (document.getElementById('prod-accessories')?.value || '').trim().toUpperCase();
+  const warrantyExpires = (document.getElementById('prod-warranty')?.value || '').trim().toUpperCase();
+  const specs = (document.getElementById('prod-specs')?.value || '').trim().toUpperCase();
+
+  const newItem = {
     id,
-    name: document.getElementById('prod-name').value.toUpperCase(),
-    category: document.getElementById('prod-category').value,
-    hsn: document.getElementById('prod-hsn').value,
-    stock: parseInt(document.getElementById('prod-stock').value),
-    price: parseFloat(document.getElementById('prod-price').value),
-    marketPrice: parseFloat(document.getElementById('prod-market').value)
-  });
+    sku: id,
+    name,
+    category,
+    afdCategory,
+    unit,
+    brand,
+    model,
+    color,
+    batchNo,
+    serialNo,
+    imei1,
+    imei2,
+    hsn,
+    price,
+    marketPrice,
+    stock,
+    grade,
+    accessories,
+    warrantyExpires,
+    specs,
+    gstRate: 18
+  };
+
+  const existingIdx = inventory.findIndex(i => i.id === id);
+  if (existingIdx >= 0) {
+    inventory[existingIdx] = newItem;
+  } else {
+    inventory.unshift(newItem);
+  }
+
   saveStorage();
   toggleAddProduct();
   renderAdminInventory();
@@ -638,44 +891,53 @@ function renderAdminAudit() {
 
 function generateReceipt(customerCard, billNo, txCats) {
   const now = new Date();
+  const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
   
-  // Populate the extreme A4 invoice fields exactly as requested before
-  document.getElementById('receipt-bill-no').innerText = billNo;
-  document.getElementById('receipt-date').innerText = now.toLocaleString();
-  document.getElementById('receipt-csd-index').innerText = "BD" + Math.floor(10000 + Math.random() * 90000);
+  // Populate the A4 dot matrix header & metadata fields
+  const safeBillNo = billNo || 'CSD/URC/DEL/2026/10/9482';
+  const elBillNo = document.getElementById('receipt-bill-no');
+  if (elBillNo) elBillNo.innerText = safeBillNo;
   
-  // Auth Details
-  document.getElementById('receipt-cashier-name').innerText = currentUser.name;
-  document.getElementById('receipt-canteen-name').innerText = customerCard.canteen;
-  document.getElementById('receipt-cust-name').innerText = `${customerCard.rank} ${customerCard.name}`;
-  document.getElementById('receipt-cust-card').innerText = customerCard.cardNo;
-  document.getElementById('receipt-cust-pan').innerText = customerCard.pan;
+  const elDate = document.getElementById('receipt-date');
+  if (elDate) elDate.innerText = formattedDate;
+
+  const elIndent = document.getElementById('receipt-indent-no');
+  if (elIndent) elIndent.innerText = 'IND-' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
+
+  const elCashVoucher = document.getElementById('receipt-cash-voucher');
+  if (elCashVoucher) elCashVoucher.innerText = 'CSD/CASH/DEL/' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
+
+  const elCashVoucherSub = document.getElementById('receipt-cash-voucher-sub');
+  if (elCashVoucherSub) elCashVoucherSub.innerText = 'CSD/CASH/DEL/' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
   
-  // Extreme Mock Fields
-  document.getElementById('receipt-station-hq').innerText = 'HQ Delhi Area (011)';
-  document.getElementById('receipt-supply-depot').innerText = 'Base Supply Depot 1';
-  document.getElementById('receipt-state-tin').innerText = 'TIN-07882931';
-  document.getElementById('receipt-tax-exemption-no').innerText = 'EX-2026-DEL-099';
-  document.getElementById('receipt-fms-id').innerText = 'FMS-889922';
-  document.getElementById('receipt-fiscal-year').innerText = '2026-2027';
-  document.getElementById('receipt-pos-terminal-ip').innerText = '192.168.1.100';
-  document.getElementById('receipt-pos-mac').innerText = 'A1:B2:C3:D4:E5:F6';
-  document.getElementById('receipt-indent-no').innerText = 'IND-2026/09/111';
-  document.getElementById('receipt-session-id').innerText = 'SESS-99999';
-  document.getElementById('receipt-software-version').innerText = 'CSD-POS v10.0 (SPA)';
-  document.getElementById('receipt-audit-hash').innerText = 'SHA256-ABCD1234EFGH';
-  document.getElementById('receipt-manager-name').innerText = 'Sub Maj R.K. Yadav';
-  document.getElementById('receipt-central-tin').innerText = 'CTIN-29384756';
-  document.getElementById('receipt-barcode-data').innerText = '|| ||| |||| | ||||| ||';
-  document.getElementById('receipt-card-status').innerText = 'ACTIVE-VERIFIED';
-  document.getElementById('receipt-card-expiry').innerText = '31-DEC-2029';
-  document.getElementById('receipt-cust-blood-group').innerText = 'O+';
-  document.getElementById('receipt-cust-dob').innerText = '12-MAY-1980';
-  document.getElementById('receipt-cust-dependents').innerText = '3 (Reg)';
-  document.getElementById('receipt-afd-status').innerText = 'ELIGIBLE (Tier 1)';
-  document.getElementById('receipt-last-purchase').innerText = new Date().toLocaleDateString();
-  document.getElementById('receipt-qr-hash').innerText = 'QR-0x992384';
-  
+  const elCashier = document.getElementById('receipt-cashier-name');
+  if (elCashier) elCashier.innerText = currentUser?.name || 'Sub Maj R.K. Yadav';
+
+  const elCanteen = document.getElementById('receipt-canteen-name');
+  if (elCanteen) elCanteen.innerText = customerCard.canteen || 'URC HQ DELHI AREA (SENA BHAWAN)';
+
+  const elCustName = document.getElementById('receipt-cust-name');
+  if (elCustName) elCustName.innerText = customerCard.name;
+
+  const elCustRank = document.getElementById('receipt-cust-rank');
+  if (elCustRank) elCustRank.innerText = customerCard.rank || 'ADDITIONAL SECTION OFFICER - I';
+
+  const elCustCard = document.getElementById('receipt-cust-card');
+  if (elCustCard) elCustCard.innerText = customerCard.cardNo;
+
+  const elCustPan = document.getElementById('receipt-cust-pan');
+  if (elCustPan) elCustPan.innerText = customerCard.pan || 'EYUPB3666M';
+
+  const elBarcode = document.getElementById('receipt-barcode-code');
+  if (elBarcode) elBarcode.innerText = safeBillNo.replace(/[^a-zA-Z0-9]/g, '_');
+
+  const elAuditTs = document.getElementById('receipt-audit-timestamp');
+  if (elAuditTs) elAuditTs.innerText = formattedDate;
+
+  const elAuditHash = document.getElementById('receipt-audit-hash');
+  if (elAuditHash) elAuditHash.innerText = 'SHA256-' + Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+  // Populate Itemized Particulars with all extended details
   const receiptBody = document.getElementById('receipt-items-body');
   receiptBody.innerHTML = '';
   
@@ -683,60 +945,134 @@ function generateReceipt(customerCard, billNo, txCats) {
   
   cart.forEach((item, index) => {
     const netValue = item.price * item.qty;
-    const taxableValue = netValue / 1.18;
-    const itemCGST = taxableValue * 0.09;
-    const itemSGST = taxableValue * 0.09;
+    const gstRate = item.gstRate || 18;
+    const taxableValue = netValue / (1 + (gstRate / 100));
+    const itemCGST = taxableValue * ((gstRate / 2) / 100);
+    const itemSGST = taxableValue * ((gstRate / 2) / 100);
+    const market = Number(item.marketPrice) || (item.price * 1.25);
     
     totalGross += taxableValue;
     totalCGST += itemCGST;
     totalSGST += itemSGST;
     totalNet += netValue;
-    totalMarketPrice += (item.marketPrice * item.qty);
+    totalMarketPrice += (market * item.qty);
+
+    const hasExtra = item.brand || item.model || item.color || item.serialNo || item.imei1 || item.specs || item.warrantyExpires || item.batchNo || item.grade;
     
     receiptBody.innerHTML += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${item.id.slice(-6)}<br>${item.hsn}</td>
-        <td class="text-left">${item.name}</td>
-        <td>${item.qty}</td>
-        <td>${(taxableValue / item.qty).toFixed(2)}</td>
-        <td>${taxableValue.toFixed(2)}</td>
-        <td>9%<br>${itemCGST.toFixed(2)}</td>
-        <td>9%<br>${itemSGST.toFixed(2)}</td>
+      <tr style="border-bottom: 1px dashed #94a3b8;">
+        <td style="padding: 5px 3px; vertical-align: top; text-align: center; font-weight: 700;">${String(index + 1).padStart(2, '0')}</td>
+        <td style="padding: 5px 4px; vertical-align: top;">
+          <strong style="letter-spacing: 0.5px;">${item.id || item.sku || 'N/A'}</strong><br>
+          <span style="font-size: 8.5px; color: #333;">HSN: ${item.hsn || '85171300'}</span>
+        </td>
+        <td style="padding: 5px 6px; vertical-align: top;">
+          <div style="font-weight: 800; font-size: 11px; letter-spacing: 0.2px;">${item.name}</div>
+          ${hasExtra ? `
+            <div style="font-size: 8.5px; line-height: 1.35; margin-top: 3px; color: #111;">
+              ${item.brand ? `<div><strong>BRAND/MFR :</strong> ${String(item.brand).toUpperCase()}</div>` : ''}
+              ${item.model || item.color ? `<div><strong>MODEL/CLR :</strong> ${String(item.model || 'N/A').toUpperCase()} &bull; COLOR: ${String(item.color || 'STANDARD').toUpperCase()}</div>` : ''}
+              ${item.batchNo || item.afdCategory ? `<div><strong>BATCH/AFD :</strong> ${String(item.batchNo || 'LOT-2026/DEL').toUpperCase()} &bull; AFD CAT: ${String(item.afdCategory || 'AFD-II').toUpperCase()}</div>` : ''}
+              ${item.serialNo && item.serialNo !== 'N/A' ? `<div><strong>SERIAL NO :</strong> ${String(item.serialNo).toUpperCase()}</div>` : ''}
+              ${(item.imei1 && item.imei1 !== 'N/A') || (item.imei2 && item.imei2 !== 'N/A') ? `
+                <div style="background: #f1f5f9; padding: 2px 4px; border: 1px dashed #cbd5e1; margin-top: 2px; font-weight: 700;">
+                  ${item.imei1 && item.imei1 !== 'N/A' ? `IMEI-1: ${item.imei1} &nbsp; ` : ''}
+                  ${item.imei2 && item.imei2 !== 'N/A' ? `IMEI-2: ${item.imei2}` : ''}
+                </div>
+              ` : ''}
+              ${item.grade || item.accessories ? `<div><strong>PKG/GRADE :</strong> ${String(item.grade || 'SEALED PACK').toUpperCase()} ${item.accessories ? '&bull; INCL: ' + String(item.accessories).toUpperCase() : ''}</div>` : ''}
+              ${item.warrantyExpires ? `<div><strong>WARRANTY  :</strong> ${String(item.warrantyExpires).toUpperCase()}</div>` : ''}
+              ${item.specs ? `<div style="margin-top: 2px; color: #1e293b;"><strong>SPECS:</strong> ${String(item.specs).toUpperCase()}</div>` : ''}
+              <div style="color: #166534; font-weight: 700; margin-top: 2px;">
+                OPEN MARKET MRP: ₹${(market * item.qty).toFixed(2)} &bull; DEFENCE SAVINGS: ₹${((market - item.price) * item.qty).toFixed(2)} (${Math.round(((market - item.price) / market) * 100)}% OFF)
+              </div>
+            </div>
+          ` : `
+            <div style="font-size: 8.5px; color: #166534; font-weight: 700; margin-top: 2px;">
+              OPEN MARKET MRP: ₹${(market * item.qty).toFixed(2)} &bull; SAVINGS: ₹${((market - item.price) * item.qty).toFixed(2)}
+            </div>
+          `}
+        </td>
+        <td style="padding: 5px 3px; vertical-align: top; text-align: center; white-space: nowrap;">${item.qty} ${item.unit || 'UNT'}</td>
+        <td style="padding: 5px 3px; vertical-align: top; text-align: right; font-family: monospace;">₹${(taxableValue / item.qty).toFixed(2)}</td>
+        <td style="padding: 5px 3px; vertical-align: top; text-align: right; font-family: monospace;">₹${taxableValue.toFixed(2)}</td>
+        <td style="padding: 5px 4px; vertical-align: top; text-align: right; font-family: monospace;">
+          <strong style="font-size: 11px;">₹${netValue.toFixed(2)}</strong><br>
+          <span style="font-size: 8px; color: #555;">GST ${gstRate}%: ₹${(itemCGST + itemSGST).toFixed(2)}</span>
+        </td>
       </tr>
     `;
   });
   
-  // Quotas (Post-purchase balances)
-  document.getElementById('receipt-quota-groc-limit').innerText = `₹${customerCard.grocLimit}`;
-  document.getElementById('receipt-quota-groc-drawn').innerText = `₹${customerCard.grocDrawn}`;
-  document.getElementById('receipt-quota-groc-bal').innerText = `₹${customerCard.grocLimit - customerCard.grocDrawn}`;
-  
-  document.getElementById('receipt-quota-liq-limit').innerText = `${customerCard.liqLimit}`;
-  document.getElementById('receipt-quota-liq-drawn').innerText = `${customerCard.liqDrawn}`;
-  document.getElementById('receipt-quota-liq-bal').innerText = `${customerCard.liqLimit - customerCard.liqDrawn}`;
-  
-  // Category Summary
-  const catSummary = document.getElementById('receipt-category-summary');
-  catSummary.innerHTML = Object.keys(txCats).map(cat => 
-    `<div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-      <span>${cat}:</span> <strong>₹${txCats[cat].toFixed(2)}</strong>
-    </div>`
-  ).join('');
-  
-  // Taxes
-  document.getElementById('receipt-tax-summary-body').innerHTML = `
-    <tr><td>18%</td><td>${totalGross.toFixed(2)}</td><td>${totalCGST.toFixed(2)}</td><td>${totalSGST.toFixed(2)}</td></tr>
-  `;
+  // Quotas
+  const elGrocLimit = document.getElementById('receipt-quota-groc-limit');
+  if (elGrocLimit) elGrocLimit.innerText = `₹${customerCard.grocLimit}`;
 
-  document.getElementById('receipt-total-gross').innerText = `₹${totalGross.toFixed(2)}`;
-  document.getElementById('receipt-total-cgst').innerText = `₹${totalCGST.toFixed(2)}`;
-  document.getElementById('receipt-total-sgst').innerText = `₹${totalSGST.toFixed(2)}`;
+  const elGrocDrawn = document.getElementById('receipt-quota-groc-drawn');
+  if (elGrocDrawn) elGrocDrawn.innerText = `₹${customerCard.grocDrawn}`;
+
+  const elGrocBal = document.getElementById('receipt-quota-groc-bal');
+  if (elGrocBal) elGrocBal.innerText = `₹${customerCard.grocLimit - customerCard.grocDrawn}`;
   
+  const elLiqLimit = document.getElementById('receipt-quota-liq-limit');
+  if (elLiqLimit) elLiqLimit.innerText = `${customerCard.liqLimit}`;
+
+  const elLiqDrawn = document.getElementById('receipt-quota-liq-drawn');
+  if (elLiqDrawn) elLiqDrawn.innerText = `${customerCard.liqDrawn}`;
+
+  const elLiqBal = document.getElementById('receipt-quota-liq-bal');
+  if (elLiqBal) elLiqBal.innerText = `${customerCard.liqLimit - customerCard.liqDrawn}`;
+  
+  // Taxes Matrix
+  const elTaxBaseCgst = document.getElementById('receipt-tax-base-cgst');
+  if (elTaxBaseCgst) elTaxBaseCgst.innerText = `₹${totalGross.toFixed(2)}`;
+
+  const elTaxBaseSgst = document.getElementById('receipt-tax-base-sgst');
+  if (elTaxBaseSgst) elTaxBaseSgst.innerText = `₹${totalGross.toFixed(2)}`;
+
+  const elTotalCgst = document.getElementById('receipt-total-cgst');
+  if (elTotalCgst) elTotalCgst.innerText = `₹${totalCGST.toFixed(2)}`;
+
+  const elTotalSgst = document.getElementById('receipt-total-sgst');
+  if (elTotalSgst) elTotalSgst.innerText = `₹${totalSGST.toFixed(2)}`;
+
+  const elTotalGross = document.getElementById('receipt-total-gross');
+  if (elTotalGross) elTotalGross.innerText = `₹${totalGross.toFixed(2)}`;
+
+  const elTotalGst = document.getElementById('receipt-total-gst');
+  if (elTotalGst) elTotalGst.innerText = `₹${(totalCGST + totalSGST).toFixed(2)}`;
+
+  // Financial Totals
   const netRounded = Math.round(totalNet);
-  document.getElementById('receipt-total-net').innerText = `₹${netRounded.toFixed(2)}`;
-  document.getElementById('receipt-amount-words').innerText = "RUPEES " + netRounded + " ONLY";
-  
-  const savings = totalMarketPrice - totalNet;
-  document.getElementById('receipt-savings').innerText = `₹${savings.toFixed(2)}`;
+  const savings = Math.max(0, totalMarketPrice - totalNet);
+
+  const elMarketTot = document.getElementById('receipt-market-total');
+  if (elMarketTot) elMarketTot.innerText = `₹ ${totalMarketPrice.toFixed(2)}`;
+
+  const elSumTaxable = document.getElementById('receipt-summary-taxable');
+  if (elSumTaxable) elSumTaxable.innerText = `₹ ${totalGross.toFixed(2)}`;
+
+  const elSumTaxes = document.getElementById('receipt-summary-taxes');
+  if (elSumTaxes) elSumTaxes.innerText = `₹ ${(totalCGST + totalSGST).toFixed(2)}`;
+
+  const elSavings = document.getElementById('receipt-savings');
+  if (elSavings) elSavings.innerText = `₹ ${savings.toFixed(2)}`;
+
+  const elTotalNet = document.getElementById('receipt-total-net');
+  if (elTotalNet) elTotalNet.innerText = `₹ ${netRounded.toFixed(2)}`;
+
+  const elAmountWords = document.getElementById('receipt-amount-words');
+  if (elAmountWords) elAmountWords.innerText = `RUPEES ${numberToWordsINR(netRounded).toUpperCase()} ONLY`;
+
+  const elCashTendered = document.getElementById('receipt-cash-tendered');
+  if (elCashTendered) elCashTendered.innerText = `₹ ${netRounded.toFixed(2)}`;
+
+  // Denominations Grid
+  const denomsGrid = document.getElementById('receipt-denominations-grid');
+  if (denomsGrid) {
+    const denomsList = calculateCashDenominations(netRounded);
+    denomsGrid.innerHTML = denomsList.map(item => `
+      <div>${item.denom >= 10 ? '₹' + item.denom : ' ₹' + item.denom} &times; ${String(item.count).padStart(3, ' ')} = ₹${item.amount.toFixed(2).padStart(9, ' ')}</div>
+    `).join('');
+  }
 }
