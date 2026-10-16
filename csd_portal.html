@@ -325,7 +325,32 @@
             <div class="cart-summary">
               <div class="summary-row"><span>Taxable Value:</span><span id="cart-subtotal">₹ 0.00</span></div>
               <div class="summary-row total"><span>NET PAYABLE:</span><span id="cart-total">₹ 0.00</span></div>
-              <button id="btn-print" class="btn-print" disabled>🖨️ Generate Bill</button>
+
+              <!-- Payment Mode & Hold Submission Configuration -->
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; margin-top: 12px;">
+                <label style="font-size: 11px; font-weight: 700; color: var(--csd-navy); display: block; margin-bottom: 6px;">TRANSACTION SETTLEMENT TYPE</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                  <button type="button" id="tab-pay-completed" class="btn-header" style="flex: 1; font-size: 11px; font-weight: 700; background: var(--csd-blue); color: #fff; border: none; padding: 6px;" onclick="selectPaymentType('COMPLETED')">💰 Cash Settled</button>
+                  <button type="button" id="tab-pay-hold" class="btn-header" style="flex: 1; font-size: 11px; font-weight: 700; background: #e2e8f0; color: #475569; border: none; padding: 6px;" onclick="selectPaymentType('ON_HOLD')">⏳ Money Submitted (On Hold)</button>
+                </div>
+
+                <div id="hold-status-desc" style="display: none; background: #fef3c7; border: 1px solid #fde047; padding: 6px 8px; border-radius: 4px; font-size: 10.5px; color: #92400e; margin-bottom: 8px; line-height: 1.35;">
+                  <strong>Status: MONEY SUBMITTED TO CSD (ON HOLD)</strong><br>
+                  Amount received in advance &amp; held securely in CSD Regimental Chest pending clearance/indent dispatch.
+                </div>
+
+                <div style="margin-top: 6px;">
+                  <label for="pos-custom-datetime" style="font-size: 10.5px; font-weight: 600; color: #334155; display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                    <span>Custom Receipt Date &amp; Time:</span>
+                    <button type="button" onclick="resetPosDatetimeNow()" style="background: none; border: none; color: var(--csd-blue); font-size: 10px; cursor: pointer; text-decoration: underline;">Set Current Time</button>
+                  </label>
+                  <input type="datetime-local" id="pos-custom-datetime" style="width: 100%; padding: 6px 8px; font-size: 11px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: 'Roboto Mono', monospace; box-sizing: border-box;">
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <button id="btn-print" class="btn-print" style="margin-top: 0; flex: 2;" disabled>🖨️ Generate &amp; Print Bill</button>
+              </div>
             </div>
           </div>
         </div>
@@ -352,8 +377,9 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th>Date</th>
+                <th>Date &amp; Time</th>
                 <th>Bill No</th>
+                <th>Status</th>
                 <th>Amount</th>
                 <th>Action</th>
               </tr>
@@ -480,17 +506,22 @@
         <div class="hole" style="width:7px; height:7px; border-radius:50%; background:#94a3b8;"></div>
       </div>
 
-      <div class="slip-content" style="font-size: 10.5px; line-height: 1.38; font-weight: 500; margin: 0 12px; color: #000000;">
+      <div class="slip-content" style="font-size: 10.5px; line-height: 1.35; font-weight: 500; margin: 0 10px; color: #000000;">
+        <!-- Centered Official CSD Logo -->
+        <div style="text-align: center; margin-bottom: 4px;">
+          <img src="assets/csd_logo.png" alt="Canteen Stores Department" id="receipt-official-logo" style="height: 52px; width: auto; object-fit: contain; display: inline-block; filter: grayscale(10%) contrast(110%);">
+        </div>
+
         <!-- Header -->
-        <div style="text-align: center; font-weight: 800; font-size: 13.5px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
-        <div style="text-align: center; font-weight: 800; font-size: 16px; letter-spacing: 1px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
-        <div style="text-align: center; font-weight: 800; font-size: 12.5px;">UNIT RUN CANTEEN (URC) &bull; <span id="receipt-canteen-name">HQ DELHI AREA (SENA BHAWAN)</span></div>
-        <div style="text-align: center; font-size: 9.5px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: <span id="receipt-state-tin">URC-DEL-0412</span></div>
-        <div style="text-align: center; font-size: 9px; color: #222;">DEPOT: <span id="receipt-supply-depot">DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT)</span> &bull; STATION: <span id="receipt-station-hq">HQ DELHI AREA (011)</span> &bull; REGIMENTAL CASH CHEST: RCC-01</div>
-        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
-        <div style="text-align: center; font-weight: 800; font-size: 12.5px; letter-spacing: 0.5px;">RETAIL TAX INVOICE / CASH MEMO &bull; OFFICIAL A4 DOT MATRIX BILL</div>
-        <div style="text-align: center; font-size: 9px; font-weight: 700;">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
-        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="text-align: center; font-weight: 800; font-size: 13px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+        <div style="text-align: center; font-weight: 800; font-size: 15px; letter-spacing: 0.8px; margin: 1px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+        <div style="text-align: center; font-weight: 800; font-size: 12px;">UNIT RUN CANTEEN (URC) &bull; <span id="receipt-canteen-name">HQ DELHI AREA (SENA BHAWAN)</span></div>
+        <div style="text-align: center; font-size: 9px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: <span id="receipt-state-tin">URC-DEL-0412</span></div>
+        <div style="text-align: center; font-size: 8.5px; color: #222;">DEPOT: <span id="receipt-supply-depot">DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT)</span> &bull; STATION: <span id="receipt-station-hq">HQ DELHI AREA (011)</span> &bull; REGIMENTAL CASH CHEST: RCC-01</div>
+        <div style="margin: 4px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="text-align: center; font-weight: 800; font-size: 12px; letter-spacing: 0.5px;" id="receipt-title-line">RETAIL TAX INVOICE / CASH MEMO &bull; OFFICIAL A4 DOT MATRIX BILL</div>
+        <div style="text-align: center; font-size: 8.5px; font-weight: 700;" id="receipt-sub-banner">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
+        <div style="margin: 4px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
         
         <!-- Metadata 2 Columns -->
         <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px;">
@@ -592,14 +623,14 @@
         </div>
 
         <!-- Physical Cash Tendered & Denomination Breakdown -->
-        <div style="margin: 5px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
-        <div style="font-weight: 800; font-size: 9.5px;">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
-        <div style="display: flex; justify-content: space-between; font-size: 9px; margin-top: 2px;">
-          <span>PAYMENT METHOD: <strong>HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)</strong></span>
-          <span>STATUS: <strong>PAID IN FULL &bull; CASH CLEARED</strong></span>
+        <div style="margin: 4px 0; white-space: pre; overflow: hidden; font-size: 10px; font-weight: 700;">========================================================================================================================</div>
+        <div style="font-weight: 800; font-size: 9.5px;" id="receipt-pay-register-title">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
+        <div style="display: flex; justify-content: space-between; font-size: 8.5px; margin-top: 2px;">
+          <span>PAYMENT METHOD: <strong id="receipt-pay-method-desc">HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)</strong></span>
+          <span>STATUS: <strong id="receipt-status-display" style="color: #0f172a;">PAID IN FULL &bull; CASH CLEARED</strong></span>
         </div>
         <div style="display: flex; justify-content: space-between; font-size: 8.5px; margin-top: 2px;">
-          <span>CASH TENDERED AT POS-01 : <strong style="font-size: 9.5px;" id="receipt-cash-tendered">₹ 0.00</strong></span>
+          <span>CASH TENDERED AT POS-01 : <strong style="font-size: 9px;" id="receipt-cash-tendered">₹ 0.00</strong></span>
           <span>CHANGE DUE / RETURNED : <strong>₹ 0.00</strong></span>
           <span>TREASURY VOUCHER : <strong style="font-family: monospace;" id="receipt-cash-voucher-sub">CSD/CASH/DEL/2026/10/9482</strong></span>
         </div>

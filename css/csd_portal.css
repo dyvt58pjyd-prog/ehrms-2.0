@@ -426,7 +426,7 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 3.5mm 5mm;
+    margin: 2mm 3mm;
   }
   body * { visibility: hidden; }
   html, body {
@@ -435,7 +435,7 @@ body {
     padding: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    max-height: 289mm !important;
+    max-height: 290mm !important;
     overflow: hidden !important;
   }
   #receipt-container, #receipt-container * { visibility: visible; }
@@ -445,13 +445,14 @@ body {
     left: 0;
     top: 0;
     width: 100% !important;
-    max-height: 288mm !important;
+    max-height: 290mm !important;
     overflow: hidden !important;
     page-break-inside: avoid !important;
+    page-break-after: avoid !important;
     font-family: 'Roboto Mono', 'Courier New', Consolas, monospace !important;
-    font-size: 8.5px;
+    font-size: 8px;
     color: #000;
-    line-height: 1.25;
+    line-height: 1.2;
     padding: 0;
     margin: 0;
     -webkit-print-color-adjust: exact;
@@ -461,11 +462,28 @@ body {
   .sprocket-wrapper {
     border: none !important;
     box-shadow: none !important;
-    padding: 0 4mm !important;
+    padding: 0 2mm !important;
     max-width: 100% !important;
-    max-height: 288mm !important;
+    max-height: 290mm !important;
     overflow: hidden !important;
     page-break-inside: avoid !important;
+    page-break-after: avoid !important;
     background: transparent !important;
+  }
+  .slip-content {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    margin: 0 2px !important;
+  }
+  .invoice-table {
+    font-size: 7.5px !important;
+    page-break-inside: avoid !important;
+  }
+  .invoice-table th, .invoice-table td {
+    padding: 2.5px 2px !important;
+  }
+  #receipt-official-logo {
+    height: 44px !important;
+    margin-bottom: 2px !important;
   }
 }

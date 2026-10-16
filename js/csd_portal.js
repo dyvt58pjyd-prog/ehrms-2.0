@@ -949,16 +949,24 @@ function renderCustomerDashboard() {
   const tbody = document.getElementById('table-cust-history');
   
   if (myTxns.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No recent transactions found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No recent transactions found.</td></tr>';
   } else {
     tbody.innerHTML = myTxns.map(t => {
       const amt = (typeof t.totalNet === 'number' ? t.totalNet : (typeof t.total === 'number' ? t.total : 0));
+      const rawDate = t.customDate || t.custom_date || t.date;
+      const displayDate = rawDate ? new Date(rawDate).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+      const isHold = t.status === 'ON_HOLD';
       return `
         <tr>
-          <td>${new Date(t.date).toLocaleDateString()}</td>
+          <td style="font-size: 12px; font-weight: 500;">${displayDate}</td>
           <td style="font-family: monospace; font-weight: 700; color: var(--csd-blue);">${t.billNo || t.id}</td>
+          <td>
+            <span class="status-badge ${isHold ? 'warning' : 'success'}" style="font-size: 10px; font-weight: 700;">
+              ${isHold ? '⏳ ON HOLD (SUBMITTED)' : '✅ CLEARED'}
+            </span>
+          </td>
           <td style="font-weight: 800; color: #0f172a;">₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td><button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue); cursor: pointer; font-weight: 700;" onclick="viewCustomerBill('${t.id}')">View Bill</button></td>
+          <td><button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue); cursor: pointer; font-weight: 700; font-size: 11px; padding: 4px 8px;" onclick="viewCustomerBill('${t.id}')">View Receipt</button></td>
         </tr>
       `;
     }).join('');
@@ -980,7 +988,9 @@ window.viewCustomerBill = function(txnId) {
     liqDrawn: 2
   };
   cart = txn.items ? txn.items.map(i => ({ ...i })) : [];
-  generateReceipt(off, txn.billNo || txn.id, txn.categoryBreakdown || {});
+  const txnDate = txn.customDate || txn.custom_date || txn.date;
+  const txnStatus = txn.status || 'COMPLETED';
+  generateReceipt(off, txn.billNo || txn.id, txn.categoryBreakdown || {}, txnDate, txnStatus);
   window.print();
 };
 
@@ -1157,12 +1167,64 @@ function updateCartUI() {
   validateCartQuotas();
 }
 
+let activePaymentType = 'COMPLETED'; // 'COMPLETED' or 'ON_HOLD'
+
+window.selectPaymentType = function(type) {
+  activePaymentType = type;
+  const btnCompleted = document.getElementById('tab-pay-completed');
+  const btnHold = document.getElementById('tab-pay-hold');
+  const descHold = document.getElementById('hold-status-desc');
+
+  if (type === 'ON_HOLD') {
+    if (btnHold) {
+      btnHold.style.background = '#d97706';
+      btnHold.style.color = '#ffffff';
+    }
+    if (btnCompleted) {
+      btnCompleted.style.background = '#e2e8f0';
+      btnCompleted.style.color = '#475569';
+    }
+    if (descHold) descHold.style.display = 'block';
+  } else {
+    if (btnCompleted) {
+      btnCompleted.style.background = 'var(--csd-blue)';
+      btnCompleted.style.color = '#ffffff';
+    }
+    if (btnHold) {
+      btnHold.style.background = '#e2e8f0';
+      btnHold.style.color = '#475569';
+    }
+    if (descHold) descHold.style.display = 'none';
+  }
+};
+
+window.resetPosDatetimeNow = function() {
+  const input = document.getElementById('pos-custom-datetime');
+  if (input) {
+    const d = new Date();
+    // format as YYYY-MM-DDTHH:mm
+    const tzOffset = d.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(d.getTime() - tzOffset)).toISOString().slice(0, 16);
+    input.value = localISOTime;
+  }
+};
+
 function handleCheckout() {
   if (!validateCartQuotas()) return;
   
   const custSelect = document.getElementById('cart-customer-select').value;
   const officer = officers.find(o => o.cardNo === custSelect);
   
+  // Custom Date Time from POS input
+  const customDateInput = document.getElementById('pos-custom-datetime');
+  let chosenDateIso = new Date().toISOString();
+  if (customDateInput && customDateInput.value) {
+    const parsed = new Date(customDateInput.value);
+    if (!isNaN(parsed.getTime())) {
+      chosenDateIso = parsed.toISOString();
+    }
+  }
+
   // Update Stock & Quotas
   let txTotal = 0;
   let txCats = {};
@@ -1170,7 +1232,7 @@ function handleCheckout() {
   cart.forEach(cartItem => {
     // Deplete stock
     const invItem = inventory.find(i => i.id === cartItem.id);
-    invItem.stock -= cartItem.qty;
+    if (invItem) invItem.stock -= cartItem.qty;
     
     const val = cartItem.price * cartItem.qty;
     txTotal += val;
@@ -1190,7 +1252,7 @@ function handleCheckout() {
   // Blockchain Hashing Simulation
   const prevTx = transactions[transactions.length - 1];
   const prevHash = prevTx ? prevTx.hash : '0000000000000000000000000000000000000000000000000000000000000000';
-  const payload = billNo + officer.cardNo + txTotal + new Date().toISOString() + prevHash;
+  const payload = billNo + officer.cardNo + txTotal + chosenDateIso + prevHash;
   
   // Simple deterministic hash simulation
   let hashVal = 0;
@@ -1209,7 +1271,10 @@ function handleCheckout() {
     terminal: 'POS-01 / IP: 192.168.1.101',
     cashier: 'Sub Maj R.K. Yadav',
     manager: 'Sub Maj R.K. Yadav',
-    date: new Date().toISOString(),
+    date: chosenDateIso,
+    customDate: chosenDateIso,
+    paymentMode: activePaymentType === 'ON_HOLD' ? 'MONEY SUBMITTED IN ADVANCE (ON HOLD - CSD CHEST)' : 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+    paymentType: activePaymentType === 'ON_HOLD' ? 'ON_HOLD' : 'CASH',
     total: txTotal,
     totalNet: txTotal,
     totalTaxable: txTotal / 1.18,
@@ -1219,7 +1284,7 @@ function handleCheckout() {
     categoryBreakdown: txCats,
     prevHash: prevHash,
     hash: hashHex,
-    status: 'COMPLETED'
+    status: activePaymentType
   };
 
   transactions.push(newTxn);
@@ -1231,8 +1296,8 @@ function handleCheckout() {
     body: JSON.stringify(newTxn)
   }).catch(e => console.warn('SQLite transaction push notice:', e));
   
-  // Render specific Bill details for printing (simplified for POS view logic)
-  generateReceipt(officer, billNo, txCats);
+  // Render specific Bill details for printing (with custom date and status)
+  generateReceipt(officer, billNo, txCats, chosenDateIso, activePaymentType);
   
   window.print();
   setTimeout(() => {
@@ -1265,9 +1330,13 @@ function renderAdminAudit() {
 }
 
 
-function generateReceipt(customerCard, billNo, txCats) {
-  const now = new Date();
-  const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
+function generateReceipt(customerCard, billNo, txCats, customDateTime, paymentStatus = 'COMPLETED') {
+  let targetDate = new Date();
+  if (customDateTime) {
+    const parsed = new Date(customDateTime);
+    if (!isNaN(parsed.getTime())) targetDate = parsed;
+  }
+  const formattedDate = targetDate.toISOString().replace('T', ' ').slice(0, 19);
   
   // Populate the A4 dot matrix header & metadata fields
   const safeBillNo = billNo || 'CSD/URC/DEL/2026/10/9482';
@@ -1277,14 +1346,44 @@ function generateReceipt(customerCard, billNo, txCats) {
   const elDate = document.getElementById('receipt-date');
   if (elDate) elDate.innerText = formattedDate;
 
+  const monthYearStr = formattedDate.slice(0, 7).replace('-', '/');
+  const billSuffix = safeBillNo.replace(/[^0-9]/g, '').slice(-4) || '9482';
+
   const elIndent = document.getElementById('receipt-indent-no');
-  if (elIndent) elIndent.innerText = 'IND-' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
+  if (elIndent) elIndent.innerText = 'IND-' + monthYearStr + '/' + billSuffix;
 
   const elCashVoucher = document.getElementById('receipt-cash-voucher');
-  if (elCashVoucher) elCashVoucher.innerText = 'CSD/CASH/DEL/' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
+  if (elCashVoucher) elCashVoucher.innerText = (paymentStatus === 'ON_HOLD' ? 'CSD/ADV-HOLD/DEL/' : 'CSD/CASH/DEL/') + monthYearStr + '/' + billSuffix;
 
   const elCashVoucherSub = document.getElementById('receipt-cash-voucher-sub');
-  if (elCashVoucherSub) elCashVoucherSub.innerText = 'CSD/CASH/DEL/' + formattedDate.slice(0, 7).replace('-', '/') + '/' + safeBillNo.slice(-4);
+  if (elCashVoucherSub) elCashVoucherSub.innerText = (paymentStatus === 'ON_HOLD' ? 'CSD/ADV-HOLD/DEL/' : 'CSD/CASH/DEL/') + monthYearStr + '/' + billSuffix;
+
+  // Title line and status banners
+  const elTitleLine = document.getElementById('receipt-title-line');
+  const elSubBanner = document.getElementById('receipt-sub-banner');
+  const elPayMethodDesc = document.getElementById('receipt-pay-method-desc');
+  const elStatusDisplay = document.getElementById('receipt-status-display');
+  const elPayRegTitle = document.getElementById('receipt-pay-register-title');
+
+  if (paymentStatus === 'ON_HOLD') {
+    if (elTitleLine) elTitleLine.innerText = 'ADVANCE MONEY DEPOSIT & CSD RECEIPT &bull; PAYMENT ON HOLD';
+    if (elSubBanner) elSubBanner.innerText = '*** ORIGINAL MONEY RECEIPT &bull; CASH DEPOSITED IN ADVANCE TO CSD CHEST (ON HOLD) ***';
+    if (elPayMethodDesc) elPayMethodDesc.innerText = 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)';
+    if (elStatusDisplay) {
+      elStatusDisplay.innerText = 'MONEY SUBMITTED (ON HOLD) &bull; SECURED IN CSD SAFE';
+      elStatusDisplay.style.color = '#b45309';
+    }
+    if (elPayRegTitle) elPayRegTitle.innerText = 'ADVANCE MONEY SUBMISSION &bull; ON-HOLD HOLDING REGISTER:';
+  } else {
+    if (elTitleLine) elTitleLine.innerText = 'RETAIL TAX INVOICE / CASH MEMO &bull; OFFICIAL A4 DOT MATRIX BILL';
+    if (elSubBanner) elSubBanner.innerText = '*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***';
+    if (elPayMethodDesc) elPayMethodDesc.innerText = 'HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)';
+    if (elStatusDisplay) {
+      elStatusDisplay.innerText = 'PAID IN FULL &bull; CASH CLEARED';
+      elStatusDisplay.style.color = '#0f172a';
+    }
+    if (elPayRegTitle) elPayRegTitle.innerText = 'PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:';
+  }
   
   const elCashier = document.getElementById('receipt-cashier-name');
   if (elCashier) elCashier.innerText = currentUser?.name || 'Sub Maj R.K. Yadav';

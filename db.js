@@ -96,9 +96,20 @@ class DatabaseManager {
         cash_change REAL,
         cash_voucher_no TEXT,
         cash_receipt_no TEXT,
+        custom_date TEXT,
         created_at TEXT NOT NULL
       );
     `);
+
+    // Ensure custom_date exists for existing sqlite databases
+    try {
+      const cols = this.db.prepare("PRAGMA table_info(csd_transactions)").all().map(c => c.name);
+      if (!cols.includes('custom_date')) {
+        this.db.exec("ALTER TABLE csd_transactions ADD COLUMN custom_date TEXT");
+      }
+    } catch (e) {
+      // pragma migration fallback
+    }
 
     // 4. CSD Officers & Smart Card Holders
     this.db.exec(`
@@ -669,7 +680,8 @@ class DatabaseManager {
         cashTendered: r.cash_tendered,
         cashChange: r.cash_change,
         cashVoucherNo: r.cash_voucher_no,
-        cashReceiptNo: r.cash_receipt_no
+        cashReceiptNo: r.cash_receipt_no,
+        customDate: r.custom_date
       };
     });
   }
@@ -685,8 +697,8 @@ class DatabaseManager {
         payment_mode, payment_type, items_json, total_taxable, total_cgst,
         total_sgst, total_net, total_savings, card_no, rank, groc_limit,
         groc_drawn, liq_limit, liq_drawn, status, cash_tendered, cash_change,
-        cash_voucher_no, cash_receipt_no, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        cash_voucher_no, cash_receipt_no, custom_date, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(id) DO UPDATE SET
         bill_no = excluded.bill_no,
         indent_no = excluded.indent_no,
@@ -713,7 +725,8 @@ class DatabaseManager {
         cash_tendered = excluded.cash_tendered,
         cash_change = excluded.cash_change,
         cash_voucher_no = excluded.cash_voucher_no,
-        cash_receipt_no = excluded.cash_receipt_no
+        cash_receipt_no = excluded.cash_receipt_no,
+        custom_date = excluded.custom_date
     `);
 
     stmt.run(
@@ -744,6 +757,7 @@ class DatabaseManager {
       Number(txn.cashChange || txn.cash_change) || 0,
       String(txn.cashVoucherNo || txn.cash_voucher_no || ''),
       String(txn.cashReceiptNo || txn.cash_receipt_no || ''),
+      txn.customDate || txn.custom_date || null,
       now
     );
   }

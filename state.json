@@ -181,256 +181,256 @@
   "highContrast": false,
   "fontSize": "NORMAL",
   "leaveBalances": {
-    "CL": {
-      "name": "Casual Leave",
-      "unit": "days",
-      "hindi": "आकस्मिक अवकाश",
-      "availed": 3,
-      "balance": 5,
-      "opening": 8,
-      "credited": 8
-    },
-    "EL": {
-      "max": 300,
-      "name": "Earned Leave",
-      "unit": "days",
-      "hindi": "अर्जित अवकाश",
-      "availed": 3,
-      "balance": 42,
-      "opening": 30,
-      "credited": 15
-    },
-    "RH": {
-      "name": "Restricted Holiday",
-      "unit": "days",
-      "hindi": "प्रतिबंधित अवकाश",
-      "availed": 1,
-      "balance": 1,
-      "opening": 2,
-      "credited": 2
-    },
     "CCL": {
       "name": "Child Care Leave",
-      "unit": "days",
       "hindi": "बाल देखरेख अवकाश",
+      "opening": 0,
+      "credited": 0,
       "availed": 0,
       "balance": 0,
-      "opening": 0,
-      "credited": 0
+      "unit": "days"
     },
-    "HPL": {
-      "name": "Half Pay Leave",
-      "unit": "days",
-      "hindi": "अर्ध वेतन अवकाश",
-      "availed": 0,
-      "balance": 26,
-      "opening": 20,
-      "credited": 10
+    "CL": {
+      "name": "Casual Leave",
+      "hindi": "आकस्मिक अवकाश",
+      "opening": 8,
+      "credited": 8,
+      "availed": 3,
+      "balance": 5,
+      "unit": "days"
     },
     "COMMUTED": {
       "name": "Commuted Leave",
-      "unit": "days",
       "hindi": "रूपांतरित अवकाश",
+      "opening": 15,
+      "credited": 0,
       "availed": 2,
       "balance": 13,
-      "opening": 15,
-      "credited": 0
+      "unit": "days"
+    },
+    "EL": {
+      "name": "Earned Leave",
+      "hindi": "अर्जित अवकाश",
+      "opening": 30,
+      "credited": 15,
+      "availed": 3,
+      "balance": 42,
+      "unit": "days",
+      "max": 300
+    },
+    "HPL": {
+      "name": "Half Pay Leave",
+      "hindi": "अर्ध वेतन अवकाश",
+      "opening": 20,
+      "credited": 10,
+      "availed": 0,
+      "balance": 26,
+      "unit": "days"
     },
     "PATERNITY": {
       "name": "Paternity Leave",
-      "unit": "days",
       "hindi": "पितृत्व अवकाश",
+      "opening": 0,
+      "credited": 0,
       "availed": 0,
       "balance": 0,
-      "opening": 0,
-      "credited": 0
+      "unit": "days"
+    },
+    "RH": {
+      "name": "Restricted Holiday",
+      "hindi": "प्रतिबंधित अवकाश",
+      "opening": 2,
+      "credited": 2,
+      "availed": 1,
+      "balance": 1,
+      "unit": "days"
     }
   },
   "leaveApplications": [
     {
       "id": "LV-2026-10088",
-      "days": 1,
       "type": "CL",
-      "reason": "Personal banking and official asset registration appointment",
-      "status": "SANCTIONED",
-      "endDate": "2026-10-12",
       "typeName": "Casual Leave",
-      "appliedOn": "2026-10-10",
       "startDate": "2026-10-12",
+      "endDate": "2026-10-12",
+      "days": 1,
+      "reason": "Personal banking and official asset registration appointment",
+      "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-10-10",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
       "approvedOn": "2026-10-10",
-      "stationLeave": false,
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/501",
       "workflowRoute": [
         {
-          "date": "10-Oct-2026 09:10",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "10-Oct-2026 09:10"
         },
         {
-          "date": "10-Oct-2026 11:20",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Scrutinized & Recommended",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "10-Oct-2026 11:20"
         },
         {
-          "date": "10-Oct-2026 11:45",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "10-Oct-2026 11:45"
         }
-      ],
-      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/501",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": ""
+      ]
     },
     {
       "id": "LV-2026-10042",
-      "days": 2,
       "type": "COMMUTED",
-      "reason": "Viral flu and seasonal fever; medical fitness certificate submitted from CGHS Wellness Centre, RK Puram",
-      "status": "SANCTIONED",
-      "endDate": "2026-10-06",
       "typeName": "Commuted Leave (Medical)",
-      "appliedOn": "2026-10-04",
       "startDate": "2026-10-05",
+      "endDate": "2026-10-06",
+      "days": 2,
+      "reason": "Viral flu and seasonal fever; medical fitness certificate submitted from CGHS Wellness Centre, RK Puram",
+      "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-10-04",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
       "approvedOn": "2026-10-04",
-      "stationLeave": false,
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/MED/2026/89",
       "workflowRoute": [
         {
-          "date": "04-Oct-2026 08:30",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted with CGHS AMA Certificate",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "04-Oct-2026 08:30"
         },
         {
-          "date": "04-Oct-2026 09:15",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Medical Scrutiny Verified",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "04-Oct-2026 09:15"
         },
         {
-          "date": "04-Oct-2026 09:45",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "04-Oct-2026 09:45"
         }
-      ],
-      "sanctionOrderNo": "MOD/DMA/ESTT-I/MED/2026/89",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": ""
+      ]
     },
     {
       "id": "LV-2026-00455",
-      "days": 1,
       "type": "RH",
-      "reason": "Festive observance (Anant Chaturdashi)",
-      "status": "SANCTIONED",
-      "endDate": "2026-09-22",
       "typeName": "Restricted Holiday",
-      "appliedOn": "2026-09-03",
       "startDate": "2026-09-22",
+      "endDate": "2026-09-22",
+      "days": 1,
+      "reason": "Festive observance (Anant Chaturdashi)",
+      "stationLeave": false,
+      "stationLeaveAddress": "",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-03",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
       "approvedOn": "2026-09-04",
-      "stationLeave": false,
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/RH/2026/09",
       "workflowRoute": [
         {
-          "date": "03-Sep-2026 11:20",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "03-Sep-2026 11:20"
         },
         {
-          "date": "03-Sep-2026 15:45",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Forwarded for Sanction",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "03-Sep-2026 15:45"
         },
         {
-          "date": "04-Sep-2026 09:30",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "04-Sep-2026 09:30"
         }
-      ],
-      "sanctionOrderNo": "MOD/DMA/ESTT-I/RH/2026/09",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": ""
+      ]
     },
     {
       "id": "LV-2026-98343",
-      "days": 3,
       "type": "EL",
-      "reason": "For Outdoor Work, of My Sister regarding her MBA Admission Counselling.",
-      "status": "SANCTIONED",
-      "endDate": "2026-09-23",
       "typeName": "Earned Leave",
-      "appliedOn": "2026-09-08",
       "startDate": "2026-09-21",
+      "endDate": "2026-09-23",
+      "days": 3,
+      "reason": "For Outdoor Work, of My Sister regarding her MBA Admission Counselling.",
+      "stationLeave": true,
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-08",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
       "approvedOn": "2026-09-08",
-      "stationLeave": true,
+      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/412",
       "workflowRoute": [
         {
-          "date": "08-Sep-2026 08:15",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "08-Sep-2026 08:15"
         },
         {
-          "date": "08-Sep-2026 08:15",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Scrutinized & Recommended",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "08-Sep-2026 08:15"
         },
         {
-          "date": "08-Sep-2026 08:16",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "08-Sep-2026 08:16"
         }
-      ],
-      "sanctionOrderNo": "MOD/DMA/ESTT-I/LV/2026/412",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+      ]
     },
     {
       "id": "LV-2026-00412",
-      "days": 2,
       "type": "CL",
-      "reason": "Urgent family domestic commitment and personal paperwork at hometown Nashik",
-      "status": "SANCTIONED",
-      "endDate": "2026-09-16",
       "typeName": "Casual Leave",
-      "appliedOn": "2026-09-01",
       "startDate": "2026-09-15",
+      "endDate": "2026-09-16",
+      "days": 2,
+      "reason": "Urgent family domestic commitment and personal paperwork at hometown Nashik",
+      "stationLeave": true,
+      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)",
+      "emergencyContact": "+91 9822453218",
+      "status": "SANCTIONED",
+      "appliedOn": "2026-09-01",
       "approvedBy": "Shri Anil Kumar Chhapolia (Joint Secretary - Estt & Coord, DMA)",
       "approvedOn": "2026-09-02",
-      "stationLeave": true,
+      "sanctionOrderNo": "MoD/DMA/Estt-I/LV/2026/412",
       "workflowRoute": [
         {
-          "date": "01-Sep-2026 10:15",
           "role": "Applicant",
+          "officer": "Anurag Anil Bawaskar (ASO-I)",
           "action": "Application Submitted",
-          "officer": "Anurag Anil Bawaskar (ASO-I)"
+          "date": "01-Sep-2026 10:15"
         },
         {
-          "date": "01-Sep-2026 14:30",
           "role": "Branch Officer",
+          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)",
           "action": "Scrutinized & Recommended",
-          "officer": "Shri Rajender Singh (Deputy Secretary, Estt)"
+          "date": "01-Sep-2026 14:30"
         },
         {
-          "date": "02-Sep-2026 11:00",
           "role": "Sanctioning Authority",
+          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)",
           "action": "Sanctioned via Aadhaar e-Sign",
-          "officer": "Shri Anil Kumar Chhapolia (Joint Secretary, DMA)"
+          "date": "02-Sep-2026 11:00"
         }
-      ],
-      "sanctionOrderNo": "MoD/DMA/Estt-I/LV/2026/412",
-      "emergencyContact": "+91 9822453218",
-      "stationLeaveAddress": "Bawaskar Niwas, Ramdaspeth, Nashik (Maharashtra)"
+      ]
     }
   ],
   "serviceBook": {
@@ -1145,134 +1145,134 @@
     {
       "date": "2026-10-15",
       "inTime": "08:52 AM",
-      "status": "Present",
       "outTime": "--:--",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-10-14",
       "inTime": "08:55 AM",
-      "status": "Present",
       "outTime": "05:48 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-10-13",
       "inTime": "09:02 AM",
-      "status": "Present",
       "outTime": "05:40 PM",
+      "status": "Present",
       "location": "South Block Gate 4"
     },
     {
       "date": "2026-10-12",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - CL)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
       "location": "Order: MOD/DMA/ESTT-I/LV/2026/501"
     },
     {
       "date": "2026-10-11",
       "inTime": "--:--",
-      "status": "Sunday",
       "outTime": "--:--",
+      "status": "Sunday",
       "location": "-"
     },
     {
       "date": "2026-10-10",
       "inTime": "--:--",
-      "status": "Saturday",
       "outTime": "--:--",
+      "status": "Saturday",
       "location": "-"
     },
     {
       "date": "2026-10-09",
       "inTime": "08:50 AM",
-      "status": "Present",
       "outTime": "06:05 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-10-08",
       "inTime": "09:05 AM",
-      "status": "Present",
       "outTime": "05:35 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 1"
     },
     {
       "date": "2026-10-07",
       "inTime": "09:12 AM",
-      "status": "Present",
       "outTime": "05:30 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-10-06",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - Commuted)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - Commuted)",
       "location": "CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89"
     },
     {
       "date": "2026-10-05",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - Commuted)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - Commuted)",
       "location": "CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89"
     },
     {
       "date": "2026-09-23",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - EL)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL)",
       "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
     },
     {
       "date": "2026-09-22",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - EL/RH)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL/RH)",
       "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
     },
     {
       "date": "2026-09-21",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - EL)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - EL)",
       "location": "Order: MOD/DMA/ESTT-I/LV/2026/412"
     },
     {
       "date": "2026-09-16",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - CL)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
       "location": "Order: MoD/DMA/Estt-I/LV/2026/412"
     },
     {
       "date": "2026-09-15",
       "inTime": "--:--",
-      "status": "Leave (Sanctioned - CL)",
       "outTime": "--:--",
+      "status": "Leave (Sanctioned - CL)",
       "location": "Order: MoD/DMA/Estt-I/LV/2026/412"
     },
     {
       "date": "2026-09-08",
       "inTime": "08:55 AM",
-      "status": "Present",
       "outTime": "05:40 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     },
     {
       "date": "2026-09-04",
       "inTime": "09:15 AM",
-      "status": "Late",
       "outTime": "05:30 PM",
+      "status": "Late",
       "location": "Sena Bhawan Gate 1"
     },
     {
       "date": "2026-09-03",
       "inTime": "08:50 AM",
-      "status": "Present",
       "outTime": "06:05 PM",
+      "status": "Present",
       "location": "Sena Bhawan Gate 2"
     }
   ],
@@ -1549,82 +1549,82 @@
     "inventory": [
       {
         "id": "281950",
+        "hsn": "84713010",
         "sku": "281950",
         "name": "APPLE IPAD 10TH GEN (10.9\", WI-FI, 256GB) - SILVER",
-        "category": "Electronics",
-        "brand": "APPLE INC / APPLE INDIA PVT LTD",
-        "model": "A2696 / IPAD 10TH GEN (WI-FI, 256GB)",
-        "color": "SILVER",
-        "hsn": "84713010",
-        "stock": 18,
-        "price": 47500,
-        "marketPrice": 59900,
         "unit": "UNT",
-        "gstRate": 18,
+        "brand": "APPLE INC / APPLE INDIA PVT LTD",
+        "color": "SILVER",
         "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
-        "accessories": "USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL",
-        "warrantyExpires": "1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY",
-        "specs": "27.69 CM (10.9\") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C",
-        "serialNo": "DMPY9028IPAD10",
         "imei1": "N/A",
         "imei2": "N/A",
+        "model": "A2696 / IPAD 10TH GEN (WI-FI, 256GB)",
+        "price": 47500,
+        "specs": "27.69 CM (10.9\") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C",
+        "stock": 18,
         "batchNo": "BAT-2026/10-DEL-IPAD",
-        "afdCategory": "AFD-II (DURABLES)"
+        "gstRate": 18,
+        "category": "Electronics",
+        "serialNo": "DMPY9028IPAD10",
+        "accessories": "USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL",
+        "afdCategory": "AFD-II (DURABLES)",
+        "marketPrice": 59900,
+        "warrantyExpires": "1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY"
       },
       {
         "id": "281949",
+        "hsn": "85171300",
         "sku": "281949",
         "name": "APPLE IPHONE 17 (256GB) - ULTRAVIOLET",
-        "category": "Electronics",
-        "brand": "APPLE INC / APPLE INDIA PVT LTD",
-        "model": "A3391 / IPHONE 17",
-        "color": "ULTRAVIOLET",
-        "hsn": "85171300",
-        "stock": 20,
-        "price": 68900,
-        "marketPrice": 89900,
         "unit": "UNT",
-        "gstRate": 18,
+        "brand": "APPLE INC / APPLE INDIA PVT LTD",
+        "color": "ULTRAVIOLET",
         "grade": "SEALED BRAND NEW RETAIL PACK",
-        "accessories": "TYPE-C WOVEN CHARGING CABLE, SIM TRAY PIN, MANUAL",
-        "warrantyExpires": "1 YEAR APPLE PAN-INDIA LIMITED WARRANTY",
-        "specs": "15.75 CM (6.2\") SUPER RETINA XDR OLED 120HZ PROMOTION | APPLE A19 BIONIC 2NM CHIP | 8GB RAM | 256GB ROM | DUAL 48MP FUSION + 48MP ULTRA WIDE CAMERA | 4200 MAH BATTERY",
-        "serialNo": "G6TQ8121IP17UV",
         "imei1": "359822/15/901284/3",
         "imei2": "359822/15/901285/0",
+        "model": "A3391 / IPHONE 17",
+        "price": 68900,
+        "specs": "15.75 CM (6.2\") SUPER RETINA XDR OLED 120HZ PROMOTION | APPLE A19 BIONIC 2NM CHIP | 8GB RAM | 256GB ROM | DUAL 48MP FUSION + 48MP ULTRA WIDE CAMERA | 4200 MAH BATTERY",
+        "stock": 20,
         "batchNo": "BAT-2026/10-DEL",
-        "afdCategory": "AFD-II (DURABLES)"
+        "gstRate": 18,
+        "category": "Electronics",
+        "serialNo": "G6TQ8121IP17UV",
+        "accessories": "TYPE-C WOVEN CHARGING CABLE, SIM TRAY PIN, MANUAL",
+        "afdCategory": "AFD-II (DURABLES)",
+        "marketPrice": 89900,
+        "warrantyExpires": "1 YEAR APPLE PAN-INDIA LIMITED WARRANTY"
       },
       {
         "id": "281948",
+        "hsn": "85171300",
         "sku": "281948",
         "name": "APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL",
-        "category": "Electronics",
-        "brand": "APPLE INC / APPLE INDIA PVT LTD",
-        "model": "A3398 / IPHONE 17 PRO MAX (256GB)",
-        "color": "TITANIUM TEAL",
-        "hsn": "85171300",
-        "stock": 15,
-        "price": 114900,
-        "marketPrice": 144900,
         "unit": "UNT",
-        "gstRate": 18,
+        "brand": "APPLE INC / APPLE INDIA PVT LTD",
+        "color": "TITANIUM TEAL",
         "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
-        "accessories": "100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS",
-        "warrantyExpires": "28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)",
-        "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS",
         "imei1": "359810/24/849201/8",
         "imei2": "359810/24/849202/6",
-        "serialNo": "G6TF9027IPHONE17",
+        "model": "A3398 / IPHONE 17 PRO MAX (256GB)",
+        "price": 114900,
+        "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS",
+        "stock": 15,
         "batchNo": "BAT-2026/09-DEL-A17",
-        "afdCategory": "AFD-II (DURABLES)"
+        "gstRate": 18,
+        "category": "Electronics",
+        "serialNo": "G6TF9027IPHONE17",
+        "accessories": "100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS",
+        "afdCategory": "AFD-II (DURABLES)",
+        "marketPrice": 144900,
+        "warrantyExpires": "28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)"
       },
       {
         "id": "606820",
         "hsn": "85171300",
         "sku": "606820",
         "name": "APPLE MACBOOK PRO 16 M4 MAX (48GB/1TB)",
-        "unit": "Unit",
+        "unit": "UNT",
         "brand": "APPLE INC / INDIA",
         "color": "SPACE BLACK",
         "grade": "Brand New Sealed Box (Grade A)",
@@ -1639,7 +1639,7 @@
         "brandBox": "Brand New Sealed Box (Grade A)",
         "category": "Electronics",
         "serialNo": "C02TM8921APPLE",
-        "accessories": "All Original Accessories Included",
+        "accessories": "All Original Accessories Included (140W USB-C Adapter, Braided MagSafe 3 Cable)",
         "afdCategory": "AFD-II (Electronics / Two-Wheelers)",
         "marketPrice": 349900,
         "warrantyExpires": "1 Year Official Brand Warranty Pan-India"
@@ -1736,23 +1736,28 @@
       },
       {
         "id": "233243",
-        "hsn": "8517",
+        "hsn": "85171300",
         "sku": "233243",
         "name": "SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW",
-        "unit": "Unit",
-        "color": "Silver Shadow",
-        "grade": "Very Good (A)",
+        "unit": "UNT",
+        "brand": "SAMSUNG ELECTRONICS INDIA",
+        "color": "SILVER SHADOW",
+        "grade": "VERY GOOD (A) - BRAND BOX",
         "imei1": "358941/08/948210/6",
         "imei2": "358941/08/948211/4",
+        "model": "SM-S931B/DS (GALAXY S25 5G)",
         "price": 54436,
-        "specs": "15.75 cm (6.2\") Full HD+ Dynamic AMOLED (120Hz) | Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm) | 12GB RAM | 256GB ROM | 50MP + 10MP + 12MP Rear Camera | 12MP Front Camera | 4000 mAh Lithium Ion Battery | Brand Box with All Accessories Included | Brand Warranty till 23-05-2027 (Grade: Very Good A)",
+        "specs": "15.75 CM (6.2\") FULL HD+ DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP REAR CAMERA | 12MP FRONT CAMERA | 4000 MAH LI-ION",
         "stock": 12,
+        "batchNo": "BAT-2026/08-DEL",
+        "gstRate": 18,
         "brandBox": "Yes",
         "category": "Electronics",
         "serialNo": "R58N90X233243S",
-        "accessories": "All Accessories Included",
+        "accessories": "ALL ACCESSORIES INCLUDED (65W TYPE-C CABLE, EJECTOR PIN)",
+        "afdCategory": "AFD-II (DURABLES)",
         "marketPrice": 80999,
-        "warrantyExpires": "23-05-2027"
+        "warrantyExpires": "23-05-2027 (PAN-INDIA BRAND ONSITE WARRANTY)"
       },
       {
         "id": "8901030311221",
@@ -1867,16 +1872,7 @@
     "transactions": [
       {
         "id": "CSD-TXN-2026-1016",
-        "billNo": "CSD/URC/DEL/2026/10/9850",
-        "indentNo": "IND-2026/10/9850",
         "date": "2026-10-15 16:45:10",
-        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
-        "terminal": "POS-01 / IP: 192.168.1.101",
-        "cashier": "Sub Maj R.K. Yadav",
-        "manager": "Sub Maj R.K. Yadav",
-        "paymentMode": "HARD CURRENCY CASH ONLY (COUNTER 01)",
-        "paymentType": "CASH",
-        "cardNo": "LB08260547713500S01",
         "rank": "ASO-I (Group A Gazetted)",
         "items": [
           {
@@ -1892,7 +1888,6 @@
             "unit": "UNT",
             "price": 47500,
             "marketPrice": 59900,
-            "gstRate": 18,
             "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
             "accessories": "USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL",
             "warrantyExpires": "15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)",
@@ -1904,29 +1899,33 @@
             "afdCategory": "AFD-II (DURABLES)"
           }
         ],
-        "total": 47500,
+        "billNo": "CSD/URC/DEL/2026/10/9850",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/9850",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
         "totalNet": 47500,
-        "totalTaxable": 40254.24,
+        "grocDrawn": 2850,
+        "grocLimit": 50000,
         "totalCgst": 3622.88,
         "totalSgst": 3622.88,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (COUNTER 01)",
+        "paymentType": "CASH",
+        "cashTendered": 47500,
         "totalSavings": 12400,
-        "categoryBreakdown": {
-          "Electronics": 47500
-        },
-        "status": "COMPLETED"
+        "totalTaxable": 40254.24,
+        "cashReceiptNo": "RCPT-CSD-2026-9850",
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9850"
       },
       {
         "id": "CSD-TXN-2026-1015",
-        "billNo": "CSD/URC/DEL/2026/10/9842",
-        "indentNo": "IND-2026/10/9842",
         "date": "2026-10-15 10:30:00",
-        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
-        "terminal": "POS-01 / IP: 192.168.1.101",
-        "cashier": "Sub Maj R.K. Yadav",
-        "manager": "Sub Maj R.K. Yadav",
-        "paymentMode": "HARD CURRENCY CASH ONLY (COUNTER 01)",
-        "paymentType": "CASH",
-        "cardNo": "LB08260547713500S01",
         "rank": "ASO-I (Group A Gazetted)",
         "items": [
           {
@@ -1942,11 +1941,10 @@
             "unit": "UNT",
             "price": 114900,
             "marketPrice": 144900,
-            "gstRate": 18,
             "grade": "VERY GOOD (A) - FACTORY SEALED BRAND BOX",
             "accessories": "100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS",
             "warrantyExpires": "28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)",
-            "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | 24MP FRONT | 5200 MAH | TITANIUM GRADE 5 CHASSIS",
+            "specs": "17.5 CM (6.9\") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS",
             "imei1": "359810/24/849201/8",
             "imei2": "359810/24/849202/6",
             "serialNo": "G6TF9027IPHONE17",
@@ -1954,16 +1952,29 @@
             "afdCategory": "AFD-II (DURABLES)"
           }
         ],
-        "total": 114900,
+        "billNo": "CSD/URC/DEL/2026/10/9842",
+        "cardNo": "LB08260547713500S01",
+        "status": "COMPLETED",
+        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
+        "cashier": "Sub Maj R.K. Yadav",
+        "manager": "Sub Maj R.K. Yadav",
+        "indentNo": "IND-2026/10/9842",
+        "liqDrawn": 2,
+        "liqLimit": 25,
+        "terminal": "POS-01 / IP: 192.168.1.101",
         "totalNet": 114900,
-        "totalTaxable": 97372.88,
+        "grocDrawn": 2850,
+        "grocLimit": 50000,
         "totalCgst": 8763.56,
         "totalSgst": 8763.56,
+        "cashChange": 0,
+        "paymentMode": "HARD CURRENCY CASH ONLY (COUNTER 01)",
+        "paymentType": "CASH",
+        "cashTendered": 114900,
         "totalSavings": 30000,
-        "categoryBreakdown": {
-          "Electronics": 114900
-        },
-        "status": "COMPLETED"
+        "totalTaxable": 97372.88,
+        "cashReceiptNo": "RCPT-CSD-2026-9842",
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9842"
       },
       {
         "id": "CSD-TXN-1792074280113",
@@ -2295,53 +2306,7 @@
         "totalTaxable": 1066.1
       }
     ],
-    "dependentCardNo": "LB08260547713500D01",
-    "officers": [
-      {
-        "cardNo": "LB08260547713500S01",
-        "rank": "ASO-I (Gazetted)",
-        "name": "ANURAG ANIL BAWASKAR",
-        "canteen": "URC HQ DELHI AREA (SENA BHAWAN)",
-        "pan": "EYUPB3666M",
-        "grocLimit": 50000,
-        "liqLimit": 25,
-        "grocDrawn": 2850,
-        "liqDrawn": 2
-      },
-      {
-        "cardNo": "GC99887766554433",
-        "rank": "COLONEL",
-        "name": "RAM SINGH",
-        "canteen": "URC HQ DELHI AREA",
-        "pan": "ABCDE1234F",
-        "grocLimit": 15000,
-        "liqLimit": 14,
-        "grocDrawn": 14500,
-        "liqDrawn": 12
-      },
-      {
-        "cardNo": "LB08260547713500D01",
-        "rank": "DEPENDENT (Father)",
-        "name": "ANIL R. BAWASKAR",
-        "canteen": "URC HQ DELHI AREA",
-        "pan": "EYUPB3666M",
-        "grocLimit": 10000,
-        "liqLimit": 25,
-        "grocDrawn": 0,
-        "liqDrawn": 0
-      },
-      {
-        "cardNo": "GC10928374123456",
-        "rank": "MAJOR",
-        "name": "ANURAG A. BAWASKAR",
-        "canteen": "URC HQ DELHI AREA",
-        "pan": "EYUPB3666M",
-        "grocLimit": 50000,
-        "liqLimit": 25,
-        "grocDrawn": 2500,
-        "liqDrawn": 2
-      }
-    ]
+    "dependentCardNo": "LB08260547713500D01"
   },
   "specialOperationOrder": {
     "endDate": "Till Further Orders (TFO) / Indefinite Operational Mandate",
