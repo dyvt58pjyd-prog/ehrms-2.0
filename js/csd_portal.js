@@ -568,6 +568,10 @@ function bindEvents() {
   // Customer Forms
   document.getElementById('form-afd-request').addEventListener('submit', handleAfdRequest);
   
+  // Direct Money On Hold Form
+  const formHold = document.getElementById('form-direct-hold');
+  if (formHold) formHold.addEventListener('submit', handleDirectHoldSubmit);
+
   // POS
   document.getElementById('btn-print').addEventListener('click', handleCheckout);
 }
@@ -703,11 +707,14 @@ function initAppLayout() {
     nav.innerHTML += `<div class="nav-item" onclick="switchView('admin-personnel')">🪪 Card Holders</div>`;
     nav.innerHTML += `<div class="nav-item" onclick="switchView('admin-audit')">🔗 Blockchain Audit</div>`;
     nav.innerHTML += `<div class="nav-item" onclick="switchView('cashier-pos')">🛒 POS Terminal</div>`;
+    nav.innerHTML += `<div class="nav-item" onclick="switchView('hold-deposit')">⏳ Money On Hold Voucher</div>`;
   } else if (currentUser.role === 'cashier') {
     nav.innerHTML += `<div class="nav-item active" onclick="switchView('cashier-pos')">🛒 POS Terminal</div>`;
+    nav.innerHTML += `<div class="nav-item" onclick="switchView('hold-deposit')">⏳ Money On Hold Voucher</div>`;
   } else if (currentUser.role === 'customer') {
     nav.innerHTML += `<div class="nav-item" onclick="switchView('customer-dashboard')">🏠 My Dashboard</div>`;
     nav.innerHTML += `<div class="nav-item" onclick="switchView('cashier-pos')">🛍️ CSD Canteen Catalog & POS</div>`;
+    nav.innerHTML += `<div class="nav-item" onclick="switchView('hold-deposit')">⏳ Money On Hold Voucher</div>`;
     nav.innerHTML += `<div class="nav-item" onclick="switchView('customer-afd')">🚘 AFD Desk</div>`;
   }
 }
@@ -732,6 +739,7 @@ window.switchView = function(viewId) {
   if (viewId === 'cashier-pos') renderPosTerminal();
   if (viewId === 'customer-dashboard') renderCustomerDashboard();
   if (viewId === 'customer-afd') renderCustomerAfd();
+  if (viewId === 'hold-deposit') renderHoldDepositView();
 }
 
 // --- Admin Views Logic ---
@@ -1606,4 +1614,171 @@ function generateCode39BarcodeSvg(text, height = 28, displayHeight = 22) {
   }
 
   return `<svg viewBox="0 0 ${totalWidth} ${height}" preserveAspectRatio="xMidYMid meet" style="display:block;margin:0 auto;height:${displayHeight}px;max-width:320px;width:100%;background:#ffffff;shape-rendering:crispEdges;" xmlns="http://www.w3.org/2000/svg"><rect width="${totalWidth}" height="${height}" fill="#ffffff"/>${bars.join('')}</svg>`;
+}
+
+// --- Direct Money On Hold Receipt Logic (No Products Needed) ---
+window.setHoldDatetimeNow = function() {
+  const input = document.getElementById('hold-datetime');
+  if (input) {
+    const d = new Date();
+    const tzOffset = d.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(d.getTime() - tzOffset)).toISOString().slice(0, 16);
+    input.value = localISOTime;
+  }
+};
+
+function renderHoldDepositView() {
+  const select = document.getElementById('hold-customer-select');
+  if (select) {
+    select.innerHTML = officers.map(o => `
+      <option value="${o.cardNo}" ${o.cardNo === (currentUser?.id || 'LB08260547713500S01') ? 'selected' : ''}>
+        ${o.cardNo} — ${o.rank} ${o.name} (${o.canteen || 'URC HQ DELHI AREA'})
+      </option>
+    `).join('');
+  }
+  
+  // Set default datetime to now if empty
+  const inputDt = document.getElementById('hold-datetime');
+  if (inputDt && !inputDt.value) {
+    setHoldDatetimeNow();
+  }
+
+  renderRecentDirectHoldList();
+}
+
+function renderRecentDirectHoldList() {
+  const container = document.getElementById('direct-hold-recent-list');
+  if (!container) return;
+  const holdTxns = transactions.filter(t => t.status === 'ON_HOLD' || t.paymentType === 'ON_HOLD');
+  
+  if (holdTxns.length === 0) {
+    container.innerHTML = '<div style="color: #64748b; font-size: 11.5px; padding: 8px 0;">No active On-Hold receipts generated yet.</div>';
+    return;
+  }
+
+  container.innerHTML = holdTxns.slice(-5).reverse().map(t => {
+    const amt = typeof t.totalNet === 'number' ? t.totalNet : (t.total || 0);
+    const rawDate = t.customDate || t.custom_date || t.date;
+    const dtStr = rawDate ? new Date(rawDate).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }) : 'N/A';
+    return `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+        <div>
+          <div style="font-weight: 700; color: #b45309;">${t.billNo || t.id}</div>
+          <div style="font-size: 10.5px; color: #64748b;">${dtStr} &bull; ${t.rank || 'OFFICER'}</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 800; font-size: 12.5px; color: #0f172a;">₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+          <button type="button" class="btn-header" style="font-size: 10px; padding: 2px 6px; color: var(--csd-blue); border-color: var(--csd-blue); margin-top: 2px;" onclick="viewCustomerBill('${t.id}')">🖨️ Re-Print</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function handleDirectHoldSubmit(e) {
+  e.preventDefault();
+  const cardNo = document.getElementById('hold-customer-select').value;
+  const officer = officers.find(o => o.cardNo === cardNo) || officers[0];
+  const amount = parseFloat(document.getElementById('hold-amount').value);
+  const category = document.getElementById('hold-category').value;
+  const remarks = document.getElementById('hold-remarks').value.trim() || 'ADVANCE CASH DEPOSIT TO CSD CHEST (PAYMENT ON HOLD)';
+  
+  const customDt = document.getElementById('hold-datetime').value;
+  let chosenDateIso = new Date().toISOString();
+  if (customDt) {
+    const parsed = new Date(customDt);
+    if (!isNaN(parsed.getTime())) chosenDateIso = parsed.toISOString();
+  }
+
+  if (isNaN(amount) || amount <= 0) {
+    alert('Please enter a valid deposit amount greater than ₹0.');
+    return;
+  }
+
+  const billNo = "CSD-HOLD-" + Math.floor(100000 + Math.random() * 900000);
+  
+  // Create an explicit On-Hold Deposit item
+  const holdItem = {
+    id: 'CSD-HOLD-DEP',
+    sku: 'ADV-CSD-HOLD',
+    name: `CSD ADVANCE MONEY DEPOSIT (ON HOLD) - ${category.toUpperCase()}`,
+    category: category.includes('Groceries') ? 'Groceries' : (category.includes('Liquor') ? 'Liquor' : 'Electronics'),
+    brand: 'CANTEEN STORES DEPARTMENT (MoD GOI)',
+    model: 'REGIMENTAL CASH CHEST HOLD / ADVANCE DEPOSIT',
+    color: 'N/A',
+    hsn: '999799', // SAC for other financial & holding services
+    stock: 999,
+    price: amount,
+    marketPrice: amount,
+    qty: 1,
+    unit: 'UNT',
+    gstRate: 0, // Advance holding deposits are statutory exempt until invoice clearance
+    grade: 'MONEY ON HOLD SECURED IN CSD RCC-01',
+    accessories: remarks,
+    warrantyExpires: 'VALID TILL FINAL INDENT CLEARANCE OR REFUND',
+    specs: `OFFICIAL CSD ADVANCE MONEY SUBMISSION RECEIPT | PURPOSE: ${category.toUpperCase()} | REMARKS: ${remarks.toUpperCase()} | SECURED UNDER URC SENA BHAWAN REGIMENTAL CASH SAFE`,
+    serialNo: 'RCC-SAFE-HOLD-' + billNo.slice(-6),
+    imei1: 'N/A',
+    imei2: 'N/A',
+    batchNo: 'BATCH-HOLD-' + chosenDateIso.slice(0, 7).replace('-', ''),
+    afdCategory: 'AFD-II (DURABLES)'
+  };
+
+  const prevTx = transactions[transactions.length - 1];
+  const prevHash = prevTx ? prevTx.hash : '0000000000000000000000000000000000000000000000000000000000000000';
+  const payload = billNo + officer.cardNo + amount + chosenDateIso + prevHash;
+  
+  let hashVal = 0;
+  for (let i = 0; i < payload.length; i++) {
+    hashVal = ((hashVal << 5) - hashVal) + payload.charCodeAt(i);
+    hashVal |= 0;
+  }
+  const hashHex = ('0000000' + (hashVal >>> 0).toString(16)).slice(-8) + 'a1b2c3d4e5f67890aabbccddeeff11223344556677889900aabbccddeeff';
+
+  const newTxn = {
+    id: billNo,
+    billNo: billNo,
+    cardNo: officer.cardNo,
+    rank: officer.rank || 'ASO-I (Gazetted)',
+    canteen: officer.canteen || 'URC HQ DELHI AREA (SENA BHAWAN)',
+    terminal: 'POS-01 / IP: 192.168.1.101',
+    cashier: currentUser?.name || 'Sub Maj R.K. Yadav',
+    manager: 'Sub Maj R.K. Yadav',
+    date: chosenDateIso,
+    customDate: chosenDateIso,
+    paymentMode: 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)',
+    paymentType: 'ON_HOLD',
+    total: amount,
+    totalNet: amount,
+    totalTaxable: amount,
+    totalCgst: 0,
+    totalSgst: 0,
+    totalSavings: 0,
+    items: [holdItem],
+    categoryBreakdown: { [holdItem.category]: amount },
+    prevHash: prevHash,
+    hash: hashHex,
+    status: 'ON_HOLD'
+  };
+
+  transactions.push(newTxn);
+  saveStorage();
+
+  // Push to SQLite
+  fetch('/api/csd/transactions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newTxn)
+  }).catch(e => console.warn('SQLite transaction push notice:', e));
+
+  // Set cart to holdItem and generate receipt
+  cart = [holdItem];
+  generateReceipt(officer, billNo, newTxn.categoryBreakdown, chosenDateIso, 'ON_HOLD');
+
+  window.print();
+
+  renderRecentDirectHoldList();
+  if (currentUser?.role === 'customer') {
+    renderCustomerDashboard();
+  }
 }

@@ -351,6 +351,12 @@
               <div style="display: flex; gap: 8px; margin-top: 10px;">
                 <button id="btn-print" class="btn-print" style="margin-top: 0; flex: 2;" disabled>🖨️ Generate &amp; Print Bill</button>
               </div>
+
+              <div style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px; text-align: center;">
+                <button type="button" onclick="switchView('hold-deposit')" style="width: 100%; padding: 8px; background: #fffbeb; border: 1.5px dashed #f59e0b; border-radius: 6px; color: #b45309; font-weight: 700; font-size: 11.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <span>⚡ Quick Money On Hold Voucher (No Catalog Needed)</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -426,6 +432,88 @@
             </thead>
             <tbody id="table-afd-history"></tbody>
           </table>
+        </div>
+      </div>
+      <!-- Direct Money On Hold Receipt Generator (No Products Needed) -->
+      <div id="view-hold-deposit" class="view-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <h2 style="margin: 0; color: var(--csd-navy);">⏳ CSD Advance Money Deposit &bull; Receipt On Hold</h2>
+            <p style="margin: 4px 0 0 0; color: var(--csd-gray); font-size: 13px;">
+              Directly enter an advance payment amount to generate and print an official CSD Money On Hold receipt without selecting catalog products.
+            </p>
+          </div>
+          <span class="status-badge warning" style="font-size: 12px; padding: 6px 12px;">CSD Regimental Cash Chest &bull; Safe Hold</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+          <!-- Left: Input Form -->
+          <div class="content-card" style="border-left: 4px solid #f59e0b;">
+            <h3 style="margin-top: 0; color: var(--csd-navy); display: flex; align-items: center; gap: 8px;">
+              <span>💵 Deposit Amount &amp; Smart Card Particulars</span>
+            </h3>
+
+            <form id="form-direct-hold">
+              <div class="form-group">
+                <label>Smart Card Holder *</label>
+                <select id="hold-customer-select" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;"></select>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px;">
+                <div class="form-group">
+                  <label>Hold Deposit Amount (₹) *</label>
+                  <input type="number" id="hold-amount" placeholder="e.g. 50000.00" required step="0.01" min="1" style="font-size: 16px; font-weight: 800; color: #b45309; padding: 10px;">
+                </div>
+                <div class="form-group">
+                  <label>Deposit Category / Purpose *</label>
+                  <select id="hold-category" required style="padding: 10px;">
+                    <option value="Electronics &amp; AFD-II">Electronics &amp; AFD-II Durables</option>
+                    <option value="AFD-I Vehicle Advance">AFD-I Four/Two Wheeler Advance</option>
+                    <option value="Groceries Quota">General Groceries Quota Advance</option>
+                    <option value="Liquor Quota">Liquor Quota Advance</option>
+                    <option value="General Regimental Hold">General Regimental Chest Hold</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Custom Receipt Date &amp; Time (Printed on Official Bill) *</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="datetime-local" id="hold-datetime" required style="flex: 1; padding: 9px 12px; font-family: 'Roboto Mono', monospace; font-size: 13px;">
+                  <button type="button" class="btn-header" style="background: #e2e8f0; color: #334155; border: none; font-size: 12px; white-space: nowrap;" onclick="setHoldDatetimeNow()">Set Current Time</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Deposit Remarks / Indent Reference</label>
+                <input type="text" id="hold-remarks" placeholder="e.g. ADVANCE PAYMENT SUBMITTED TOWARDS IPHONE 17 PRO MAX / AFD INDENT ALLOTMENT" value="ADVANCE CASH DEPOSIT SUBMITTED TO CSD REGIMENTAL CASH CHEST (PAYMENT ON HOLD)">
+              </div>
+
+              <div style="display: flex; gap: 12px; margin-top: 20px;">
+                <button type="submit" class="btn-csd btn-primary" style="background: #d97706; border-color: #b45309; font-size: 14px; padding: 12px 24px; flex: 1;">
+                  🖨️ Generate &amp; Print Money Hold Receipt
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right: Summary & Hold Rules -->
+          <div>
+            <div class="content-card" style="background: #fffbeb; border: 1px solid #fef3c7;">
+              <h4 style="margin-top: 0; color: #92400e;">📌 About CSD Money On Hold Receipts</h4>
+              <ul style="font-size: 12.5px; color: #78350f; line-height: 1.6; padding-left: 18px; margin: 0;">
+                <li>Allows immediate issuance of an official MoD CSD money deposit voucher without having to select products from the catalog.</li>
+                <li>Prints strictly on <strong>1 A4 Page</strong> with the centered CSD logo, Code-39 barcode, and statutory GST / Regimental Cash Chest authentication.</li>
+                <li>The receipt is timestamped with your chosen custom date and time.</li>
+                <li>Recorded immediately into the SQLite audit ledger under <code>ON_HOLD</code> status.</li>
+              </ul>
+            </div>
+
+            <div class="content-card" style="margin-top: 16px;">
+              <h4 style="margin-top: 0; color: var(--csd-navy);">Recent On-Hold Money Receipts</h4>
+              <div id="direct-hold-recent-list" style="font-size: 12px; max-height: 250px; overflow-y: auto;"></div>
+            </div>
+          </div>
         </div>
       </div>
       

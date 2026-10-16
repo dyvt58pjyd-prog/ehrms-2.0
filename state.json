@@ -1921,7 +1921,11 @@
         "totalSavings": 12400,
         "totalTaxable": 40254.24,
         "cashReceiptNo": "RCPT-CSD-2026-9850",
-        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9850"
+        "cashVoucherNo": "CSD/CASH/DEL/2026/10/9850",
+        "total": 47500,
+        "categoryBreakdown": {
+          "Electronics": 47500
+        }
       },
       {
         "id": "CSD-TXN-2026-1015",
@@ -2306,7 +2310,53 @@
         "totalTaxable": 1066.1
       }
     ],
-    "dependentCardNo": "LB08260547713500D01"
+    "dependentCardNo": "LB08260547713500D01",
+    "officers": [
+      {
+        "cardNo": "LB08260547713500S01",
+        "rank": "ASO-I (Gazetted)",
+        "name": "ANURAG ANIL BAWASKAR",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "EYUPB3666M",
+        "grocLimit": 10000,
+        "liqLimit": 10,
+        "grocDrawn": 2850,
+        "liqDrawn": 2
+      },
+      {
+        "cardNo": "LB08260547713500D01",
+        "rank": "DEPENDENT (Father)",
+        "name": "ANIL R. BAWASKAR",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "EYUPB3666M",
+        "grocLimit": 10000,
+        "liqLimit": 0,
+        "grocDrawn": 0,
+        "liqDrawn": 0
+      },
+      {
+        "cardNo": "GC10928374123456",
+        "rank": "MAJOR",
+        "name": "ANURAG A. BAWASKAR",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "EYUPB3666M",
+        "grocLimit": 10000,
+        "liqLimit": 10,
+        "grocDrawn": 2500,
+        "liqDrawn": 2
+      },
+      {
+        "cardNo": "GC99887766554433",
+        "rank": "COLONEL",
+        "name": "RAM SINGH",
+        "canteen": "URC HQ DELHI AREA",
+        "pan": "ABCDE1234F",
+        "grocLimit": 15000,
+        "liqLimit": 14,
+        "grocDrawn": 14500,
+        "liqDrawn": 12
+      }
+    ]
   },
   "specialOperationOrder": {
     "endDate": "Till Further Orders (TFO) / Indefinite Operational Mandate",
