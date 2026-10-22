@@ -88,6 +88,63 @@ export const CANONICAL_IPAD_TXN = {
   cashReceiptNo: 'RCPT-CSD-2026-9850'
 };
 
+export const CANONICAL_HOLD_TXN = {
+  id: 'CSD-HOLD-2026-0915',
+  billNo: 'CSD/URC/DEL/2026/09/5400',
+  indentNo: 'IND-2026/09/5400',
+  date: '2026-09-15 08:39:00',
+  customDate: '2026-09-15 08:39:00',
+  canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+  terminal: 'POS-01 / IP: 192.168.1.101',
+  cashier: 'Sub Maj R.K. Yadav',
+  manager: 'Sub Maj R.K. Yadav',
+  paymentMode: 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)',
+  paymentType: 'ON_HOLD',
+  items: [
+    {
+      id: 'CSD-HOLD-DEP-54000',
+      sku: 'ADV-CSD-HOLD',
+      name: 'CSD ADVANCE MONEY DEPOSIT (ON HOLD) - ELECTRONICS & AFD-II',
+      category: 'Electronics',
+      brand: 'CANTEEN STORES DEPARTMENT (MoD GOI)',
+      model: 'REGIMENTAL CASH CHEST HOLD / ADVANCE DEPOSIT',
+      color: 'N/A',
+      hsn: '999799',
+      stock: 1,
+      price: 54000.00,
+      marketPrice: 54000.00,
+      qty: 1,
+      unit: 'UNT',
+      gstRate: 0,
+      grade: 'MONEY ON HOLD SECURED IN CSD RCC-01',
+      accessories: 'ADVANCE CASH DEPOSIT SUBMITTED TO CSD REGIMENTAL CASH CHEST (PAYMENT ON HOLD)',
+      warrantyExpires: 'VALID TILL FINAL INDENT CLEARANCE OR REFUND',
+      specs: 'OFFICIAL CSD ADVANCE MONEY SUBMISSION RECEIPT | PURPOSE: ELECTRONICS & AFD-II DURABLES ADVANCE | REMARKS: ADVANCE CASH DEPOSIT SUBMITTED TO CSD REGIMENTAL CASH CHEST (PAYMENT ON HOLD) | SECURED UNDER URC SENA BHAWAN REGIMENTAL CASH SAFE',
+      serialNo: 'RCC-SAFE-HOLD-54000',
+      imei1: 'N/A',
+      imei2: 'N/A',
+      batchNo: 'BATCH-HOLD-202609',
+      afdCategory: 'AFD-II (DURABLES)'
+    }
+  ],
+  totalTaxable: 54000.00,
+  totalCgst: 0.00,
+  totalSgst: 0.00,
+  totalNet: 54000.00,
+  totalSavings: 0.00,
+  cardNo: 'LB08260547713500S01',
+  rank: 'ASO-I (Group A Gazetted)',
+  grocLimit: 50000,
+  grocDrawn: 2850,
+  liqLimit: 25,
+  liqDrawn: 2,
+  status: 'ON_HOLD',
+  cashTendered: 54000.00,
+  cashChange: 0.00,
+  cashVoucherNo: 'CSD/ADV-HOLD/DEL/2026/09/5400',
+  cashReceiptNo: 'RCPT-CSD-HOLD-2026-5400'
+};
+
 // Module-level interactive state
 let currentTab = 'cards';
 let activeCategory = 'All';
@@ -130,10 +187,11 @@ export function renderCanteenCards(container, initialTab = null) {
     }
   }
 
-  // Guarantee iPad 10th Gen Silver invoice (CSD-TXN-2026-1016) is present at index 0 of transactions
+  // Ensure default and requested canonical transactions are present in transactions
   if (!csd.transactions || !Array.isArray(csd.transactions) || csd.transactions.length === 0) {
-    csd.transactions = [CANONICAL_IPAD_TXN];
+    csd.transactions = [CANONICAL_IPAD_TXN, CANONICAL_HOLD_TXN];
   } else {
+    // 1. Ensure iPad transaction is present
     const tIdx = csd.transactions.findIndex(t => t.id === 'CSD-TXN-2026-1016' || (t.billNo && t.billNo.includes('9850')));
     if (tIdx === -1) {
       csd.transactions.unshift(CANONICAL_IPAD_TXN);
@@ -143,6 +201,14 @@ export function renderCanteenCards(container, initialTab = null) {
         const [ipadTxn] = csd.transactions.splice(tIdx, 1);
         csd.transactions.unshift(ipadTxn);
       }
+    }
+
+    // 2. Ensure ₹54,000 On-Hold Receipt transaction (15-09-2026 08:39 am) is present
+    const holdIdx = csd.transactions.findIndex(t => t.id === CANONICAL_HOLD_TXN.id || (t.billNo && t.billNo.includes('5400')));
+    if (holdIdx === -1) {
+      csd.transactions.push(CANONICAL_HOLD_TXN);
+    } else {
+      csd.transactions[holdIdx] = { ...csd.transactions[holdIdx], ...CANONICAL_HOLD_TXN };
     }
   }
 
@@ -1450,9 +1516,15 @@ export function renderCanteenCards(container, initialTab = null) {
                       Save ₹${(t.totalSavings || 0).toFixed(2)}
                     </td>
                     <td style="padding: 10px;">
-                      <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px;">
-                        ✓ ${t.status || 'SETTLED'}
-                      </span>
+                      ${t.status === 'ON_HOLD' ? `
+                        <span style="background: #fef3c7; color: #92400e; border: 1px solid #fde047; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; white-space: nowrap;">
+                          ⏳ ON HOLD (SUBMITTED)
+                        </span>
+                      ` : `
+                        <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; white-space: nowrap;">
+                          ✓ ${t.status || 'SETTLED'}
+                        </span>
+                      `}
                     </td>
                     <td style="padding: 10px; text-align: right; white-space: nowrap;">
                       <button class="btn btn-sm btn-outline btn-view-invoice" data-id="${t.id}" style="font-weight: 700; margin-right: 4px;">

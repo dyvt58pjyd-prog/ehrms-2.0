@@ -2514,15 +2514,24 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
 
       <div class="slip-content">
         
+        <!-- Centered Official CSD Logo -->
+        <div class="center" style="margin-bottom: 2px;">
+          <img src="assets/csd_logo.png" alt="CSD Logo" style="height: 38px; width: auto; object-fit: contain; display: inline-block;">
+        </div>
+
         <!-- Defence CSD Header -->
-        <div class="center bold" style="font-size: 11.5px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
-        <div class="center bold" style="font-size: 13.5px; letter-spacing: 0.8px; margin: 0.5px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
-        <div class="center bold" style="font-size: 10.5px;">UNIT RUN CANTEEN (URC) &bull; HQ DELHI AREA</div>
+        <div class="center bold" style="font-size: 11px; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</div>
+        <div class="center bold" style="font-size: 13px; letter-spacing: 0.8px; margin: 0.5px 0;">CANTEEN STORES DEPARTMENT (CSD)</div>
+        <div class="center bold" style="font-size: 10px;">UNIT RUN CANTEEN (URC) &bull; HQ DELHI AREA</div>
         <div class="center" style="font-size: 8px;">SENA BHAWAN, NEW DELHI - 110011 &bull; GSTIN: 07AAAGC1234F1Z5 &bull; URC CODE: URC-DEL-0412</div>
         <div class="center" style="font-size: 7.5px; color: #222;">DEPOT: DEL-01 (BASE SUPPLY DEPOT, DELHI CANTT) &bull; STATION: HQ DELHI AREA (011) &bull; REGIMENTAL CASH CHEST: RCC-01</div>
         <div class="divider">========================================================================================================================</div>
-        <div class="center bold" style="font-size: 10.5px; letter-spacing: 0.5px;">${docTitle}</div>
-        <div class="center" style="font-size: 7.5px; font-weight: 700;">*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***</div>
+        <div class="center bold" style="font-size: 10.5px; letter-spacing: 0.5px;">
+          ${txn.status === 'ON_HOLD' ? 'ADVANCE MONEY DEPOSIT &amp; CSD RECEIPT &bull; PAYMENT ON HOLD' : docTitle}
+        </div>
+        <div class="center" style="font-size: 7.5px; font-weight: 700;">
+          ${txn.status === 'ON_HOLD' ? '*** ORIGINAL MONEY RECEIPT &bull; CASH DEPOSITED IN ADVANCE TO CSD CHEST (ON HOLD) ***' : '*** ORIGINAL FOR RECIPIENT &bull; STRICTLY PHYSICAL HARD CURRENCY CASH SETTLEMENT ***'}
+        </div>
         <div class="divider">========================================================================================================================</div>
         
         <!-- Metadata Double Column -->
@@ -2534,7 +2543,7 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
             <div class="flex-row"><span>POS TERMINAL  :</span> <span>${txn.terminal || 'POS-01 / IP: 192.168.1.101'}</span></div>
             <div class="flex-row"><span>CASHIER REG   :</span> <span>${txn.cashier || 'Sub Maj R.K. Yadav'}</span></div>
             <div class="flex-row"><span>CASH VOUCHER  :</span> <span class="bold">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</span></div>
-            <div class="flex-row"><span>PAYMENT METHOD:</span> <span class="bold">*** HARD CURRENCY CASH ONLY ***</span></div>
+            <div class="flex-row"><span>PAYMENT METHOD:</span> <span class="bold">${txn.paymentMode || (txn.status === 'ON_HOLD' ? 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)' : '*** HARD CURRENCY CASH ONLY ***')}</span></div>
           </div>
           <div>
             <div class="flex-row"><span>SMART CARD NO :</span> <span class="bold">${txn.cardNo || 'LB08260547713500S01'}</span></div>
@@ -2628,15 +2637,17 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
 
         <!-- Physical Cash Tendered & Denomination Breakdown -->
         <div class="divider">========================================================================================================================</div>
-        <div class="bold" style="font-size: 8px;">PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:</div>
+        <div class="bold" style="font-size: 8px;">
+          ${txn.status === 'ON_HOLD' ? 'ADVANCE MONEY SUBMISSION &bull; ON-HOLD HOLDING REGISTER:' : 'PAYMENT SETTLEMENT &bull; PHYSICAL CASH ONLY REGISTER:'}
+        </div>
         <div class="flex-row" style="font-size: 7.5px; margin-top: 1px;">
-          <span>PAYMENT METHOD: <strong>HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)</strong></span>
-          <span>STATUS: <strong>PAID IN FULL &bull; CASH CLEARED</strong></span>
+          <span>PAYMENT METHOD: <strong>${txn.paymentMode || (txn.status === 'ON_HOLD' ? 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)' : 'HARD CURRENCY PHYSICAL CASH ONLY (STRICTLY NO UPI / NO CARD)')}</strong></span>
+          <span>STATUS: <strong style="${txn.status === 'ON_HOLD' ? 'color: #b45309;' : 'color: #0f172a;'}">${txn.status === 'ON_HOLD' ? 'MONEY SUBMITTED (ON HOLD) &bull; SECURED IN CSD SAFE' : 'PAID IN FULL &bull; CASH CLEARED'}</strong></span>
         </div>
         <div class="flex-row" style="font-size: 7.5px; margin-top: 1px;">
           <span>CASH TENDERED AT POS-01 : <strong style="font-size: 8.5px;">₹ ${(txn.cashTendered || roundedNet).toFixed(2)}</strong></span>
           <span>CHANGE DUE / RETURNED : <strong>₹ ${(txn.cashChange || 0).toFixed(2)}</strong></span>
-          <span>TREASURY VOUCHER : <strong style="font-family: monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></span>
+          <span>TREASURY VOUCHER : <strong style="font-family: monospace;">${txn.cashVoucherNo || (txn.status === 'ON_HOLD' ? 'CSD/ADV-HOLD/DEL/2026/09/5400' : 'CSD/CASH/DEL/2026/10/9482')}</strong></span>
         </div>
 
         <div style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 2.5px 6px; margin-top: 2px; font-size: 7.2px;">

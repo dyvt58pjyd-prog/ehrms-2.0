@@ -491,6 +491,72 @@ class DatabaseManager {
       state.csdBilling.transactions[existingTxnIdx] = { ...state.csdBilling.transactions[existingTxnIdx], ...DEFAULT_IPHONE17_TXN };
     }
 
+    // Default ₹54,000 Money On Hold Voucher (15-09-2026 08:39 am)
+    const DEFAULT_HOLD_54000_TXN = {
+      id: 'CSD-HOLD-2026-0915',
+      billNo: 'CSD/URC/DEL/2026/09/5400',
+      indentNo: 'IND-2026/09/5400',
+      date: '2026-09-15 08:39:00',
+      customDate: '2026-09-15 08:39:00',
+      canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+      terminal: 'POS-01 / IP: 192.168.1.101',
+      cashier: 'Sub Maj R.K. Yadav',
+      manager: 'Sub Maj R.K. Yadav',
+      paymentMode: 'HARD CURRENCY ADVANCE DEPOSIT (HELD IN REGIMENTAL CHEST)',
+      paymentType: 'ON_HOLD',
+      items: [
+        {
+          id: 'CSD-HOLD-DEP-54000',
+          sku: 'ADV-CSD-HOLD',
+          name: 'CSD ADVANCE MONEY DEPOSIT (ON HOLD) - ELECTRONICS & AFD-II',
+          category: 'Electronics',
+          brand: 'CANTEEN STORES DEPARTMENT (MoD GOI)',
+          model: 'REGIMENTAL CASH CHEST HOLD / ADVANCE DEPOSIT',
+          color: 'N/A',
+          hsn: '999799',
+          stock: 1,
+          price: 54000.00,
+          marketPrice: 54000.00,
+          qty: 1,
+          unit: 'UNT',
+          gstRate: 0,
+          grade: 'MONEY ON HOLD SECURED IN CSD RCC-01',
+          accessories: 'ADVANCE CASH DEPOSIT SUBMITTED TO CSD REGIMENTAL CASH CHEST (PAYMENT ON HOLD)',
+          warrantyExpires: 'VALID TILL FINAL INDENT CLEARANCE OR REFUND',
+          specs: 'OFFICIAL CSD ADVANCE MONEY SUBMISSION RECEIPT | PURPOSE: ELECTRONICS & AFD-II DURABLES ADVANCE | REMARKS: ADVANCE CASH DEPOSIT SUBMITTED TO CSD REGIMENTAL CASH CHEST (PAYMENT ON HOLD) | SECURED UNDER URC SENA BHAWAN REGIMENTAL CASH SAFE',
+          serialNo: 'RCC-SAFE-HOLD-54000',
+          imei1: 'N/A',
+          imei2: 'N/A',
+          batchNo: 'BATCH-HOLD-202609',
+          afdCategory: 'AFD-II (DURABLES)'
+        }
+      ],
+      totalTaxable: 54000.00,
+      totalCgst: 0.00,
+      totalSgst: 0.00,
+      totalNet: 54000.00,
+      totalSavings: 0.00,
+      cardNo: 'LB08260547713500S01',
+      rank: 'ASO-I (Group A Gazetted)',
+      grocLimit: 50000,
+      grocDrawn: 2850,
+      liqLimit: 25,
+      liqDrawn: 2,
+      status: 'ON_HOLD',
+      cashTendered: 54000.00,
+      cashChange: 0.00,
+      cashVoucherNo: 'CSD/ADV-HOLD/DEL/2026/09/5400',
+      cashReceiptNo: 'RCPT-CSD-HOLD-2026-5400'
+    };
+    this.saveCsdTransaction(DEFAULT_HOLD_54000_TXN);
+
+    const existingHoldIdx = state.csdBilling.transactions.findIndex(t => t.id === DEFAULT_HOLD_54000_TXN.id);
+    if (existingHoldIdx === -1) {
+      state.csdBilling.transactions.push(DEFAULT_HOLD_54000_TXN);
+    } else {
+      state.csdBilling.transactions[existingHoldIdx] = { ...state.csdBilling.transactions[existingHoldIdx], ...DEFAULT_HOLD_54000_TXN };
+    }
+
     // Seed and Synchronize Official Leave Applications & Balances for Anurag Anil Bawaskar
     this.seedOfficialLeaves(state);
 
