@@ -405,6 +405,7 @@ class EhrmsApp {
       const docs = [
         { title: 'Digitally Certified e-Service Book (e-SB)', route: 'service-book', icon: '📖', type: 'Official Document' },
         { title: '7th CPC Monthly Pay Slip & Salary Breakdown', route: 'salary', icon: '💳', type: 'Tax & Finance' },
+        { title: 'SBI Loan against Fixed Deposit (TDR) Sanction Advice & Receipt', route: 'vault', icon: '🏦', type: 'Tax & Finance' },
         { title: 'Form 16 (TDS Certificate & Detailed Annexure)', route: 'salary', icon: '📄', type: 'Tax & Finance' },
         { title: 'ITR-V (Income Tax Return Verification)', route: 'salary', icon: '✅', type: 'Tax & Finance' },
         { title: 'Form 26AS (Tax Credit Statement)', route: 'service-book', icon: '📑', type: 'Tax & Finance' },

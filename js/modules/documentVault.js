@@ -57,6 +57,21 @@ export function renderDocumentVault(container) {
       downloadFn: () => DL.downloadServiceBook(user, sb)
     },
     {
+      id: 'DOC-SBI-FDLOAN-2026',
+      name: 'SBI Loan against Fixed Deposit (TDR) Sanction Advice & Receipt',
+      category: 'Tax & Finance',
+      date: '28-Oct-2026',
+      verified: true,
+      issuer: 'State Bank of India (SBI) - Defence Banking Branch, AFS Bareilly (01818)',
+      docNo: 'SBI/DBB/LAD/2026/084102',
+      icon: '🏦',
+      description: 'Official Core Banking System (CBS) sanction advice and disbursement receipt for ₹4,50,000.00 Demand Loan / Overdraft against Special Term Deposit (STDR A/C 40189248102) with 10% margin, lien marking confirmation, and credit to DSP Savings A/C 39189241534.',
+      downloadFn: () => {
+        const customData = store.get().sbiFdLoanDetails || {};
+        DL.downloadSbiLoanAgainstFdReceipt(user, customData);
+      }
+    },
+    {
       id: 'DOC-PAYSLIP-2026',
       name: '7th CPC Monthly Pay Slip & Entitlement Dossier',
       category: 'Tax & Finance',
@@ -738,6 +753,113 @@ export function renderDocumentVault(container) {
     container.querySelector('#modal-doc-title').textContent = doc.name;
     container.querySelector('#modal-doc-id').textContent = `${doc.docNo} • ${doc.category}`;
     
+    if (doc.id === 'DOC-SBI-FDLOAN-2026') {
+      const stateObj = store.get();
+      let loanData = stateObj.sbiFdLoanDetails || {
+        loanAmount: 450000,
+        fdPrincipal: 500000,
+        sanctionDate: '28-Oct-2026',
+        loanAccountNo: '41982049182',
+        fdAccountNo: '40189248102',
+        fdReceiptNo: 'STDR/2026/841029',
+        fdRate: '7.10%',
+        loanRate: '8.10%'
+      };
+
+      function renderSbiModalView() {
+        container.querySelector('#modal-doc-body').innerHTML = `
+          <div style="background: #002D62; color: white; padding: 14px 18px; border-radius: 6px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 26px;">🏦</span>
+              <div>
+                <strong style="font-size: 14px; letter-spacing: 0.3px;">State Bank of India &bull; Loan Against Fixed Deposit (LAD)</strong>
+                <div style="font-size: 11.5px; opacity: 0.9; margin-top: 2px;">Customizable Amount &amp; Live Core Banking System (CBS) Receipt Generator</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-sm btn-primary" id="btn-sbi-live-download" style="background: #00a4e4; border-color: #0284c7; font-weight: 700;">
+                📥 Download HTML Receipt
+              </button>
+              <button class="btn btn-sm btn-outline" id="btn-sbi-live-print" style="color: white; border-color: white;">
+                🖨️ Print Receipt
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Amount Customization Toolbar -->
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size: 12px; font-weight: 800; color: #002D62; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+              <span>⚙️</span> CUSTOMIZE LOAN &amp; FIXED DEPOSIT PARTICULARS:
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; align-items: flex-end;">
+              <div>
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Loan Sanction Amount (₹) *</label>
+                <input type="number" id="sbi-input-loan-amt" class="form-control" value="${loanData.loanAmount || 450000}" step="1000" style="width: 100%; padding: 6px 10px; font-size: 13px; font-weight: 700; color: #002D62; border: 1.5px solid #00a4e4; border-radius: 4px; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Fixed Deposit Principal (₹) *</label>
+                <input type="number" id="sbi-input-fd-amt" class="form-control" value="${loanData.fdPrincipal || 500000}" step="1000" style="width: 100%; padding: 6px 10px; font-size: 13px; font-weight: 700; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Sanction Date</label>
+                <input type="text" id="sbi-input-date" class="form-control" value="${loanData.sanctionDate || '28-Oct-2026'}" style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box;">
+              </div>
+              <div>
+                <button id="btn-update-sbi-receipt" class="btn btn-sm btn-primary" style="width: 100%; padding: 8px 12px; background: #002D62; border-color: #002D62; font-weight: 700;">
+                  🔄 Update Receipt
+                </button>
+              </div>
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 8px;">
+              💡 <em>Note: Margin is automatically verified at 10.00%. Effective loan rate is calculated at Underlying FD Rate (7.10%) + 1.00% = 8.10% p.a. Disbursement is mapped to SBI DSP Savings A/C 39189241534.</em>
+            </div>
+          </div>
+
+          <!-- Embedded Live Preview Container -->
+          <div style="border: 2px solid #002D62; border-radius: 6px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+            <iframe id="sbi-receipt-frame" style="width: 100%; height: 680px; border: none; display: block;"></iframe>
+          </div>
+        `;
+
+        const iframe = container.querySelector('#sbi-receipt-frame');
+        if (iframe) {
+          const docHtml = DL.generateSbiLoanAgainstFdReceiptHtml(user, loanData);
+          iframe.srcdoc = docHtml;
+        }
+
+        container.querySelector('#btn-update-sbi-receipt')?.addEventListener('click', () => {
+          const newLoanAmt = parseFloat(container.querySelector('#sbi-input-loan-amt').value) || 450000;
+          const newFdAmt = parseFloat(container.querySelector('#sbi-input-fd-amt').value) || 500000;
+          const newDate = container.querySelector('#sbi-input-date').value || '28-Oct-2026';
+
+          loanData = {
+            ...loanData,
+            loanAmount: newLoanAmt,
+            fdPrincipal: newFdAmt,
+            fdAccrued: Math.round(newFdAmt * 1.082),
+            drawingPower: newLoanAmt,
+            sanctionDate: newDate
+          };
+
+          store.set(s => ({ ...s, sbiFdLoanDetails: loanData }));
+          renderSbiModalView();
+          DL.showDownloadToast(`SBI Loan Receipt updated for ₹${newLoanAmt.toLocaleString('en-IN')}`);
+        });
+
+        container.querySelector('#btn-sbi-live-download')?.addEventListener('click', () => {
+          DL.downloadSbiLoanAgainstFdReceipt(user, loanData);
+        });
+
+        container.querySelector('#btn-sbi-live-print')?.addEventListener('click', () => {
+          DL.printSbiLoanAgainstFdReceipt(user, loanData);
+        });
+      }
+
+      renderSbiModalView();
+      viewerModal.style.display = 'flex';
+      return;
+    }
+
     container.querySelector('#modal-doc-body').innerHTML = `
       <div style="background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <div style="text-align: center; border-bottom: 2px solid #002B49; padding-bottom: 12px; margin-bottom: 16px;">
@@ -795,7 +917,12 @@ export function renderDocumentVault(container) {
   });
 
   container.querySelector('#btn-modal-print')?.addEventListener('click', () => {
-    window.print();
+    if (activeModalDoc && activeModalDoc.id === 'DOC-SBI-FDLOAN-2026') {
+      const customData = store.get().sbiFdLoanDetails || {};
+      DL.printSbiLoanAgainstFdReceipt(user, customData);
+    } else {
+      window.print();
+    }
   });
 
   container.querySelector('#btn-modal-download')?.addEventListener('click', () => {

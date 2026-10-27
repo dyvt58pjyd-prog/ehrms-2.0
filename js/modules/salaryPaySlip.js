@@ -5,7 +5,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadPaySlip, downloadForm16, downloadITRV } from '../downloader.js';
+import { downloadPaySlip, downloadForm16, downloadITRV, downloadSbiLoanAgainstFdReceipt } from '../downloader.js';
 
 function numberToWordsINR(num) {
   const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
@@ -95,6 +95,9 @@ export function renderSalaryPaySlip(container) {
         </button>
         <button class="btn btn-outline" id="btn-download-itrv" style="margin-left: 8px; border-color: #ea580c; color: #ea580c; font-weight: bold;">
           ✅ ITR-V Acknowledgment
+        </button>
+        <button class="btn btn-outline" id="btn-download-sbi-loan" style="margin-left: 8px; border-color: #002D62; color: #002D62; font-weight: bold; background: #f0f7ff;" title="State Bank of India Loan against Fixed Deposit Sanction Receipt">
+          🏦 SBI Loan Against FD Receipt
         </button>
       </div>
     </div>
@@ -375,6 +378,11 @@ export function renderSalaryPaySlip(container) {
   
   container.querySelector('#btn-download-form16')?.addEventListener('click', () => {
     downloadForm16(user);
+  });
+
+  container.querySelector('#btn-download-sbi-loan')?.addEventListener('click', () => {
+    const loanData = store.get().sbiFdLoanDetails || {};
+    downloadSbiLoanAgainstFdReceipt(user, loanData);
   });
 
   container.querySelector('#btn-download-payslip').addEventListener('click', () => {
