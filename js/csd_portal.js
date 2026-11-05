@@ -17,7 +17,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
     accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
-    warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY',
+    warrantyExpires: '3 YEARS INBUILT WARRANTY (CLAIMABLE ONLY AT CSD / URC)',
     specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
     serialNo: 'DMPY9028IPAD10',
     imei1: 'N/A',
@@ -41,7 +41,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
     accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
-    warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+    warrantyExpires: '28-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
     specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS',
     imei1: '359810/24/849201/8',
     imei2: '359810/24/849202/6',
@@ -65,7 +65,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'SEALED BRAND NEW RETAIL PACK',
     accessories: 'TYPE-C WOVEN CHARGING CABLE, SIM TRAY PIN, MANUAL',
-    warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED WARRANTY',
+    warrantyExpires: '3 YEARS INBUILT WARRANTY (CLAIMABLE ONLY AT CSD / URC)',
     specs: '15.75 CM (6.2") SUPER RETINA XDR OLED 120HZ PROMOTION | APPLE A19 BIONIC 2NM CHIP | 8GB RAM | 256GB ROM | DUAL 48MP FUSION + 48MP ULTRA WIDE CAMERA | 4200 MAH BATTERY',
     serialNo: 'G6TQ8121IP17UV',
     imei1: '359822/15/901284/3',
@@ -89,7 +89,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'VERY GOOD (A) - BRAND BOX',
     accessories: 'ALL ACCESSORIES INCLUDED (65W TYPE-C CABLE, EJECTOR PIN)',
-    warrantyExpires: '23-05-2027 (PAN-INDIA BRAND ONSITE WARRANTY)',
+    warrantyExpires: '23-05-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
     specs: '15.75 CM (6.2") FULL HD+ DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP REAR CAMERA | 12MP FRONT CAMERA | 4000 MAH LI-ION',
     imei1: '358941/08/948210/6',
     imei2: '358941/08/948211/4',
@@ -113,7 +113,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'SEALED BRAND PACK',
     accessories: 'DATA CABLE, SIM TOOL',
-    warrantyExpires: '1 YEAR BRAND WARRANTY',
+    warrantyExpires: '3 YEARS INBUILT WARRANTY (CLAIMABLE ONLY AT CSD / URC)',
     specs: '6.2" DYNAMIC AMOLED 2X | EXYNOS 2400 | 8GB RAM | 128GB ROM | 50MP TRIPLE CAMERA',
     imei1: '359124/11/498211/2',
     imei2: '359124/11/498212/0',
@@ -137,7 +137,7 @@ const DEFAULT_INVENTORY = [
     gstRate: 18,
     grade: 'ORIGINAL FACTORY SEALED',
     accessories: 'DUALSENSE CONTROLLER, HDMI 2.1 CABLE, STAND',
-    warrantyExpires: '1 YEAR SONY INDIA WARRANTY',
+    warrantyExpires: '3 YEARS INBUILT WARRANTY (CLAIMABLE ONLY AT CSD / URC)',
     specs: 'CUSTOM AMD ZEN 2 8-CORE | RDNA 2 GPU 10.28 TFLOPS | 16GB GDDR6 | 1TB NVME SSD | 4K 120HZ HDR',
     imei1: 'N/A',
     imei2: 'N/A',
@@ -295,7 +295,7 @@ const DEFAULT_TRANSACTIONS = [
         gstRate: 18,
         grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
         accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
-        warrantyExpires: '15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)',
+        warrantyExpires: '15-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
         specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
         serialNo: 'DMPY9028IPAD10',
         imei1: 'N/A',
@@ -343,7 +343,7 @@ const DEFAULT_TRANSACTIONS = [
         gstRate: 18,
         grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
         accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
-        warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+        warrantyExpires: '28-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
         specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | 24MP FRONT | 5200 MAH | TITANIUM GRADE 5 CHASSIS',
         imei1: '359810/24/849201/8',
         imei2: '359810/24/849202/6',
@@ -1028,12 +1028,52 @@ function renderCustomerDashboard() {
             </span>
           </td>
           <td style="font-weight: 800; color: #0f172a;">₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td><button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue); cursor: pointer; font-weight: 700; font-size: 11px; padding: 4px 8px;" onclick="viewCustomerBill('${t.id}')">View Receipt</button></td>
+          <td style="white-space: nowrap;">
+            <button class="btn-header" style="color:var(--csd-blue); border-color:var(--csd-blue); cursor: pointer; font-weight: 700; font-size: 11px; padding: 4px 8px; margin-right: 4px;" onclick="viewCustomerBill('${t.id}')">📄 Receipt</button>
+            <button class="btn-header" style="background:#002b49; color:#fde047; border: 1.5px solid #f59e0b; cursor: pointer; font-weight: 800; font-size: 11px; padding: 4px 8px; margin-right: 4px;" onclick="viewCustomerPurchaseCert('${t.id}')">📜 Purchase Cert</button>
+            <button class="btn-header" style="background:#14532d; color:#ffffff; border: 1.5px solid #86efac; cursor: pointer; font-weight: 800; font-size: 11px; padding: 4px 8px;" onclick="viewCustomerWarrantyCert('${t.id}')">🛡️ Warranty Cert</button>
+          </td>
         </tr>
       `;
     }).join('');
   }
 }
+
+window.viewCustomerPurchaseCert = function(txnId) {
+  const txn = transactions.find(t => t.id === txnId);
+  if (!txn) return;
+  const off = officers.find(o => o.cardNo === (txn.cardNo || currentUser?.id)) || {
+    name: currentUser?.name || 'ANURAG ANIL BAWASKAR',
+    rank: txn.rank || 'ASO-I (Gazetted)',
+    cardNo: txn.cardNo || currentUser?.id || 'LB08260547713500S01',
+    canteen: txn.canteen || 'URC HQ DELHI AREA (SENA BHAWAN)',
+    empId: 'MOD-DMA-2024-8104',
+    designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)'
+  };
+  import('./downloader.js').then(DL => {
+    DL.printCsdPurchaseCertificate(off, txn);
+  }).catch(e => {
+    console.error('Failed to load downloader', e);
+  });
+};
+
+window.viewCustomerWarrantyCert = function(txnId) {
+  const txn = transactions.find(t => t.id === txnId);
+  if (!txn) return;
+  const off = officers.find(o => o.cardNo === (txn.cardNo || currentUser?.id)) || {
+    name: currentUser?.name || 'ANURAG ANIL BAWASKAR',
+    rank: txn.rank || 'ASO-I (Gazetted)',
+    cardNo: txn.cardNo || currentUser?.id || 'LB08260547713500S01',
+    canteen: txn.canteen || 'URC HQ DELHI AREA (SENA BHAWAN)',
+    empId: 'MOD-DMA-2024-8104',
+    designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)'
+  };
+  import('./downloader.js').then(DL => {
+    DL.printCsdWarrantyCertificate(off, txn);
+  }).catch(e => {
+    console.error('Failed to load downloader', e);
+  });
+};
 
 window.viewCustomerBill = function(txnId) {
   const txn = transactions.find(t => t.id === txnId);

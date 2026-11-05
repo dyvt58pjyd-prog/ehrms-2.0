@@ -6,7 +6,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml, downloadCsdPurchaseCertificate, printCsdPurchaseCertificate, downloadCsdWarrantyCertificate, printCsdWarrantyCertificate } from '../downloader.js';
 import { CSD_LOGO_B64, EMBLEM_B64 } from '../csd_assets.js';
 
 export const CANONICAL_IPAD_ITEM = {
@@ -25,7 +25,7 @@ export const CANONICAL_IPAD_ITEM = {
   gstRate: 18,
   grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
   accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
-  warrantyExpires: '1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY',
+  warrantyExpires: '3 YEARS INBUILT WARRANTY (CLAIMABLE ONLY AT CSD / URC)',
   specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
   serialNo: 'DMPY9028IPAD10',
   imei1: 'N/A',
@@ -61,7 +61,7 @@ export const CANONICAL_IPAD_TXN = {
       marketPrice: 59900.00,
       grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
       accessories: 'USB-C CHARGE CABLE (1M), 20W USB-C POWER ADAPTER, MANUAL',
-      warrantyExpires: '15-10-2027 (1 YEAR APPLE PAN-INDIA LIMITED ONSITE WARRANTY)',
+      warrantyExpires: '15-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
       specs: '27.69 CM (10.9") LIQUID RETINA DISPLAY (TRUE TONE, 500 NITS) | APPLE A14 BIONIC 6-CORE CPU | 4-CORE GPU | 4GB RAM | 256GB NVME STORAGE | 12MP WIDE REAR CAMERA | 12MP LANDSCAPE ULTRA WIDE FRONT CAMERA (CENTER STAGE) | TOUCH ID | WI-FI 6 + BLUETOOTH 5.2 | USB-C',
       serialNo: 'DMPY9028IPAD10',
       imei1: 'N/A',
@@ -365,7 +365,7 @@ export function renderCanteenCards(container, initialTab = null) {
           </div>
 
           <!-- Action Buttons -->
-          <div style="display: flex; gap: 6px; align-items: center;">
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             <button id="btn-modal-print-invoice" class="btn btn-sm btn-warning" style="background: #f59e0b; border-color: #d97706; color: #000; font-weight: 800; padding: 4px 10px; font-size: 11px;">
               🖨️ Print
             </button>
@@ -374,6 +374,12 @@ export function renderCanteenCards(container, initialTab = null) {
             </button>
             <button id="btn-modal-dl-slip" class="btn btn-sm btn-success" style="background: #16a34a; border-color: #15803d; color: white; font-weight: 700; padding: 4px 10px; font-size: 11px;">
               📟 POS Slip
+            </button>
+            <button id="btn-modal-dl-cert" class="btn btn-sm" style="background: #002b49; border: 1.5px solid #f59e0b; color: #fef08a; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
+              📜 Purchase Cert
+            </button>
+            <button id="btn-modal-dl-warr" class="btn btn-sm" style="background: #14532d; border: 1.5px solid #86efac; color: #ffffff; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
+              🛡️ Warranty Cert
             </button>
             <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
               &times;
@@ -530,7 +536,7 @@ export function renderCanteenCards(container, initialTab = null) {
             </div>
             <div>
               <label style="font-size: 11px; font-weight: 800; color: #002b49; display: block; margin-bottom: 4px;">WARRANTY PERIOD &amp; TERMS</label>
-              <input type="text" id="new-item-warranty" value="1 Year Official Brand Warranty Pan-India" placeholder="e.g. 1 Year Official Brand Warranty" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+              <input type="text" id="new-item-warranty" value="3 Years Inbuilt Warranty (Claimable Only at CSD)" placeholder="e.g. 3 Years Inbuilt Warranty (Claimable Only at CSD)" style="width: 100%; padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
             </div>
           </div>
 
@@ -618,7 +624,7 @@ export function renderCanteenCards(container, initialTab = null) {
     const stock = parseInt(addItemModal.querySelector('#new-item-stock').value) || 10;
     const grade = addItemModal.querySelector('#new-item-grade').value.trim() || 'Brand New Sealed Box (Grade A)';
     const accessories = addItemModal.querySelector('#new-item-accessories').value.trim() || 'All Original Accessories Included';
-    const warrantyExpires = addItemModal.querySelector('#new-item-warranty').value.trim() || '1 Year Official Brand Warranty Pan-India';
+    const warrantyExpires = addItemModal.querySelector('#new-item-warranty').value.trim() || '3 Years Inbuilt Warranty (Claimable Only at CSD)';
     const specs = addItemModal.querySelector('#new-item-specs').value.trim();
     const addToCart = addItemModal.querySelector('#new-item-add-cart').checked;
 
@@ -704,6 +710,20 @@ export function renderCanteenCards(container, initialTab = null) {
     if (activeModalTxn) {
       downloadCsdDotMatrixSlip(user, activeModalTxn);
       showDownloadToast('CSD Dot Matrix Cash Memo Slip Downloaded!');
+    }
+  });
+
+  container.querySelector('#btn-modal-dl-cert')?.addEventListener('click', () => {
+    if (activeModalTxn) {
+      downloadCsdPurchaseCertificate(user, activeModalTxn);
+      showDownloadToast('Official CSD Purchase Certificate Downloaded!');
+    }
+  });
+
+  container.querySelector('#btn-modal-dl-warr')?.addEventListener('click', () => {
+    if (activeModalTxn) {
+      downloadCsdWarrantyCertificate(user, activeModalTxn);
+      showDownloadToast('CSD 3-Year Inbuilt Warranty Certificate Downloaded!');
     }
   });
 
@@ -1445,6 +1465,13 @@ export function renderCanteenCards(container, initialTab = null) {
           <div style="margin-top: 16px; font-size: 11.5px; color: #64748b; line-height: 1.5;">
             <strong>Note:</strong> Unutilized grocery and liquor quotas automatically lapse at the end of every calendar month and do not accumulate or carry forward. Next monthly quota rollover occurs on <strong>01 November 2026</strong>.
           </div>
+
+          <div style="margin-top: 14px; background: #f8fafc; border-left: 4px solid #002b49; padding: 12px 16px; font-size: 12px; color: #334155; line-height: 1.6; border-radius: 0 6px 6px 0;">
+            <div style="font-weight: 800; color: #002b49; margin-bottom: 4px;">📜 Statutory CSD Pricing &amp; Warranty Rules:</div>
+            <div>&bull; <strong>MRP Basis:</strong> CSD pricing is computed strictly on manufacturer's declared MRP and negotiated MoD wholesale contracts.</div>
+            <div>&bull; <strong>Independent Concessions:</strong> CSD discounts do not depend on, match, or fluctuate with open-market festival offers, festive discounts, or online e-commerce platform sales.</div>
+            <div>&bull; <strong>3-Year Inbuilt Warranty:</strong> All CSD electronics products carry a mandatory inbuilt warranty of 3 years from the date of purchase, claimable <strong>strictly and exclusively at CSD / URC counters only (not claimable at any other location or outside brand centre)</strong>.</div>
+          </div>
         </div>
 
       </div>
@@ -1533,8 +1560,14 @@ export function renderCanteenCards(container, initialTab = null) {
                       <button class="btn btn-sm btn-primary btn-dl-invoice" data-id="${t.id}" style="font-weight: 700; background: #002b49; margin-right: 4px;">
                         📥 A4 PDF
                       </button>
-                      <button class="btn btn-sm btn-success btn-dl-slip" data-id="${t.id}" style="font-weight: 700; background: #16a34a; border-color: #15803d; color: white;">
+                      <button class="btn btn-sm btn-success btn-dl-slip" data-id="${t.id}" style="font-weight: 700; background: #16a34a; border-color: #15803d; color: white; margin-right: 4px;">
                         📟 Slip
+                      </button>
+                      <button class="btn btn-sm btn-dl-cert" data-id="${t.id}" style="font-weight: 800; background: #002b49; border: 1.5px solid #f59e0b; color: #fef08a; margin-right: 4px; cursor: pointer;">
+                        📜 Purchase Cert
+                      </button>
+                      <button class="btn btn-sm btn-dl-warr" data-id="${t.id}" style="font-weight: 800; background: #14532d; border: 1.5px solid #86efac; color: white; cursor: pointer;">
+                        🛡️ Warranty Cert
                       </button>
                     </td>
                   </tr>
@@ -1573,6 +1606,26 @@ export function renderCanteenCards(container, initialTab = null) {
         if (txn) {
           downloadCsdDotMatrixSlip(user, txn);
           showDownloadToast(`CSD Dot Matrix Cash Memo #${txn.billNo} Downloaded!`);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-cert').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        if (txn) {
+          downloadCsdPurchaseCertificate(user, txn);
+          showDownloadToast(`CSD Purchase Certificate #${txn.billNo} Downloaded!`);
+        }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-warr').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        if (txn) {
+          downloadCsdWarrantyCertificate(user, txn);
+          showDownloadToast(`CSD 3-Year Inbuilt Warranty Certificate #${txn.billNo} Downloaded!`);
         }
       });
     });

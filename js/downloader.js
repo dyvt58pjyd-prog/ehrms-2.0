@@ -2193,7 +2193,7 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         marketPrice: 144900.00,
         grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
         accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
-        warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+        warrantyExpires: '28-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
         specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS',
         imei1: '359810/24/849201/8',
         imei2: '359810/24/849202/6',
@@ -2236,7 +2236,7 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
       marketPrice: 144900.00,
       grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
       accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
-      warrantyExpires: '28-10-2027 (1 YEAR PAN-INDIA APPLE LIMITED ONSITE WARRANTY)',
+      warrantyExpires: '28-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
       specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION (WIDE + ULTRA-WIDE + 10X PERISCOPE TELEPHOTO) | 24MP FRONT | 5200 MAH BATTERY | 45W WIRED & 25W MAGSAFE | TITANIUM GRADE 5 CHASSIS',
       imei1: '359810/24/849201/8',
       imei2: '359810/24/849202/6',
@@ -2678,8 +2678,23 @@ export function generateA4DotMatrixBillHtml(user, txnData, docTypeTitle) {
         </div>
         <div class="divider">========================================================================================================================</div>
 
-        <div style="font-size: 6.8px; color: #333; line-height: 1.2; text-align: justify;">
-          <strong>Statutory Directive under Essential Commodities Act &amp; MoD Regulations:</strong> Goods sold under CSD quota are strictly for the bonafide personal consumption of authorized defence civilian personnel and their verified family dependents. Commercial resale or unauthorized transfer of CSD goods is a severe cognizable offense under Section 7 of the Essential Commodities Act, 1955 and Service Conduct Rules. Warranty valid through authorized brand service centres nationwide.
+        <!-- STATUTORY RULES, PRICING & WARRANTY DIRECTIVES -->
+        <div style="font-size: 6.8px; color: #1e293b; line-height: 1.32; text-align: justify; background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 6px; margin: 2px 0;">
+          <div class="bold" style="font-size: 7.5px; margin-bottom: 2px; color: #002b49; letter-spacing: 0.4px;">
+            TERMS, CONDITIONS &amp; STATUTORY CSD RULES:
+          </div>
+          <div style="margin-bottom: 2px;">
+            <strong>1. PRICING BASIS ON MRP:</strong> CSD concessional rates are strictly computed and benchmarked against the manufacturer's declared Maximum Retail Price (MRP) and negotiated Ministry of Defence (MoD) wholesale rate-contracts.
+          </div>
+          <div style="margin-bottom: 2px;">
+            <strong>2. INDEPENDENCE OF CSD CONCESSION (NO OPEN-MARKET / ONLINE DEPENDENCY):</strong> CSD concessional discounts are statutory and predetermined under government agreements. CSD discounts are entirely independent and DO NOT depend on, match, or fluctuate with open-market festival offers, festive season discounts, temporary clearance sales, bank/credit card cashbacks, or dynamic pricing schemes on external online e-commerce platforms (e.g. Amazon, Flipkart, etc.).
+          </div>
+          <div style="margin-bottom: 2px;">
+            <strong>3. MANDATORY 3-YEAR INBUILT WARRANTY (CLAIMABLE ONLY AT CSD):</strong> All CSD electronics products carry a mandatory inbuilt warranty of <strong>THREE (3) YEARS from the date of purchase from CSD/URC</strong>. Warranty can be claimed <strong>STRICTLY AND EXCLUSIVELY AT CSD / URC ONLY &bull; NOT CLAIMABLE AT ANY OTHER LOCATION, OUTSIDE WORKSHOP, OR BRAND SERVICE CENTRE</strong>. Any defect or service request must be routed solely through the designated CSD/URC warranty desk upon presentation of this original CSD bill.
+          </div>
+          <div>
+            <strong>4. BONAFIDE PERSONAL CONSUMPTION &amp; ANTI-RESALE:</strong> Goods sold under CSD quota are strictly for the personal consumption of authorized defence civilian personnel and their verified family dependents. Commercial resale, market diversion, or unauthorized transfer is a cognizable offense under Section 7 of the Essential Commodities Act, 1955 and Central Civil Services Conduct Rules.
+          </div>
         </div>
 
         <!-- TRUE CODE-39 VECTOR SVG BARCODE -->
@@ -2738,6 +2753,1018 @@ export function downloadCsdDotMatrixSlip(user, txnData) {
 
 export function printCsdDotMatrixSlip(user, txnData) {
   const html = getCsdDotMatrixSlipHtml(user, txnData);
+  const printWin = window.open('', '_blank');
+  if (printWin) {
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => { printWin.print(); }, 500);
+  } else {
+    alert('Please allow popups to print.');
+  }
+}
+
+/**
+ * 11D. Download Official CSD Certificate of Purchase
+ * Government of India - Ministry of Defence - Canteen Stores Department (CSD)
+ */
+export function generateCsdPurchaseCertificateHtml(user, txnData) {
+  const u = user || {
+    name: 'ANURAG ANIL BAWASKAR',
+    empId: 'MOD-DMA-2024-8104',
+    designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)',
+    cadre: 'Department of Military Affairs (DMA), Ministry of Defence'
+  };
+
+  const txn = txnData || {
+    id: 'CSD-TXN-2026-1002',
+    billNo: 'CSD/URC/DEL/2026/10/9482',
+    indentNo: 'IND-2026/10/9482',
+    date: '2026-10-02 18:45:10',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    terminal: 'POS-01 / IP: 192.168.1.101',
+    cashier: 'Sub Maj R.K. Yadav',
+    manager: 'Sub Maj R.K. Yadav',
+    paymentMode: 'HARD CURRENCY CASH ONLY (COUNTER 01)',
+    cardNo: 'LB08260547713500S01',
+    rank: 'ASO-I (Group A Gazetted)',
+    cashVoucherNo: 'CSD/CASH/DEL/2026/10/9482',
+    cashReceiptNo: 'RCPT-CSD-2026-9482',
+    items: [
+      {
+        id: '281948',
+        sku: '281948',
+        name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+        color: 'TITANIUM TEAL',
+        hsn: '85171300',
+        qty: 1,
+        unit: 'UNT',
+        price: 114900.00,
+        marketPrice: 144900.00,
+        grade: 'VERY GOOD (A) - FACTORY SEALED BRAND BOX',
+        accessories: '100W TYPE-C BRAIDED FAST CABLE, SIM EJECTOR PIN, APPLE STICKERS',
+        warrantyExpires: '28-10-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
+        specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | 24MP FRONT | 5200 MAH | TITANIUM GRADE 5 CHASSIS',
+        imei1: '359810/24/849201/8',
+        imei2: '359810/24/849202/6',
+        serialNo: 'G6TF9027IPHONE17',
+        batchNo: 'BAT-2026/09-DEL-A17'
+      }
+    ],
+    totalTaxable: 97372.88,
+    totalCgst: 8763.56,
+    totalSgst: 8763.56,
+    totalNet: 114900.00
+  };
+
+  const rawItems = txn.items && txn.items.length > 0 ? txn.items : [
+    {
+      id: '281948',
+      sku: '281948',
+      name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+      category: 'Electronics',
+      brand: 'APPLE INC / APPLE INDIA PVT LTD',
+      model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+      color: 'TITANIUM TEAL',
+      price: 114900.00,
+      marketPrice: 144900.00,
+      qty: 1,
+      serialNo: 'G6TF9027IPHONE17',
+      imei1: '359810/24/849201/8',
+      imei2: '359810/24/849202/6',
+      batchNo: 'BAT-2026/09-DEL-A17',
+      specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | TITANIUM GRADE 5 CHASSIS'
+    }
+  ];
+
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  const certDocketNo = `CSD/CERT-PUR/2026/${safeBillNo}`;
+  const barcodeSvg = generateCode39BarcodeSvg('CSD-PUR-' + safeBillNo, 26, 20);
+
+  const purchaseDate = txn.date ? txn.date.split(' ')[0] : '2026-10-02';
+
+  let totalMarket = 0;
+  let totalNet = 0;
+  rawItems.forEach(it => {
+    const q = Number(it.qty) || 1;
+    const p = Number(it.price) || 0;
+    const m = Number(it.marketPrice) || (p * 1.25);
+    totalNet += (p * q);
+    totalMarket += (m * q);
+  });
+  const totalSavings = Math.max(0, totalMarket - totalNet);
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSD Certificate of Purchase - ${safeBillNo}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Roboto:wght@400;500;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 5mm 6mm;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: #334155;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color: #0f172a;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page-container {
+      width: 210mm;
+      max-width: 210mm;
+      margin: 10px auto;
+      background: #ffffff;
+      padding: 10mm 12mm;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      position: relative;
+      box-sizing: border-box;
+    }
+    .cert-outer-border {
+      border: 4px double #002b49;
+      padding: 7mm 8mm;
+      position: relative;
+      background: radial-gradient(circle at center, #ffffff 60%, #faf8f2 100%);
+    }
+    .cert-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #b45309;
+    }
+    .corner-tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+    .corner-tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+    .corner-br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+    .header-table td {
+      vertical-align: middle;
+    }
+    .govt-heading {
+      text-align: center;
+      line-height: 1.25;
+    }
+    .govt-heading h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 15px;
+      margin: 0;
+      color: #002b49;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+    .govt-heading h2 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 13px;
+      margin: 2px 0 0 0;
+      color: #002b49;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .govt-heading h3 {
+      font-size: 10.5px;
+      margin: 2px 0 0 0;
+      color: #b45309;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+    .govt-heading .station {
+      font-size: 9px;
+      color: #475569;
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .title-banner {
+      background: linear-gradient(90deg, #002b49 0%, #004b7a 50%, #002b49 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 6px 12px;
+      margin: 8px 0;
+      border-radius: 3px;
+      border-top: 2px solid #f59e0b;
+      border-bottom: 2px solid #f59e0b;
+    }
+    .title-banner h4 {
+      font-family: 'Cinzel', Georgia, serif;
+      margin: 0;
+      font-size: 12.5px;
+      letter-spacing: 1.2px;
+      font-weight: 800;
+    }
+    .title-banner .sub-banner {
+      font-size: 8.5px;
+      letter-spacing: 0.8px;
+      color: #fde047;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .docket-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      padding: 3px 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 8px;
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .solemn-text {
+      font-size: 9.5px;
+      line-height: 1.5;
+      text-align: justify;
+      color: #1e293b;
+      margin: 6px 0 10px 0;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin-bottom: 8px;
+    }
+    .info-table th, .info-table td {
+      border: 1px solid #cbd5e1;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+    .info-table th {
+      background: #f8fafc;
+      color: #002b49;
+      font-weight: 800;
+      text-align: left;
+    }
+    .info-label {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #002b49;
+      width: 22%;
+    }
+    .info-val {
+      width: 28%;
+    }
+
+    .statutory-box {
+      background: #ffffff;
+      border: 1.5px solid #002b49;
+      padding: 6px 10px;
+      font-size: 8.2px;
+      line-height: 1.4;
+      color: #1e293b;
+      margin: 8px 0;
+      border-radius: 4px;
+    }
+    .statutory-title {
+      font-weight: 800;
+      color: #002b49;
+      font-size: 9px;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sig-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: end;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1.5px dashed #cbd5e1;
+    }
+
+    .print-bar {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .print-btn {
+      padding: 7px 22px;
+      background: #002b49;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    @media print {
+      body { background: #ffffff !important; padding: 0 !important; }
+      .page-container {
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        padding: 5mm 6mm !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .print-bar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-bar">
+    <button class="print-btn" onclick="window.print()">🖨️ Print Official CSD Purchase Certificate</button>
+  </div>
+
+  <div class="page-container">
+    <div class="cert-outer-border">
+      <div class="cert-corner corner-tl"></div>
+      <div class="cert-corner corner-tr"></div>
+      <div class="cert-corner corner-bl"></div>
+      <div class="cert-corner corner-br"></div>
+
+      <!-- Government CSD Header -->
+      <table class="header-table">
+        <tr>
+          <td style="width: 75px; text-align: left;">
+            <img src="${EMBLEM_B64}" alt="Government Emblem" style="height: 58px; width: auto; object-fit: contain;">
+          </td>
+          <td class="govt-heading">
+            <h1>भारत सरकार &bull; GOVERNMENT OF INDIA</h1>
+            <h2>रक्षा मंत्रालय &bull; MINISTRY OF DEFENCE</h2>
+            <h3>CANTEEN STORES DEPARTMENT (CSD)</h3>
+            <div class="station">URC HQ DELHI AREA &bull; SENA BHAWAN, NEW DELHI - 110011</div>
+            <div style="font-size: 7.5px; color: #64748b; font-family: monospace; margin-top: 1px;">
+              AUTHENTICATED UNDER DEFENCE CIVILIAN PERSONNEL WELFARE RULES &amp; GFR 2017
+            </div>
+          </td>
+          <td style="width: 85px; text-align: right;">
+            <img src="${CSD_LOGO_B64}" alt="CSD Logo" style="height: 38px; width: auto; object-fit: contain;">
+          </td>
+        </tr>
+      </table>
+
+      <!-- Title Strip -->
+      <div class="title-banner">
+        <h4>OFFICIAL CERTIFICATE OF BONAFIDE CSD PURCHASE</h4>
+        <div class="sub-banner">STATUTORY PROCUREMENT RECORD &bull; ENTITLEMENT RECONCILIATION DOSSIER</div>
+      </div>
+
+      <!-- Docket Details -->
+      <div class="docket-row">
+        <span>CERTIFICATE NO: <strong>${certDocketNo}</strong></span>
+        <span>ISSUE DATE: <strong>${purchaseDate}</strong></span>
+        <span>STATION: <strong>NEW DELHI (SENA BHAWAN)</strong></span>
+      </div>
+
+      <!-- Certification Statement -->
+      <div class="solemn-text">
+        This is to solemnly certify under the authority and seal of the <strong>Canteen Stores Department (Ministry of Defence, Government of India)</strong> that the officer designated hereunder has procured the undermentioned authentic item(s) through authorized Unit Run Canteen (URC) retail entitlement quota in full adherence to the General Financial Rules (GFR), 2017 and Service Conduct Regulations:
+      </div>
+
+      <!-- Officer & Beneficiary Dossier -->
+      <table class="info-table">
+        <tr>
+          <th colspan="4" style="background: #002b49; color: #ffffff; font-size: 9.5px; padding: 3px 6px;">
+            1. OFFICER &amp; BENEFICIARY SMART CARD CREDENTIALS
+          </th>
+        </tr>
+        <tr>
+          <td class="info-label">Officer Name</td>
+          <td class="info-val"><strong style="color: #002b49;">${u.name}</strong></td>
+          <td class="info-label">Employee ID (PPO/PF)</td>
+          <td class="info-val"><strong style="font-family: monospace;">${u.empId}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Designation &amp; Rank</td>
+          <td class="info-val"><strong>${u.designation}</strong></td>
+          <td class="info-label">Ministry / Department</td>
+          <td class="info-val">Department of Military Affairs (DMA)</td>
+        </tr>
+        <tr>
+          <td class="info-label">CSD Smart Card Chip UID</td>
+          <td class="info-val"><code style="font-family: monospace; color: #166534; font-weight: 700;">IND-CSD-CHIP-7F89B2</code></td>
+          <td class="info-label">CSD Card / Pass No</td>
+          <td class="info-val"><strong style="font-family: monospace;">${txn.cardNo || 'LB08260547713500S01'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Tax Invoice Reference</td>
+          <td class="info-val"><strong style="font-family: monospace; color: #002b49;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</strong></td>
+          <td class="info-label">Regimental Cash Voucher</td>
+          <td class="info-val"><strong style="font-family: monospace;">${txn.cashVoucherNo || 'CSD/CASH/DEL/2026/10/9482'}</strong></td>
+        </tr>
+      </table>
+
+      <!-- Equipment / Items Specification -->
+      <table class="info-table">
+        <tr>
+          <th colspan="4" style="background: #002b49; color: #ffffff; font-size: 9.5px; padding: 3px 6px;">
+            2. PROCURED EQUIPMENT &amp; HARDWARE VERIFICATION PARTICULARS
+          </th>
+        </tr>
+        ${rawItems.map(it => `
+          <tr>
+            <td class="info-label">Item Nomenclature</td>
+            <td class="info-val" colspan="3"><strong style="font-size: 10px; color: #002b49;">${it.name}</strong></td>
+          </tr>
+          <tr>
+            <td class="info-label">Brand &amp; Manufacturer</td>
+            <td class="info-val">${it.brand || 'OFFICIAL OEM RATE CONTRACTOR'}</td>
+            <td class="info-label">Model / Color</td>
+            <td class="info-val">${it.model || 'STANDARD RETAIL'} ${it.color ? '&bull; ' + it.color : ''}</td>
+          </tr>
+          <tr>
+            <td class="info-label">Hardware Serial Number</td>
+            <td class="info-val"><strong style="font-family: monospace; color: #b45309;">${it.serialNo || 'N/A'}</strong></td>
+            <td class="info-label">IMEI-1 / IMEI-2</td>
+            <td class="info-val" style="font-family: monospace; font-size: 8.5px;">
+              ${it.imei1 && it.imei1 !== 'N/A' ? it.imei1 : 'N/A'} ${it.imei2 && it.imei2 !== 'N/A' ? ' / ' + it.imei2 : ''}
+            </td>
+          </tr>
+          <tr>
+            <td class="info-label">Technical Specifications</td>
+            <td class="info-val" colspan="3" style="font-size: 8px; color: #334155; line-height: 1.35;">
+              ${it.specs || 'Certified original factory hardware sealed configuration.'}
+            </td>
+          </tr>
+        `).join('')}
+      </table>
+
+      <!-- Financial & Valuation Particulars -->
+      <table class="info-table">
+        <tr>
+          <th colspan="4" style="background: #002b49; color: #ffffff; font-size: 9.5px; padding: 3px 6px;">
+            3. COMMERCIAL PRICING &amp; DEFENCE CONCESSION AUDIT
+          </th>
+        </tr>
+        <tr>
+          <td class="info-label">Civil Open Market MRP</td>
+          <td class="info-val" style="text-decoration: line-through;">₹ ${totalMarket.toFixed(2)}</td>
+          <td class="info-label">CSD Concessional Price</td>
+          <td class="info-val"><strong style="font-size: 11px; color: #166534;">₹ ${totalNet.toFixed(2)}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Total Concession / Savings</td>
+          <td class="info-val"><strong style="color: #166534;">₹ ${totalSavings.toFixed(2)}</strong></td>
+          <td class="info-label">Payment Settlement</td>
+          <td class="info-val"><strong>${txn.paymentMode || 'HARD CURRENCY CASH ONLY (COUNTER 01)'}</strong></td>
+        </tr>
+      </table>
+
+      <!-- Statutory Rules & Directives Box -->
+      <div class="statutory-box">
+        <div class="statutory-title">
+          <span>📜</span> STATUTORY STATEMENTS &amp; MANDATORY CSD RULES:
+        </div>
+        <div style="margin-bottom: 2px;">
+          &bull; <strong>PRICING BASIS ON MRP:</strong> CSD concessional rates are strictly computed and benchmarked against the manufacturer's declared Maximum Retail Price (MRP) and negotiated Ministry of Defence (MoD) wholesale depot rate-contracts.
+        </div>
+        <div style="margin-bottom: 2px;">
+          &bull; <strong>INDEPENDENCE OF CONCESSION (NO OPEN-MARKET / ONLINE DEPENDENCY):</strong> CSD concessional discounts are statutory and predetermined under government rate agreements. CSD discounts DO NOT depend on, match, or fluctuate with open-market festival offers, festive season discounts, temporary clearance sales, bank/credit card cashbacks, or dynamic pricing on online e-commerce platforms.
+        </div>
+        <div style="margin-bottom: 2px;">
+          &bull; <strong>3-YEAR INBUILT WARRANTY (CLAIMABLE ONLY AT CSD):</strong> All CSD electronics products carry a mandatory inbuilt warranty of <strong>THREE (3) YEARS from the date of purchase from CSD/URC</strong>, claimable <strong>STRICTLY AND EXCLUSIVELY AT CSD / URC COUNTERS ONLY &bull; NOT CLAIMABLE AT ANY OTHER LOCATION OR BRAND SERVICE CENTRE</strong>.
+        </div>
+        <div>
+          &bull; <strong>BONAFIDE CONSUMPTION:</strong> Procurement is certified for the bonafide personal consumption of the authorized officer and verified family dependents under Section 7 of the Essential Commodities Act, 1955.
+        </div>
+      </div>
+
+      <!-- Signatures & Authority Seals -->
+      <div class="sig-section">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="${MOD_STAMP_B64}" alt="MoD Stamp" style="height: 52px; width: auto; object-fit: contain; opacity: 0.92;">
+            <div style="font-size: 8px; line-height: 1.35; color: #334155;">
+              <strong>SEAL OF URC REGIMENTAL DEPOT</strong><br>
+              Regimental Cash Chest: RCC-DEL-01<br>
+              Sena Bhawan, New Delhi - 110011<br>
+              Auth Ref: MoD/CSD/CERT/2026/081
+            </div>
+          </div>
+          <div style="margin-top: 6px;">
+            ${barcodeSvg}
+            <div style="font-size: 7.5px; font-family: monospace; letter-spacing: 1px; text-align: center; color: #000;">*CSD-PUR-${safeBillNo}*</div>
+          </div>
+        </div>
+
+        <div style="text-align: right;">
+          <div style="font-size: 8.5px; font-weight: 700; color: #002b49; margin-bottom: 3px;">
+            Authenticated &amp; Issued by Authorized Signatories:
+          </div>
+          ${generateAdobeDigitalSignature('Sub Maj R.K. Yadav', 'CSD Depot Manager & Cash Custodian', 'CSD Bonafide Purchase Certification & Entitlement Audit', 'URC HQ Delhi Area, Sena Bhawan', purchaseDate + ' 18:45:10 +05\'30\'')}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+export function downloadCsdPurchaseCertificate(user, txnData) {
+  const txn = txnData || {};
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  triggerDownload(`CSD_Purchase_Certificate_${safeBillNo}.html`, generateCsdPurchaseCertificateHtml(user, txnData));
+}
+
+export function printCsdPurchaseCertificate(user, txnData) {
+  const html = generateCsdPurchaseCertificateHtml(user, txnData);
+  const printWin = window.open('', '_blank');
+  if (printWin) {
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => { printWin.print(); }, 500);
+  } else {
+    alert('Please allow popups to print.');
+  }
+}
+
+/**
+ * 11E. Download Official CSD 3-Year Inbuilt Warranty Certificate
+ * Directorate General of Quality Assurance (DGQA) & CSD Central Technical Inspection Cell
+ */
+export function generateCsdWarrantyCertificateHtml(user, txnData) {
+  const u = user || {
+    name: 'ANURAG ANIL BAWASKAR',
+    empId: 'MOD-DMA-2024-8104',
+    designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)',
+    cadre: 'Department of Military Affairs (DMA), Ministry of Defence'
+  };
+
+  const txn = txnData || {
+    id: 'CSD-TXN-2026-1002',
+    billNo: 'CSD/URC/DEL/2026/10/9482',
+    indentNo: 'IND-2026/10/9482',
+    date: '2026-10-02 18:45:10',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    cardNo: 'LB08260547713500S01',
+    rank: 'ASO-I (Group A Gazetted)',
+    items: [
+      {
+        id: '281948',
+        sku: '281948',
+        name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+        category: 'Electronics',
+        brand: 'APPLE INC / APPLE INDIA PVT LTD',
+        model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+        color: 'TITANIUM TEAL',
+        hsn: '85171300',
+        qty: 1,
+        price: 114900.00,
+        marketPrice: 144900.00,
+        serialNo: 'G6TF9027IPHONE17',
+        imei1: '359810/24/849201/8',
+        imei2: '359810/24/849202/6',
+        batchNo: 'BAT-2026/09-DEL-A17',
+        specs: '17.5 CM (6.9") SUPER RETINA XDR PROMOTION 120HZ OLED (3000 NITS) | APPLE A19 PRO 2NM BIONIC SILICON | 12GB RAM | 256GB NVME | TRIPLE 48MP FUSION | 24MP FRONT | 5200 MAH | TITANIUM GRADE 5 CHASSIS'
+      }
+    ]
+  };
+
+  const rawItems = txn.items && txn.items.length > 0 ? txn.items : [
+    {
+      id: '281948',
+      sku: '281948',
+      name: 'APPLE IPHONE 17 PRO MAX (256GB) - TITANIUM TEAL',
+      category: 'Electronics',
+      brand: 'APPLE INC / APPLE INDIA PVT LTD',
+      model: 'A3398 / IPHONE 17 PRO MAX (256GB)',
+      color: 'TITANIUM TEAL',
+      price: 114900.00,
+      marketPrice: 144900.00,
+      serialNo: 'G6TF9027IPHONE17',
+      imei1: '359810/24/849201/8',
+      imei2: '359810/24/849202/6',
+      batchNo: 'BAT-2026/09-DEL-A17',
+      specs: '17.5 CM (6.9") SUPER RETINA XDR OLED 120HZ | APPLE A19 PRO 2NM | 12GB RAM | 256GB NVME'
+    }
+  ];
+
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  const certDocketNo = `CSD/WARR-DEED/2026/${safeBillNo}`;
+  const barcodeSvg = generateCode39BarcodeSvg('CSD-WARR-' + safeBillNo, 26, 20);
+
+  const purchaseDateStr = txn.date ? txn.date.split(' ')[0] : '2026-10-02';
+  const pDate = new Date(purchaseDateStr);
+  const expDate = new Date(pDate);
+  expDate.setFullYear(pDate.getFullYear() + 3);
+  const expiryDateStr = expDate.toISOString().split('T')[0];
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSD 3-Year Inbuilt Warranty Certificate - ${safeBillNo}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Roboto:wght@400;500;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 5mm 6mm;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: #1e293b;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color: #0f172a;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page-container {
+      width: 210mm;
+      max-width: 210mm;
+      margin: 10px auto;
+      background: #ffffff;
+      padding: 9mm 11mm;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      position: relative;
+      box-sizing: border-box;
+    }
+    .cert-outer-border {
+      border: 4px double #166534;
+      padding: 6.5mm 7.5mm;
+      position: relative;
+      background: radial-gradient(circle at center, #ffffff 65%, #f4fbf7 100%);
+    }
+    .cert-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #16a34a;
+    }
+    .corner-tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+    .corner-tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+    .corner-br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+    .header-table td {
+      vertical-align: middle;
+    }
+    .govt-heading {
+      text-align: center;
+      line-height: 1.25;
+    }
+    .govt-heading h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 15px;
+      margin: 0;
+      color: #002b49;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+    .govt-heading h2 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 12.5px;
+      margin: 2px 0 0 0;
+      color: #166534;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .govt-heading h3 {
+      font-size: 10.5px;
+      margin: 2px 0 0 0;
+      color: #002b49;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+    .govt-heading .station {
+      font-size: 9px;
+      color: #475569;
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .title-banner {
+      background: linear-gradient(90deg, #14532d 0%, #166534 50%, #14532d 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 6px 12px;
+      margin: 8px 0;
+      border-radius: 3px;
+      border-top: 2px solid #eab308;
+      border-bottom: 2px solid #eab308;
+    }
+    .title-banner h4 {
+      font-family: 'Cinzel', Georgia, serif;
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      font-weight: 800;
+    }
+    .title-banner .sub-banner {
+      font-size: 8.5px;
+      letter-spacing: 0.8px;
+      color: #fef08a;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .docket-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      padding: 3px 6px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      margin-bottom: 8px;
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .jurisdiction-alert {
+      background: #fffbeb;
+      border: 2px solid #b45309;
+      padding: 7px 10px;
+      border-radius: 4px;
+      margin: 8px 0;
+      text-align: justify;
+    }
+    .jurisdiction-alert-title {
+      font-weight: 900;
+      color: #9a3412;
+      font-size: 9.5px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .jurisdiction-alert-body {
+      font-size: 8.5px;
+      line-height: 1.42;
+      color: #78350f;
+      font-weight: 500;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin-bottom: 7px;
+    }
+    .info-table th, .info-table td {
+      border: 1px solid #cbd5e1;
+      padding: 3.5px 6px;
+      vertical-align: top;
+    }
+    .info-label {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #002b49;
+      width: 22%;
+    }
+    .info-val {
+      width: 28%;
+    }
+
+    .scope-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 5px 8px;
+      font-size: 8px;
+      line-height: 1.4;
+      color: #334155;
+      margin: 7px 0;
+      border-radius: 4px;
+    }
+    .scope-title {
+      font-weight: 800;
+      color: #166534;
+      font-size: 8.8px;
+      margin-bottom: 2px;
+    }
+
+    .sig-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: end;
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1.5px dashed #cbd5e1;
+    }
+
+    .print-bar {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .print-btn {
+      padding: 7px 22px;
+      background: #166534;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    @media print {
+      body { background: #ffffff !important; padding: 0 !important; }
+      .page-container {
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        padding: 4mm 5mm !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .print-bar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-bar">
+    <button class="print-btn" onclick="window.print()">🖨️ Print Official 3-Year Inbuilt Warranty Certificate</button>
+  </div>
+
+  <div class="page-container">
+    <div class="cert-outer-border">
+      <div class="cert-corner corner-tl"></div>
+      <div class="cert-corner corner-tr"></div>
+      <div class="cert-corner corner-bl"></div>
+      <div class="cert-corner corner-br"></div>
+
+      <!-- Government CSD Header -->
+      <table class="header-table">
+        <tr>
+          <td style="width: 75px; text-align: left;">
+            <img src="${EMBLEM_B64}" alt="Government Emblem" style="height: 56px; width: auto; object-fit: contain;">
+          </td>
+          <td class="govt-heading">
+            <h1>भारत सरकार &bull; GOVERNMENT OF INDIA</h1>
+            <h2>रक्षा मंत्रालय &bull; MINISTRY OF DEFENCE</h2>
+            <h3>DIRECTORATE GENERAL OF QUALITY ASSURANCE (DGQA) &amp; CSD</h3>
+            <div class="station">CANTEEN STORES DEPARTMENT &bull; TECHNICAL INSPECTION &amp; WARRANTY CELL</div>
+            <div style="font-size: 7.5px; color: #166534; font-family: monospace; font-weight: 700; margin-top: 1px;">
+              STATUTORY INBUILT WARRANTY DEED UNDER DEFENCE RATE CONTRACT NO. MoD/CSD/EC-WARR/2026
+            </div>
+          </td>
+          <td style="width: 85px; text-align: right;">
+            <img src="${CSD_LOGO_B64}" alt="CSD Logo" style="height: 38px; width: auto; object-fit: contain;">
+          </td>
+        </tr>
+      </table>
+
+      <!-- Title Strip -->
+      <div class="title-banner">
+        <h4>STATUTORY THREE (3) YEAR INBUILT WARRANTY CERTIFICATE</h4>
+        <div class="sub-banner">DIRECTORATE GENERAL OF QUALITY ASSURANCE &bull; CSD CENTRAL WARRANTY DEED</div>
+      </div>
+
+      <!-- Docket Details -->
+      <div class="docket-row">
+        <span>CERTIFICATE NO: <strong>${certDocketNo}</strong></span>
+        <span>VALIDITY: <strong style="color: #166534;">3 YEARS (FROM ${purchaseDateStr} TO ${expiryDateStr})</strong></span>
+        <span>JURISDICTION: <strong style="color: #b45309;">STRICTLY CSD ONLY</strong></span>
+      </div>
+
+      <!-- CRITICAL STATUTORY JURISDICTION BOX (REQUESTED BY USER) -->
+      <div class="jurisdiction-alert">
+        <div class="jurisdiction-alert-title">
+          <span>⚠️</span> MANDATORY STATUTORY JURISDICTION: WARRANTY CLAIMABLE ONLY AT CSD / URC
+        </div>
+        <div class="jurisdiction-alert-body">
+          <strong>THIS INBUILT 3-YEAR WARRANTY IS EXCLUSIVELY AND STRICTLY CLAIMABLE ONLY AT CANTEEN STORES DEPARTMENT (CSD) / UNIT RUN CANTEEN (URC) DESIGNATED WARRANTY SERVICE DESKS.</strong> Under statutory Ministry of Defence regulations, this warranty is <strong>NOT CLAIMABLE OR SERVICEABLE AT ANY OTHER LOCATION, OPEN-MARKET BRAND STORE, THIRD-PARTY WORKSHOP, OR COMMERCIAL SERVICE CENTRE</strong>. Beneficiaries must deposit the defective equipment directly at the CSD / URC Customer Service Counter along with this Certificate and original CSD Tax Invoice for authorized technical repair or OEM unit replacement.
+        </div>
+      </div>
+
+      <!-- Beneficiary Dossier -->
+      <table class="info-table">
+        <tr>
+          <th colspan="4" style="background: #166534; color: #ffffff; font-size: 9.5px; padding: 3px 6px;">
+            1. REGISTERED BENEFICIARY &amp; ENTITLEMENT DOSSIER
+          </th>
+        </tr>
+        <tr>
+          <td class="info-label">Beneficiary Officer</td>
+          <td class="info-val"><strong style="color: #002b49;">${u.name}</strong></td>
+          <td class="info-label">Employee ID (PPO/PF)</td>
+          <td class="info-val"><strong style="font-family: monospace;">${u.empId}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Substantive Designation</td>
+          <td class="info-val"><strong>${u.designation}</strong></td>
+          <td class="info-label">Ministry / Department</td>
+          <td class="info-val">Department of Military Affairs (DMA)</td>
+        </tr>
+        <tr>
+          <td class="info-label">CSD Smart Card UID</td>
+          <td class="info-val"><code style="font-family: monospace; color: #166534; font-weight: 700;">IND-CSD-CHIP-7F89B2</code></td>
+          <td class="info-label">CSD Card Number</td>
+          <td class="info-val"><strong style="font-family: monospace;">${txn.cardNo || 'LB08260547713500S01'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Originating CSD Invoice</td>
+          <td class="info-val"><strong style="font-family: monospace; color: #002b49;">${txn.billNo || 'CSD/URC/DEL/2026/10/9482'}</strong></td>
+          <td class="info-label">Date of Inception</td>
+          <td class="info-val"><strong style="color: #166534;">${purchaseDateStr}</strong></td>
+        </tr>
+      </table>
+
+      <!-- Equipment Details -->
+      <table class="info-table">
+        <tr>
+          <th colspan="4" style="background: #166534; color: #ffffff; font-size: 9.5px; padding: 3px 6px;">
+            2. CERTIFIED HARDWARE SPECIFICATION UNDER 3-YEAR WARRANTY
+          </th>
+        </tr>
+        ${rawItems.map(it => `
+          <tr>
+            <td class="info-label">Item Nomenclature</td>
+            <td class="info-val" colspan="3"><strong style="font-size: 10px; color: #002b49;">${it.name}</strong></td>
+          </tr>
+          <tr>
+            <td class="info-label">Brand &amp; Manufacturer</td>
+            <td class="info-val">${it.brand || 'OFFICIAL OEM RATE CONTRACTOR'}</td>
+            <td class="info-label">Model &amp; Color</td>
+            <td class="info-val">${it.model || 'STANDARD RETAIL'} ${it.color ? '&bull; ' + it.color : ''}</td>
+          </tr>
+          <tr>
+            <td class="info-label">Hardware Serial Number</td>
+            <td class="info-val"><strong style="font-family: monospace; color: #b45309;">${it.serialNo || 'N/A'}</strong></td>
+            <td class="info-label">IMEI-1 / IMEI-2</td>
+            <td class="info-val" style="font-family: monospace; font-size: 8.5px;">
+              ${it.imei1 && it.imei1 !== 'N/A' ? it.imei1 : 'N/A'} ${it.imei2 && it.imei2 !== 'N/A' ? ' / ' + it.imei2 : ''}
+            </td>
+          </tr>
+          <tr>
+            <td class="info-label">CSD Warranty Tenure</td>
+            <td class="info-val" colspan="3"><strong style="color: #166534;">3 YEARS INBUILT COMPREHENSIVE (EXPIRY: ${expiryDateStr}) &bull; CLAIMABLE ONLY AT CSD</strong></td>
+          </tr>
+        `).join('')}
+      </table>
+
+      <!-- Scope of Warranty Coverage -->
+      <div class="scope-box">
+        <div class="scope-title">🛡️ SCOPE OF COMPREHENSIVE INBUILT 3-YEAR WARRANTY COVERAGE:</div>
+        <div>&bull; <strong>Hardware Components:</strong> 100% comprehensive coverage against internal hardware defects, motherboard, CPU/SoC, RAM, display panel, charging controller, battery capacity retention, and camera modules.</div>
+        <div>&bull; <strong>Genuine Factory Parts:</strong> Repairs executed strictly with factory OEM genuine parts through MoD CSD rate-contract facilities with zero labour or assessment charges.</div>
+        <div>&bull; <strong>Exclusions:</strong> Intentional mechanical breakage, deliberate physical impact, liquid damage beyond IP ratings, or unauthorized third-party tampering outside CSD.</div>
+        <div>&bull; <strong>Pricing Integrity Rule:</strong> Reaffirmed that CSD pricing is based strictly on manufacturer's declared MRP and negotiated MoD wholesale contracts; completely independent of open-market festival offers or online dynamic pricing.</div>
+      </div>
+
+      <!-- Signatures & Authority Seals -->
+      <div class="sig-section">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="${MOD_STAMP_B64}" alt="MoD Stamp" style="height: 50px; width: auto; object-fit: contain; opacity: 0.92;">
+            <div style="font-size: 8px; line-height: 1.35; color: #334155;">
+              <strong>CSD QA &amp; INSPECTION SEAL</strong><br>
+              Directorate General of Quality Assurance (DGQA)<br>
+              Ministry of Defence, New Delhi - 110011<br>
+              Warrant Cell: URC_DELHI_SENA_BHAWAN
+            </div>
+          </div>
+          <div style="margin-top: 6px;">
+            ${barcodeSvg}
+            <div style="font-size: 7.5px; font-family: monospace; letter-spacing: 1px; text-align: center; color: #000;">*CSD-WARR-${safeBillNo}*</div>
+          </div>
+        </div>
+
+        <div style="text-align: right;">
+          <div style="font-size: 8.5px; font-weight: 700; color: #166534; margin-bottom: 3px;">
+            Verified &amp; Certified by Quality Assurance Authority:
+          </div>
+          ${generateAdobeDigitalSignature('Col. P.S. Rawat', 'Director (QA & Tech Inspection)', 'CSD 3-Year Inbuilt Statutory Warranty Attestation', 'DGQA Cell, Sena Bhawan, New Delhi', purchaseDateStr + ' 18:45:10 +05\'30\'')}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+export function downloadCsdWarrantyCertificate(user, txnData) {
+  const txn = txnData || {};
+  const safeBillNo = (txn.billNo || 'CSD_BILL').replace(/[^a-zA-Z0-9]/g, '_');
+  triggerDownload(`CSD_3Year_Warranty_Certificate_${safeBillNo}.html`, generateCsdWarrantyCertificateHtml(user, txnData));
+}
+
+export function printCsdWarrantyCertificate(user, txnData) {
+  const html = generateCsdWarrantyCertificateHtml(user, txnData);
   const printWin = window.open('', '_blank');
   if (printWin) {
     printWin.document.open();

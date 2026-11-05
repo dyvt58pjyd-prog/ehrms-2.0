@@ -280,6 +280,38 @@ export function renderDocumentVault(container) {
       }
     },
     {
+      id: 'DOC-CSD-CERT-PUR-2026',
+      name: 'Official CSD Certificate of Purchase (URC Delhi Area)',
+      category: 'Tax & Finance',
+      date: '02-Oct-2026',
+      verified: true,
+      issuer: 'Canteen Stores Department & Ministry of Defence',
+      docNo: 'CSD/CERT-PUR/2026/10/9482',
+      icon: '📜',
+      description: 'Official statutory certificate of bonafide CSD purchase certifying quota reconciliation, manufacturer MRP pricing basis, and anti-diversion compliance under Section 7 of the Essential Commodities Act, 1955.',
+      downloadFn: () => {
+        const csdBilling = store.get().csdBilling || {};
+        const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;
+        DL.downloadCsdPurchaseCertificate(user, txn);
+      }
+    },
+    {
+      id: 'DOC-CSD-CERT-WARR-2026',
+      name: 'CSD Statutory 3-Year Inbuilt Warranty Certificate & Guarantee Deed',
+      category: 'Tax & Finance',
+      date: '02-Oct-2026',
+      verified: true,
+      issuer: 'DGQA & CSD Central Technical Inspection Cell',
+      docNo: 'CSD/WARR-DEED/2026/10/9482',
+      icon: '🛡️',
+      description: 'Official 3-Year Inbuilt Warranty Guarantee Deed for electronics equipment. Endorsed with statutory jurisdiction claimable strictly and exclusively at CSD / URC counters.',
+      downloadFn: () => {
+        const csdBilling = store.get().csdBilling || {};
+        const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;
+        DL.downloadCsdWarrantyCertificate(user, txn);
+      }
+    },
+    {
       id: 'DOC-IPR-2026',
       name: 'Immovable Property Return (IPR) Acknowledgment',
       category: 'Compliance & Legal',
