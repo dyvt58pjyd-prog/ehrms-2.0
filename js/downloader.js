@@ -4083,14 +4083,7 @@ export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
       color: #0f172a;
     }
 
-    .cursive-sig {
-      font-family: 'Brush Script MT', 'Dancing Script', cursive;
-      font-size: 26px;
-      color: #1e3a8a;
-      line-height: 1;
-      margin-bottom: 2px;
-      filter: drop-shadow(0.5px 0.5px 0px rgba(0,0,0,0.15));
-    }
+
 
     .copy-to-block {
       margin-top: 16px;
@@ -4249,12 +4242,11 @@ export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
       <strong>5. Deposition &amp; Turnaround Protocol:</strong> The beneficiary officer is requested to present the subject device at Customer Service Counter 01, URC HQ Delhi Area, Sena Bhawan along with this Claim Notice, the original Statutory Warranty Deed, and original CSD Tax Invoice. Authorized resolution turnaround time is <strong>3 to 7 working days</strong>. In the event of catastrophic component failure or factory unserviceability, an immediate identical brand-new factory OEM replacement unit under AFD Category II shall be requisitioned.
     </div>
 
-    <!-- Sign-off Section (Physical Ink Signatures, NO Digital Signature Box) -->
+    <!-- Sign-off Section (Official Authority Endorsement, No Signatures) -->
     <div class="sign-off-section">
       <div class="sign-block-left">
-        <div style="font-weight: 700; color: #002b49; margin-bottom: 2px;">COUNTERSIGNED &amp; ADMITTED:</div>
-        <div class="cursive-sig">R.K. Yadav</div>
-        <div style="font-weight: 700; color: #0f172a; font-size: 9.5px;">(SUB MAJ R.K. YADAV)</div>
+        <div style="font-weight: 700; color: #002b49; margin-bottom: 6px;">COUNTERSIGNED &amp; ADMITTED:</div>
+        <div style="font-weight: 700; color: #0f172a; font-size: 10px;">SUB MAJ R.K. YADAV</div>
         <div>Canteen Officer &amp; Manager</div>
         <div>URC HQ Delhi Area (Sena Bhawan)</div>
         <div style="font-size: 7.5px; color: #64748b; margin-top: 1px;">Station: Sena Bhawan, New Delhi</div>
@@ -4272,9 +4264,8 @@ export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
       </div>
 
       <div class="sign-block-right">
-        <div style="font-weight: 700; color: #002b49; margin-bottom: 2px;">Yours faithfully,</div>
-        <div class="cursive-sig">P.S. Rawat</div>
-        <div style="font-weight: 700; color: #0f172a; font-size: 9.5px;">(COL. P.S. RAWAT)</div>
+        <div style="font-weight: 700; color: #002b49; margin-bottom: 6px;">Yours faithfully,</div>
+        <div style="font-weight: 700; color: #0f172a; font-size: 10px;">COL. P.S. RAWAT</div>
         <div>Director (QA &amp; Technical Inspection)</div>
         <div>DGQA &amp; CSD Technical Warranty Cell</div>
         <div>Ministry of Defence, New Delhi - 110011</div>
