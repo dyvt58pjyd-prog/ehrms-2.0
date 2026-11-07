@@ -6,7 +6,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml, downloadCsdPurchaseCertificate, printCsdPurchaseCertificate, downloadCsdWarrantyCertificate, printCsdWarrantyCertificate } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml, downloadCsdPurchaseCertificate, printCsdPurchaseCertificate, downloadCsdWarrantyCertificate, printCsdWarrantyCertificate, downloadCsdClaimNoticeLetter, printCsdClaimNoticeLetter } from '../downloader.js';
 import { CSD_LOGO_B64, EMBLEM_B64 } from '../csd_assets.js';
 
 export const CANONICAL_IPAD_ITEM = {
@@ -381,6 +381,9 @@ export function renderCanteenCards(container, initialTab = null) {
             <button id="btn-modal-dl-warr" class="btn btn-sm" style="background: #14532d; border: 1.5px solid #86efac; color: #ffffff; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
               🛡️ Warranty Cert
             </button>
+            <button id="btn-modal-dl-claim" class="btn btn-sm" style="background: #831843; border: 1.5px solid #f472b6; color: #ffffff; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
+              📋 Claim Notice
+            </button>
             <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
               &times;
             </button>
@@ -725,6 +728,11 @@ export function renderCanteenCards(container, initialTab = null) {
       downloadCsdWarrantyCertificate(user, activeModalTxn);
       showDownloadToast('CSD 3-Year Inbuilt Warranty Certificate Downloaded!');
     }
+  });
+
+  container.querySelector('#btn-modal-dl-claim')?.addEventListener('click', () => {
+    downloadCsdClaimNoticeLetter(user, activeModalTxn);
+    showDownloadToast('CSD Statutory Warranty Claim Notice Letter Downloaded!');
   });
 
   // Mode Toggle Buttons
@@ -1569,6 +1577,9 @@ export function renderCanteenCards(container, initialTab = null) {
                       <button class="btn btn-sm btn-dl-warr" data-id="${t.id}" style="font-weight: 800; background: #14532d; border: 1.5px solid #86efac; color: white; cursor: pointer;">
                         🛡️ Warranty Cert
                       </button>
+                      <button class="btn btn-sm btn-dl-claim" data-id="${t.id}" style="font-weight: 800; background: #831843; border: 1.5px solid #f472b6; color: white; margin-left: 4px; cursor: pointer;">
+                        📋 Claim Notice
+                      </button>
                     </td>
                   </tr>
                 `;
@@ -1627,6 +1638,14 @@ export function renderCanteenCards(container, initialTab = null) {
           downloadCsdWarrantyCertificate(user, txn);
           showDownloadToast(`CSD 3-Year Inbuilt Warranty Certificate #${txn.billNo} Downloaded!`);
         }
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-claim').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        downloadCsdClaimNoticeLetter(user, txn);
+        showDownloadToast(`CSD Warranty Claim Notice Letter Downloaded!`);
       });
     });
   }

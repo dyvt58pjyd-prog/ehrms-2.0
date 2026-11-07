@@ -272,7 +272,7 @@ export function renderDocumentVault(container) {
       issuer: 'Canteen Stores Department / URC HQ DELHI AREA (Sena Bhawan)',
       docNo: 'CSD/URC/DEL/2026/10/9482',
       icon: '🧾',
-      description: 'Official GST retail tax invoice for Samsung Galaxy S25 5G 12/256GB (Silver Shadow - ₹54,436) drawn against smart card LB08260547713500S01 with 18% composite GST breakdown, digital signature, and quota reconciliation.',
+      description: 'Official GST retail tax invoice for Samsung Galaxy S25 5G 12/256GB (Silver Shadow - ₹54,217 | S/N: RZCY80J72JR | IMEI1: 353039750390438) drawn against smart card LB08260547713500S01 with 18% composite GST breakdown, digital signature, and quota reconciliation.',
       downloadFn: () => {
         const csdBilling = store.get().csdBilling || {};
         const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;
@@ -309,6 +309,20 @@ export function renderDocumentVault(container) {
         const csdBilling = store.get().csdBilling || {};
         const txn = (csdBilling.transactions && csdBilling.transactions[0]) || null;
         DL.downloadCsdWarrantyCertificate(user, txn);
+      }
+    },
+    {
+      id: 'DOC-CSD-CLAIM-NOTICE-2026',
+      name: 'CSD Statutory Warranty Claim Notice Letter (iPhone 16 Ultramarine 128GB)',
+      category: 'Tax & Finance',
+      date: '07-Nov-2026',
+      verified: true,
+      issuer: 'Canteen Stores Department • DGQA Warranty & Inspection Cell',
+      docNo: 'CSD/URC-DEL/WARR-CLAIM/2026/11/6703-CN',
+      icon: '📋',
+      description: 'Official Statutory Warranty Claim Lodgement Notice & Service Order for Apple iPhone 16 - 128GB Ultramarine (Model A3287 | S/N: FPMT2MWHMH | IMEI1: 35 896458 653186 0) under 3-Year Inbuilt Warranty Deed with mandatory CSD-only jurisdiction.',
+      downloadFn: () => {
+        DL.downloadCsdClaimNoticeLetter(user);
       }
     },
     {

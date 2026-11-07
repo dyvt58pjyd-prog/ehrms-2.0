@@ -83,7 +83,7 @@ const DEFAULT_INVENTORY = [
     color: 'SILVER SHADOW',
     hsn: '85171300',
     stock: 12,
-    price: 54436.00,
+    price: 54217.00,
     marketPrice: 80999.00,
     unit: 'UNT',
     gstRate: 18,
@@ -91,9 +91,10 @@ const DEFAULT_INVENTORY = [
     accessories: 'ALL ACCESSORIES INCLUDED (65W TYPE-C CABLE, EJECTOR PIN)',
     warrantyExpires: '23-05-2029 (3 YEARS INBUILT WARRANTY - CLAIMABLE ONLY AT CSD)',
     specs: '15.75 CM (6.2") FULL HD+ DYNAMIC AMOLED 2X 120HZ | QUALCOMM SNAPDRAGON 8 ELITE 3NM | 12GB RAM | 256GB ROM | 50MP+10MP+12MP REAR CAMERA | 12MP FRONT CAMERA | 4000 MAH LI-ION',
-    imei1: '358941/08/948210/6',
-    imei2: '358941/08/948211/4',
-    serialNo: 'R58N90X233243S',
+    imei1: '353039750390438',
+    imei2: '353126390390439',
+    eid: '89043051202300838925009577633543',
+    serialNo: 'RZCY80J72JR',
     batchNo: 'BAT-2026/08-DEL',
     afdCategory: 'AFD-II (DURABLES)'
   },
@@ -444,6 +445,11 @@ function initializeStorage() {
       const idx = inventory.findIndex(i => i.id === item.id || (i.name && i.name.includes('IPAD 10TH GEN')));
       if (idx !== -1) {
         inventory[idx] = { ...inventory[idx], ...item, price: 47500.00, color: 'SILVER' };
+      }
+    } else if (item.id === '233243' || (item.name && item.name.includes('SAMSUNG GALAXY S25'))) {
+      const idx = inventory.findIndex(i => i.id === item.id || (i.name && i.name.includes('SAMSUNG GALAXY S25')));
+      if (idx !== -1) {
+        inventory[idx] = { ...inventory[idx], ...item, price: 54217.00, serialNo: 'RZCY80J72JR', imei1: '353039750390438', imei2: '353126390390439', eid: '89043051202300838925009577633543' };
       }
     }
   });

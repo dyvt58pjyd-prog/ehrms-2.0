@@ -3777,6 +3777,483 @@ export function printCsdWarrantyCertificate(user, txnData) {
 }
 
 /**
+ * 12C. Generate Official CSD Statutory Warranty Claim Notice Letter HTML
+ * Government of India • Ministry of Defence • Directorate General of Quality Assurance (DGQA) & CSD
+ * Claim Lodgement Notice & Technical Service Order for Apple iPhone 16 Ultramarine (128GB)
+ */
+export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
+  if (!user) user = {
+    name: 'ANURAG ANIL BAWASKAR',
+    empId: '41028104',
+    designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)',
+    cadre: 'Department of Military Affairs (DMA), Ministry of Defence'
+  };
+
+  const dev = deviceData || {
+    billNo: 'CSD/URC/DEL/2026/11/6703',
+    warrCertNo: 'CSD/WARR-DEED/2026/CSD_URC_DEL_2026_11_6703',
+    claimNoticeNo: 'CSD/URC-DEL/WARR-CLAIM/2026/11/6703-CN',
+    contractNo: 'MoD/CSD/EC-WARR/2026',
+    dateOfInception: '2026-10-20',
+    dateOfNotice: '2026-11-07',
+    expiryDate: '2029-10-20',
+    tenure: '3 YEARS INBUILT COMPREHENSIVE (EXPIRY: 2029-10-20) • CLAIMABLE ONLY AT CSD',
+    canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
+    cardNo: 'LB08260547713500S01',
+    cardUid: 'IND-CSD-CHIP-7F89B2',
+    rank: 'ASO-I (Group A Gazetted)',
+    name: 'APPLE IPHONE 16 - 128GB',
+    brand: 'Apple Inc / Apple India Pvt Ltd',
+    model: 'A3287 • ULTRAMARINE',
+    color: 'ULTRAMARINE',
+    storage: '128GB',
+    serialNo: 'FPMT2MWHMH',
+    imei1: '35 896458 653186 0',
+    imei2: '35 896458 640247 6',
+    hsn: '85171300',
+    defectsReported: 'Statutory 3-Year Inbuilt Warranty Claim Intake & Technical Diagnostic Inspection Protocol',
+    tat: '3 to 7 Working Days (Zero Labour / Zero Assessment Charges)'
+  };
+
+  const safeNoticeNo = (dev.claimNoticeNo || dev.billNo || 'CSD_CLAIM_6703').replace(/[^a-zA-Z0-9]/g, '_');
+  const barcodeSvg = generateCode39BarcodeSvg('CSD-CLAIM-' + (dev.billNo || 'CSD_6703').replace(/[^a-zA-Z0-9]/g, '_'), 26, 20);
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSD Statutory Warranty Claim Notice Letter - ${dev.claimNoticeNo || 'iPhone 16 Ultramarine'}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Roboto:wght@400;500;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 5mm 6mm;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: #0f172a;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color: #0f172a;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page-container {
+      width: 210mm;
+      max-width: 210mm;
+      margin: 10px auto;
+      background: #ffffff;
+      padding: 8.5mm 10.5mm;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      position: relative;
+      box-sizing: border-box;
+    }
+    .cert-outer-border {
+      border: 3.5px double #002b49;
+      padding: 6mm 7mm;
+      position: relative;
+      background: radial-gradient(circle at center, #ffffff 68%, #f8fafc 100%);
+    }
+    .cert-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #b91c1c;
+    }
+    .corner-tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+    .corner-tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+    .corner-br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+    .header-table td {
+      vertical-align: middle;
+    }
+    .govt-heading {
+      text-align: center;
+      line-height: 1.25;
+    }
+    .govt-heading h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 14.5px;
+      margin: 0;
+      color: #002b49;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+    .govt-heading h2 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 12px;
+      margin: 2px 0 0 0;
+      color: #b91c1c;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+    .govt-heading h3 {
+      font-size: 10px;
+      margin: 2px 0 0 0;
+      color: #002b49;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .govt-heading .station {
+      font-size: 8.5px;
+      color: #475569;
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .title-banner {
+      background: linear-gradient(90deg, #7f1d1d 0%, #991b1b 50%, #7f1d1d 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 5.5px 12px;
+      margin: 7px 0;
+      border-radius: 3px;
+      border-top: 2px solid #eab308;
+      border-bottom: 2px solid #eab308;
+    }
+    .title-banner h4 {
+      font-family: 'Cinzel', Georgia, serif;
+      margin: 0;
+      font-size: 11.5px;
+      letter-spacing: 1.1px;
+      font-weight: 800;
+    }
+    .title-banner .sub-banner {
+      font-size: 8.5px;
+      letter-spacing: 0.8px;
+      color: #fef08a;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .docket-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 5px 8px;
+      font-size: 8.5px;
+      font-family: 'Roboto Mono', monospace;
+      margin-bottom: 7px;
+    }
+    .docket-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.5px 0;
+    }
+    .docket-label {
+      color: #475569;
+      font-weight: 600;
+    }
+    .docket-val {
+      color: #002b49;
+      font-weight: 700;
+    }
+
+    .jurisdiction-alert {
+      background: #fffbeb;
+      border: 2px solid #b45309;
+      padding: 6.5px 9px;
+      border-radius: 4px;
+      margin: 7px 0;
+      text-align: justify;
+    }
+    .jurisdiction-alert-title {
+      font-weight: 900;
+      color: #9a3412;
+      font-size: 9px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .jurisdiction-alert-body {
+      font-size: 8px;
+      line-height: 1.4;
+      color: #78350f;
+      font-weight: 500;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5px;
+      margin-bottom: 6px;
+    }
+    .info-table th, .info-table td {
+      border: 1px solid #cbd5e1;
+      padding: 3px 6px;
+      vertical-align: top;
+    }
+    .info-label {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #002b49;
+      width: 22%;
+    }
+    .info-val {
+      width: 28%;
+    }
+
+    .terms-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 5px 8px;
+      font-size: 7.8px;
+      line-height: 1.38;
+      color: #334155;
+      margin: 6px 0;
+      border-radius: 4px;
+    }
+    .terms-title {
+      font-weight: 800;
+      font-size: 8.5px;
+      color: #002b49;
+      margin-bottom: 3px;
+    }
+
+    .sig-section {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 6px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .watermark-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-family: 'Cinzel', serif;
+      font-size: 42px;
+      font-weight: 900;
+      color: rgba(185, 28, 28, 0.04);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="cert-outer-border">
+      <div class="cert-corner corner-tl"></div>
+      <div class="cert-corner corner-tr"></div>
+      <div class="cert-corner corner-bl"></div>
+      <div class="cert-corner corner-br"></div>
+      <div class="watermark-bg">CSD WARRANTY CLAIM LODGED</div>
+
+      <!-- Header -->
+      <table class="header-table">
+        <tr>
+          <td style="width: 15%; text-align: left;">
+            <img src="${EMBLEM_B64}" alt="Emblem of India" style="height: 52px; width: auto; object-fit: contain;">
+          </td>
+          <td style="width: 70%; text-align: center;">
+            <div class="govt-heading">
+              <h1>भारत सरकार &bull; GOVERNMENT OF INDIA</h1>
+              <h2>रक्षा मंत्रालय &bull; MINISTRY OF DEFENCE</h2>
+              <h3>DIRECTORATE GENERAL OF QUALITY ASSURANCE (DGQA) &amp; CSD</h3>
+              <div class="station">CANTEEN STORES DEPARTMENT &bull; TECHNICAL INSPECTION &amp; WARRANTY CELL</div>
+              <div class="station" style="font-size: 8px; font-weight: 700; color: #166534; margin-top: 2px;">
+                STATUTORY DEFENCE WARRANTY RATE CONTRACT NO. ${dev.contractNo || 'MoD/CSD/EC-WARR/2026'}
+              </div>
+            </div>
+          </td>
+          <td style="width: 15%; text-align: right;">
+            <img src="${CSD_LOGO_B64}" alt="CSD Crest" style="height: 52px; width: auto; object-fit: contain;">
+          </td>
+        </tr>
+      </table>
+
+      <!-- Title Banner -->
+      <div class="title-banner">
+        <h4>STATUTORY WARRANTY CLAIM LODGEMENT NOTICE &amp; SERVICE ORDER</h4>
+        <div class="sub-banner">OFFICIAL CSD DEFENCE CANTEEN WARRANTY INTAKE &bull; DGQA TECHNICAL INSPECTION DESK</div>
+      </div>
+
+      <!-- Docket Grid -->
+      <div class="docket-grid">
+        <div class="docket-item">
+          <span class="docket-label">CLAIM NOTICE NO:</span>
+          <span class="docket-val" style="color: #991b1b;">${dev.claimNoticeNo || 'CSD/URC-DEL/WARR-CLAIM/2026/11/6703-CN'}</span>
+        </div>
+        <div class="docket-item">
+          <span class="docket-label">DATE OF CLAIM NOTICE:</span>
+          <span class="docket-val">${dev.dateOfNotice || '2026-11-07'}</span>
+        </div>
+        <div class="docket-item">
+          <span class="docket-label">WARRANTY DEED NO:</span>
+          <span class="docket-val">${dev.warrCertNo || 'CSD/WARR-DEED/2026/CSD_URC_DEL_2026_11_6703'}</span>
+        </div>
+        <div class="docket-item">
+          <span class="docket-label">WARRANTY TENURE:</span>
+          <span class="docket-val" style="color: #166534;">3 YEARS (2026-10-20 TO 2029-10-20)</span>
+        </div>
+        <div class="docket-item">
+          <span class="docket-label">ORIGINATING INVOICE:</span>
+          <span class="docket-val">${dev.billNo || 'CSD/URC/DEL/2026/11/6703'} (2026-10-20)</span>
+        </div>
+        <div class="docket-item">
+          <span class="docket-label">STATUTORY JURISDICTION:</span>
+          <span class="docket-val" style="color: #991b1b; font-weight: 800;">STRICTLY CSD / URC ONLY</span>
+        </div>
+      </div>
+
+      <!-- Mandatory Jurisdiction Warning -->
+      <div class="jurisdiction-alert">
+        <div class="jurisdiction-alert-title">
+          <span>⚠️</span> MANDATORY STATUTORY JURISDICTION: WARRANTY CLAIMABLE STRICTLY &amp; EXCLUSIVELY AT CSD / URC
+        </div>
+        <div class="jurisdiction-alert-body">
+          <strong>THIS INBUILT 3-YEAR WARRANTY IS EXCLUSIVELY AND STRICTLY CLAIMABLE ONLY AT CANTEEN STORES DEPARTMENT (CSD) / UNIT RUN CANTEEN (URC) DESIGNATED WARRANTY SERVICE DESKS.</strong> Under statutory Ministry of Defence regulations (Rate Contract No. ${dev.contractNo || 'MoD/CSD/EC-WARR/2026'}), this warranty is <strong>NOT CLAIMABLE OR SERVICEABLE AT ANY OTHER LOCATION, OPEN-MARKET BRAND STORE, THIRD-PARTY WORKSHOP, OR COMMERCIAL SERVICE CENTRE</strong>. Beneficiaries must deposit the defective equipment directly at the CSD / URC Customer Service Counter along with this Claim Notice, the original Statutory Warranty Deed, and original CSD Tax Invoice for authorized zero-cost technical diagnosis, factory component restoration, or OEM replacement. Any unauthorized opening of the chassis, unaccredited third-party intervention, or open-market tampering outside CSD custody voids the statutory guarantee deed irreversibly.
+        </div>
+      </div>
+
+      <!-- Section 1: Beneficiary Dossier -->
+      <div style="font-size: 8.5px; font-weight: 800; color: #002b49; margin-bottom: 3px; letter-spacing: 0.5px; text-transform: uppercase;">
+        1. REGISTERED BENEFICIARY &amp; ENTITLEMENT DOSSIER
+      </div>
+      <table class="info-table">
+        <tr>
+          <td class="info-label">Beneficiary Officer</td>
+          <td class="info-val"><strong>${user.name || 'ANURAG ANIL BAWASKAR'}</strong></td>
+          <td class="info-label">Employee ID (PPO/PF)</td>
+          <td class="info-val"><strong>${user.empId || '41028104'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Substantive Designation</td>
+          <td class="info-val">${user.designation || 'ADDITIONAL SECTION OFFICER - I'}</td>
+          <td class="info-label">Ministry / Department</td>
+          <td class="info-val">${user.cadre || 'Department of Military Affairs (DMA)'}</td>
+        </tr>
+        <tr>
+          <td class="info-label">CSD Smart Card UID</td>
+          <td class="info-val"><code>${dev.cardUid || 'IND-CSD-CHIP-7F89B2'}</code></td>
+          <td class="info-label">CSD Card Number</td>
+          <td class="info-val"><strong style="color: #002b49;">${dev.cardNo || 'LB08260547713500S01'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Originating CSD Invoice</td>
+          <td class="info-val"><code>${dev.billNo || 'CSD/URC/DEL/2026/11/6703'}</code></td>
+          <td class="info-label">Date of Inception</td>
+          <td class="info-val">${dev.dateOfInception || '2026-10-20'}</td>
+        </tr>
+      </table>
+
+      <!-- Section 2: Certified Hardware Specification -->
+      <div style="font-size: 8.5px; font-weight: 800; color: #002b49; margin-bottom: 3px; letter-spacing: 0.5px; text-transform: uppercase;">
+        2. CERTIFIED HARDWARE SPECIFICATION UNDER CLAIM NOTICE
+      </div>
+      <table class="info-table">
+        <tr>
+          <td class="info-label">Item Nomenclature</td>
+          <td class="info-val" colspan="3"><strong style="color: #002b49; font-size: 9.5px;">${dev.name || 'APPLE IPHONE 16 - 128GB'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Brand &amp; Manufacturer</td>
+          <td class="info-val">${dev.brand || 'Apple Inc / Apple India Pvt Ltd'}</td>
+          <td class="info-label">Model &amp; Color</td>
+          <td class="info-val"><strong>${dev.model || 'A3287 • ULTRAMARINE'}</strong></td>
+        </tr>
+        <tr>
+          <td class="info-label">Hardware Serial Number</td>
+          <td class="info-val"><code style="font-weight: 800; font-size: 9px; color: #b91c1c;">${dev.serialNo || 'FPMT2MWHMH'}</code></td>
+          <td class="info-label">Cellular IMEI-1 / IMEI-2</td>
+          <td class="info-val"><code style="font-size: 8.5px;">${dev.imei1 || '35 896458 653186 0'}</code><br><code style="font-size: 8.5px;">${dev.imei2 || '35 896458 640247 6'}</code></td>
+        </tr>
+        <tr>
+          <td class="info-label">CSD Warranty Tenure</td>
+          <td class="info-val" colspan="3"><strong style="color: #166534;">${dev.tenure || '3 YEARS INBUILT COMPREHENSIVE (EXPIRY: 2029-10-20) • CLAIMABLE ONLY AT CSD'}</strong></td>
+        </tr>
+      </table>
+
+      <!-- Section 3: Statutory Claim Notice Terms & Instructions -->
+      <div class="terms-box">
+        <div class="terms-title">📋 STATUTORY WARRANTY INTAKE DIRECTIVES &amp; SERVICE CONDITIONS:</div>
+        <div>&bull; <strong>Intake Verification:</strong> This Claim Notice certifies formal registration of the warranty claim for the Apple iPhone 16 (128GB Ultramarine) under Defence Rate Contract No. <code>${dev.contractNo || 'MoD/CSD/EC-WARR/2026'}</code>. Physical equipment shall be accepted upon cross-verification of Serial No. <code>${dev.serialNo || 'FPMT2MWHMH'}</code> and Smart Card Chip UID.</div>
+        <div>&bull; <strong>100% Comprehensive Component Coverage:</strong> Internal hardware defects, Apple A18 SoC logic board, Super Retina XDR OLED display panel, battery health and charging controller, dual 48MP Fusion camera modules, and internal bus assemblies are 100% covered.</div>
+        <div>&bull; <strong>Zero Labour &amp; Factory Spares:</strong> All servicing and repairs are executed strictly with 100% factory OEM genuine parts through MoD CSD rate-contract authorized technical facilities with zero labour, zero diagnosis, and zero handling fees.</div>
+        <div>&bull; <strong>Resolution Turnaround Time (TAT):</strong> Standard technical inspection and resolution turnaround time is 3 to 7 working days. In the event of catastrophic component failure or factory unserviceability, an immediate brand-new OEM unit replacement under AFD Category II shall be requisitioned.</div>
+        <div>&bull; <strong>Pricing Integrity Rule:</strong> Reaffirmed that CSD pricing is based strictly on manufacturer's declared MRP and negotiated wholesale Defence contracts; completely independent of open-market festival offers, flash sales, or online dynamic pricing.</div>
+        <div>&bull; <strong>Strict Exclusion:</strong> Intentional mechanical breakage, deliberate physical crushing, liquid immersion beyond IP ratings, or unauthorized third-party tampering outside CSD jurisdiction.</div>
+      </div>
+
+      <!-- Signatures & Authority Seals -->
+      <div class="sig-section">
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="${MOD_STAMP_B64}" alt="MoD Stamp" style="height: 48px; width: auto; object-fit: contain; opacity: 0.94;">
+            <div style="font-size: 7.5px; line-height: 1.35; color: #334155;">
+              <strong>CSD QA &amp; INSPECTION SEAL</strong><br>
+              Directorate General of Quality Assurance (DGQA)<br>
+              Ministry of Defence, New Delhi - 110011<br>
+              Warrant Cell: URC_DELHI_SENA_BHAWAN
+            </div>
+          </div>
+          <div style="margin-top: 5px;">
+            ${barcodeSvg}
+            <div style="font-size: 7px; font-family: monospace; letter-spacing: 1px; color: #000;">*CSD-CLAIM-${safeNoticeNo}*</div>
+          </div>
+        </div>
+
+        <div style="flex: 1; text-align: center; font-size: 7.5px; color: #475569; padding: 0 10px;">
+          <div style="font-weight: 700; color: #002b49; margin-bottom: 2px;">COUNTERSIGNED &amp; ADMITTED</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 8px; color: #166534; font-weight: 700;">SUB MAJ R.K. YADAV</div>
+          <div>Canteen Officer &amp; Manager</div>
+          <div>URC HQ Delhi Area (Sena Bhawan)</div>
+        </div>
+
+        <div style="flex: 1; text-align: right;">
+          <div style="font-size: 8px; font-weight: 700; color: #b91c1c; margin-bottom: 2px;">
+            Authorized Warranty Authority Attestation:
+          </div>
+          ${generateAdobeDigitalSignature('Col. P.S. Rawat', 'Director (QA & Tech Inspection)', 'CSD Statutory Warranty Claim Order & Intake Attestation', 'DGQA Cell, Sena Bhawan, New Delhi', (dev.dateOfNotice || '2026.11.07') + ' 11:30:00 +05\'30\'')}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+export function downloadCsdClaimNoticeLetter(user, deviceData) {
+  const dev = deviceData || {};
+  const safeNoticeNo = (dev.claimNoticeNo || dev.billNo || 'CSD_WARR_CLAIM_6703').replace(/[^a-zA-Z0-9]/g, '_');
+  triggerDownload(`CSD_Warranty_Claim_Notice_iPhone16_${safeNoticeNo}.html`, generateCsdClaimNoticeLetterHtml(user, deviceData));
+}
+
+export function printCsdClaimNoticeLetter(user, deviceData) {
+  const html = generateCsdClaimNoticeLetterHtml(user, deviceData);
+  const printWin = window.open('', '_blank');
+  if (printWin) {
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => { printWin.print(); }, 500);
+  } else {
+    alert('Please allow popups to print.');
+  }
+}
+
+/**
  * 13. Download Official Special Operation Deployment Directive & Order
  * Government of India - Ministry of Defence - Department of Defence
  */
