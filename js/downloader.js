@@ -4328,7 +4328,7 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
     contractNo: 'MoD/CSD/EC-WARR/2026',
     dateOfInception: '2026-10-20',
     dateOfClaimNotice: '2026-11-07',
-    dateOfSettlement: '2026-11-13',
+    dateOfSettlement: '09-November-2026',
     expiryDate: '2029-10-20',
     canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
     cardNo: 'LB08260547713500S01',

@@ -329,7 +329,7 @@ export function renderDocumentVault(container) {
       id: 'DOC-CSD-BAT-COMPL-2026',
       name: 'CSD Warranty Claim Completion & Battery Replacement Certificate (iPhone 16 Ultramarine)',
       category: 'Tax & Finance',
-      date: '13-Nov-2026',
+      date: '09-Nov-2026',
       verified: true,
       issuer: 'Canteen Stores Department & DGQA Central Inspection Cell',
       docNo: 'CSD/WARR-COMPL/2026/11/6703-BAT',
