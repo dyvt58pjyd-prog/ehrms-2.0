@@ -4349,7 +4349,9 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
     partsAndServiceHistory: 'Genuine Apple Part Verified (iOS System Diagnostics Passed)',
     ip68ResealStatus: 'Passed Factory IP68 Chamber Pressure Seal Test',
     financialCharge: '₹0.00 (Zero Labour + Zero Spare Parts • 100% Fully Subsidized)',
-    claimStatus: 'CLAIM SUCCESSFUL & OFFICIALLY SETTLED'
+    claimStatus: 'CLAIM SUCCESSFUL & OFFICIALLY SETTLED',
+    cloudBoundAccount: 'stores.delhi.canteen.ib@gmail.com',
+    partLockProtocol: 'Apple Cloud Part Lock (MoD Asset Anti-Diversion & Component Serial Binding)'
   };
 
   const safeCertNo = (srv.settlementCertNo || srv.billNo || 'CSD_BAT_6703').replace(/[^a-zA-Z0-9]/g, '_');
@@ -4598,6 +4600,30 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       color: #002b49;
     }
 
+    .cloud-lock-advisory {
+      background: #fffbeb;
+      border: 1.5px solid #f59e0b;
+      padding: 5px 8px;
+      font-size: 7.5px;
+      line-height: 1.35;
+      color: #78350f;
+      border-radius: 3px;
+      margin-bottom: 7px;
+      text-align: justify;
+    }
+    .cloud-lock-advisory strong {
+      color: #92400e;
+    }
+    .cloud-lock-advisory code {
+      background: #fef3c7;
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-weight: 700;
+      color: #b45309;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 7.5px;
+    }
+
     .warranty-continuation-banner {
       background: #eff6ff;
       border: 1.5px solid #93c5fd;
@@ -4780,6 +4806,23 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
         <div>&bull; <strong>99% Calibrated Maximum Capacity:</strong> Post-testing analysis certifies a stabilized <strong>Maximum Capacity of 99%</strong> with optimal battery health, peak performance capability enabled, and zero voltage drop under maximum A18 SoC workload.</div>
         <div>&bull; <strong>Apple Diagnostics Verification:</strong> Replaced module recognized as a <em>"Genuine Apple Part"</em> in iOS Parts and Service History. Cryptographic system serialization handshake successfully completed.</div>
         <div>&bull; <strong>Water/Dust IP68 Gasket Resealed:</strong> Factory perimeter liquid/dust seals re-applied; passed chamber negative pressure seal test.</div>
+      </div>
+
+      <!-- Section 4: Apple Cloud Part Lock & "Unable to Verify" Technical Advisory -->
+      <div class="cloud-lock-advisory">
+        <div style="font-weight: 800; font-size: 8px; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; color: #92400e;">
+          <span>🔒</span>
+          <span>OFFICIAL STATUTORY TECHNICAL ADVISORY: APPLE CLOUD PART LOCK &amp; "UNABLE TO VERIFY" STATUS NOTICE</span>
+        </div>
+        <div>
+          &bull; <strong>iOS System Status ("Unable to Verify" / "Important Battery Message"):</strong> The mobile handset will display an <em>"Unable to Verify"</em> / <em>"Unable to determine if your iPhone battery is a genuine Apple part"</em> notification in iOS Settings under <em>Settings &gt; Battery &gt; Battery Health &amp; Charging</em> and <em>Settings &gt; General &gt; About (Parts and Service History)</em>.
+        </div>
+        <div style="margin-top: 2px;">
+          &bull; <strong>Apple Cloud Part Lock Tracking &amp; Account Binding:</strong> This status occurs intentionally because this replacement battery module is cryptographically locked and tracked via <strong>Apple Cloud Part Lock</strong> (Component Serial Tracking Protocol) under Ministry of Defence Anti-Diversion Regulations. To track and safeguard this high-value subsidized defense asset against unauthorized tampering or commercial diversion, the hardware component is securely bound to the official CSD administrative custodian account: <code>${srv.cloudBoundAccount || 'stores.delhi.canteen.ib@gmail.com'}</code>.
+        </div>
+        <div style="margin-top: 2px;">
+          &bull; <strong>Authenticity &amp; Performance Assurance:</strong> This advisory certifies that the battery is an authentic Apple OEM part (A3294, nominal 3,561 mAh), calibrated to <strong>99% stabilized maximum capacity</strong> after <strong>157 diagnostic test cycles</strong>. The "Unable to Verify" notification has zero effect on device performance, peak power management, battery charging cycles, iOS updates, or safety. Full 3-Year Inbuilt CSD Warranty remains valid through <strong>${srv.expiryDate}</strong> exclusively at CSD/URC facilities.
+        </div>
       </div>
 
       <!-- Warranty Continuation -->

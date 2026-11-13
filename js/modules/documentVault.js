@@ -334,7 +334,7 @@ export function renderDocumentVault(container) {
       issuer: 'Canteen Stores Department & DGQA Central Inspection Cell',
       docNo: 'CSD/WARR-COMPL/2026/11/6703-BAT',
       icon: '🔋',
-      description: 'Official Statutory Warranty Claim Successful Completion Certificate for Apple iPhone 16 Ultramarine (128GB). Certifies OEM Factory Battery Replacement (100% Initial Nominal Capacity) benchmarked across 157 diagnostic cycle count tests to a stabilized 99% Maximum Capacity with zero officer charges.',
+      description: 'Official Statutory Warranty Claim Successful Completion Certificate for Apple iPhone 16 Ultramarine (128GB). Certifies OEM Factory Battery Replacement (100% Initial Nominal Capacity) benchmarked across 157 diagnostic cycle count tests to a stabilized 99% Maximum Capacity with zero officer charges. Includes official technical advisory on Apple Cloud Part Lock binding to stores.delhi.canteen.ib@gmail.com and iOS "Unable to Verify" asset tracking status.',
       downloadFn: () => {
         DL.downloadCsdBatteryClaimSuccessCertificate(user);
       }
