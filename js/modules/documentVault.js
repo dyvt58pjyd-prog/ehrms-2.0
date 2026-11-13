@@ -326,6 +326,20 @@ export function renderDocumentVault(container) {
       }
     },
     {
+      id: 'DOC-CSD-BAT-COMPL-2026',
+      name: 'CSD Warranty Claim Completion & Battery Replacement Certificate (iPhone 16 Ultramarine)',
+      category: 'Tax & Finance',
+      date: '13-Nov-2026',
+      verified: true,
+      issuer: 'Canteen Stores Department & DGQA Central Inspection Cell',
+      docNo: 'CSD/WARR-COMPL/2026/11/6703-BAT',
+      icon: '🔋',
+      description: 'Official Statutory Warranty Claim Successful Completion Certificate for Apple iPhone 16 Ultramarine (128GB). Certifies OEM Factory Battery Replacement (100% Initial Nominal Capacity) benchmarked across 157 diagnostic cycle count tests to a stabilized 99% Maximum Capacity with zero officer charges.',
+      downloadFn: () => {
+        DL.downloadCsdBatteryClaimSuccessCertificate(user);
+      }
+    },
+    {
       id: 'DOC-IPR-2026',
       name: 'Immovable Property Return (IPR) Acknowledgment',
       category: 'Compliance & Legal',

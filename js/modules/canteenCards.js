@@ -6,7 +6,7 @@
  */
 
 import { store } from '../state.js';
-import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml, downloadCsdPurchaseCertificate, printCsdPurchaseCertificate, downloadCsdWarrantyCertificate, printCsdWarrantyCertificate, downloadCsdClaimNoticeLetter, printCsdClaimNoticeLetter } from '../downloader.js';
+import { downloadCanteenCards, downloadCsdInvoice, downloadCsdDotMatrixSlip, printCsdInvoice, printCsdDotMatrixSlip, showDownloadToast, generateA4DotMatrixBillHtml, downloadCsdPurchaseCertificate, printCsdPurchaseCertificate, downloadCsdWarrantyCertificate, printCsdWarrantyCertificate, downloadCsdClaimNoticeLetter, printCsdClaimNoticeLetter, downloadCsdBatteryClaimSuccessCertificate, printCsdBatteryClaimSuccessCertificate } from '../downloader.js';
 import { CSD_LOGO_B64, EMBLEM_B64 } from '../csd_assets.js';
 
 export const CANONICAL_IPAD_ITEM = {
@@ -384,6 +384,9 @@ export function renderCanteenCards(container, initialTab = null) {
             <button id="btn-modal-dl-claim" class="btn btn-sm" style="background: #831843; border: 1.5px solid #f472b6; color: #ffffff; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
               📋 Claim Notice
             </button>
+            <button id="btn-modal-dl-bat-success" class="btn btn-sm" style="background: #15803d; border: 1.5px solid #4ade80; color: #ffffff; font-weight: 800; padding: 4px 10px; font-size: 11px; cursor: pointer;">
+              🔋 Battery Cert
+            </button>
             <button id="btn-close-invoice-modal" style="background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
               &times;
             </button>
@@ -733,6 +736,11 @@ export function renderCanteenCards(container, initialTab = null) {
   container.querySelector('#btn-modal-dl-claim')?.addEventListener('click', () => {
     downloadCsdClaimNoticeLetter(user, activeModalTxn);
     showDownloadToast('CSD Statutory Warranty Claim Notice Letter Downloaded!');
+  });
+
+  container.querySelector('#btn-modal-dl-bat-success')?.addEventListener('click', () => {
+    downloadCsdBatteryClaimSuccessCertificate(user, activeModalTxn);
+    showDownloadToast('CSD Warranty Claim Battery Replacement Certificate Downloaded!');
   });
 
   // Mode Toggle Buttons
@@ -1580,6 +1588,9 @@ export function renderCanteenCards(container, initialTab = null) {
                       <button class="btn btn-sm btn-dl-claim" data-id="${t.id}" style="font-weight: 800; background: #831843; border: 1.5px solid #f472b6; color: white; margin-left: 4px; cursor: pointer;">
                         📋 Claim Notice
                       </button>
+                      <button class="btn btn-sm btn-dl-bat-success" data-id="${t.id}" style="font-weight: 800; background: #15803d; border: 1.5px solid #4ade80; color: white; margin-left: 4px; cursor: pointer;">
+                        🔋 Battery Cert
+                      </button>
                     </td>
                   </tr>
                 `;
@@ -1646,6 +1657,14 @@ export function renderCanteenCards(container, initialTab = null) {
         const txn = txns.find(t => t.id === btn.dataset.id);
         downloadCsdClaimNoticeLetter(user, txn);
         showDownloadToast(`CSD Warranty Claim Notice Letter Downloaded!`);
+      });
+    });
+
+    tabContainer.querySelectorAll('.btn-dl-bat-success').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const txn = txns.find(t => t.id === btn.dataset.id);
+        downloadCsdBatteryClaimSuccessCertificate(user, txn);
+        showDownloadToast(`CSD Warranty Claim Battery Replacement Certificate Downloaded!`);
       });
     });
   }
