@@ -734,12 +734,12 @@ export function renderCanteenCards(container, initialTab = null) {
   });
 
   container.querySelector('#btn-modal-dl-claim')?.addEventListener('click', () => {
-    downloadCsdClaimNoticeLetter(user, activeModalTxn);
+    downloadCsdClaimNoticeLetter(user);
     showDownloadToast('CSD Statutory Warranty Claim Notice Letter Downloaded!');
   });
 
   container.querySelector('#btn-modal-dl-bat-success')?.addEventListener('click', () => {
-    downloadCsdBatteryClaimSuccessCertificate(user, activeModalTxn);
+    downloadCsdBatteryClaimSuccessCertificate(user);
     showDownloadToast('CSD Warranty Claim Battery Replacement Certificate Downloaded!');
   });
 
@@ -1654,16 +1654,14 @@ export function renderCanteenCards(container, initialTab = null) {
 
     tabContainer.querySelectorAll('.btn-dl-claim').forEach(btn => {
       btn.addEventListener('click', () => {
-        const txn = txns.find(t => t.id === btn.dataset.id);
-        downloadCsdClaimNoticeLetter(user, txn);
+        downloadCsdClaimNoticeLetter(user);
         showDownloadToast(`CSD Warranty Claim Notice Letter Downloaded!`);
       });
     });
 
     tabContainer.querySelectorAll('.btn-dl-bat-success').forEach(btn => {
       btn.addEventListener('click', () => {
-        const txn = txns.find(t => t.id === btn.dataset.id);
-        downloadCsdBatteryClaimSuccessCertificate(user, txn);
+        downloadCsdBatteryClaimSuccessCertificate(user);
         showDownloadToast(`CSD Warranty Claim Battery Replacement Certificate Downloaded!`);
       });
     });

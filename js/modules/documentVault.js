@@ -920,6 +920,80 @@ export function renderDocumentVault(container) {
       return;
     }
 
+    if (doc.id === 'DOC-CSD-BAT-COMPL-2026') {
+      container.querySelector('#modal-doc-body').innerHTML = `
+        <div style="background: #002b49; color: white; padding: 12px 18px; border-radius: 6px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">🔋</span>
+            <div>
+              <strong style="font-size: 13.5px; letter-spacing: 0.3px;">CSD Statutory Warranty Claim Settlement Certificate</strong>
+              <div style="font-size: 11px; opacity: 0.9; margin-top: 1px;">iPhone 16 Ultramarine &bull; OEM Battery Replacement (157 Cycles, 99% Max Capacity)</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm btn-primary" id="btn-bat-vault-download" style="background: #15803d; border-color: #166534; font-weight: 700;">
+              📥 Download Certificate
+            </button>
+            <button class="btn btn-sm btn-outline" id="btn-bat-vault-print" style="color: white; border-color: white;">
+              🖨️ Print
+            </button>
+          </div>
+        </div>
+        <div style="border: 2px solid #002b49; border-radius: 6px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <iframe id="bat-cert-frame" style="width: 100%; height: 750px; border: none; display: block;"></iframe>
+        </div>
+      `;
+      const iframe = container.querySelector('#bat-cert-frame');
+      if (iframe) {
+        iframe.srcdoc = DL.generateCsdBatteryClaimSuccessCertificateHtml(user);
+      }
+      container.querySelector('#btn-bat-vault-download')?.addEventListener('click', () => {
+        DL.downloadCsdBatteryClaimSuccessCertificate(user);
+      });
+      container.querySelector('#btn-bat-vault-print')?.addEventListener('click', () => {
+        DL.printCsdBatteryClaimSuccessCertificate(user);
+      });
+      viewerModal.style.display = 'flex';
+      return;
+    }
+
+    if (doc.id === 'DOC-CSD-CLAIM-NOTICE-2026') {
+      container.querySelector('#modal-doc-body').innerHTML = `
+        <div style="background: #002b49; color: white; padding: 12px 18px; border-radius: 6px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">📋</span>
+            <div>
+              <strong style="font-size: 13.5px; letter-spacing: 0.3px;">CSD Statutory Warranty Claim Notice Letter</strong>
+              <div style="font-size: 11px; opacity: 0.9; margin-top: 1px;">Formal MoD Service Call Order &bull; iPhone 16 Ultramarine 128GB</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm btn-primary" id="btn-claim-vault-download" style="background: #0284c7; border-color: #0369a1; font-weight: 700;">
+              📥 Download Notice Letter
+            </button>
+            <button class="btn btn-sm btn-outline" id="btn-claim-vault-print" style="color: white; border-color: white;">
+              🖨️ Print
+            </button>
+          </div>
+        </div>
+        <div style="border: 2px solid #002b49; border-radius: 6px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <iframe id="claim-notice-frame" style="width: 100%; height: 750px; border: none; display: block;"></iframe>
+        </div>
+      `;
+      const iframe = container.querySelector('#claim-notice-frame');
+      if (iframe) {
+        iframe.srcdoc = DL.generateCsdClaimNoticeLetterHtml(user);
+      }
+      container.querySelector('#btn-claim-vault-download')?.addEventListener('click', () => {
+        DL.downloadCsdClaimNoticeLetter(user);
+      });
+      container.querySelector('#btn-claim-vault-print')?.addEventListener('click', () => {
+        DL.printCsdClaimNoticeLetter(user);
+      });
+      viewerModal.style.display = 'flex';
+      return;
+    }
+
     container.querySelector('#modal-doc-body').innerHTML = `
       <div style="background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <div style="text-align: center; border-bottom: 2px solid #002B49; padding-bottom: 12px; margin-bottom: 16px;">

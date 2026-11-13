@@ -3783,14 +3783,21 @@ export function printCsdWarrantyCertificate(user, txnData) {
  * (Revised Format: Classical Government Letterhead, No Digital Signature Box, Physical Authority Sign-off)
  */
 export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
-  if (!user) user = {
+  const DEFAULT_USER = {
     name: 'ANURAG ANIL BAWASKAR',
     empId: '41028104',
     designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)',
     cadre: 'Department of Military Affairs (DMA), Ministry of Defence'
   };
+  const u = {
+    ...DEFAULT_USER,
+    ...(user || {})
+  };
+  for (const [k, v] of Object.entries(DEFAULT_USER)) {
+    if (!u[k]) u[k] = v;
+  }
 
-  const dev = deviceData || {
+  const CANONICAL_NOTICE_DEFAULTS = {
     billNo: 'CSD/URC/DEL/2026/11/6703',
     warrCertNo: 'CSD/WARR-DEED/2026/CSD_URC_DEL_2026_11_6703',
     claimNoticeNo: 'CSD/URC-DEL/WARR-CLAIM/2026/11/6703-CN',
@@ -3816,7 +3823,27 @@ export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
     tat: '3 to 7 Working Days (Zero Labour / Zero Assessment Charges)'
   };
 
-  const safeNoticeNo = (dev.claimNoticeNo || dev.billNo || 'CSD_CLAIM_6703').replace(/[^a-zA-Z0-9]/g, '_');
+  const cleanDeviceData = {};
+  if (deviceData && typeof deviceData === 'object') {
+    for (const [k, v] of Object.entries(deviceData)) {
+      if (v !== undefined && v !== null && v !== '') {
+        cleanDeviceData[k] = v;
+      }
+    }
+  }
+
+  const dev = {
+    ...CANONICAL_NOTICE_DEFAULTS,
+    ...(cleanDeviceData.claimNoticeNo ? cleanDeviceData : {})
+  };
+
+  for (const [k, v] of Object.entries(CANONICAL_NOTICE_DEFAULTS)) {
+    if (!dev[k]) {
+      dev[k] = v;
+    }
+  }
+
+  const safeNoticeNo = (dev.claimNoticeNo || 'CSD_URC_DEL_WARR_CLAIM_2026_11_6703_CN').replace(/[^a-zA-Z0-9]/g, '_');
   const barcodeSvg = generateCode39BarcodeSvg('CSD-CLAIM-' + (dev.billNo || 'CSD_6703').replace(/[^a-zA-Z0-9]/g, '_'), 24, 18);
 
   return `<!DOCTYPE html>
@@ -4137,12 +4164,12 @@ export function generateCsdClaimNoticeLetterHtml(user, deviceData) {
     <!-- Addressee -->
     <div class="addressee-block">
       <strong>To,</strong><br>
-      <strong style="font-size: 10.5px; color: #002b49;">Shri ${user.name || 'ANURAG ANIL BAWASKAR'}</strong>,<br>
-      ${user.designation || 'Additional Section Officer - I (Group A Gazetted)'},<br>
-      ${user.cadre || 'Department of Military Affairs (DMA), Ministry of Defence'},<br>
+      <strong style="font-size: 10.5px; color: #002b49;">Shri ${u.name || 'ANURAG ANIL BAWASKAR'}</strong>,<br>
+      ${u.designation || 'Additional Section Officer - I (Group A Gazetted)'},<br>
+      ${u.cadre || 'Department of Military Affairs (DMA), Ministry of Defence'},<br>
       Room No. 106, Sena Bhawan / South Block, New Delhi - 110011.<br>
       <span style="font-family: 'Roboto Mono', monospace; font-size: 8.5px; color: #475569;">
-        [Employee ID (PPO/PF): <strong>${user.empId || '41028104'}</strong> | CSD Smart Card No: <strong>${dev.cardNo || 'LB08260547713500S01'}</strong> | Chip UID: <code>${dev.cardUid || 'IND-CSD-CHIP-7F89B2'}</code>]
+        [Employee ID (PPO/PF): <strong>${u.empId || '41028104'}</strong> | CSD Smart Card No: <strong>${dev.cardNo || 'LB08260547713500S01'}</strong> | Chip UID: <code>${dev.cardUid || 'IND-CSD-CHIP-7F89B2'}</code>]
       </span>
     </div>
 
@@ -4313,23 +4340,31 @@ export function printCsdClaimNoticeLetter(user, deviceData) {
  * Technical Parameters: OEM Factory Battery Replaced (100% Initial Capacity) • Tested 157 Cycle Count Times • Calibrated Max Capacity 99%
  */
 export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData) {
-  if (!user) user = {
+  const DEFAULT_USER = {
     name: 'ANURAG ANIL BAWASKAR',
     empId: '41028104',
     designation: 'ADDITIONAL SECTION OFFICER - I (GROUP A GAZETTED)',
     cadre: 'Department of Military Affairs (DMA), Ministry of Defence'
   };
+  const u = {
+    ...DEFAULT_USER,
+    ...(user || {})
+  };
+  for (const [k, v] of Object.entries(DEFAULT_USER)) {
+    if (!u[k]) u[k] = v;
+  }
 
-  const srv = serviceData || {
+  const CANONICAL_DEFAULTS = {
     billNo: 'CSD/URC/DEL/2026/11/6703',
     warrCertNo: 'CSD/WARR-DEED/2026/CSD_URC_DEL_2026_11_6703',
     claimDocketNo: 'CSD/URC-DEL/WARR-CLAIM/2026/11/6703-CN',
     settlementCertNo: 'CSD/WARR-COMPL/2026/11/6703-BAT',
     contractNo: 'MoD/CSD/EC-WARR/2026',
-    dateOfInception: '2026-10-20',
-    dateOfClaimNotice: '2026-11-07',
+    dateOfInception: '20-Oct-2026',
+    dateOfClaimNotice: '07-Nov-2026',
     dateOfSettlement: '09-November-2026',
-    expiryDate: '2029-10-20',
+    expiryDate: '20-October-2029',
+    tenure: '3 YEARS INBUILT COMPREHENSIVE (EXPIRY: 20-OCTOBER-2029) • CLAIMABLE ONLY AT CSD',
     canteen: 'URC HQ DELHI AREA (SENA BHAWAN)',
     cardNo: 'LB08260547713500S01',
     cardUid: 'IND-CSD-CHIP-7F89B2',
@@ -4354,17 +4389,40 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
     partLockProtocol: 'Apple Cloud Part Lock (MoD Asset Anti-Diversion & Component Serial Binding)'
   };
 
-  const safeCertNo = (srv.settlementCertNo || srv.billNo || 'CSD_BAT_6703').replace(/[^a-zA-Z0-9]/g, '_');
+  // Safe merge: ensure NO variable is ever undefined or null
+  const cleanServiceData = {};
+  if (serviceData && typeof serviceData === 'object') {
+    for (const [k, v] of Object.entries(serviceData)) {
+      if (v !== undefined && v !== null && v !== '') {
+        cleanServiceData[k] = v;
+      }
+    }
+  }
+
+  // Merge canonical defaults with provided fields (if it's not a generic raw billing transaction)
+  const srv = {
+    ...CANONICAL_DEFAULTS,
+    ...(cleanServiceData.settlementCertNo || cleanServiceData.claimDocketNo ? cleanServiceData : {})
+  };
+
+  // Guaranteed fallback for every single field so undefined never appears
+  for (const [k, v] of Object.entries(CANONICAL_DEFAULTS)) {
+    if (!srv[k]) {
+      srv[k] = v;
+    }
+  }
+
+  const safeCertNo = (srv.settlementCertNo || 'CSD_WARR_COMPL_2026_11_6703_BAT').replace(/[^a-zA-Z0-9]/g, '_');
   const barcodeSvg = generateCode39BarcodeSvg('CSD-SETTLED-' + (srv.billNo || 'CSD_6703').replace(/[^a-zA-Z0-9]/g, '_'), 24, 18);
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CSD Warranty Claim Settlement & Battery Replacement Certificate - ${srv.settlementCertNo}</title>
+  <title>CSD Warranty Claim Settlement &amp; Battery Replacement Certificate - ${srv.settlementCertNo}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Roboto:wght@400;500;700;800;900&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Roboto:wght@400;500;700;800;900&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     @page {
       size: A4 portrait;
@@ -4376,7 +4434,7 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       padding: 0;
       width: 100%;
       background: #1e293b;
-      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      font-family: 'Merriweather', Georgia, serif;
       color: #0f172a;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
@@ -4386,37 +4444,29 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       max-width: 210mm;
       margin: 10px auto;
       background: #ffffff;
-      padding: 9mm 11mm;
+      padding: 8mm 10mm;
       box-shadow: 0 12px 36px rgba(0,0,0,0.45);
       position: relative;
       box-sizing: border-box;
+      line-height: 1.45;
     }
-    .cert-border {
-      border: 3.5px double #15803d;
-      padding: 6.5mm 8mm;
+    .cert-frame {
+      border: 2.5px solid #002b49;
+      outline: 1.5px solid #b45309;
+      outline-offset: 3.5px;
+      padding: 6.5mm 8.5mm;
       position: relative;
-      background: radial-gradient(circle at center, #ffffff 70%, #f0fdf4 100%);
+      background: #ffffff;
     }
-    .corner-bracket {
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border: 2px solid #16a34a;
-    }
-    .corner-tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
-    .corner-tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
-    .corner-bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
-    .corner-br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
-
     .watermark {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-30deg);
       font-family: 'Cinzel', serif;
-      font-size: 38px;
+      font-size: 32px;
       font-weight: 900;
-      color: rgba(22, 101, 52, 0.04);
+      color: rgba(0, 43, 73, 0.035);
       white-space: nowrap;
       pointer-events: none;
       letter-spacing: 5px;
@@ -4428,195 +4478,219 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
     }
     .header-table td {
       vertical-align: middle;
-    }
-    .govt-heading {
-      text-align: center;
-      line-height: 1.25;
+      padding: 0;
     }
     .govt-heading h1 {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 14.5px;
-      margin: 0;
-      color: #002b49;
-      letter-spacing: 1px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
       font-weight: 800;
+      color: #002b49;
+      letter-spacing: 1.2px;
+      margin: 0;
+      line-height: 1.2;
     }
     .govt-heading h2 {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #831843;
+      letter-spacing: 1px;
       margin: 2px 0 0 0;
-      color: #15803d;
-      font-weight: 700;
-      letter-spacing: 0.6px;
+      line-height: 1.2;
     }
     .govt-heading h3 {
+      font-family: 'Cinzel', serif;
       font-size: 10px;
-      margin: 2px 0 0 0;
+      font-weight: 700;
       color: #002b49;
-      font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      margin: 2px 0 0 0;
     }
-    .govt-heading .station {
-      font-size: 8.5px;
-      color: #475569;
+    .govt-heading .cell-subtitle {
+      font-family: 'Roboto', sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      color: #334155;
       margin-top: 1px;
-      font-weight: 600;
+      letter-spacing: 0.4px;
     }
 
-    .title-banner {
-      background: linear-gradient(90deg, #14532d 0%, #15803d 50%, #14532d 100%);
-      color: #ffffff;
-      text-align: center;
-      padding: 6px 12px;
-      margin: 7px 0;
-      border-radius: 3px;
-      border-top: 2px solid #eab308;
-      border-bottom: 2px solid #eab308;
-    }
-    .title-banner h4 {
-      font-family: 'Cinzel', Georgia, serif;
-      margin: 0;
-      font-size: 11.5px;
-      letter-spacing: 1.1px;
-      font-weight: 800;
-    }
-    .title-banner .sub-banner {
-      font-size: 8.5px;
-      letter-spacing: 0.8px;
-      color: #fef08a;
-      margin-top: 2px;
-      font-weight: 600;
-    }
-
-    .claim-success-badge {
+    .dispatch-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #f0fdf4;
-      border: 1.5px solid #86efac;
-      padding: 6px 10px;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-    .success-tag {
-      font-size: 11px;
-      font-weight: 900;
-      color: #166534;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      letter-spacing: 0.5px;
-    }
-    .docket-details {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 3px solid #002b49;
+      padding: 4px 8px;
       font-family: 'Roboto Mono', monospace;
       font-size: 8px;
-      color: #334155;
-      text-align: right;
-      line-height: 1.35;
+      margin: 6px 0;
+      border-radius: 2px;
+    }
+    .dispatch-item strong {
+      color: #002b49;
+      font-weight: 700;
+    }
+
+    .cert-title-banner {
+      background: #002b49;
+      border-bottom: 2.5px solid #b45309;
+      padding: 6px 8px;
+      text-align: center;
+      margin-bottom: 7px;
+    }
+    .cert-title-banner h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .cert-title-banner .sub-banner {
+      font-family: 'Roboto', sans-serif;
+      font-size: 7.5px;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.8px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .preamble {
+      font-size: 8px;
+      line-height: 1.45;
+      text-align: justify;
+      color: #1e293b;
+      margin-bottom: 7px;
+      padding: 4px 7px;
+      background: #fafafa;
+      border-left: 3px solid #15803d;
+      font-style: italic;
     }
 
     .section-title {
+      font-family: 'Roboto', sans-serif;
       font-size: 8.5px;
       font-weight: 800;
       color: #002b49;
-      margin-bottom: 3px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 5px 0 3px 0;
       display: flex;
       align-items: center;
       gap: 5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 1px;
     }
 
     .info-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 8.5px;
-      margin-bottom: 7px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 8px;
+      margin-bottom: 5px;
+      border: 1px solid #cbd5e1;
     }
-    .info-table th, .info-table td {
+    .info-table td {
       border: 1px solid #cbd5e1;
       padding: 3px 6px;
       vertical-align: middle;
     }
-    .info-label {
+    .info-table tr:nth-child(even) td {
       background: #f8fafc;
+    }
+    .info-label {
+      width: 23%;
       font-weight: 700;
       color: #002b49;
-      width: 25%;
+      background: #f1f5f9;
     }
     .info-val {
-      width: 25%;
+      width: 27%;
+      color: #0f172a;
     }
 
-    .battery-metrics-card {
-      background: #ffffff;
-      border: 1.5px solid #16a34a;
-      border-radius: 4px;
-      padding: 7px 10px;
-      margin: 8px 0;
-    }
-    .battery-metrics-grid {
+    .metric-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 5px;
+      gap: 5px;
+      margin: 5px 0 6px 0;
     }
-    .metric-box {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 3px;
-      padding: 6px 4px;
+    .metric-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-top: 2px solid #002b49;
+      padding: 4px;
       text-align: center;
+      border-radius: 2px;
     }
-    .metric-value {
+    .metric-card:nth-child(2) { border-top-color: #0284c7; }
+    .metric-card:nth-child(3) { border-top-color: #16a34a; }
+    .metric-card:nth-child(4) { border-top-color: #059669; }
+    .metric-num {
       font-family: 'Roboto Mono', monospace;
-      font-size: 14px;
-      font-weight: 900;
-      color: #15803d;
-      line-height: 1.2;
-    }
-    .metric-label {
-      font-size: 7.5px;
-      font-weight: 700;
-      color: #1e293b;
-      margin-top: 2px;
-      text-transform: uppercase;
-    }
-
-    .technical-findings {
-      background: #fafafa;
-      border: 1px solid #e2e8f0;
-      padding: 6px 8px;
-      font-size: 7.8px;
-      line-height: 1.4;
-      color: #334155;
-      margin-bottom: 7px;
-      border-radius: 3px;
-    }
-    .technical-findings strong {
+      font-size: 13px;
+      font-weight: 800;
       color: #002b49;
+      line-height: 1.1;
+    }
+    .metric-lbl {
+      font-family: 'Roboto', sans-serif;
+      font-size: 6.8px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-top: 1px;
     }
 
-    .cloud-lock-advisory {
-      background: #fffbeb;
-      border: 1.5px solid #f59e0b;
+    .findings-list {
+      font-family: 'Roboto', sans-serif;
+      font-size: 7.8px;
+      line-height: 1.38;
+      color: #1e293b;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 4px 7px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+    }
+    .findings-list strong { color: #002b49; }
+
+    .advisory-box {
+      border: 1.5px solid #d97706;
+      background: #fffdf5;
       padding: 5px 8px;
+      font-family: 'Roboto', sans-serif;
       font-size: 7.5px;
       line-height: 1.35;
       color: #78350f;
-      border-radius: 3px;
-      margin-bottom: 7px;
+      border-radius: 2px;
+      margin-bottom: 6px;
       text-align: justify;
     }
-    .cloud-lock-advisory strong {
+    .advisory-title {
+      font-weight: 800;
+      font-size: 8px;
       color: #92400e;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .cloud-lock-advisory code {
+    .advisory-box strong { color: #92400e; }
+    .advisory-box code {
       background: #fef3c7;
-      padding: 1px 4px;
+      padding: 0 4px;
       border-radius: 2px;
       font-weight: 700;
       color: #b45309;
@@ -4624,108 +4698,106 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       font-size: 7.5px;
     }
 
-    .warranty-continuation-banner {
+    .warranty-strip {
       background: #eff6ff;
-      border: 1.5px solid #93c5fd;
-      padding: 5px 8px;
-      font-size: 8px;
-      line-height: 1.35;
+      border: 1px solid #93c5fd;
+      border-left: 3px solid #2563eb;
+      padding: 4px 7px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 7.6px;
+      line-height: 1.32;
       color: #1e3a8a;
-      border-radius: 3px;
-      margin-bottom: 8px;
+      border-radius: 2px;
+      margin-bottom: 6px;
       text-align: justify;
     }
 
-    .endorsement-row {
-      margin-top: 8px;
+    .authority-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      padding-top: 6px;
+      padding-top: 5px;
       border-top: 1px dashed #cbd5e1;
+      font-family: 'Roboto', sans-serif;
+      margin-top: 5px;
     }
-    .endorse-left {
+    .auth-col-left {
       width: 32%;
-      font-size: 7.8px;
+      font-size: 7.5px;
       color: #334155;
     }
-    .endorse-center {
+    .auth-col-center {
       width: 34%;
       text-align: center;
     }
-    .endorse-right {
+    .auth-col-right {
       width: 34%;
       text-align: right;
-      font-size: 7.8px;
+      font-size: 7.5px;
       color: #0f172a;
     }
   </style>
 </head>
 <body>
   <div class="page-container">
-    <div class="cert-border">
-      <div class="corner-bracket corner-tl"></div>
-      <div class="corner-bracket corner-tr"></div>
-      <div class="corner-bracket corner-bl"></div>
-      <div class="corner-bracket corner-br"></div>
-      <div class="watermark">CSD CLAIM SUCCESSFUL</div>
+    <div class="cert-frame">
+      <div class="watermark">MINISTRY OF DEFENCE &bull; DGQA &bull; CSD</div>
 
-      <!-- Header -->
+      <!-- Header Table -->
       <table class="header-table">
         <tr>
-          <td style="width: 15%; text-align: left;">
-            <img src="${EMBLEM_B64}" alt="Emblem of India" style="height: 50px; width: auto; object-fit: contain;">
+          <td style="width: 14%; text-align: left;">
+            <img src="${EMBLEM_B64}" alt="Emblem of India" style="height: 54px; width: auto; object-fit: contain;">
           </td>
-          <td style="width: 70%; text-align: center;">
+          <td style="width: 72%; text-align: center;">
             <div class="govt-heading">
               <h1>भारत सरकार &bull; GOVERNMENT OF INDIA</h1>
               <h2>रक्षा मंत्रालय &bull; MINISTRY OF DEFENCE</h2>
               <h3>DIRECTORATE GENERAL OF QUALITY ASSURANCE (DGQA) &amp; CSD</h3>
-              <div class="station">CANTEEN STORES DEPARTMENT &bull; TECHNICAL INSPECTION &amp; WARRANTY CELL</div>
-              <div class="station" style="font-size: 8px; font-weight: 700; color: #15803d; margin-top: 1px;">
-                DEFENCE RATE CONTRACT NO. ${srv.contractNo} &bull; STATUTORY 3-YEAR INBUILT WARRANTY
-              </div>
+              <div class="cell-subtitle">CENTRAL ELECTRONICS TECHNICAL INSPECTION &amp; WARRANTY SETTLEMENT CELL</div>
+              <div class="cell-subtitle" style="font-size: 7.5px; color: #64748b; margin-top: 1px;">Sena Bhawan, DHQ PO, New Delhi - 110011</div>
             </div>
           </td>
-          <td style="width: 15%; text-align: right;">
-            <img src="${CSD_LOGO_B64}" alt="CSD Crest" style="height: 50px; width: auto; object-fit: contain;">
+          <td style="width: 14%; text-align: right;">
+            <img src="${CSD_LOGO_B64}" alt="CSD Crest" style="height: 52px; width: auto; object-fit: contain;">
           </td>
         </tr>
       </table>
 
+      <!-- Dispatch Reference Bar -->
+      <div class="dispatch-bar">
+        <div class="dispatch-item"><strong>CERTIFICATE NO:</strong> ${srv.settlementCertNo}</div>
+        <div class="dispatch-item"><strong>CLAIM DOCKET:</strong> ${srv.claimDocketNo}</div>
+        <div class="dispatch-item"><strong>DATE:</strong> ${srv.dateOfSettlement}</div>
+      </div>
+
       <!-- Title Banner -->
-      <div class="title-banner">
-        <h4>STATUTORY WARRANTY CLAIM SETTLEMENT &amp; BATTERY REPLACEMENT CERTIFICATE</h4>
-        <div class="sub-banner">OFFICIAL SERVICE COMPLETION NOTE &bull; OEM BATTERY CALIBRATION &amp; QUALITY CLEARANCE</div>
+      <div class="cert-title-banner">
+        <h4>STATUTORY WARRANTY CLAIM SETTLEMENT CERTIFICATE</h4>
+        <div class="sub-banner">OFFICIAL QUALITY CLEARANCE &bull; OEM BATTERY RESTORATION RECORD &bull; DEFENCE CONTRACT NO. ${srv.contractNo}</div>
       </div>
 
-      <!-- Claim Success Badge -->
-      <div class="claim-success-badge">
-        <div class="success-tag">
-          <span>✅</span> <span>${srv.claimStatus}</span>
-        </div>
-        <div class="docket-details">
-          <strong>SETTLEMENT CERT NO:</strong> <span style="color: #15803d;">${srv.settlementCertNo}</span><br>
-          <strong>CLAIM DOCKET REF:</strong> <span>${srv.claimDocketNo}</span> &bull; <strong>DATE:</strong> <span>${srv.dateOfSettlement}</span>
-        </div>
+      <!-- Preamble -->
+      <div class="preamble">
+        THIS IS TO OFFICIALLY CERTIFY that pursuant to Statutory Warranty Claim Docket No. <strong>${srv.claimDocketNo}</strong> lodged under the Statutory 3-Year Inbuilt CSD Warranty Deed, the electronic equipment specified hereunder has undergone technical diagnostic intake, clean-room OEM component restoration, automated cycle-count stress benchmarking, and statutory quality clearance under the aegis of the Directorate General of Quality Assurance (DGQA), Ministry of Defence. The claim is officially certified as <strong>${srv.claimStatus}</strong> with ZERO financial liability to the beneficiary officer.
       </div>
 
-      <!-- Section 1: Beneficiary & Entitlement Particulars -->
+      <!-- Section 1: Beneficiary Dossier -->
       <div class="section-title">
         <span>👤</span> 1. REGISTERED BENEFICIARY &amp; ENTITLEMENT DOSSIER
       </div>
       <table class="info-table">
         <tr>
           <td class="info-label">Beneficiary Officer</td>
-          <td class="info-val"><strong>${user.name}</strong></td>
+          <td class="info-val"><strong>${u.name}</strong></td>
           <td class="info-label">Employee ID (PPO/PF)</td>
-          <td class="info-val"><strong>${user.empId}</strong></td>
+          <td class="info-val"><strong>${u.empId}</strong></td>
         </tr>
         <tr>
           <td class="info-label">Substantive Designation</td>
-          <td class="info-val">${user.designation}</td>
+          <td class="info-val">${u.designation}</td>
           <td class="info-label">Ministry / Department</td>
-          <td class="info-val">${user.cadre}</td>
+          <td class="info-val">${u.cadre}</td>
         </tr>
         <tr>
           <td class="info-label">CSD Smart Card UID</td>
@@ -4748,19 +4820,19 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
       <table class="info-table">
         <tr>
           <td class="info-label">Item Nomenclature</td>
-          <td class="info-val" colspan="3"><strong style="color: #002b49; font-size: 9.5px;">${srv.name}</strong></td>
+          <td class="info-val" colspan="3"><strong style="color: #002b49; font-size: 9px;">${srv.name}</strong></td>
         </tr>
         <tr>
           <td class="info-label">Brand &amp; Manufacturer</td>
           <td class="info-val">${srv.brand}</td>
-          <td class="info-label">Model &amp; Color</td>
+          <td class="info-label">Model &amp; Storage</td>
           <td class="info-val"><strong>${srv.model}</strong> (${srv.storage})</td>
         </tr>
         <tr>
           <td class="info-label">Hardware Serial Number (S/N)</td>
-          <td class="info-val"><code style="font-weight: 800; font-size: 9px; color: #b91c1c;">${srv.serialNo}</code></td>
+          <td class="info-val"><code style="font-weight: 800; font-size: 8.5px; color: #b91c1c;">${srv.serialNo}</code></td>
           <td class="info-label">Primary / Secondary IMEI</td>
-          <td class="info-val"><code style="font-size: 8px;">${srv.imei1}</code><br><code style="font-size: 8px;">${srv.imei2}</code></td>
+          <td class="info-val"><code style="font-size: 7.8px;">${srv.imei1}</code><br><code style="font-size: 7.8px;">${srv.imei2}</code></td>
         </tr>
         <tr>
           <td class="info-label">Statutory Warranty Expiry</td>
@@ -4770,47 +4842,39 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
         </tr>
       </table>
 
-      <!-- Section 3: Battery Replacement & 157 Cycle Benchmark Card -->
+      <!-- Section 3: DGQA Benchmark Metrics & Battery Restoration Record -->
       <div class="section-title">
-        <span>🔋</span> 3. OEM BATTERY REPLACEMENT &amp; DGQA 157 CYCLE BENCHMARK DOSSIER
+        <span>🔋</span> 3. OEM BATTERY RESTORATION &amp; DGQA 157-CYCLE BENCHMARK DOSSIER
       </div>
-      <div class="battery-metrics-card">
-        <div style="font-size: 8.5px; font-weight: 800; color: #166534; display: flex; justify-content: space-between; align-items: center;">
-          <span>AUTHORIZED FACTORY BATTERY RESTORATION UNDER DEFENCE RATE CONTRACT</span>
-          <span style="font-family: 'Roboto Mono', monospace; font-size: 8px; color: #002b49;">PART SPEC: APPLE A3294</span>
+      <div class="metric-strip">
+        <div class="metric-card">
+          <div class="metric-num">${(srv.initialNominalCapacity || '100%').split(' ')[0]}</div>
+          <div class="metric-lbl">Initial Rating</div>
         </div>
-        <div class="battery-metrics-grid">
-          <div class="metric-box">
-            <div class="metric-value">100%</div>
-            <div class="metric-label">Initial Capacity</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-value" style="color: #0284c7;">157</div>
-            <div class="metric-label">Tested Cycle Count</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-value" style="color: #16a34a;">99%</div>
-            <div class="metric-label">Max Capacity Calibrated</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-value" style="color: #059669; font-size: 13px;">₹0.00</div>
-            <div class="metric-label">Total Officer Charge</div>
-          </div>
+        <div class="metric-card">
+          <div class="metric-num" style="color: #0284c7;">157</div>
+          <div class="metric-lbl">Tested Cycles</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num" style="color: #16a34a;">99%</div>
+          <div class="metric-lbl">Max Capacity</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num" style="color: #059669;">₹0.00</div>
+          <div class="metric-lbl">Officer Charges</div>
         </div>
       </div>
 
-      <!-- Technical Findings & QA Protocol -->
-      <div class="technical-findings">
-        <div>&bull; <strong>Component Replaced:</strong> Original OEM Apple Factory Rechargeable Li-ion Battery Unit (A3294, nominal 3,561 mAh) successfully fitted in clean-room technical bench facilities.</div>
-        <div>&bull; <strong>157 Cycle Count Test Protocol:</strong> The replacement battery was subjected to 157 automated charge-discharge cycle diagnostic tests on the DGQA electronic test bench to verify thermal stability, peak current delivery, and electrochemical voltage retention.</div>
-        <div>&bull; <strong>99% Calibrated Maximum Capacity:</strong> Post-testing analysis certifies a stabilized <strong>Maximum Capacity of 99%</strong> with optimal battery health, peak performance capability enabled, and zero voltage drop under maximum A18 SoC workload.</div>
-        <div>&bull; <strong>Apple Diagnostics Verification:</strong> Replaced module recognized as a <em>"Genuine Apple Part"</em> in iOS Parts and Service History. Cryptographic system serialization handshake successfully completed.</div>
-        <div>&bull; <strong>Water/Dust IP68 Gasket Resealed:</strong> Factory perimeter liquid/dust seals re-applied; passed chamber negative pressure seal test.</div>
+      <div class="findings-list">
+        <div>&bull; <strong>Component Replaced:</strong> Original OEM Apple Factory Rechargeable Li-ion Battery Unit (A3294, nominal 3,561 mAh) fitted under ISO Class-5 clean-room conditions.</div>
+        <div>&bull; <strong>157 Cycle Count Test Protocol:</strong> Replacement battery subjected to 157 automated charge-discharge stress cycles on the DGQA electronic test bench to verify electrochemical stability, thermal dissipation, and zero voltage drop under peak A18 SoC workload.</div>
+        <div>&bull; <strong>99% Calibrated Maximum Capacity:</strong> Post-testing analysis certifies a stabilized <strong>Maximum Capacity of 99%</strong> with iOS peak performance capability enabled and normal voltage retention.</div>
+        <div>&bull; <strong>Hermetic IP68 Pressure Seal:</strong> Factory perimeter liquid/dust ingress seal re-applied; passed chamber negative pressure seal test.</div>
       </div>
 
       <!-- Section 4: Apple Cloud Part Lock & "Unable to Verify" Technical Advisory -->
-      <div class="cloud-lock-advisory">
-        <div style="font-weight: 800; font-size: 8px; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; color: #92400e;">
+      <div class="advisory-box">
+        <div class="advisory-title">
           <span>🔒</span>
           <span>OFFICIAL STATUTORY TECHNICAL ADVISORY: APPLE CLOUD PART LOCK &amp; "UNABLE TO VERIFY" STATUS NOTICE</span>
         </div>
@@ -4818,32 +4882,32 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
           &bull; <strong>iOS System Status ("Unable to Verify" / "Important Battery Message"):</strong> The mobile handset will display an <em>"Unable to Verify"</em> / <em>"Unable to determine if your iPhone battery is a genuine Apple part"</em> notification in iOS Settings under <em>Settings &gt; Battery &gt; Battery Health &amp; Charging</em> and <em>Settings &gt; General &gt; About (Parts and Service History)</em>.
         </div>
         <div style="margin-top: 2px;">
-          &bull; <strong>Apple Cloud Part Lock Tracking &amp; Account Binding:</strong> This status occurs intentionally because this replacement battery module is cryptographically locked and tracked via <strong>Apple Cloud Part Lock</strong> (Component Serial Tracking Protocol) under Ministry of Defence Anti-Diversion Regulations. To track and safeguard this high-value subsidized defense asset against unauthorized tampering or commercial diversion, the hardware component is securely bound to the official CSD administrative custodian account: <code>${srv.cloudBoundAccount || 'stores.delhi.canteen.ib@gmail.com'}</code>.
+          &bull; <strong>Apple Cloud Part Lock Tracking &amp; Account Binding:</strong> This status occurs intentionally because this replacement battery module is cryptographically locked and tracked via <strong>Apple Cloud Part Lock</strong> (Component Serial Tracking Protocol) under Ministry of Defence Anti-Diversion Regulations. To track and safeguard this high-value subsidized defense asset against unauthorized tampering or commercial diversion, the hardware component is securely bound to the official CSD administrative custodian account: <code>${srv.cloudBoundAccount}</code>.
         </div>
         <div style="margin-top: 2px;">
           &bull; <strong>Authenticity &amp; Performance Assurance:</strong> This advisory certifies that the battery is an authentic Apple OEM part (A3294, nominal 3,561 mAh), calibrated to <strong>99% stabilized maximum capacity</strong> after <strong>157 diagnostic test cycles</strong>. The "Unable to Verify" notification has zero effect on device performance, peak power management, battery charging cycles, iOS updates, or safety. Full 3-Year Inbuilt CSD Warranty remains valid through <strong>${srv.expiryDate}</strong> exclusively at CSD/URC facilities.
         </div>
       </div>
 
-      <!-- Warranty Continuation -->
-      <div class="warranty-continuation-banner">
+      <!-- Section 5: Warranty Continuation -->
+      <div class="warranty-strip">
         <strong>🛡️ INBUILT STATUTORY WARRANTY CONTINUATION:</strong>
-        This service action is officially certified as successfully completed under CSD Inbuilt Statutory Warranty terms. The device retains its comprehensive 3-Year Inbuilt Statutory Warranty through <strong>20-October-2029</strong> with zero impairment. All subsequent claims remain claimable strictly and exclusively at CSD / URC counters under Defence Rate Contract No. <code>${srv.contractNo}</code>.
+        This service action is officially certified as successfully completed under CSD Inbuilt Statutory Warranty terms. The device retains its comprehensive 3-Year Inbuilt Statutory Warranty through <strong>${srv.expiryDate}</strong> with zero impairment. All subsequent claims remain claimable strictly and exclusively at CSD / URC counters under Defence Rate Contract No. <code>${srv.contractNo}</code>.
       </div>
 
-      <!-- Official Authority Endorsement (No Signatures) -->
-      <div class="endorsement-row">
-        <div class="endorse-left">
-          <div style="font-weight: 700; color: #002b49; margin-bottom: 3px;">TECHNICAL SERVICE CLEARANCE:</div>
-          <div style="font-weight: 700; color: #0f172a; font-size: 9px;">SUB MAJ R.K. YADAV</div>
+      <!-- Section 6: Official Authority Clearance (No Signatures) -->
+      <div class="authority-row">
+        <div class="auth-col-left">
+          <div style="font-weight: 700; color: #002b49; margin-bottom: 2px;">TECHNICAL SERVICE CLEARANCE:</div>
+          <div style="font-weight: 700; color: #0f172a; font-size: 8.5px;">SUB MAJ R.K. YADAV</div>
           <div>Canteen Officer &amp; Manager</div>
           <div>URC HQ Delhi Area (Sena Bhawan)</div>
-          <div style="font-size: 7px; color: #64748b; margin-top: 1px;">Station: Sena Bhawan, New Delhi</div>
+          <div style="font-size: 6.8px; color: #64748b; margin-top: 1px;">Station: Sena Bhawan, New Delhi</div>
         </div>
 
-        <div class="endorse-center">
+        <div class="auth-col-center">
           <div style="display: inline-block;">
-            <img src="${MOD_STAMP_B64}" alt="MoD Stamp" style="height: 48px; width: auto; object-fit: contain; opacity: 0.94;">
+            <img src="${MOD_STAMP_B64}" alt="MoD Stamp" style="height: 46px; width: auto; object-fit: contain; opacity: 0.94;">
             <div style="font-size: 6.5px; font-weight: 700; color: #334155; margin-top: 1px;">DGQA / CSD QA SEAL</div>
             <div style="margin-top: 2px;">
               ${barcodeSvg}
@@ -4852,13 +4916,13 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
           </div>
         </div>
 
-        <div class="endorse-right">
-          <div style="font-weight: 700; color: #002b49; margin-bottom: 3px;">QUALITY ASSURANCE CERTIFICATION:</div>
-          <div style="font-weight: 700; color: #0f172a; font-size: 9px;">COL. P.S. RAWAT</div>
+        <div class="auth-col-right">
+          <div style="font-weight: 700; color: #002b49; margin-bottom: 2px;">QUALITY ASSURANCE CERTIFICATION:</div>
+          <div style="font-weight: 700; color: #0f172a; font-size: 8.5px;">COL. P.S. RAWAT</div>
           <div>Director (QA &amp; Technical Inspection)</div>
           <div>DGQA &amp; CSD Central Warranty Cell</div>
           <div>Ministry of Defence, New Delhi - 110011</div>
-          <div style="font-size: 7px; color: #64748b; font-style: italic; margin-top: 1px;">For and on behalf of the President of India</div>
+          <div style="font-size: 6.8px; color: #64748b; font-style: italic; margin-top: 1px;">For and on behalf of the President of India</div>
         </div>
       </div>
 
@@ -4869,8 +4933,7 @@ export function generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData)
 }
 
 export function downloadCsdBatteryClaimSuccessCertificate(user, serviceData) {
-  const srv = serviceData || {};
-  const safeCertNo = (srv.settlementCertNo || srv.billNo || 'CSD_BAT_6703').replace(/[^a-zA-Z0-9]/g, '_');
+  const safeCertNo = 'CSD_WARR_COMPL_2026_11_6703_BAT';
   triggerDownload(`CSD_Warranty_Claim_Successful_Battery_iPhone16_${safeCertNo}.html`, generateCsdBatteryClaimSuccessCertificateHtml(user, serviceData));
 }
 
