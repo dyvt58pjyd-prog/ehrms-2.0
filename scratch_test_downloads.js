@@ -35,6 +35,7 @@ globalThis.document = {
   createElement: () => ({
     href: '',
     download: '',
+    setAttribute: function(k, v) { this[k] = v; },
     click: function() {
       generatedFiles[this.download] = blobMap.get(this.href) || '';
     }

@@ -177,11 +177,11 @@ assert(typeof downloader.downloadOfficialLetterhead === 'function', 'downloadOff
 
 // 8. Test downloadOfficialLetterhead generated output
 let testLetterHtml = '';
-globalThis.Blob = class { constructor([c]) { testLetterHtml = c; } };
+globalThis.Blob = class { constructor(parts) { testLetterHtml = parts.join(''); } };
 globalThis.URL = { createObjectURL: () => 'blob:mock', revokeObjectURL: () => {} };
 globalThis.document = {
   body: { appendChild: () => {}, removeChild: () => {} },
-  createElement: () => ({ set href(v){}, set download(v){}, click(){} })
+  createElement: () => ({ set href(v){}, set download(v){}, setAttribute(){}, click(){} })
 };
 downloader.downloadOfficialLetterhead();
 
