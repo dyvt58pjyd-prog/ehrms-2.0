@@ -132,6 +132,18 @@ export function renderDocumentVault(container) {
       downloadFn: () => DL.downloadServiceCertificate(user)
     },
     {
+      id: 'DOC-NCB-DEP-2026',
+      name: 'NCB Deputation & Posting Order (Assistant Director, NCB HQ Delhi)',
+      category: 'Military & Orders',
+      date: '20-Nov-2026',
+      verified: true,
+      issuer: 'Ministry of Home Affairs / Narcotics Control Bureau (NCB HQ)',
+      docNo: 'No. I-12014/18/2026-Ad.I/NCB',
+      icon: '🛡️',
+      description: 'Official MHA / NCB Secretariat Office Order transferring Shri Anurag Anil Bawaskar (Emp ID: 41028104) on deputation from DRDO, Ministry of Defence to NCB Headquarters, New Delhi as Assistant Director w.e.f. 20 November 2026.',
+      downloadFn: () => DL.downloadNcbDeputationLetter(user, store.get().ncbDeputationOrder || {})
+    },
+    {
       id: 'DOC-POSTING-2026',
       name: 'Gazette Transfer & Posting Order (DRDO Pune)',
       category: 'Military & Orders',
@@ -953,6 +965,32 @@ export function renderDocumentVault(container) {
       container.querySelector('#btn-bat-vault-print')?.addEventListener('click', () => {
         DL.printCsdBatteryClaimSuccessCertificate(user);
       });
+      viewerModal.style.display = 'flex';
+      return;
+    }
+
+    if (doc.id === 'DOC-NCB-DEP-2026') {
+      const dep = store.get().ncbDeputationOrder || {};
+      container.querySelector('#modal-doc-body').innerHTML = `
+        <div style="background: #172554; color: white; padding: 12px 18px; border-radius: 6px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">🛡️</span>
+            <div>
+              <strong style="font-size: 13.5px; letter-spacing: 0.3px;">Narcotics Control Bureau (NCB HQ) Deputation Order</strong>
+              <div style="font-size: 11px; opacity: 0.9; margin-top: 1px;">Assistant Director, NCB HQ Delhi &bull; w.e.f. 20 November 2026</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-ncb-vault-download" style="background: #ffffff; color: #172554; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">⬇️ Download Order</button>
+            <button id="btn-ncb-vault-print" style="background: #b91c1c; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">🖨️ Print Order</button>
+          </div>
+        </div>
+        <iframe id="doc-ncb-dep-iframe" style="width: 100%; height: 640px; border: 1px solid #cbd5e1; border-radius: 6px; background: #e5e7eb;" title="NCB Deputation Office Order"></iframe>
+      `;
+      const iframe = container.querySelector('#doc-ncb-dep-iframe');
+      if (iframe) iframe.srcdoc = DL.generateNcbDeputationLetterHtml(user, dep);
+      container.querySelector('#btn-ncb-vault-download')?.addEventListener('click', () => DL.downloadNcbDeputationLetter(user, dep));
+      container.querySelector('#btn-ncb-vault-print')?.addEventListener('click', () => DL.printNcbDeputationLetter(user, dep));
       viewerModal.style.display = 'flex';
       return;
     }

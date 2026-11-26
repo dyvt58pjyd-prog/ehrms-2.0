@@ -5,7 +5,7 @@
  */
 
 import { store, OFFICIAL_PERSONAS } from '../state.js';
-import { downloadSpecialOperationOrder, downloadTransferOrder } from '../downloader.js';
+import { downloadSpecialOperationOrder, downloadTransferOrder, downloadNcbDeputationLetter } from '../downloader.js';
 
 export function renderDashboard(container) {
   const state = store.get();
@@ -870,10 +870,10 @@ function renderCircularsCard(state) {
       <div class="gov-card-body">
         <div class="notice-list">
           ${topCirculars.map(cir => `
-            <div class="notice-item ${cir.isNew ? 'new-notice' : ''}" style="${cir.isSpecialOperation ? 'background: #fff1f2; border-left: 4px solid #dc2626;' : (cir.isTransferOrder ? 'background: #f0fdf4; border-left: 4px solid #16a34a;' : '')}">
+            <div class="notice-item ${cir.isNew ? 'new-notice' : ''}" style="${cir.isSpecialOperation ? 'background: #fff1f2; border-left: 4px solid #dc2626;' : (cir.isNcbDeputation ? 'background: #eff6ff; border-left: 4px solid #1e3a8a;' : (cir.isTransferOrder ? 'background: #f0fdf4; border-left: 4px solid #16a34a;' : ''))}">
               <div class="notice-info">
-                <div class="notice-title" style="${cir.isSpecialOperation ? 'color: #991b1b; font-weight: 700;' : (cir.isTransferOrder ? 'color: #166534; font-weight: 700;' : '')}">
-                  ${cir.isSpecialOperation ? '<span style="background: #dc2626; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; margin-right: 4px;">TOP SECRET</span>' : (cir.isTransferOrder ? '<span style="background: #16a34a; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; margin-right: 4px;">GAZETTE ORDER</span>' : (cir.isNew ? '<span style="color: #dc2626; font-size: 10px; font-weight: 800; margin-right: 4px;">[NEW]</span>' : ''))}
+                <div class="notice-title" style="${cir.isSpecialOperation ? 'color: #991b1b; font-weight: 700;' : (cir.isNcbDeputation ? 'color: #1e3a8a; font-weight: 700;' : (cir.isTransferOrder ? 'color: #166534; font-weight: 700;' : ''))}">
+                  ${cir.isSpecialOperation ? '<span style="background: #dc2626; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; margin-right: 4px;">TOP SECRET</span>' : (cir.isNcbDeputation ? '<span style="background: #1e3a8a; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; margin-right: 4px;">NCB DEPUTATION</span>' : (cir.isTransferOrder ? '<span style="background: #16a34a; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; margin-right: 4px;">GAZETTE ORDER</span>' : (cir.isNew ? '<span style="color: #dc2626; font-size: 10px; font-weight: 800; margin-right: 4px;">[NEW]</span>' : '')))}
                   ${cir.title}
                 </div>
                 ${cir.subject ? `<div style="font-size: 11px; color: #334155; margin-top: 3px; line-height: 1.45;">${cir.subject}</div>` : ''}
@@ -884,13 +884,17 @@ function renderCircularsCard(state) {
                   <button class="btn btn-sm btn-danger" style="background: #dc2626; color: white; border: none; font-size: 11px; padding: 3px 8px; font-weight: 700;" id="btn-view-special-order-cir">👁️ View</button>
                   <button class="btn btn-sm btn-primary" style="font-size: 11px; padding: 3px 8px; font-weight: 700;" id="btn-download-special-order-cir">📥 PDF</button>
                 </div>
+              ` : (cir.isNcbDeputation ? `
+                <div style="display: flex; gap: 4px; flex-shrink: 0; align-self: flex-start; margin-top: 4px;">
+                  <button class="btn btn-sm btn-primary" style="background: #1e3a8a; border-color: #1e3a8a; font-size: 11px; padding: 4px 10px; font-weight: 700;" id="btn-download-ncb-dep-cir">📥 NCB Order</button>
+                </div>
               ` : (cir.isTransferOrder ? `
                 <div style="display: flex; gap: 4px; flex-shrink: 0; align-self: flex-start; margin-top: 4px;">
                   <button class="btn btn-sm btn-primary" style="background: #16a34a; border-color: #15803d; font-size: 11px; padding: 4px 10px; font-weight: 700;" id="btn-download-transfer-cir">📥 Transfer Order</button>
                 </div>
               ` : `
                 <button class="btn btn-sm btn-outline" style="flex-shrink: 0; align-self: flex-start; margin-top: 4px;" onclick="alert('Viewing Office Memorandum ${cir.id}:\\n\\nSubject: ${cir.subject}\\nDocument: ${cir.file}')">PDF</button>
-              `)}
+              `))}
             </div>
           `).join('')}
         </div>
@@ -1170,11 +1174,13 @@ function attachDashboardEvents(container, state) {
   const dlBannerBtn = container.querySelector('#btn-download-special-order-banner');
   const dlCirBtn = container.querySelector('#btn-download-special-order-cir');
   const dlModalBtn = container.querySelector('#btn-download-special-order-modal');
+  const dlNcbDepBtn = container.querySelector('#btn-download-ncb-dep-cir');
   const dlTransferBtn = container.querySelector('#btn-download-transfer-cir');
 
   if (dlBannerBtn) dlBannerBtn.addEventListener('click', triggerDownloadAction);
   if (dlCirBtn) dlCirBtn.addEventListener('click', triggerDownloadAction);
   if (dlModalBtn) dlModalBtn.addEventListener('click', triggerDownloadAction);
+  if (dlNcbDepBtn) dlNcbDepBtn.addEventListener('click', () => downloadNcbDeputationLetter(user, state.ncbDeputationOrder || {}));
   if (dlTransferBtn) dlTransferBtn.addEventListener('click', () => downloadTransferOrder(user));
 
   // Initialize Dashboard Analytics Charts if Admin Role is active

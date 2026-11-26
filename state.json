@@ -605,6 +605,15 @@
       },
       {
         "to": "Present",
+        "dept": "Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs, R.K. Puram, New Delhi",
+        "from": "2026-11-20",
+        "post": "Assistant Director",
+        "orderNo": "No. I-12014/18/2026-Ad.I/NCB",
+        "remarks": "Transferred on Deputation Basis from DRDO, Ministry of Defence to NCB HQ Delhi as Assistant Director w.e.f. 20 November 2026",
+        "payLevel": "Level 7"
+      },
+      {
+        "to": "2026-11-19",
         "dept": "Defence Research & Development Organisation (DRDO), Dighi, Pune",
         "from": "2026-09-08",
         "post": "Additional Section Officer - I",
@@ -869,6 +878,20 @@
     "govtCgegisContribution": 84
   },
   "circulars": [
+    {
+      "id": "No. I-12014/18/2026-Ad.I/NCB",
+      "date": "20-11-2026",
+      "file": "NCB_Deputation_Order_Assistant_Director_41028104_20Nov2026.html",
+      "isNew": true,
+      "title": "Deputation & Posting Order: Shri Anurag Anil Bawaskar transferred from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), New Delhi as Assistant Director",
+      "subject": "Office Order No. I-12014/18/2026-Ad.I/NCB: Appointment on Deputation Basis of Shri Anurag Anil Bawaskar (Emp ID: 41028104) from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), R.K. Puram, New Delhi as Assistant Director (Group 'A' Gazetted) w.e.f. 20 November 2026 (Forenoon).",
+      "category": "Postings & Transfers",
+      "authority": "Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs",
+      "downloadType": "ncbDeputationOrder",
+      "classification": "OFFICIAL GAZETTE",
+      "isTransferOrder": true,
+      "isNcbDeputation": true
+    },
     {
       "id": "MHA/CIS/2026/89",
       "date": "28-09-2026",
@@ -2932,5 +2955,23 @@
       "nodalOfficer": "Shri Rajender Singh, DS (Estt)",
       "resolutionNotes": "CGHS cards verified and handed over. Records updated in Sub-Book 3."
     }
-  ]
+  ],
+  "ncbDeputationOrder": {
+    "orderNo": "No. I-12014/18/2026-Ad.I/NCB",
+    "orderDate": "20th November, 2026",
+    "effectiveDateDot": "20.11.2026",
+    "endTenureDot": "19.11.2029",
+    "signDateShort": "20/11/26",
+    "parentDept": "DRDO, Ministry of Defence",
+    "parentDeptFull": "Defence Research & Development Organisation (DRDO), Ministry of Defence",
+    "doptOrderNo": "DoP&T/MHA Approval Order No. 6/18/2026-EO(MM-I)/IS-II dated 12.11.2026",
+    "relOrderRef": "MoD/DRDO/Estt./Rel-2026/8104 dated 19.11.2026",
+    "postTitle": "Assistant Director",
+    "postingStation": "Narcotics Control Bureau (NCB HQ), New Delhi",
+    "officeAddress": "West Block No. 1, Wing No. 5, R.K. Puram, New Delhi-110066",
+    "tenureYears": "three years",
+    "signingOfficer": "R. K. Verma",
+    "signingDesignation": "Deputy Director (Admn.) / Under Secretary to the Govt. of India",
+    "signingTele": "011-26761000"
+  }
 }

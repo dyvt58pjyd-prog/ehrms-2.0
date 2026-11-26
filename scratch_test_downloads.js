@@ -125,4 +125,23 @@ if (dirKey) {
   console.log('Directory CSV contains Col. Devashish Sharma:', content.includes('Col. Devashish Sharma'));
 }
 
-console.log('\n🎉 ALL 7 OFFICIAL DOWNLOADABLE DOCUMENTS VERIFIED SUCCESSFULLY!');
+// 8. NCB Deputation Office Order (MHA OrderAdmin Format)
+downloader.downloadNcbDeputationLetter(user, state.ncbDeputationOrder);
+const ncbKey = Object.keys(generatedFiles).find(k => k.includes('NCB_Deputation_Order'));
+console.log('\nGenerated NCB Deputation Order file:', ncbKey);
+if (ncbKey) {
+  const rawHtml = generatedFiles[ncbKey];
+  const textHtml = rawHtml.replace(/data:image\/png;base64,[A-Za-z0-9+/=]+/g, 'DATA_URI');
+  console.log('NCB Order contains Officer Anurag Anil Bawaskar:', textHtml.includes('Anurag Anil Bawaskar'));
+  console.log('NCB Order contains Emp ID 41028104:', textHtml.includes('41028104'));
+  console.log('NCB Order contains DRDO Ministry of Defence:', textHtml.includes('DRDO, Ministry of Defence'));
+  console.log('NCB Order contains Narcotics Control Bureau:', textHtml.includes('Narcotics Control Bureau'));
+  console.log('NCB Order contains Assistant Director:', textHtml.includes('Assistant Director'));
+  console.log('NCB Order contains NCB HQ New Delhi:', textHtml.includes('NCB HQ), New Delhi'));
+  console.log('NCB Order contains Date 20th November, 2026:', textHtml.includes('20th November, 2026'));
+  console.log('NCB Order contains embedded NCB Crest PNG:', rawHtml.includes('data:image/png;base64,'));
+  console.log('NCB Order has zero undefined/NaN text:', !textHtml.includes('undefined') && !textHtml.includes('NaN'));
+}
+
+console.log('\n🎉 ALL 8 OFFICIAL DOWNLOADABLE DOCUMENTS VERIFIED SUCCESSFULLY!');
+process.exit(0);

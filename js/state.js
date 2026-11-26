@@ -373,11 +373,29 @@ const INITIAL_DATA = {
         remarks: 'Strategic Threat Intelligence Analysis, Cabinet Briefings & National Security Operations'
       },
       {
+        post: 'Assistant Director',
+        dept: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs, R.K. Puram, New Delhi',
+        payLevel: 'Level 7',
+        from: '2026-11-20',
+        to: 'Present',
+        orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+        remarks: 'Transferred on Deputation Basis from DRDO, Ministry of Defence to NCB HQ Delhi as Assistant Director w.e.f. 20 November 2026'
+      },
+      {
+        post: 'Assistant Director',
+        dept: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs, R.K. Puram, New Delhi',
+        payLevel: 'Level 7',
+        from: '2026-11-20',
+        to: 'Present',
+        orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+        remarks: 'Transferred on Deputation Basis from DRDO, Ministry of Defence to NCB HQ Delhi as Assistant Director w.e.f. 20 November 2026'
+      },
+      {
         post: 'Additional Section Officer - I',
         dept: 'Defence Research & Development Organisation (DRDO), Dighi, Pune',
         payLevel: 'Level 7',
         from: '2026-09-08',
-        to: 'Present',
+        to: '2026-11-19',
         orderNo: 'MoD/DRDO/Estt/2026/102',
         remarks: 'Transferred from Rashtrapati Bhawan, New Delhi. Joint Staff Coordination & Defence Cyber Infrastructure'
       },
@@ -669,6 +687,20 @@ const INITIAL_DATA = {
   // Official Office Memorandums (OMs) & Gazette Circulars
   circulars: [
     {
+      id: 'No. I-12014/18/2026-Ad.I/NCB',
+      date: '20-11-2026',
+      title: 'Deputation & Posting Order: Shri Anurag Anil Bawaskar transferred from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), New Delhi as Assistant Director',
+      subject: 'Office Order No. I-12014/18/2026-Ad.I/NCB: Appointment on Deputation Basis of Shri Anurag Anil Bawaskar (Emp ID: 41028104) from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), R.K. Puram, New Delhi as Assistant Director (Group \'A\' Gazetted) w.e.f. 20 November 2026 (Forenoon).',
+      category: 'Postings & Transfers',
+      authority: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
+      file: 'NCB_Deputation_Order_Assistant_Director_41028104_20Nov2026.html',
+      classification: 'OFFICIAL GAZETTE',
+      isNew: true,
+      isTransferOrder: true,
+      isNcbDeputation: true,
+      downloadType: 'ncbDeputationOrder'
+    },
+    {
       id: 'MHA/CIS/2026/89',
       date: '28-09-2026',
       title: 'MHA Directive on Physical Security Audits & Biometric Access Control for Critical Installations',
@@ -713,6 +745,20 @@ const INITIAL_DATA = {
       isNew: true,
       isSpecialOperation: true,
       downloadType: 'specialOrder'
+    },
+    {
+      id: 'No. I-12014/18/2026-Ad.I/NCB',
+      date: '20-11-2026',
+      title: 'Deputation & Posting Order: Shri Anurag Anil Bawaskar transferred from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), New Delhi as Assistant Director',
+      subject: 'Office Order No. I-12014/18/2026-Ad.I/NCB: Appointment on Deputation Basis of Shri Anurag Anil Bawaskar (Emp ID: 41028104) from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), R.K. Puram, New Delhi as Assistant Director (Group \'A\' Gazetted) w.e.f. 20 November 2026 (Forenoon).',
+      category: 'Postings & Transfers',
+      authority: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
+      file: 'NCB_Deputation_Order_Assistant_Director_41028104_20Nov2026.html',
+      classification: 'OFFICIAL GAZETTE',
+      isNew: true,
+      isTransferOrder: true,
+      isNcbDeputation: true,
+      downloadType: 'ncbDeputationOrder'
     },
     {
       id: 'MoD/DRDO/TRF/2026/102',
@@ -942,7 +988,7 @@ const INITIAL_DATA = {
   ],
 
   // Notifications
-  
+
   // AEBAS (Biometric Attendance)
   aebasRecords: [
     { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
@@ -1017,7 +1063,45 @@ const INITIAL_DATA = {
     }
   },
 
-notifications: [
+  ncbDeputationOrder: {
+    orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+    orderDate: '20th November, 2026',
+    effectiveDateDot: '20.11.2026',
+    endTenureDot: '19.11.2029',
+    signDateShort: '20/11/26',
+    parentDept: 'DRDO, Ministry of Defence',
+    parentDeptFull: 'Defence Research & Development Organisation (DRDO), Ministry of Defence',
+    doptOrderNo: 'DoP&T/MHA Approval Order No. 6/18/2026-EO(MM-I)/IS-II dated 12.11.2026',
+    relOrderRef: 'MoD/DRDO/Estt./Rel-2026/8104 dated 19.11.2026',
+    postTitle: 'Assistant Director',
+    postingStation: 'Narcotics Control Bureau (NCB HQ), New Delhi',
+    officeAddress: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi-110066',
+    tenureYears: 'three years',
+    signingOfficer: 'R. K. Verma',
+    signingDesignation: 'Deputy Director (Admn.) / Under Secretary to the Govt. of India',
+    signingTele: '011-26761000'
+  },
+
+  ncbDeputationOrder: {
+    orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+    orderDate: '20th November, 2026',
+    effectiveDateDot: '20.11.2026',
+    endTenureDot: '19.11.2029',
+    signDateShort: '20/11/26',
+    parentDept: 'DRDO, Ministry of Defence',
+    parentDeptFull: 'Defence Research & Development Organisation (DRDO), Ministry of Defence',
+    doptOrderNo: 'DoP&T/MHA Approval Order No. 6/18/2026-EO(MM-I)/IS-II dated 12.11.2026',
+    relOrderRef: 'MoD/DRDO/Estt./Rel-2026/8104 dated 19.11.2026',
+    postTitle: 'Assistant Director',
+    postingStation: 'Narcotics Control Bureau (NCB HQ), New Delhi',
+    officeAddress: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi-110066',
+    tenureYears: 'three years',
+    signingOfficer: 'R. K. Verma',
+    signingDesignation: 'Deputy Director (Admn.) / Under Secretary to the Govt. of India',
+    signingTele: '011-26761000'
+  },
+
+  notifications: [
     { id: 99, title: '🚨 TOP SECRET: Special Operation Order Issued', message: 'MoD Order No. MoD/DoD/OPS-SPL/2026/8104-SEC issued for Special Operation effective 12-Sep-2026 until further orders. Detailed location classified; to be revealed in Apex Briefing on 12-Sep-2026 at South Block.', type: 'warning', timestamp: 'Just now' },
     { id: 1, title: 'Restricted Holiday Request', message: 'Restricted Holiday (RH) for 22-Sep-2026 is pending review with Shri Anil Kumar Chhapolia, Joint Secretary (Estt & Coord, DMA).', type: 'info', timestamp: '2 hours ago' },
     { id: 2, title: 'Casual Leave Sanctioned', message: 'CL for 15-16 Sep 2026 sanctioned by Shri Anil Kumar Chhapolia via Order MoD/DMA/Estt-I/LV/2026/412.', type: 'success', timestamp: 'Yesterday' },
@@ -1208,14 +1292,14 @@ notifications: [
         batchNo: 'BAT-2026/10-DEL',
         afdCategory: 'AFD-II (DURABLES)'
       },
-      { 
-        id: '245561', 
-        name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK', 
-        category: 'Electronics', 
-        hsn: '8517', 
-        stock: 25, 
-        price: 32999.00, 
-        marketPrice: 74999.00, 
+      {
+        id: '245561',
+        name: 'SAMSUNG GALAXY S24 5G (8/128GB) - ONYX BLACK',
+        category: 'Electronics',
+        hsn: '8517',
+        stock: 25,
+        price: 32999.00,
+        marketPrice: 74999.00,
         unit: 'Unit',
         color: 'Onyx Black',
         grade: 'Very Good (A)',
@@ -1228,14 +1312,14 @@ notifications: [
         serialNo: 'R58N90Y245561T',
         sku: '245561'
       },
-      { 
-        id: '99055412', 
-        name: 'SONY PLAYSTATION 5 CONSOLE', 
-        category: 'Electronics', 
-        hsn: '9504', 
-        stock: 5, 
-        price: 37900.00, 
-        marketPrice: 57999.00, 
+      {
+        id: '99055412',
+        name: 'SONY PLAYSTATION 5 CONSOLE',
+        category: 'Electronics',
+        hsn: '9504',
+        stock: 5,
+        price: 37900.00,
+        marketPrice: 57999.00,
         unit: 'Unit',
         color: 'White',
         grade: 'Very Good (A)',
@@ -1248,14 +1332,14 @@ notifications: [
         serialNo: 'PS5-7X9P2M4K8W',
         sku: '99055412'
       },
-      { 
-        id: '233243', 
-        name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', 
-        category: 'Electronics', 
-        hsn: '8517', 
-        stock: 12, 
-        price: 54217.00, 
-        marketPrice: 80999.00, 
+      {
+        id: '233243',
+        name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW',
+        category: 'Electronics',
+        hsn: '8517',
+        stock: 12,
+        price: 54217.00,
+        marketPrice: 80999.00,
         unit: 'Unit',
         color: 'Silver Shadow',
         grade: 'Very Good (A)',
@@ -1455,13 +1539,13 @@ notifications: [
         paymentMode: 'HARD CURRENCY CASH ONLY (Tendered Exact ₹54,217.00 - Physical Cash Counter 01)',
         paymentType: 'CASH',
         items: [
-          { 
-            id: '233243', 
-            name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW', 
-            category: 'Electronics', 
-            hsn: '8517', 
-            qty: 1, 
-            price: 54217.00, 
+          {
+            id: '233243',
+            name: 'SAMSUNG GALAXY S25 5G (12/256GB) - SILVER SHADOW',
+            category: 'Electronics',
+            hsn: '8517',
+            qty: 1,
+            price: 54217.00,
             marketPrice: 80999.00,
             color: 'Silver Shadow',
             grade: 'Very Good (A)',
@@ -1844,7 +1928,7 @@ class StateManager {
           return;
         }
       }
-      
+
       let res = await fetch('/api/state?ts=' + Date.now(), { cache: 'no-store' }).catch(() => null);
       if (!res || !res.ok) {
         // Fallback for static GitHub Pages hosting
@@ -2018,8 +2102,8 @@ class StateManager {
                 d1.setDate(d1.getDate() + 2);
                 d2.setDate(d2.getDate() + 5);
                 t.appliedOn = todayIso;
-                t.startDate = `${d1.getFullYear()}-${String(d1.getMonth()+1).padStart(2, '0')}-${String(d1.getDate()).padStart(2, '0')}`;
-                t.endDate = `${d2.getFullYear()}-${String(d2.getMonth()+1).padStart(2, '0')}-${String(d2.getDate()).padStart(2, '0')}`;
+                t.startDate = `${d1.getFullYear()}-${String(d1.getMonth() + 1).padStart(2, '0')}-${String(d1.getDate()).padStart(2, '0')}`;
+                t.endDate = `${d2.getFullYear()}-${String(d2.getMonth() + 1).padStart(2, '0')}-${String(d2.getDate()).padStart(2, '0')}`;
               }
               return t;
             });
@@ -2055,7 +2139,7 @@ class StateManager {
       if (supabaseClient) {
         supabaseClient.from('ehrms_state').upsert({ id: 'global_state', data: this.data })
           .then(res => {
-             if (res.error) console.error("Supabase Sync Error (ensure 'ehrms_state' table exists with 'id' and 'data' columns):", res.error);
+            if (res.error) console.error("Supabase Sync Error (ensure 'ehrms_state' table exists with 'id' and 'data' columns):", res.error);
           });
       }
 

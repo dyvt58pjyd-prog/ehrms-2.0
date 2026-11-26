@@ -7,12 +7,14 @@ import { store } from '../state.js';
 import {
   downloadSpecialOperationOrder,
   downloadTransferOrder,
+  downloadNcbDeputationLetter,
   downloadSecurityClearanceCertificate,
   downloadCtgSanctionOrder,
   downloadSpecialDutyAllowanceOrder,
   downloadWarRoomPass,
   EMBLEM_BASE64,
   DRDO_LOGO_BASE64,
+  NCB_LOGO_BASE64,
   wrapGovDocument,
   generateESignature
 } from '../downloader.js';
@@ -304,6 +306,8 @@ export function renderOrdersCirculars(container) {
   function triggerDocumentDownload(orderId, downloadType) {
     if (downloadType === 'specialOrder' || orderId === 'MoD/DoD/OPS-SPL/2026/8104-SEC') {
       downloadSpecialOperationOrder(user, order);
+    } else if (downloadType === 'ncbDeputationOrder' || orderId === 'F. No. I-12014/18/2026-Estt.(NCB)/DEP-8104' || orderId === 'No. I-12014/18/2026-Ad.I/NCB') {
+      downloadNcbDeputationLetter(user, store.get().ncbDeputationOrder || {});
     } else if (downloadType === 'transferOrder' || orderId === 'MoD/DRDO/TRF/2026/102') {
       downloadTransferOrder(user);
     } else if (downloadType === 'securityClearance' || orderId === 'MoD/SEC-VET/2026/A-01') {
@@ -408,12 +412,12 @@ export function renderOrdersCirculars(container) {
     modalContentEl.innerHTML = `
       <div style="text-align: center; border-bottom: 2px solid #002B49; padding-bottom: 12px; margin-bottom: 16px;">
         <div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 8px;">
-          <img src="assets/emblem.png" alt="National Emblem" style="height: 58px; width: auto; object-fit: contain;">
+          <img src="${cir.isNcbDeputation ? 'assets/ncb_logo.png' : 'assets/emblem.png'}" alt="${cir.isNcbDeputation ? 'Narcotics Control Bureau Crest' : 'National Emblem'}" style="height: 58px; width: auto; object-fit: contain;">
         </div>
         <div style="font-size: 13px; font-weight: 800; color: #002B49; letter-spacing: 0.5px;">GOVERNMENT OF INDIA &bull; भारत सरकार</div>
-        <div style="font-size: 12px; font-weight: 700; color: #475569;">MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</div>
+        <div style="font-size: 12px; font-weight: 700; color: #475569;">${cir.isNcbDeputation ? 'MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय' : 'MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय'}</div>
         <div style="font-size: 11px; font-weight: 600; color: #006699;">${cir.authority.toUpperCase()}</div>
-        <div style="font-size: 10px; color: #64748b; margin-top: 2px;">CENTRAL SECRETARIAT / SOUTH BLOCK, NEW DELHI</div>
+        <div style="font-size: 10px; color: #64748b; margin-top: 2px;">${cir.isNcbDeputation ? 'WEST BLOCK NO. 1, WING NO. 5, R.K. PURAM, NEW DELHI - 110066' : 'CENTRAL SECRETARIAT / SOUTH BLOCK, NEW DELHI'}</div>
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">

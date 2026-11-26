@@ -410,6 +410,7 @@ class EhrmsApp {
         { title: 'ITR-V (Income Tax Return Verification)', route: 'salary', icon: '✅', type: 'Tax & Finance' },
         { title: 'Form 26AS (Tax Credit Statement)', route: 'service-book', icon: '📑', type: 'Tax & Finance' },
         { title: 'Official Government Service Certificate', route: 'service-book', icon: '📜', type: 'Service Record' },
+        { title: 'Narcotics Control Bureau (NCB) Deputation & Transfer Order (Assistant Director - NCB HQ Delhi)', route: 'deputation', icon: '🛡️', type: 'Orders & Directives' },
         { title: 'Gazette Transfer & Posting Order (DRDO Pune)', route: 'service-book', icon: '📋', type: 'Orders & Directives' },
         { title: 'Special Operations Directive Order (TOP SECRET)', route: 'dashboard', icon: '🎖️', type: 'Orders & Directives' },
         { title: 'CGHS Beneficiary Plastic Card & Medical Dossier', route: 'cghs', icon: '⚕️', type: 'Medical & Welfare' },
