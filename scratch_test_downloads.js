@@ -140,6 +140,8 @@ if (ncbKey) {
   console.log('NCB Order contains NCB HQ New Delhi:', textHtml.includes('NCB HQ), New Delhi'));
   console.log('NCB Order contains Date 20th November, 2026:', textHtml.includes('20th November, 2026'));
   console.log('NCB Order contains embedded NCB Crest PNG:', rawHtml.includes('data:image/png;base64,'));
+  console.log('NCB Order contains embedded Sign PNG:', typeof downloader.NCB_SIGN_BASE64 === 'string' && rawHtml.includes(downloader.NCB_SIGN_BASE64));
+  console.log('NCB Order uses Arial font:', rawHtml.includes('font-family: Arial,'));
   console.log('NCB Order has zero undefined/NaN text:', !textHtml.includes('undefined') && !textHtml.includes('NaN'));
 }
 
