@@ -81,8 +81,8 @@ const aparKey = Object.keys(generatedFiles).find(k => k.includes('APAR'));
 console.log('\nGenerated APAR Dossier file:', aparKey);
 if (aparKey) {
   const content = generatedFiles[aparKey];
-  console.log('APAR contains Shri Anil Kumar Chhapolia:', content.includes('Shri Anil Kumar Chhapolia'));
-  console.log('APAR contains Grading 9.6/10:', content.includes('9.6/10'));
+  console.log('APAR contains Col. Devashish Sharma:', content.includes('Col. Devashish Sharma'));
+  console.log('APAR contains Outstanding:', content.includes('Outstanding'));
 }
 
 // 4. IPR Acknowledgement
@@ -97,11 +97,11 @@ if (iprKey) {
 
 // 5. Leave Sanction Order
 downloader.downloadLeaveOrder(user, leave);
-const leaveKey = Object.keys(generatedFiles).find(k => k.includes('Leave_Order_'));
+const leaveKey = Object.keys(generatedFiles).find(k => k.includes('Leave_Sanction'));
 console.log('\nGenerated Leave Order file:', leaveKey);
 if (leaveKey) {
   const content = generatedFiles[leaveKey];
-  console.log('Leave Order contains NCB HQ:', content.includes('Narcotics Control Bureau'));
+  console.log('Leave Order contains leave ID:', content.includes(leave.id));
   console.log('Leave Order contains Reporting Officer:', content.includes(user.reportingOfficer.name));
 }
 
@@ -117,12 +117,12 @@ if (claimKey) {
 
 // 7. Directory CSV
 downloader.downloadDirectoryCsv(officers);
-const dirKey = Object.keys(generatedFiles).find(k => k.includes('NCB_HQ_Officers_Directory'));
+const dirKey = Object.keys(generatedFiles).find(k => k.includes('DMA_Officers_Directory'));
 console.log('\nGenerated Officers Directory CSV file:', dirKey);
 if (dirKey) {
   const content = generatedFiles[dirKey];
-  console.log('Directory CSV contains DG N. S. Raja Subramani:', content.includes('N. S. Raja Subramani'));
-  console.log('Directory CSV contains DDG Anil Kumar Chhapolia:', content.includes('Anil Kumar Chhapolia'));
+  console.log('Directory CSV contains CDS Anil Chauhan:', content.includes('General Anil Chauhan'));
+  console.log('Directory CSV contains Col. Devashish Sharma:', content.includes('Col. Devashish Sharma'));
 }
 
 // 8. NCB Deputation Office Order (MHA OrderAdmin Format)

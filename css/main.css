@@ -4,19 +4,19 @@
    ========================================================================== */
 
 :root {
-  /* Government of India • Ministry of Home Affairs / NCB Palette */
-  --goi-navy: #0e2252;
-  --goi-navy-dark: #091638;
-  --goi-navy-light: #1e3a8a;
-  --goi-blue: #1d4ed8;
-  --goi-blue-soft: #eff6ff;
+  /* Government of India Palette */
+  --goi-navy: #002b49;
+  --goi-navy-dark: #001a2c;
+  --goi-navy-light: #0d4269;
+  --goi-blue: #005691;
+  --goi-blue-soft: #e8f1f7;
   --goi-saffron: #ff9933;
-  --goi-saffron-dark: #b91c1c;
-  --goi-saffron-soft: #fef2f2;
+  --goi-saffron-dark: #e67e00;
+  --goi-saffron-soft: #fff3e6;
   --goi-green: #138808;
   --goi-green-dark: #0e6306;
   --goi-green-soft: #eaf6ea;
-  --goi-gold: #c9a23f;
+  --goi-gold: #d4af37;
   --goi-chakra-blue: #000080;
 
   /* Neutral Surface Colors */
@@ -214,12 +214,12 @@ body {
   border-color: var(--goi-saffron-dark);
 }
 
-/* Main Government Header (NCB • MHA) */
+/* Main Government Header */
 .main-header {
   background: var(--bg-surface);
-  border-bottom: 3px solid var(--goi-navy);
+  border-bottom: 2px solid var(--goi-navy);
   box-shadow: var(--shadow-sm);
-  padding: 10px 24px;
+  padding: 12px 24px;
 }
 
 .header-container {
@@ -234,24 +234,16 @@ body {
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   text-decoration: none;
 }
 
 .national-emblem {
-  width: 40px;
-  height: 64px;
+  width: 44px;
+  height: 70px;
   flex-shrink: 0;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
-}
-
-.ncb-crest-header {
-  height: 58px;
-  width: auto;
-  flex-shrink: 0;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(14, 34, 82, 0.16));
 }
 
 .brand-text {

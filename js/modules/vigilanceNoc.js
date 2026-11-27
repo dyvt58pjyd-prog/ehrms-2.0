@@ -17,7 +17,7 @@ export function renderVigilanceNoc(container) {
       appliedOn: '2026-08-10',
       status: 'CLEARED',
       cvcStatus: 'Verified (No Pending Enquiries)',
-      authority: 'Chief Vigilance Officer (CVO), MHA / NCB HQ'
+      authority: 'Chief Vigilance Officer, MoD'
     }
   ];
 

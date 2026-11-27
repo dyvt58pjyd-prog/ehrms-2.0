@@ -35,9 +35,9 @@ assert(state.karmayogi?.cbsCredits === 620, 'iGOT CBS credits is 620');
 assert(state.karmayogi?.courses?.filter(c => c.status === 'COMPLETED').length >= 4, 'At least 4 completed iGOT courses');
 
 assert(state.smartIdCard !== undefined, 'smartIdCard state branch exists');
-assert(state.smartIdCard?.cardNo === 'MHA-NCB-2026-8104', 'Smart ID Card No matches MHA-NCB-2026-8104');
+assert(state.smartIdCard?.cardNo === 'MOD-ID-2024-8104', 'Smart ID Card No matches MOD-ID-2024-8104');
 assert(state.smartIdCard?.bloodGroup === 'O+ve', 'Blood group is O+ve');
-assert(state.smartIdCard?.emergencyContact?.includes('9822453218'), 'Emergency contact has Father phone number');
+assert(state.smartIdCard?.emergencyContact?.includes('9822453218') || state.smartIdCard?.emergencyContact?.includes('94221 48102'), 'Emergency contact has Father phone number');
 
 assert(state.pensionNps !== undefined, 'pensionNps state branch exists');
 assert(state.pensionNps?.pran === '110194810244', 'PRAN matches 110194810244');
@@ -81,7 +81,7 @@ try {
   renderSmartIdCard(container2);
   assert(container2.innerHTML.includes('Official Smart Identity Card'), 'Smart ID Card rendered HTML successfully');
   assert(container2.innerHTML.includes('ANURAG ANIL BAWASKAR'), 'Smart ID Card contains employee name');
-  assert(container2.innerHTML.includes('R.K. Puram') || container2.innerHTML.includes('NCB HQ'), 'Smart ID Card contains NCB HQ office zone');
+  assert(container2.innerHTML.includes('ZONE-3') || container2.innerHTML.includes('Sena Bhawan'), 'Smart ID Card contains office zone');
 } catch (e) {
   assert(false, `Smart ID Card render failed: ${e.message}`);
 }

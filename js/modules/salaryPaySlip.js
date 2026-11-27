@@ -1,6 +1,6 @@
 /**
  * e-HRMS 2.0 - 7th CPC Salary & Monthly Pay Slip Module
- * PAO (NCB), Narcotics Control Bureau (NCB HQ) • Ministry of Home Affairs
+ * Department of Military Affairs, Ministry of Defence
  * Government of India
  */
 
@@ -113,26 +113,26 @@ export function renderSalaryPaySlip(container) {
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 10px;">
           <img src="assets/emblem.svg" alt="National Emblem of India" style="height: 64px; width: auto; object-fit: contain;">
           <div style="flex: 1; text-align: center;">
-            <div style="font-size: 17px; font-weight: 800; color: #0e2252; letter-spacing: 0.5px; line-height: 1.2;">
-              वेतन एवं लेखा कार्यालय (स्वापक नियंत्रण ब्यूरो)
+            <div style="font-size: 17px; font-weight: 800; color: #002B49; letter-spacing: 0.5px; line-height: 1.2;">
+              कार्यालय रक्षा लेखा महानियंत्रक
             </div>
-            <div style="font-size: 15.5px; font-weight: 800; color: #0e2252; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px; line-height: 1.2;">
-              Pay &amp; Accounts Office (NCB)
+            <div style="font-size: 15.5px; font-weight: 800; color: #002B49; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px; line-height: 1.2;">
+              Controller General of Defence Accounts
             </div>
             <div style="font-size: 13px; font-weight: 700; color: #1e3a8a; margin-top: 2px;">
-              गृह मंत्रालय, भारत सरकार / MINISTRY OF HOME AFFAIRS &bull; GOVERNMENT OF INDIA
+              रक्षा वित्त विभाग / DEPARTMENT OF DEFENCE FINANCE &bull; रक्षा मंत्रालय, भारत सरकार
             </div>
             <div style="font-size: 12px; font-weight: 700; color: #334155; margin-top: 1px;">
-              NARCOTICS CONTROL BUREAU (NCB HQ) &bull; HEADQUARTERS ESTABLISHMENT
+              MINISTRY OF DEFENCE &bull; DEPARTMENT OF MILITARY AFFAIRS (DMA)
             </div>
             <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-              पश्चिमी खंड-1, विंग-5, आर. के. पुरम, नई दिल्ली - 110066 &bull; West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066
+              उलान बटार मार्ग, पालम, दिल्ली छावनी - 110010 &bull; Ulan Batar Road, Palam, Delhi Cantt - 110010
             </div>
-            <div style="font-size: 11.5px; font-weight: 700; color: #0e2252; margin-top: 3px;">
-              DDO Code: <strong>${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> &bull; PAO Code: <strong>${user.disbursingOfficer?.paoCode || '021840'}</strong> (PAO (NCB), MHA) &bull; Controller Code: <strong>001</strong> (Pr. CCA, MHA)
+            <div style="font-size: 11.5px; font-weight: 700; color: #002B49; margin-top: 3px;">
+              DDO Code: <strong>${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> &bull; PAO Code: <strong>001488</strong> (MoD Secretariat / CGDA) &bull; Controller Code: <strong>073</strong> (CGDA Civil)
             </div>
           </div>
-          <img src="assets/ncb_logo.png" alt="NCB Official Crest" style="height: 60px; width: auto; object-fit: contain;">
+          <img src="assets/mod_logo.png" alt="MoD Logo" style="height: 60px; width: auto; object-fit: contain;">
         </div>
 
         <div style="background: #002B49; color: #ffffff; padding: 6px 14px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 12.5px; letter-spacing: 0.4px;">
@@ -162,10 +162,10 @@ export function renderSalaryPaySlip(container) {
         <div><strong>सीजीएचएस आईडी / CGHS Ben ID:</strong> <strong>${user.cghsBenId || 'CGHS/DEL/DMA/2444810'}</strong></div>
 
         <div><strong>संवितरण अधिकारी / DDO:</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> (${user.disbursingOfficer?.designation || 'Senior Accounts Officer / DDO'})</div>
-        <div><strong>डीडीओ कोड / DDO Code:</strong> <strong style="color: #0e2252;">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> &bull; PAO (NCB), MHA New Delhi</div>
+        <div><strong>डीडीओ कोड / DDO Code:</strong> <strong style="color: #002B49;">${user.disbursingOfficer?.ddoCode || user.ddoCode || '10501'}</strong> &bull; Dept of Defence Finance (CGDA)</div>
 
-        <div><strong>वेतन व लेखा कार्यालय / PAO:</strong> <strong>PAO Code: ${user.disbursingOfficer?.paoCode || '021840'}</strong> (${state.payroll?.accounting?.paoName || 'PAO (NCB), Ministry of Home Affairs, New Delhi'})</div>
-        <div><strong>ट्रेजरी लेखा शीर्ष / Budget Head:</strong> ${state.payroll?.accounting?.budgetHead || 'Major Head 2055 - Police (Narcotics Control Bureau) • Minor 001 • Obj Head 01'}</div>
+        <div><strong>वेतन व लेखा कार्यालय / PAO:</strong> <strong>PAO Code: 001488</strong> (PAO, MoD Secretariat / CGDA, South Block, New Delhi)</div>
+        <div><strong>ट्रेजरी लेखा शीर्ष / Budget Head:</strong> Major Head 2052 &bull; Minor 090 &bull; Sub Head 02 &bull; Obj Head 01</div>
 
         <div><strong>वेतन बैंक / Salary Bank &amp; Branch:</strong> ${user.bankDetails?.bankName || 'SBI'} &bull; ${user.bankDetails?.branch || 'DEFENCE BANKING BRANCH, AFS, BAREILLY'}</div>
         <div><strong>खाता संख्या / Account No &amp; Type:</strong> <strong>${user.bankDetails?.accountNo || '39189241534'}</strong> (${user.bankDetails?.accountType || 'Savings Bank - DSP'})</div>
@@ -379,7 +379,7 @@ export function renderSalaryPaySlip(container) {
       <!-- Government Treasury & PFMS Accounting Classification Audit Strip -->
       <div class="payslip-audit-strip" style="position: relative; z-index: 1;">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 6px; margin-bottom: 6px; font-weight: 600;">
-          <span>Treasury Classification: ${state.payroll?.accounting?.budgetHead || 'Major Head 2055 - Police (Narcotics Control Bureau) • Minor 001 • Sub Head 01 (PAO NCB, MHA) • Object Head 01 (Salaries)'}</span>
+          <span>Treasury Classification: Major Head 2052 (Secretariat-General Services) &bull; Minor Head 090 &bull; Sub Head 02 (CGDA / Defence Finance) &bull; Object Head 01 (Salaries)</span>
           <span id="audit-bill"></span>
         </div>
         <div style="display: flex; justify-content: space-between;">
@@ -416,10 +416,10 @@ export function renderSalaryPaySlip(container) {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 16px; font-size: 11.5px; color: #334155;">
-          <div><strong>Disbursing Authority:</strong> ${state.payroll?.accounting?.paoName || 'PAO (NCB), Ministry of Home Affairs, New Delhi'}</div>
-          <div><strong>Disbursing Office (DDO):</strong> <strong>${user.disbursingOfficer?.name || 'Shri Pradeep Kumar, SAO'}</strong> &bull; DDO Code: <strong>${user.disbursingOfficer?.ddoCode || '10501'}</strong></div>
-          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>${user.disbursingOfficer?.paoCode || '021840'}</strong> (PAO (NCB), MHA, New Delhi)</div>
-          <div><strong>Accounting Authority:</strong> Principal Chief Controller of Accounts (MHA), New Delhi</div>
+          <div><strong>Disbursing Authority:</strong> Controller General of Defence Accounts (CGDA)</div>
+          <div><strong>Disbursing Office (DDO):</strong> <strong>Shri Pradeep Kumar, SAO</strong> &bull; DDO Code: <strong>10501</strong></div>
+          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>001488</strong> (MoD Secretariat / CGDA, South Block, New Delhi)</div>
+          <div><strong>Accounting Authority:</strong> Defence Accounts Department (DAD), Ministry of Defence</div>
           <div><strong>Rule Reference:</strong> Rule 257 &amp; 288 of GFR 2017 &bull; Centralized e-Payroll Mandate</div>
           <div><strong>Legal Validity:</strong> Validated Electronic Document under Section 65B of Indian Evidence Act, 1872 / Section 63 of BSA 2023</div>
         </div>
@@ -487,8 +487,8 @@ export function renderSalaryPaySlip(container) {
     const lastDay = new Date(year, monthIndex + 1, 0).getDate();
     const pad = (n) => String(n).padStart(2, '0');
     
-    if(elAuditBill) elAuditBill.textContent = `Bill No: NCB/HQ/ESTT/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
-    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: PAO/MHA/NCB/${year}/0941 &bull; Voucher No: PAO-NCB-VR-${year}-08104 &bull; PFMS ID: PFMS-MHA-NCB-${year}-${shortMon}-8104 &bull; DDO Code: 10501 (PAO NCB, MHA New Delhi)`;
+    if(elAuditBill) elAuditBill.textContent = `Bill No: DMA/ESTT-I/SAL-${shortMon}-${year}/0412 (${lastDay}-${shortMon}-${year})`;
+    if(elAuditPfms) elAuditPfms.innerHTML = `Token No: PAO/MOD/DEL/${year}/0941 &bull; Voucher No: PAO-CGDA-VR-${year}-08104 &bull; PFMS ID: PFMS-DEF-CIV-${year}-${shortMon}-8104 &bull; DDO Code: 10501 (Dept of Defence Finance - CGDA)`;
     if(elAuditCred) elAuditCred.innerHTML = `Payment Advice / RBI UTR: <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${shortMon}-${year} 10:14 IST`;
 
     const elSysRef = container.querySelector('#sys-ref-code');

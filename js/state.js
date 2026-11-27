@@ -1,6 +1,6 @@
 /**
  * e-HRMS 2.0 Central Data Store & State Management
- * Government of India - Ministry of Home Affairs / Narcotics Control Bureau (NCB HQ)
+ * Government of India - Ministry of Defence / Department of Military Affairs
  */
 
 const STORAGE_KEY = 'ehrms_2_0_portal_state_v23';
@@ -18,27 +18,27 @@ const INITIAL_DATA = {
   currentUser: {
     empId: '41028104',
     pran: '110194810244',
-    gpfNpsNo: 'NPS/NCB/DEL/2026/0810',
+    gpfNpsNo: 'NPS/DMA/DEL/2024/0810',
     name: 'ANURAG ANIL BAWASKAR',
     hindiName: 'अनुराग अनिल बावस्कर',
     fatherName: 'Shri Anil Ramkrishna Bawaskar',
     motherName: 'Smt. Manisha Anil Bawaskar',
-    designation: 'ASSISTANT DIRECTOR',
-    hindiDesignation: 'सहायक निदेशक',
+    designation: 'ADDITIONAL SECTION OFFICER - I',
+    hindiDesignation: 'अपर अनुभाग अधिकारी - I',
     classification: "Central Civil Services - Group 'A' (Gazetted)",
     group: "Group 'A'",
     gazettedStatus: "Gazetted Officer (Class-I / Group 'A')",
-    serviceStatus: "Regular / On Deputation (Group 'A' Gazetted)",
-    cadre: 'Central Secretariat Service (CSS) / NCB Deputation Cadre (Ex-DRDO, MoD)',
-    ministry: 'Ministry of Home Affairs',
-    department: 'Narcotics Control Bureau (NCB HQ)',
-    office: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066',
+    serviceStatus: "Regular / Commissioned (Group 'A' Gazetted)",
+    cadre: 'Central Secretariat Service (CSS) / Defence Civil Services (DMA)',
+    ministry: 'Ministry of Defence',
+    department: 'Department of Military Affairs (DMA)',
+    office: 'South Block, New Delhi - 110011',
     payLevel: 'Level 7 (₹44,900 - ₹1,42,400)',
     currentBasicPay: 70000,
     cell: 'Cell 16',
     dob: '2001-12-08',
     dojGov: '2024-11-13',
-    dojCurrentPost: '2026-11-20',
+    dojCurrentPost: '2025-12-16',
     superannuationDate: '2061-12-31',
     email: 'anurag.bawaskar@gov.in',
     mobile: '+91 84599 62390',
@@ -50,124 +50,151 @@ const INITIAL_DATA = {
     gender: 'Male',
     homeState: 'Maharashtra',
     homeTown: 'Nashik',
-    cghsBenId: 'CGHS/DEL/MHA-NCB/2444810',
+    cghsBenId: 'CGHS/DEL/DMA/2444810',
     avatar: 'assets/avatar.svg',
 
     // Official Bank Particulars (PFMS Integrated)
     bankDetails: {
       accountNo: '39189241534',
       accountHolder: 'Anurag Anil Bawaskar',
-      accountType: 'Savings Account (Central Govt Salary Package)',
+      accountType: 'Savings Account (Defence Salary Package - DSP)',
       bankName: 'SBI (State Bank of India)',
       branch: 'DEFENCE BANKING BRANCH, AFS, BAREILLY',
       ifsc: 'SBIN0001818',
       micr: '243002018',
       branchCode: '01818',
-      pfmsSchemeCode: 'PFMS-MHA-NCB-2026',
+      pfmsSchemeCode: 'PFMS-DEF-CIV-2024',
       pfmsStatus: 'PFMS Mandate Active & Beneficiary Verified'
     },
 
-    // Authentic Hierarchy & Workflow Route in Narcotics Control Bureau (NCB HQ), MHA
+    // Authentic Hierarchy & Workflow Route in Department of Military Affairs
     controllingOfficer: {
-      name: 'Shri R. K. Verma',
-      designation: 'Deputy Director (Admn.) / Under Secretary',
-      department: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
-      email: 'dd-admn.ncb@nic.in',
-      empId: 'MHA-NCB-DD-204',
-      room: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi'
+      name: 'Shri Rajender Singh',
+      designation: 'Deputy Secretary (Establishment)',
+      department: 'Department of Military Affairs',
+      email: 'ds-estt.dma@gov.in',
+      empId: 'MOD-DMA-DS-204',
+      room: 'Room 106, Sena Bhawan, New Delhi'
     },
     reportingOfficer: {
       name: 'Shri Anil Kumar Chhapolia',
-      designation: 'Deputy Director General (Ops & Coordination)',
-      department: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
-      email: 'ddg-ops.ncb@nic.in',
-      empId: 'MHA-NCB-DDG-01',
-      room: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi'
+      designation: 'Joint Secretary (Establishment & Coordination)',
+      department: 'Department of Military Affairs',
+      email: 'ak.chhapolia@nic.in',
+      empId: 'MOD-DMA-JS-01',
+      room: 'Room 214, Sena Bhawan / South Block, New Delhi'
     },
     reviewingOfficer: {
-      name: 'Shri N. S. Raja Subramani',
-      designation: 'Director General, Narcotics Control Bureau (NCB HQ)',
-      department: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
-      email: 'dg.ncb@nic.in',
-      empId: 'MHA-NCB-DG-01',
-      room: 'Directorate General Chamber, West Block No. 1, R.K. Puram, New Delhi'
+      name: 'Lieutenant General N.S. Raja Subramani',
+      designation: 'Chief of Defence Staff & Secretary DMA',
+      department: 'Department of Military Affairs',
+      email: 'cds.dma@gov.in',
+      empId: 'MOD-DMA-CDS-01',
+      room: 'Room 199-C, South Block, New Delhi'
     },
     disbursingOfficer: {
       name: 'Shri Pradeep Kumar, SAO',
-      designation: 'Drawing & Disbursing Officer (DDO) • PAO (NCB), MHA',
-      department: 'Pay & Accounts Office (NCB), Ministry of Home Affairs',
+      designation: 'Drawing & Disbursing Officer (DDO)',
+      department: 'Department of Defence Finance (CGDA)',
       ddoCode: '10501',
-      paoCode: '021840',
-      email: 'pao-ncb.mha@gov.in',
-      empId: 'MHA-NCB-DDO-04',
-      room: 'PAO (NCB), Ministry of Home Affairs, New Delhi'
+      paoCode: '001488',
+      email: 'ddo-cgda.finance@gov.in',
+      empId: 'MOD-CGDA-DDO-04',
+      room: 'Defence Finance Wing, CGDA, New Delhi'
     }
   },
 
-  // Official Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs Officers Directory
+  // Genuine Department of Military Affairs (DMA) Officers Directory
   dmaOfficersDirectory: [
     {
-      name: 'Shri N. S. Raja Subramani',
-      designation: 'Director General (DG), Narcotics Control Bureau (NCB HQ)',
-      wing: 'Apex Enforcement Command, NDPS Policy & Executive Leadership (MHA)',
-      office: 'DG Secretariat, West Block No. 1, R.K. Puram, New Delhi',
-      email: 'dg-ncb@nic.in',
-      phone: '011-26761001',
-      roleType: 'Director General (CCA)'
+      name: 'General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM',
+      designation: 'Chief of Defence Staff (CDS) & Secretary, DMA',
+      wing: 'Apex Command & Executive Leadership',
+      office: 'Room 183-A, South Block, New Delhi',
+      email: 'cds.dma@gov.in',
+      phone: '011-23011800',
+      roleType: 'Secretary'
     },
     {
-      name: 'Shri Anil Kumar Chhapolia',
-      designation: 'Deputy Director General (Operations & Coordination), NCB HQ',
-      wing: 'Operations, Intelligence Coordination & Inter-Agency Task Forces',
-      office: 'Wing No. 5, West Block No. 1, R.K. Puram, New Delhi',
-      email: 'ddg-ops.ncb@nic.in',
-      phone: '011-26761120',
-      roleType: 'Deputy Director General (Reporting Auth)'
+      name: 'Vice Admiral Atul Anand, AVSM, VSM',
+      designation: 'Additional Secretary, DMA',
+      wing: 'Executive & Tri-Services Integration',
+      office: 'Room 185, South Block, New Delhi',
+      email: 'as-dma@gov.in',
+      phone: '011-23012111',
+      roleType: 'Additional Secretary'
     },
     {
-      name: 'Shri R. K. Verma',
-      designation: 'Deputy Director (Admn.) / Under Secretary, NCB HQ',
-      wing: 'Establishment-I, Deputation Appointments, Service Book & Secretarial Control',
-      office: 'Wing No. 5, West Block No. 1, R.K. Puram, New Delhi',
-      email: 'dd-admn.ncb@nic.in',
-      phone: '011-26761000',
-      roleType: 'Deputy Director (Admn.)'
-    },
-    {
-      name: 'Shri Rajender Singh',
-      designation: 'Deputy Director (Vigilance & Establishment Scrutiny), NCB HQ',
-      wing: 'Establishment Scrutiny, Rule Verification & Vigilance Clearance',
-      office: 'Wing No. 5, West Block No. 1, R.K. Puram, New Delhi',
-      email: 'dd-vig.ncb@nic.in',
-      phone: '011-26761215',
-      roleType: 'Branch Controlling Officer (Scrutiny)'
+      name: 'Lieutenant General N.S. Raja Subramani',
+      designation: 'Chief of Defence Staff & Secretary DMA',
+      wing: 'Civil Establishment, Cadre Administration & Inter-Ministerial Coord',
+      office: 'Room 199-C, South Block, New Delhi',
+      email: 'cds.dma@gov.in',
+      phone: '011-23013890',
+      roleType: 'Joint Secretary (Cadre Admin)'
     },
     {
       name: 'Shri Kumar Ravi Kant Singh, IAS',
-      designation: 'Joint Secretary (IS-II / NCB Cadre), Ministry of Home Affairs',
-      wing: 'Internal Security-II Division, Narcotics Policy & Parliamentary Coordination',
-      office: 'North Block, Central Secretariat, New Delhi',
+      designation: 'Joint Secretary (Works & Parliament)',
+      wing: 'Defence Works, Infrastructure & Parliamentary Business',
+      office: 'Room 189-B, South Block, New Delhi',
       email: 'krk.singh@ias.nic.in',
-      phone: '011-23094120',
-      roleType: 'Joint Secretary (MHA IS-II)'
+      phone: '011-23014120',
+      roleType: 'Joint Secretary'
+    },
+    {
+      name: 'Maj Gen G. S. Choudhry',
+      designation: 'Joint Secretary (Army & Territorial Army)',
+      wing: 'Indian Army Affairs & Territorial Army Administration',
+      office: 'Room 188-A, South Block, New Delhi',
+      email: 'js-army.dma@gov.in',
+      phone: '011-23012980',
+      roleType: 'Joint Secretary'
+    },
+    {
+      name: 'Rear Admiral Kunal Singh Rajkumar',
+      designation: 'Joint Secretary (Navy & Defence Staff)',
+      wing: 'Indian Navy Affairs & Joint Operations Staff',
+      office: 'Room 190, South Block, New Delhi',
+      email: 'js-navy.dma@gov.in',
+      phone: '011-23013440',
+      roleType: 'Joint Secretary'
+    },
+    {
+      name: 'Air Vice Marshal Vikram Gaur',
+      designation: 'Joint Secretary (Air & Staff Duties)',
+      wing: 'Indian Air Force Affairs & Strategic Staff Duties',
+      office: 'Room 192, South Block, New Delhi',
+      email: 'js-air.dma@gov.in',
+      phone: '011-23014550',
+      roleType: 'Joint Secretary'
+    },
+    {
+      name: 'Shri Anil Kumar Chhapolia',
+      designation: 'Joint Secretary (Establishment & Coordination)',
+      wing: 'Establishment-I, Civil-Military Staffing & Service Records',
+      office: 'Room 214, Sena Bhawan, New Delhi',
+      email: 'ak.chhapolia@nic.in',
+      phone: '011-23019812',
+      roleType: 'Director (Reporting Officer for ASO-I)'
+    },
+    {
+      name: 'Shri Rajender Singh',
+      designation: 'Deputy Secretary (Establishment)',
+      wing: 'Section Officer / ASO Cadre Management, Leaves & Scrutiny',
+      office: 'Room 106, Sena Bhawan, New Delhi',
+      email: 'ds-estt.dma@gov.in',
+      phone: '011-23015523',
+      roleType: 'Under Secretary (Branch Officer)'
     },
     {
       name: 'Shri Pradeep Kumar, SAO',
-      designation: 'Drawing & Disbursing Officer (DDO) & PAO (NCB)',
-      wing: 'Pay & Accounts Office (NCB), Ministry of Home Affairs - DDO: 10501 / PAO: 021840',
-      office: 'PAO (NCB), Ministry of Home Affairs, New Delhi',
-      email: 'pao-ncb.mha@gov.in',
-      phone: '011-26761390',
-      roleType: 'DDO & PAO (NCB, MHA)'
-    },
-    {
-      name: 'Shri Anurag Anil Bawaskar',
-      designation: 'Assistant Director, Narcotics Control Bureau (NCB HQ)',
-      wing: 'Operations & Intelligence Coordination (Deputation from DRDO, MoD w.e.f. 20.11.2026)',
-      office: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066',
-      email: 'anurag.bawaskar@gov.in',
-      phone: '+91 84599 62390',
-      roleType: 'Assistant Director (ESS)'
+      designation: 'Drawing & Disbursing Officer (DDO)',
+      wing: 'Department of Defence Finance (CGDA) - DDO Code: 10501',
+      office: 'Defence Finance Wing, CGDA, New Delhi',
+      email: 'ddo-cgda.finance@gov.in',
+      phone: '011-23017789',
+      roleType: 'DDO'
     }
   ],
 
@@ -344,6 +371,15 @@ const INITIAL_DATA = {
         to: '2025-12-15',
         orderNo: 'CabSec/MHA/Sec-Analyst/2025/104',
         remarks: 'Strategic Threat Intelligence Analysis, Cabinet Briefings & National Security Operations'
+      },
+      {
+        post: 'Assistant Director',
+        dept: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs, R.K. Puram, New Delhi',
+        payLevel: 'Level 7',
+        from: '2026-11-20',
+        to: 'Present',
+        orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+        remarks: 'Transferred on Deputation Basis from DRDO, Ministry of Defence to NCB HQ Delhi as Assistant Director w.e.f. 20 November 2026'
       },
       {
         post: 'Assistant Director',
@@ -631,19 +667,19 @@ const INITIAL_DATA = {
       tdsPaid: 18480
     },
     accounting: {
-      majorHead: '2055 - Police (Narcotics Control Bureau)',
-      minorHead: '115 - Criminal Investigation & Intelligence (NCB HQ)',
-      subHead: '04 - Narcotics Control Bureau (Ministry of Home Affairs)',
-      detailedHead: '04.00.01 - Salaries (7th CPC)',
-      billNo: 'NCB/HQ/ESTT/SAL-NOV-2026/0814',
-      billDate: '26-Nov-2026',
-      tokenNo: 'PAO/MHA/NCB/2026/1148',
-      tokenDate: '27-Nov-2026',
-      voucherNo: 'PAO-NCB-VR-2026-08104',
-      voucherDate: '30-Nov-2026',
-      ddoCode: '10501 (DDO, NCB HQ - Ministry of Home Affairs)',
-      paoCode: 'PAO (NCB), Ministry of Home Affairs, New Delhi (Code: 021840)',
-      pfmsSanctionId: 'PFMS-MHA-NCB-2026-NOV-8104',
+      majorHead: '2052 - Secretariat-General Services',
+      minorHead: '090 - Secretariat',
+      subHead: '02 - Department of Military Affairs',
+      detailedHead: '02.00.01 - Salaries (7th CPC)',
+      billNo: 'DMA/ESTT-I/SAL-AUG-2026/0412',
+      billDate: '28-Aug-2026',
+      tokenNo: 'PAO/MOD/DEL/2026/0941',
+      tokenDate: '29-Aug-2026',
+      voucherNo: 'PAO-DMA-VR-2026-08104',
+      voucherDate: '31-Aug-2026',
+      ddoCode: '10501 (Department of Defence Finance - CGDA)',
+      paoCode: '001488 (PAO, Ministry of Defence Secretariat / CGDA)',
+      pfmsSanctionId: 'PFMS-MOD-DMA-2026-AUG-8104',
       utr: 'SBIN0001818948102'
     }
   },
@@ -709,6 +745,20 @@ const INITIAL_DATA = {
       isNew: true,
       isSpecialOperation: true,
       downloadType: 'specialOrder'
+    },
+    {
+      id: 'No. I-12014/18/2026-Ad.I/NCB',
+      date: '20-11-2026',
+      title: 'Deputation & Posting Order: Shri Anurag Anil Bawaskar transferred from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), New Delhi as Assistant Director',
+      subject: 'Office Order No. I-12014/18/2026-Ad.I/NCB: Appointment on Deputation Basis of Shri Anurag Anil Bawaskar (Emp ID: 41028104) from DRDO, Ministry of Defence to Narcotics Control Bureau (NCB HQ), R.K. Puram, New Delhi as Assistant Director (Group \'A\' Gazetted) w.e.f. 20 November 2026 (Forenoon).',
+      category: 'Postings & Transfers',
+      authority: 'Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs',
+      file: 'NCB_Deputation_Order_Assistant_Director_41028104_20Nov2026.html',
+      classification: 'OFFICIAL GAZETTE',
+      isNew: true,
+      isTransferOrder: true,
+      isNcbDeputation: true,
+      downloadType: 'ncbDeputationOrder'
     },
     {
       id: 'MoD/DRDO/TRF/2026/102',
@@ -939,16 +989,9 @@ const INITIAL_DATA = {
 
   // Notifications
 
-  // AEBAS (Biometric Attendance - NCB HQ R.K. Puram & Prior Postings)
+  // AEBAS (Biometric Attendance)
   aebasRecords: [
-    { date: '2026-11-26', inTime: '09:02 AM', outTime: '--:--', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
-    { date: '2026-11-25', inTime: '08:56 AM', outTime: '06:10 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
-    { date: '2026-11-24', inTime: '08:59 AM', outTime: '06:04 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
-    { date: '2026-11-23', inTime: '09:05 AM', outTime: '05:55 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
-    { date: '2026-11-22', inTime: '--:--', outTime: '--:--', status: 'Sunday', location: '-' },
-    { date: '2026-11-21', inTime: '--:--', outTime: '--:--', status: 'Saturday', location: '-' },
-    { date: '2026-11-20', inTime: '09:30 AM', outTime: '06:15 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram (Deputation Joining)' },
-    { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'DRDO / Sena Bhawan Gate 2' },
+    { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
     { date: '2026-10-14', inTime: '08:55 AM', outTime: '05:48 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
     { date: '2026-10-13', inTime: '09:02 AM', outTime: '05:40 PM', status: 'Present', location: 'South Block Gate 4' },
     { date: '2026-10-12', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/501' },
@@ -958,13 +1001,21 @@ const INITIAL_DATA = {
     { date: '2026-10-08', inTime: '09:05 AM', outTime: '05:35 PM', status: 'Present', location: 'Sena Bhawan Gate 1' },
     { date: '2026-10-07', inTime: '09:12 AM', outTime: '05:30 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
     { date: '2026-10-06', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89' },
-    { date: '2026-10-05', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89' }
+    { date: '2026-10-05', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - Commuted)', location: 'CGHS Med Cert: MOD/DMA/ESTT-I/MED/2026/89' },
+    { date: '2026-09-23', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-22', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL/RH)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-21', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - EL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/412' },
+    { date: '2026-09-16', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412' },
+    { date: '2026-09-15', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MoD/DMA/Estt-I/LV/2026/412' },
+    { date: '2026-09-08', inTime: '08:55 AM', outTime: '05:40 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
+    { date: '2026-09-04', inTime: '09:15 AM', outTime: '05:30 PM', status: 'Late', location: 'Sena Bhawan Gate 1' },
+    { date: '2026-09-03', inTime: '08:50 AM', outTime: '06:05 PM', status: 'Present', location: 'Sena Bhawan Gate 2' }
   ],
   aebasStats: {
-    avgInTime: '08:59 AM',
-    avgOutTime: '06:01 PM',
-    lateDays: 0,
-    leavesTaken: 3,
+    avgInTime: '09:01 AM',
+    avgOutTime: '05:45 PM',
+    lateDays: 1,
+    leavesTaken: 9,
     totalWorkingDays: 22
   },
 
@@ -991,23 +1042,23 @@ const INITIAL_DATA = {
     entitlement: 'Eligible for Type-IV'
   },
 
-  // e-Office File Tracking System (FTS - NCB HQ, MHA)
+  // e-Office File Tracking System (FTS)
   eOfficeData: {
     inbox: [
-      { fileNo: 'No. I-12014/18/2026-Ad.I/NCB', subject: 'Assumption of Charge & Deputation Joining Report — Shri Anurag Anil Bawaskar, Assistant Director (NCB HQ)', from: 'Shri R. K. Verma, Deputy Director (Admn.), NCB HQ', date: '20-Nov-2026', type: 'File', priority: 'Immediate' },
-      { fileNo: 'MHA/NCB/PAO/2026/114', subject: 'Transmission of LPC & e-Service Book from DDO 10501 (DRDO MoD) to PAO (NCB), MHA New Delhi', from: 'PAO (NCB), Ministry of Home Affairs', date: '23-Nov-2026', type: 'File', priority: 'High' },
-      { fileNo: 'Receipt-NCB-2026-8104', subject: 'CGHS & NDPS Intelligence Cell Onboarding Circular', from: 'NCB HQ Dak & Registry Section', date: '21-Nov-2026', type: 'Receipt', priority: 'Normal' }
+      { fileNo: 'MoD/DMA/Proc/2026/89', subject: 'Procurement of High-Altitude Drones for Northern Command', from: 'Col. Amit Sharma, Director (Acq)', date: '08-Sep-2026', type: 'File', priority: 'Immediate' },
+      { fileNo: 'MoD/DMA/Pol/2026/12', subject: 'Agnipath Scheme: Review of Implementation Guidelines', from: 'Shri Rajender Singh, DS (Estt)', date: '07-Sep-2026', type: 'File', priority: 'High' },
+      { fileNo: 'Receipt-10492-2026', subject: 'Representation regarding Pay Fixation Anomaly', from: 'Sena Bhawan Dak Section', date: '08-Sep-2026', type: 'Receipt', priority: 'Normal' }
     ],
     sent: [
-      { fileNo: 'NCB/OPS/AD/2026/09', subject: 'Joining & Compliance Declaration u/s Official Secrets Act & NDPS Enforcement Code', to: 'Director General, NCB HQ, R.K. Puram', date: '20-Nov-2026', type: 'File' },
-      { fileNo: 'MoD/DRDO/Estt/2026/102', subject: 'Historical Relieving & Handover Note from DRDO, Ministry of Defence', to: 'DRDO HQ & DDO 10501', date: '19-Nov-2026', type: 'File' }
+      { fileNo: 'MoD/DMA/Estt/2026/41', subject: 'Posting & Transfer of Group A Gazetted Officers', to: 'Shri Rajender Singh, DS (Estt)', date: '06-Sep-2026', type: 'File' },
+      { fileNo: 'MoD/DMA/Trg/2026/08', subject: 'Nomination for National Defence College (NDC) Course', to: 'Gen. N.S. Raja Subramani, CDS', date: '01-Sep-2026', type: 'File' }
     ],
     activeFile: {
-      fileNo: 'No. I-12014/18/2026-Ad.I/NCB',
-      subject: 'Assumption of Charge & Deputation Joining Report — Shri Anurag Anil Bawaskar, Assistant Director (NCB HQ)',
+      fileNo: 'MoD/DMA/Proc/2026/89',
+      subject: 'Procurement of High-Altitude Drones for Northern Command',
       notes: [
-        { noteNo: 1, text: 'In pursuance of DoP&T / MHA approval and DRDO relieving order MoD/DRDO/Estt./Rel-2026/8104, Shri Anurag Anil Bawaskar reported at NCB HQ, R.K. Puram, New Delhi on 20.11.2026 (F.N.) as Assistant Director.', author: 'Shri R. K. Verma, Deputy Director (Admn.)', date: '20-Nov-2026 10:30 AM' },
-        { noteNo: 2, text: 'Payroll and Service Book migration initiated with PAO (NCB), Ministry of Home Affairs, New Delhi.', author: 'Shri Anil Kumar Chhapolia, DDG (Ops & Coord)', date: '21-Nov-2026 11:15 AM' }
+        { noteNo: 1, text: 'The proposal for procurement of 50 High-Altitude Drones has been received from Northern Command. The estimated cost is ₹120 Crores. Financial concurrence is required.', author: 'Col. Amit Sharma, Director (Acq)', date: '06-Sep-2026 10:15 AM' },
+        { noteNo: 2, text: 'File forwarded to ASO-I (DMA) for initial scrutiny and linking of relevant Financial Powers Rules.', author: 'Shri Rajender Singh, DS (Estt)', date: '07-Sep-2026 14:30 PM' }
       ]
     }
   },
@@ -1031,10 +1082,31 @@ const INITIAL_DATA = {
     signingTele: '011-26761000'
   },
 
+  ncbDeputationOrder: {
+    orderNo: 'No. I-12014/18/2026-Ad.I/NCB',
+    orderDate: '20th November, 2026',
+    effectiveDateDot: '20.11.2026',
+    endTenureDot: '19.11.2029',
+    signDateShort: '20/11/26',
+    parentDept: 'DRDO, Ministry of Defence',
+    parentDeptFull: 'Defence Research & Development Organisation (DRDO), Ministry of Defence',
+    doptOrderNo: 'DoP&T/MHA Approval Order No. 6/18/2026-EO(MM-I)/IS-II dated 12.11.2026',
+    relOrderRef: 'MoD/DRDO/Estt./Rel-2026/8104 dated 19.11.2026',
+    postTitle: 'Assistant Director',
+    postingStation: 'Narcotics Control Bureau (NCB HQ), New Delhi',
+    officeAddress: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi-110066',
+    tenureYears: 'three years',
+    signingOfficer: 'R. K. Verma',
+    signingDesignation: 'Deputy Director (Admn.) / Under Secretary to the Govt. of India',
+    signingTele: '011-26761000'
+  },
+
   notifications: [
-    { id: 101, title: '🛡️ NCB HQ Deputation Joining Confirmed', message: 'Order No. I-12014/18/2026-Ad.I/NCB issued: Appointed as Assistant Director at Narcotics Control Bureau (NCB HQ), New Delhi w.e.f. 20 November 2026.', type: 'success', timestamp: '20 Nov 2026' },
-    { id: 102, title: '💳 PAO (NCB) MHA Payroll Mapped', message: 'Salary & PRAN accounting transitioned to PAO (NCB), Ministry of Home Affairs, New Delhi (Net Pay: ₹1,18,232, SBI A/C 39189241534).', type: 'info', timestamp: '23 Nov 2026' },
-    { id: 99, title: '🚨 ARCHIVED: Special Operation Order (Parent Cadre)', message: 'MoD/DoD/OPS-SPL/2026/8104-SEC retained in archival compliance ledger.', type: 'warning', timestamp: '10 Sep 2026' }
+    { id: 99, title: '🚨 TOP SECRET: Special Operation Order Issued', message: 'MoD Order No. MoD/DoD/OPS-SPL/2026/8104-SEC issued for Special Operation effective 12-Sep-2026 until further orders. Detailed location classified; to be revealed in Apex Briefing on 12-Sep-2026 at South Block.', type: 'warning', timestamp: 'Just now' },
+    { id: 1, title: 'Restricted Holiday Request', message: 'Restricted Holiday (RH) for 22-Sep-2026 is pending review with Shri Anil Kumar Chhapolia, Joint Secretary (Estt & Coord, DMA).', type: 'info', timestamp: '2 hours ago' },
+    { id: 2, title: 'Casual Leave Sanctioned', message: 'CL for 15-16 Sep 2026 sanctioned by Shri Anil Kumar Chhapolia via Order MoD/DMA/Estt-I/LV/2026/412.', type: 'success', timestamp: 'Yesterday' },
+    { id: 3, title: 'Vigilance Clearance Verified', message: 'Top Secret Defence Security Vetting validated by Lieutenant General N.S. Raja Subramani, CDS.', type: 'success', timestamp: '3 days ago' },
+    { id: 4, title: 'Salary Disbursed', message: 'Pay Level 7 Cell 16 August 2026 salary credited (Net: ₹1,18,232) to SBI A/C 39189241534 (Defence Banking Branch, AFS Bareilly, IFSC: SBIN0001818).', type: 'success', timestamp: '31 Aug 2026' }
   ],
 
   // Mission Karmayogi (iGOT Capacity Building & Training)
@@ -1115,18 +1187,18 @@ const INITIAL_DATA = {
     ]
   },
 
-  // Official NCB HQ (MHA) Smart Identity Card & Security Access Pass
+  // Official MoD Smart Identity Card & Security Access Pass
   smartIdCard: {
-    cardNo: 'MHA-NCB-2026-8104',
-    securityAccessZone: 'ZONE-1 (NCB HQ R.K. PURAM & MHA NORTH BLOCK)',
-    accessClearance: 'Top Secret / NDPS Intelligence & Enforcement Operations',
-    issuedDate: '20-Nov-2026',
-    validUpto: '19-Nov-2029 (3 Yrs Deputation)',
-    issuingAuthority: 'Shri R. K. Verma, Deputy Director (Admn.), NCB HQ (MHA)',
+    cardNo: 'MOD-ID-2024-8104',
+    securityAccessZone: 'ZONE-3 (DRDO / RESEARCH FACILITIES)',
+    accessClearance: 'Top Secret / Sensitive Defence Documents',
+    issuedDate: '13-Nov-2024',
+    validUpto: '12-Nov-2029 (5 Years)',
+    issuingAuthority: 'Shri Anil Kumar Chhapolia, Joint Secretary (Establishment & Coordination), DMA',
     bloodGroup: 'O+ve',
-    emergencyContact: '+91 9822453218 (Shri Anil Ramkrishna Bawaskar, Father)',
-    smartChipUid: 'IND-MHA-NCB-8104',
-    rfidAccessId: 'NCB-WB1-RKP-08104'
+    emergencyContact: '+91 9822453218 (Shri Anil Ramkrishna Bawaskar, Father - RSI)',
+    smartChipUid: 'IND-MOD-7F89B241',
+    rfidAccessId: 'DMA-GATE-SOUTH-08104'
   },
 
   // Official CSD Canteen & Retail Billing System
@@ -1906,34 +1978,21 @@ class StateManager {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (parsed?.currentUser?.email === INITIAL_DATA.currentUser.email && parsed?.dmaOfficersDirectory) {
-          // Always ensure NCB HQ (MHA) posting, PAO (NCB), circulars, and service history stay synchronized
+          // Always ensure core official circulars, orders and Group A classification are refreshed
           parsed.specialOperationOrder = JSON.parse(JSON.stringify(INITIAL_DATA.specialOperationOrder));
-          parsed.ncbDeputationOrder = JSON.parse(JSON.stringify(INITIAL_DATA.ncbDeputationOrder));
           parsed.circulars = JSON.parse(JSON.stringify(INITIAL_DATA.circulars));
-          parsed.aebasRecords = JSON.parse(JSON.stringify(INITIAL_DATA.aebasRecords));
-          parsed.aebasStats = JSON.parse(JSON.stringify(INITIAL_DATA.aebasStats));
-          parsed.eOfficeData = JSON.parse(JSON.stringify(INITIAL_DATA.eOfficeData));
-          parsed.smartIdCard = JSON.parse(JSON.stringify(INITIAL_DATA.smartIdCard));
-          parsed.serviceBook = JSON.parse(JSON.stringify(INITIAL_DATA.serviceBook));
-          parsed.currentUser.designation = INITIAL_DATA.currentUser.designation;
-          parsed.currentUser.hindiDesignation = INITIAL_DATA.currentUser.hindiDesignation;
-          parsed.currentUser.cadre = INITIAL_DATA.currentUser.cadre;
-          parsed.currentUser.ministry = INITIAL_DATA.currentUser.ministry;
+          parsed.serviceHistory = JSON.parse(JSON.stringify(INITIAL_DATA.serviceHistory));
           parsed.currentUser.classification = INITIAL_DATA.currentUser.classification;
           parsed.currentUser.group = INITIAL_DATA.currentUser.group;
           parsed.currentUser.gazettedStatus = INITIAL_DATA.currentUser.gazettedStatus;
           parsed.currentUser.serviceStatus = INITIAL_DATA.currentUser.serviceStatus;
           parsed.currentUser.office = INITIAL_DATA.currentUser.office;
           parsed.currentUser.department = INITIAL_DATA.currentUser.department;
-          parsed.currentUser.cghsBenId = INITIAL_DATA.currentUser.cghsBenId;
-          parsed.currentUser.dojCurrentPost = INITIAL_DATA.currentUser.dojCurrentPost;
           parsed.currentUser.ddoCode = '10501';
-          parsed.currentUser.controllingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.controllingOfficer));
-          parsed.currentUser.reportingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.reportingOfficer));
-          parsed.currentUser.reviewingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.reviewingOfficer));
           parsed.currentUser.disbursingOfficer = JSON.parse(JSON.stringify(INITIAL_DATA.currentUser.disbursingOfficer));
           if (parsed.payroll && parsed.payroll.accounting) {
-            parsed.payroll.accounting = JSON.parse(JSON.stringify(INITIAL_DATA.payroll.accounting));
+            parsed.payroll.accounting.ddoCode = '10501 (Department of Defence Finance - CGDA)';
+            parsed.payroll.accounting.paoCode = '001488 (PAO, Ministry of Defence Secretariat / CGDA)';
           }
 
           // Ensure all features from INITIAL_DATA are merged if missing in stored state
@@ -2171,16 +2230,16 @@ export const OFFICIAL_PERSONAS = {
     id: 'EMPLOYEE',
     userId: 'anurag.bawaskar',
     password: 'Anurag@2026',
-    allowedIdentifiers: ['anurag.bawaskar', '8459962390', 'anurag.bawaskar@gov.in', 'ncb-hq-2026-8104', 'mod-dma-2024-8104', 'eyupb3666m'],
+    allowedIdentifiers: ['anurag.bawaskar', '8459962390', 'anurag.bawaskar@gov.in', 'mod-dma-2024-8104', 'eyupb3666m'],
     name: 'ANURAG ANIL BAWASKAR',
     hindiName: 'अनुराग अनिल बावस्कर',
-    designation: 'ASSISTANT DIRECTOR',
-    hindiDesignation: 'सहायक निदेशक (एनसीबी मुख्यालय)',
+    designation: 'ADDITIONAL SECTION OFFICER - I',
+    hindiDesignation: 'अपर अनुभाग अधिकारी - I',
     roleTitle: 'Employee Self Service (ESS)',
     classification: "Central Civil Services - Group 'A' (Gazetted)",
-    department: 'Narcotics Control Bureau (NCB HQ)',
-    ministry: 'Ministry of Home Affairs',
-    office: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066',
+    department: 'Department of Military Affairs',
+    ministry: 'Ministry of Defence',
+    office: 'Room 216, Sena Bhawan / South Block, New Delhi',
     email: 'anurag.bawaskar@gov.in',
     mobile: '8459962390',
     pan: 'EYUPB3666M',
@@ -2194,19 +2253,19 @@ export const OFFICIAL_PERSONAS = {
     id: 'APPROVER',
     userId: 'anil.chhapolia',
     password: 'Director@2026',
-    allowedIdentifiers: ['anil.chhapolia', '9811024012', 'ddg-ops.ncb@nic.in', 'ak.chhapolia@nic.in'],
+    allowedIdentifiers: ['anil.chhapolia', '9811024012', 'ak.chhapolia@nic.in', 'mod-dma-dir-2021', 'anil.chhapolia'],
     name: 'Shri Anil Kumar Chhapolia',
-    hindiName: 'श्री अनिल कुमार छपोलिया',
-    designation: 'Deputy Director General (Ops & Coordination)',
-    hindiDesignation: 'उप महानिदेशक (संचालन एवं समन्वय)',
+    hindiName: 'कर्नल देवाशीष शर्मा',
+    designation: 'Joint Secretary (Establishment & Coordination)',
+    hindiDesignation: 'निदेशक (स्थापना एवं संयुक्त स्टाफ)',
     roleTitle: 'Manager Self Service (MSS Reporting Officer)',
-    classification: 'Senior Enforcement Leadership / DDG, NCB HQ',
-    department: 'Narcotics Control Bureau (NCB HQ)',
-    ministry: 'Ministry of Home Affairs',
-    office: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi',
-    email: 'ddg-ops.ncb@nic.in',
+    classification: 'Armed Forces / Joint Secretary, DMA',
+    department: 'Department of Military Affairs',
+    ministry: 'Ministry of Defence',
+    office: 'Room 214, Sena Bhawan, New Delhi',
+    email: 'ak.chhapolia@nic.in',
     mobile: '9811024012',
-    empId: 'MHA-NCB-DDG-01',
+    empId: 'MOD-DMA-JS-01',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'approvals',
     badgeClass: 'badge-warning'
@@ -2215,19 +2274,19 @@ export const OFFICIAL_PERSONAS = {
     id: 'BRANCH_OFFICER',
     userId: 'manoj.sinha',
     password: 'Scrutiny@2026',
-    allowedIdentifiers: ['manoj.sinha', 'rk.verma', '9868133452', 'dd-admn.ncb@nic.in'],
+    allowedIdentifiers: ['manoj.sinha', '9868133452', 'ds-estt.dma@gov.in', 'mod-dma-us-108'],
     name: 'Shri Rajender Singh',
-    hindiName: 'श्री राजेंद्र सिंह',
-    designation: 'Deputy Director (Administration & Estt.)',
-    hindiDesignation: 'उप निदेशक (प्रशासन एवं स्थापना)',
+    hindiName: 'श्री मनोज कुमार सिन्हा',
+    designation: 'Deputy Secretary (Establishment)',
+    hindiDesignation: 'अवर सचिव (स्थापना-I)',
     roleTitle: 'Branch Controlling Officer (Scrutiny)',
     classification: "Central Secretariat Service - Group 'A' (Gazetted)",
-    department: 'Narcotics Control Bureau (NCB HQ)',
-    ministry: 'Ministry of Home Affairs',
-    office: 'West Block No. 1, Wing No. 5, R.K. Puram, New Delhi',
-    email: 'dd-admn.ncb@nic.in',
+    department: 'Department of Military Affairs',
+    ministry: 'Ministry of Defence',
+    office: 'Room 106, Sena Bhawan, New Delhi',
+    email: 'ds-estt.dma@gov.in',
     mobile: '9868133452',
-    empId: 'MHA-NCB-DD-204',
+    empId: 'MOD-DMA-DS-204',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'approvals',
     badgeClass: 'badge-info'
@@ -2236,21 +2295,21 @@ export const OFFICIAL_PERSONAS = {
     id: 'DDO',
     userId: 'ddo.10501',
     password: 'DDO@10501',
-    allowedIdentifiers: ['ddo.10501', '10501', 'pradeep.kumar', 'pao-ncb.mha@gov.in', '011-26761000'],
+    allowedIdentifiers: ['ddo.10501', '10501', 'pradeep.kumar', 'ddo-cgda.finance@gov.in', 'ddo-dma@gov.in', 'mod-cgda-ddo-04', 'mod-dma-ddo-04', '011-23017789', '01123017789'],
     name: 'Shri Pradeep Kumar, SAO',
     hindiName: 'श्री प्रदीप कुमार, व.ले.अ.',
-    designation: 'Drawing & Disbursing Officer (DDO) • PAO (NCB)',
-    hindiDesignation: 'आहरण एवं संवितरण अधिकारी (पीएओ एनसीबी, गृह मंत्रालय)',
-    roleTitle: 'DDO & PAO (NCB), Ministry of Home Affairs',
-    classification: 'Senior Accounts Officer • PAO (NCB), MHA New Delhi',
-    department: 'Pay & Accounts Office (NCB), Ministry of Home Affairs',
-    ministry: 'Ministry of Home Affairs',
-    office: 'PAO (NCB), West Block No. 1, R.K. Puram, New Delhi',
-    email: 'pao-ncb.mha@gov.in',
-    phone: '011-26761000',
+    designation: 'Drawing & Disbursing Officer (DDO)',
+    hindiDesignation: 'आहरण एवं संवितरण अधिकारी',
+    roleTitle: 'DDO (Department of Defence Finance - CGDA)',
+    classification: 'Senior Accounts Officer / Defence Accounts Department (CGDA)',
+    department: 'Department of Defence Finance (CGDA)',
+    ministry: 'Ministry of Defence',
+    office: 'Defence Finance Wing, CGDA, New Delhi',
+    email: 'ddo-cgda.finance@gov.in',
+    phone: '011-23017789',
     ddoCode: '10501',
-    paoCode: '021840',
-    empId: 'MHA-NCB-DDO-04',
+    paoCode: '001488',
+    empId: 'MOD-CGDA-DDO-04',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'salary',
     badgeClass: 'badge-clear'
@@ -2259,19 +2318,19 @@ export const OFFICIAL_PERSONAS = {
     id: 'ADMIN',
     userId: 'raja.subramani',
     password: 'Admin@2026',
-    allowedIdentifiers: ['raja.subramani', 'dg.ncb', '9810144901', 'dg.ncb@nic.in', 'admin'],
-    name: 'Shri N. S. Raja Subramani',
-    hindiName: 'श्री एन. एस. राजा सुब्रमणि',
-    designation: 'Director General, Narcotics Control Bureau (NCB HQ)',
-    hindiDesignation: 'महानिदेशक, स्वापक नियंत्रण ब्यूरो (गृह मंत्रालय)',
+    allowedIdentifiers: ['raja.subramani', '9810144901', 'cds.dma@gov.in', 'mod-dma-js-01', 'admin'],
+    name: 'Lieutenant General N.S. Raja Subramani',
+    hindiName: 'श्री अनिल कुमार छपोलिया',
+    designation: 'Chief of Defence Staff & Secretary DMA',
+    hindiDesignation: 'संयुक्त सचिव (स्थापना एवं समन्वय)',
     roleTitle: 'Cadre Controlling Authority (CCA)',
-    classification: 'Apex Head of Bureau / NCB HQ (IS-II Division)',
-    department: 'Narcotics Control Bureau (NCB HQ)',
-    ministry: 'Ministry of Home Affairs',
-    office: 'Directorate General Wing, West Block No. 1, R.K. Puram, New Delhi',
-    email: 'dg.ncb@nic.in',
+    classification: 'Joint Secretary / Senior Executive',
+    department: 'Department of Military Affairs',
+    ministry: 'Ministry of Defence',
+    office: 'Room 199-C, South Block, New Delhi',
+    email: 'cds.dma@gov.in',
     mobile: '9810144901',
-    empId: 'MHA-NCB-DG-01',
+    empId: 'MOD-DMA-CDS-01',
     avatar: 'assets/avatar.svg',
     defaultRoute: 'analytics',
     badgeClass: 'badge-primary'

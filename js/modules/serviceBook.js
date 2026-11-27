@@ -61,16 +61,15 @@ export function renderServiceBook(container) {
     <div class="esb-header-card">
       <div style="display: flex; align-items: center; gap: 14px;">
         <img src="assets/emblem.png" alt="State Emblem of India" style="width: 40px; height: 64px; flex-shrink: 0; object-fit: contain;">
-        <img src="assets/ncb_logo.png" alt="NCB Crest" style="height: 54px; width: auto; flex-shrink: 0; object-fit: contain;">
         <div>
           <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">
-            Government of India &bull; ${user.ministry || 'Ministry of Home Affairs'} &bull; Central Civil Services
+            Government of India &bull; Ministry of Defence &bull; Central Civil Services
           </div>
           <div style="font-size: 17px; font-weight: 800; color: var(--goi-navy); margin-top: 2px;">
             e-Service Book Record: ${user.name} (${user.empId})
           </div>
           <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 4px;">
-            Cadre: ${user.cadre} &bull; DDO: Drawing &amp; Disbursing Officer, ${user.department}
+            Cadre: ${user.cadre} &bull; DDO: Drawing & Disbursing Officer (DDO), ${user.department}
           </div>
         </div>
       </div>
@@ -418,9 +417,11 @@ export function renderServiceBook(container) {
               <div style="background: #eff6ff; border-left: 4px solid var(--goi-blue); padding: 12px 16px; border-radius: 4px; margin-bottom: 14px;">
                 <strong>Administrative Justification &amp; Rule Compliance:</strong><br>
                 Shri Anurag Anil Bawaskar was commissioned into Central Government service on <strong>13 November 2024</strong>. 
-                Pursuant to his inter-ministerial posting (MoD / DRDO) and subsequent <strong>Deputation to Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs</strong> as <strong>Assistant Director</strong> w.e.f. <strong>20 November 2026</strong> (Order No. I-12014/18/2026-Ad.I/NCB) under <strong>Fundamental Rule 22(I)(a)(1)</strong> read with <strong>DoPT OM No. 12/3/2009-Pay-I</strong> and 
-                <strong>Sanction Order No. MoD/DMA/Pay-Fix/2026/118 dated 25-06-2026</strong>, his basic pay has been fixed and protected at 
-                <strong>Level 7, Cell 16 (₹70,000)</strong> effective 01-July-2026 on foreign/deputation service parity under PAO (NCB), MHA New Delhi.
+                Pursuant to his inter-ministerial posting to the Department of Military Affairs (MoD) and under the provisions of 
+                <strong>Fundamental Rule 22(I)(a)(1)</strong> read with <strong>DoPT OM No. 12/3/2009-Pay-I</strong> and 
+                <strong>Presidential Sanction Order No. MoD/DMA/Pay-Fix/2026/118 dated 25-06-2026</strong>, his basic pay has been fixed at 
+                <strong>Level 7, Cell 16 (₹70,000)</strong> effective 01-July-2026. This protects his previous strategic emoluments drawn during his tenure as 
+                Chief Information Security Officer (MeitY) and Deputy Security Analyst (Cabinet Secretariat).
               </div>
               <div class="key-val-grid">
                 <div class="key-val-item">
@@ -433,7 +434,7 @@ export function renderServiceBook(container) {
                 </div>
                 <div class="key-val-item">
                   <span class="key-val-label">Net Take-Home Salary (Electronic Credit)</span>
-                  <span class="key-val-value" style="font-weight: 800; color: #166534;">₹${(state.payroll?.netSalary || 118232).toLocaleString('en-IN')} (PAO NCB, MHA &bull; SBI AFS Bareilly A/C 39189241534)</span>
+                  <span class="key-val-value" style="font-weight: 800; color: #166534;">₹${(state.payroll?.netSalary || 118232).toLocaleString('en-IN')} (Disbursed to SBI AFS Bareilly A/C 39189241534)</span>
                 </div>
                 <div class="key-val-item">
                   <span class="key-val-label">Next Annual Increment Date</span>
@@ -441,11 +442,11 @@ export function renderServiceBook(container) {
                 </div>
                 <div class="key-val-item">
                   <span class="key-val-label">Pay Fixation Vetting Authority</span>
-                  <span class="key-val-value">${user.controllingOfficer?.name || 'Shri R. K. Verma'}, ${user.controllingOfficer?.designation || 'Deputy Director (Admn.)'} &bull; ${user.controllingOfficer?.room || 'Room 204, West Block-1, R.K. Puram'}</span>
+                  <span class="key-val-value">${user.controllingOfficer.name}, DS (Estt) &bull; Room 106, Sena Bhawan</span>
                 </div>
                 <div class="key-val-item">
                   <span class="key-val-label">Pay Fixation Sanctioning Authority</span>
-                  <span class="key-val-value">${user.reviewingOfficer?.name || 'Shri N. S. Raja Subramani'}, ${user.reviewingOfficer?.designation || 'Director General, NCB'} &bull; ${user.reviewingOfficer?.room || 'DG Secretariat, West Block-1, NCB HQ'}</span>
+                  <span class="key-val-value">${user.reviewingOfficer.name}, JS (Estt &amp; Coord) &bull; Room 199-C, South Block</span>
                 </div>
               </div>
             </div>

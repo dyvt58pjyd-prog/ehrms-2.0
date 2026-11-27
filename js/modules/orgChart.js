@@ -138,15 +138,15 @@ export function renderOrgChart(container) {
     <div class="page-title-strip">
       <div class="page-title-left">
         <div class="breadcrumb">
-          <a href="#dashboard">e-HRMS 2.0</a> &rsaquo; <span class="current">NCB HQ Hierarchy</span>
+          <a href="#dashboard">e-HRMS 2.0</a> &rsaquo; <span class="current">Hierarchy</span>
         </div>
         <h1 class="page-heading">
-          🏢 NCB HQ Organizational Hierarchy (MHA)
-          <span class="page-heading-hi">/ स्वापक नियंत्रण ब्यूरो संगठनात्मक पदानुक्रम</span>
+          🏢 Dynamic Org Chart
+          <span class="page-heading-hi">/ संगठनात्मक पदानुक्रम</span>
         </h1>
       </div>
       <div class="page-actions">
-        <button class="btn btn-outline" onclick="alert('Exporting high-resolution NCB HQ PDF hierarchy chart...')">
+        <button class="btn btn-outline" onclick="alert('Exporting high-resolution PDF chart...')">
           📥 Download PDF Chart
         </button>
       </div>
@@ -157,50 +157,66 @@ export function renderOrgChart(container) {
       <div class="org-tree">
         <ul>
           <li>
-            <div class="org-node apex" onclick="alert('Director General, Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs')">
-              <img src="assets/ncb_logo.png" alt="NCB DG" style="object-fit:contain; background:#fff; padding:2px;">
-              <div class="name">Shri N. S. Raja Subramani</div>
-              <div class="title">Director General (DG), NCB HQ<br>Ministry of Home Affairs</div>
+            <div class="org-node apex" onclick="alert('Viewing profile of CDS & Secretary DMA')">
+              <img src="assets/avatar.svg" alt="CDS">
+              <div class="name">General Anil Chauhan</div>
+              <div class="title">Chief of Defence Staff &amp;<br>Secretary, DMA</div>
             </div>
             <ul>
               <li>
-                <div class="org-node" onclick="alert('Deputy Director General (Ops & Coord), NCB HQ')">
-                  <img src="assets/avatar.svg" alt="DDG">
-                  <div class="name">Shri Anil Kumar Chhapolia</div>
-                  <div class="title">Dy. Director General (Ops &amp; Coord)<br>NCB HQ, New Delhi</div>
-                  <div class="org-node-badge">Sanctioning Auth</div>
+                <div class="org-node" onclick="alert('Viewing profile of Additional Secretary')">
+                  <img src="assets/avatar.svg" alt="AS">
+                  <div class="name">Shri Shantanu</div>
+                  <div class="title">Additional Secretary (AS)</div>
                 </div>
                 <ul>
                   <li>
-                    <div class="org-node" onclick="alert('Deputy Director (Admn.), NCB HQ')">
-                      <img src="assets/avatar.svg" alt="DD">
-                      <div class="name">Shri R. K. Verma</div>
-                      <div class="title">Deputy Director (Admn.)<br>Under Secretary to Govt. of India</div>
-                      <div class="org-node-badge" style="background:#0284c7">Estt. Order Auth</div>
+                    <div class="org-node" onclick="alert('Viewing profile of JS Estt')">
+                      <img src="assets/avatar.svg" alt="JS">
+                      <div class="name">Shri A.K. Chhapolia</div>
+                      <div class="title">Joint Secretary (Estt)</div>
+                      <div class="org-node-badge">Sanctioning Auth</div>
                     </div>
                     <ul>
                       <li>
-                        <div class="org-node highlight" onclick="alert('Active Posting w.e.f. 20 Nov 2026: Assistant Director, NCB HQ New Delhi (Deputation from DRDO, MoD)')">
-                          <img src="assets/anurag_photo.jpg" alt="You">
-                          <div class="name">Shri Anurag Anil Bawaskar</div>
-                          <div class="title">Assistant Director (NCB HQ, Delhi)<br><span style="color:#b91c1c; font-weight:700;">Deputation w.e.f. 20-Nov-2026</span></div>
-                          <div class="org-node-badge" style="background:#16a34a">You</div>
+                        <div class="org-node" onclick="alert('Viewing profile of DS')">
+                          <img src="assets/avatar.svg" alt="DS">
+                          <div class="name">Shri Rajender Singh</div>
+                          <div class="title">Deputy Secretary (DS)</div>
+                          <div class="org-node-badge" style="background:#0284c7">Reporting Auth</div>
                         </div>
+                        <ul>
+                          <li>
+                            <div class="org-node highlight" onclick="alert('This is your current position in the hierarchy')">
+                              <img src="assets/avatar.svg" alt="You">
+                              <div class="name">Anurag A. Bawaskar</div>
+                              <div class="title">ASO-I (Establishment-I)</div>
+                              <div class="org-node-badge" style="background:#16a34a">You</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="org-node">
+                              <img src="assets/avatar.svg" alt="Peer">
+                              <div class="name">Shri Ramesh Kumar</div>
+                              <div class="title">Section Officer (SO)</div>
+                            </div>
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         <div class="org-node">
-                          <img src="assets/avatar.svg" alt="Peer">
-                          <div class="name">Shri Rajender Singh</div>
-                          <div class="title">Deputy Director (Admn. Scrutiny)<br>West Block-1, R.K. Puram</div>
+                          <img src="assets/avatar.svg" alt="Dir">
+                          <div class="name">Smt. Sunita Sharma</div>
+                          <div class="title">Director (Coordination)</div>
                         </div>
                       </li>
                     </ul>
                   </li>
                   <li>
                     <div class="org-node">
-                      <img src="assets/avatar.svg" alt="PAO">
-                      <div class="name">Shri Pradeep Kumar, SAO</div>
-                      <div class="title">DDO (10501) &amp; PAO (NCB)<br>Ministry of Home Affairs, New Delhi</div>
+                      <img src="assets/avatar.svg" alt="JS">
+                      <div class="name">Maj Gen R.K. Singh</div>
+                      <div class="title">Joint Secretary (Army)</div>
                     </div>
                   </li>
                 </ul>
