@@ -69,7 +69,7 @@ export function triggerDownload(filename, content, mimeType = 'text/html;charset
     if (a.style) a.style.display = 'none';
     a.href = url;
     a.download = filename;
-    a.setAttribute('download', filename);
+    if (typeof a.setAttribute === 'function') a.setAttribute('download', filename);
     a.target = '_blank';
     a.rel = 'noopener';
     document.body.appendChild(a);
@@ -825,14 +825,15 @@ export function downloadPaySlip(user, payroll, month) {
 
   const ddoCode = user.disbursingOfficer?.ddoCode || user.ddoCode || "10501";
   const ddoName = user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO";
-  const ddoDesig = user.disbursingOfficer?.designation || "Senior Accounts Officer / DDO";
-  const paoCode = user.disbursingOfficer?.paoCode || "001488";
+  const ddoDesig = user.disbursingOfficer?.designation || "Senior Accounts Officer / DDO (NCB HQ)";
+  const paoCode = user.disbursingOfficer?.paoCode || "021840";
+  const paoName = "PAO (NCB), Ministry of Home Affairs, New Delhi";
   const bankAcc = user.bankDetails?.accountNo || "39189241534";
   const bankName = user.bankDetails?.bankName || "State Bank of India";
   const bankBranch = user.bankDetails?.branch || "DEFENCE BANKING BRANCH, AFS, BAREILLY";
   const bankIfsc = user.bankDetails?.ifsc || "SBIN0001818";
   const bankMicr = user.bankDetails?.micr || "243002018";
-  const bankAccType = user.bankDetails?.accountType || "Savings Bank (Defence Salary Package - DSP)";
+  const bankAccType = user.bankDetails?.accountType || "Savings Bank (Salary Account - Verified)";
 
   const formatGovDate = (dStr) => {
     if (!dStr) return '';
@@ -1160,16 +1161,16 @@ export function downloadPaySlip(user, payroll, month) {
         <div class="ps-header-grid">
           <img src="${EMBLEM_BASE64}" class="ps-logo-emblem" alt="National Emblem of India">
           <div style="flex: 1;">
-            <div class="ps-title-hi">कार्यालय रक्षा लेखा महानियंत्रक</div>
-            <div class="ps-title-en">Controller General of Defence Accounts</div>
-            <div class="ps-sub-hi">रक्षा वित्त विभाग / DEPARTMENT OF DEFENCE FINANCE &bull; रक्षा मंत्रालय, भारत सरकार</div>
-            <div class="ps-sub-en">MINISTRY OF DEFENCE &bull; DEPARTMENT OF MILITARY AFFAIRS</div>
-            <div class="ps-sub-addr">उलान बटार मार्ग, पालम, दिल्ली छावनी - 110010 &bull; Ulan Batar Road, Palam, Delhi Cantt - 110010</div>
-            <div style="font-size: 8.5px; font-weight: 700; color: #002B49; margin-top: 1px;">
-              DDO Code: <strong>${ddoCode}</strong> &bull; PAO Code: <strong>${paoCode}</strong> (PAO, MoD Secretariat / CGDA) &bull; Controller Code: <strong>073</strong> (CGDA Civil)
+            <div class="ps-title-hi">वेतन एवं लेखा कार्यालय (स्वापक नियंत्रण ब्यूरो)</div>
+            <div class="ps-title-en">Pay &amp; Accounts Office (NCB)</div>
+            <div class="ps-sub-hi">स्वापक नियंत्रण ब्यूरो / NARCOTICS CONTROL BUREAU &bull; गृह मंत्रालय, भारत सरकार</div>
+            <div class="ps-sub-en">MINISTRY OF HOME AFFAIRS &bull; NCB HEADQUARTERS, NEW DELHI</div>
+            <div class="ps-sub-addr">पश्चिमी खंड-1, विंग-5, आर. के. पुरम, नई दिल्ली - 110066 &bull; West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066</div>
+            <div style="font-size: 8.5px; font-weight: 700; color: #0e2252; margin-top: 1px;">
+              DDO Code: <strong>${ddoCode}</strong> &bull; PAO Code: <strong>${paoCode}</strong> (${paoName}) &bull; Controller Code: <strong>001</strong> (Pr. CCA, MHA)
             </div>
           </div>
-          <img src="${MOD_LOGO_BASE64}" class="ps-logo-mod" alt="MoD Crest">
+          <img src="${NCB_LOGO_BASE64}" class="ps-logo-mod" alt="NCB Official Crest">
         </div>
       </div>
 
@@ -1188,9 +1189,9 @@ export function downloadPaySlip(user, payroll, month) {
         </tr>
         <tr>
           <td class="ps-label">पदनाम / Designation:</td>
-          <td class="ps-val"><strong>${user.designation}</strong> (${user.hindiDesignation || 'अपर अनुभाग अधिकारी - I'})</td>
+          <td class="ps-val"><strong>${user.designation}</strong> (${user.hindiDesignation || 'सहायक निदेशक'})</td>
           <td class="ps-label">संवर्ग व श्रेणी / Cadre &amp; Class:</td>
-          <td class="ps-val"><strong>${user.classification || "Group 'A' (Gazetted)"}</strong> &bull; CSS / DMA</td>
+          <td class="ps-val"><strong>${user.classification || "Group 'A' (Gazetted)"}</strong> &bull; MHA / NCB HQ</td>
         </tr>
         <tr>
           <td class="ps-label">वेतन स्तर / Pay Level:</td>
@@ -1206,21 +1207,21 @@ export function downloadPaySlip(user, payroll, month) {
         </tr>
         <tr>
           <td class="ps-label">जन्म तिथि / Date of Birth:</td>
-          <td class="ps-val">${formatGovDate(user.dob) || '08-Dec-2001 (08-12-2001)'}</td>
+          <td class="ps-val">${formatGovDate(user.dob) || '17-Oct-1998 (17-10-1998)'}</td>
           <td class="ps-label">कार्यग्रहण / Date of Joining:</td>
-          <td class="ps-val">${formatGovDate(user.dojGov) || '13-Nov-2024 (13-11-2024)'}</td>
+          <td class="ps-val">${formatGovDate(user.dojGov) || '13-Nov-2024'} (NCB HQ: ${formatGovDate(user.dojCurrentPost) || '20-Nov-2026'})</td>
         </tr>
         <tr>
           <td class="ps-label">अधिवर्षिता / Superannuation:</td>
-          <td class="ps-val">${formatGovDate(user.superannuationDate) || '31-Dec-2061 (31-12-2061)'}</td>
+          <td class="ps-val">${formatGovDate(user.superannuationDate) || '31-Oct-2058 (31-10-2058)'}</td>
           <td class="ps-label">सीजीएचएस / CGHS Ben ID:</td>
-          <td class="ps-val"><strong>${user.cghsBenId || 'CGHS/DEL/DMA/2444810'}</strong></td>
+          <td class="ps-val"><strong>${user.cghsBenId || 'CGHS/DEL/MHA-NCB/2444810'}</strong></td>
         </tr>
         <tr>
           <td class="ps-label">संवितरण अधिकारी / DDO:</td>
           <td class="ps-val"><strong>${ddoName}</strong> (${ddoDesig}) &bull; DDO: <strong>${ddoCode}</strong></td>
           <td class="ps-label">वेतन व लेखा कार्यालय / PAO:</td>
-          <td class="ps-val"><strong>001488</strong> &bull; PAO, MoD Secretariat / CGDA, South Block, New Delhi</td>
+          <td class="ps-val"><strong>${paoCode}</strong> &bull; ${paoName}</td>
         </tr>
         <tr>
           <td class="ps-label">वेतन बैंक / Salary Bank:</td>
@@ -1388,11 +1389,11 @@ export function downloadPaySlip(user, payroll, month) {
       <!-- Treasury Audit & Accounting Strip -->
       <div class="ps-audit-strip">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 2px; margin-bottom: 2px;">
-          <span><strong>Treasury Accounting Head:</strong> Major Head 2052 (Secretariat-General Services) &bull; Minor Head 090 (Secretariat) &bull; Sub Head 02 (DMA / Defence Finance) &bull; Detailed Head 02.00.01 (Salaries 7th CPC)</span>
-          <span><strong>Bill No:</strong> DMA/ESTT-I/SAL-${curShortMon}-${psYear}/0412 (${lastDay}-${curShortMon}-${psYear})</span>
+          <span><strong>Treasury Accounting Head:</strong> Major Head 2055 - Police (Narcotics Control Bureau) &bull; Minor Head 001 (Direction &amp; Admn) &bull; Sub Head 01 (NCB HQ) &bull; Detailed Head 01.00.01 (Salaries 7th CPC)</span>
+          <span><strong>Bill No:</strong> NCB/HQ/ESTT/SAL-${curShortMon}-${psYear}/0412 (${lastDay}-${curShortMon}-${psYear})</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span><strong>Token No:</strong> PAO/MOD/DEL/${psYear}/0941 &bull; <strong>Voucher No:</strong> PAO-CGDA-VR-${psYear}-08104 &bull; <strong>PFMS ID:</strong> PFMS-DEF-CIV-${psYear}-${curShortMon}-8104</span>
+          <span><strong>Token No:</strong> PAO/MHA/NCB/${psYear}/0941 &bull; <strong>Voucher No:</strong> PAO-NCB-VR-${psYear}-08104 &bull; <strong>PFMS ID:</strong> PFMS-MHA-NCB-${psYear}-${curShortMon}-8104</span>
           <span><strong>Payment Advice / RBI UTR:</strong> <strong>SBIN0001818948102</strong> &bull; Credited: ${lastDay}-${curShortMon}-${psYear} 10:14 IST</span>
         </div>
       </div>
@@ -1417,17 +1418,17 @@ export function downloadPaySlip(user, payroll, month) {
         </div>
 
         <div class="ps-gen-grid">
-          <div><strong>Disbursing Authority:</strong> Controller General of Defence Accounts (CGDA)</div>
+          <div><strong>Disbursing Authority:</strong> ${paoName}</div>
           <div><strong>Disbursing Office (DDO):</strong> ${ddoName} (DDO Code: <strong>${ddoCode}</strong>)</div>
-          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>${paoCode}</strong> (MoD Secretariat / CGDA)</div>
-          <div><strong>Accounting Standard:</strong> Defence Accounts Code (DAC 2025) &bull; Rule 257 &amp; 288 of GFR 2017</div>
+          <div><strong>Pay &amp; Accounts Office:</strong> PAO Code: <strong>${paoCode}</strong> (PAO (NCB), MHA New Delhi)</div>
+          <div><strong>Accounting Standard:</strong> Civil Accounts Manual (CAM) &bull; Rule 257 &amp; 288 of GFR 2017</div>
           <div><strong>Legal Admissibility:</strong> Valid Electronic Document under Section 65B of Indian Evidence Act, 1872 / Section 63 of BSA 2023</div>
-          <div><strong>System Reference:</strong> e-HRMS2.0/SAL/${psYear}/${curShortMon}/10501 &bull; Generated: ${lastDay}-${curShortMon}-${psYear}</div>
+          <div><strong>System Reference:</strong> e-HRMS2.0/NCB/SAL/${psYear}/${curShortMon}/10501 &bull; Generated: ${lastDay}-${curShortMon}-${psYear}</div>
         </div>
       </div>
 
       <div class="ps-footer-note">
-        Official Centralized Electronic Payroll Disbursement Document &bull; Ministry of Defence &bull; Department of Military Affairs &bull; Controller General of Defence Accounts (CGDA) &bull; Government of India
+        Official Centralized Electronic Payroll Disbursement Document &bull; Ministry of Home Affairs &bull; Narcotics Control Bureau (NCB HQ) &bull; PAO (NCB), New Delhi &bull; Government of India
       </div>
     </div>
   `;
@@ -1442,8 +1443,8 @@ export function downloadServiceBook(user, sb) {
     <div class="doc-header">
       <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
       <h2>GOVERNMENT OF INDIA &bull; भारत सरकार</h2>
-      <h3>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h3>
-      <h4>DEPARTMENT OF MILITARY AFFAIRS &bull; CENTRAL CIVIL SERVICES</h4>
+      <h3>MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय</h3>
+      <h4>NARCOTICS CONTROL BUREAU (NCB HQ) &bull; CENTRAL CIVIL SERVICES</h4>
       <div class="doc-title-strip">
         DIGITALLY CERTIFIED ELECTRONIC SERVICE BOOK (e-SB) DOSSIER
       </div>
@@ -1644,10 +1645,13 @@ export function downloadAparDossier(user, apar) {
   const cycles = Array.isArray(apar) ? apar : (apar?.cycles || []);
   const body = `
     <div class="doc-header">
-      <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
+      <div style="display:flex; justify-content:center; align-items:center; gap:14px;">
+        <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
+        <img src="${NCB_LOGO_BASE64}" style="height:54px; width:auto;" alt="NCB Crest">
+      </div>
       <h2>GOVERNMENT OF INDIA &bull; भारत सरकार</h2>
-      <h3>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h3>
-      <h4>DEPARTMENT OF MILITARY AFFAIRS &bull; SPARROW APAR DOSSIER</h4>
+      <h3>MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय</h3>
+      <h4>NARCOTICS CONTROL BUREAU (NCB HQ) &bull; SPARROW APAR DOSSIER</h4>
       <div class="doc-title-strip">
         OFFICIAL ANNUAL PERFORMANCE APPRAISAL DOSSIER &bull; CADRE: ${user.cadre}
       </div>
@@ -1688,7 +1692,7 @@ export function downloadAparDossier(user, apar) {
       </div>
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Reviewing Authority:</div>
-        ${generateAdobeDigitalSignature(user.reviewingOfficer.name, 'Reviewing Authority, DMA', "APAR Dossier Final Attestation", "New Delhi, India", "2026.06.12 14:15:48 +05'30'")}
+        ${generateAdobeDigitalSignature(user.reviewingOfficer.name, 'Reviewing Authority, NCB HQ (MHA)', "APAR Dossier Final Attestation", "New Delhi, India", "2026.06.12 14:15:48 +05'30'")}
       </div>
     </div>
   `;
@@ -1703,14 +1707,14 @@ export function downloadAparDossier(user, apar) {
 export function downloadIprAck(user, ipr) {
   const properties = Array.isArray(ipr) ? ipr : (ipr?.properties || []);
   const complianceYear = ipr?.complianceYear || '2025';
-  const ackNo = ipr?.ackNo || 'IPR-2025-MOD-8104';
+  const ackNo = ipr?.ackNo || 'IPR-2025-MHA-NCB-8104';
   const filedOn = ipr?.filedOn || '2026-01-14';
   const body = `
     <div class="doc-header">
       <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
       <h2>GOVERNMENT OF INDIA &bull; भारत सरकार</h2>
-      <h3>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h3>
-      <h4>DEPARTMENT OF MILITARY AFFAIRS &bull; VIGILANCE & ETHICS WING</h4>
+      <h3>MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय</h3>
+      <h4>NARCOTICS CONTROL BUREAU (NCB HQ) &bull; VIGILANCE &amp; ETHICS WING</h4>
       <div class="doc-title-strip">
         IMMOVABLE PROPERTY RETURN (IPR) FILING ACKNOWLEDGEMENT & RECEIPT
       </div>
@@ -1766,7 +1770,7 @@ export function downloadIprAck(user, ipr) {
       </div>
       <div>
         <div style="font-weight: 700; font-size: 10px; margin-bottom: 2px; color: #1e293b; text-align: right;">Central Vigilance Officer:</div>
-        ${generateAdobeDigitalSignature('Central Vigilance Officer (CVO)', 'Department of Military Affairs, MoD', "IPR Annual Compliance Verification", "New Delhi, India", "2026.02.04 15:20:33 +05'30'")}
+        ${generateAdobeDigitalSignature('Central Vigilance Officer (CVO)', 'Narcotics Control Bureau (MHA)', "IPR Annual Compliance Verification", "New Delhi, India", "2026.02.04 15:20:33 +05'30'")}
       </div>
     </div>
   `;
@@ -1789,9 +1793,9 @@ export function downloadLeaveOrder(user, app) {
   
   const approvedDate = app.approvedOn || todayIso;
 
-  const orderNo = app.sanctionOrderNo || app.sanctionOrder || 'MOD/DMA/ESTT-I/LV/2026/412';
+  const orderNo = app.sanctionOrderNo || app.sanctionOrder || 'MHA/NCB/ESTT-I/LV/2026/412';
   const reportingOfficerName = user.reportingOfficer ? user.reportingOfficer.name : 'Shri Anil Kumar Chhapolia';
-  const reportingOfficerDesig = user.reportingOfficer ? user.reportingOfficer.designation : 'Joint Secretary (Establishment & Coordination)';
+  const reportingOfficerDesig = user.reportingOfficer ? user.reportingOfficer.designation : 'Deputy Director General (Ops & Coord)';
 
   const formatDateFormal = (dateStr) => {
     const d = new Date(dateStr);
@@ -1875,13 +1879,13 @@ export function downloadLeaveOrder(user, app) {
       <div class="letterhead-center">
         No. ${orderNo}<br>
         Government of India<br>
-        Ministry of Defence<br>
-        Department of Military Affairs<br>
-        (Establishment-I Branch)
+        Ministry of Home Affairs<br>
+        Narcotics Control Bureau (NCB HQ)<br>
+        (Administration / Establishment-I)
       </div>
 
       <div class="letterhead-right">
-        Room No. 106, Sena Bhawan, New Delhi<br>
+        West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066<br>
         Dated: ${formatDateFormal(approvedDate)}
       </div>
 
@@ -1891,7 +1895,7 @@ export function downloadLeaveOrder(user, app) {
 
       <div class="order-body">
         <p style="text-indent: 50px; margin-bottom: 15px;">
-          In pursuance of the provisions contained in the Central Civil Services (Leave) Rules, 1972, as amended from time to time, sanction of the Competent Authority is hereby conveyed for the grant of <strong>${app.days} days of ${app.typeName}</strong> to <strong>Shri ${user.name}</strong>, ${user.designation} (Employee ID: ${user.empId}), Department of Military Affairs.
+          In pursuance of the provisions contained in the Central Civil Services (Leave) Rules, 1972, as amended from time to time, sanction of the Competent Authority is hereby conveyed for the grant of <strong>${app.days} days of ${app.typeName}</strong> to <strong>Shri ${user.name}</strong>, ${user.designation} (Employee ID: ${user.empId}), Narcotics Control Bureau (NCB HQ), New Delhi.
         </p>
         <p style="text-indent: 50px; margin-bottom: 15px;">
           The period of leave shall commence from <strong>${formatDateFormal(app.startDate)}</strong> to <strong>${formatDateFormal(app.endDate)}</strong> (inclusive of both days). 
@@ -1904,7 +1908,7 @@ export function downloadLeaveOrder(user, app) {
 
       <div style="display: flex; justify-content: flex-end; align-items: flex-end; margin-top: 30px;">
         <div style="text-align: right;">
-          <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Sanctioning Authority (DMA / MoD):</div>
+          <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Sanctioning Authority (NCB HQ / MHA):</div>
           ${(() => {
             let leaveSignDate = "2026.08.14 11:30:15 +05'30'";
             if (app.startDate) {
@@ -1918,7 +1922,7 @@ export function downloadLeaveOrder(user, app) {
           <div style="font-size: 9.5px; font-weight: bold; margin-top: 4px;">
             (${reportingOfficerName})<br>
             ${reportingOfficerDesig}<br>
-            For Chief of Defence Staff & Secretary, DMA
+            For Director General, Narcotics Control Bureau (NCB HQ)
           </div>
         </div>
       </div>
@@ -1941,10 +1945,13 @@ export function downloadClaimOrder(user, claim) {
 
   const body = `
     <div class="doc-header">
-      <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
+      <div style="display:flex; justify-content:center; align-items:center; gap:14px;">
+        <img src="${EMBLEM_BASE64}" class="doc-emblem" alt="Emblem">
+        <img src="${NCB_LOGO_BASE64}" style="height:54px; width:auto;" alt="NCB Crest">
+      </div>
       <h2>GOVERNMENT OF INDIA &bull; भारत सरकार</h2>
-      <h3>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h3>
-      <h4>DEPARTMENT OF MILITARY AFFAIRS &bull; CASH & ACCOUNTS BRANCH</h4>
+      <h3>MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय</h3>
+      <h4>NARCOTICS CONTROL BUREAU (NCB HQ) &bull; PAO (NCB) ACCOUNTS BRANCH</h4>
       <div class="doc-title-strip">
         CONTINGENT DISBURSEMENT BILL & SANCTION &bull; REF: ${claim.id}
       </div>
@@ -2007,7 +2014,7 @@ export function downloadClaimOrder(user, claim) {
 }
 
 /**
- * 7. Download DMA Officers Directory CSV
+ * 7. Download NCB HQ Officers Directory CSV
  */
 export function downloadDirectoryCsv(officers) {
   let csv = 'Name,Designation,Wing,Office Location,Gov Email,Role Type\n';
@@ -2022,7 +2029,7 @@ export function downloadDirectoryCsv(officers) {
     ].join(',');
     csv += row + '\n';
   });
-  triggerDownload('DMA_Officers_Directory_2026.csv', csv, 'text/csv;charset=utf-8;');
+  triggerDownload('NCB_HQ_Officers_Directory_2026.csv', csv, 'text/csv;charset=utf-8;');
 }
 
 /**
@@ -2055,7 +2062,7 @@ export function downloadKarmayogiCertificate(user, course) {
       
       <div style="font-size: 12.5px; color: #334155; margin-bottom: 18px;">
         ${user.designation} &bull; <strong>Group 'A' (Gazetted)</strong> &bull; Employee ID: <strong>${user.empId}</strong><br>
-        Department of Military Affairs, Ministry of Defence
+        ${user.department || 'Narcotics Control Bureau (NCB HQ)'}, ${user.ministry || 'Ministry of Home Affairs'}
       </div>
 
       <p style="font-size: 13px; color: #475569; line-height: 1.6; max-width: 650px; margin: 0 auto 16px auto;">
@@ -2097,28 +2104,29 @@ export function downloadKarmayogiCertificate(user, course) {
 }
 
 /**
- * 9. Download Ministry of Defence Smart ID Card (Print Ready HTML/PDF)
+ * 9. Download NCB HQ / Ministry of Home Affairs Smart ID Card (Print Ready HTML/PDF)
  */
 export function downloadSmartIdCard(user, card) {
   const body = `
     <div style="text-align: center; margin-bottom: 12px;">
-      <h3 style="margin: 0; color: #002B49;">GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE</h3>
-      <div style="font-size: 11px; color: #64748b;">Official Smart Identity Card & Security Access Pass &bull; South Block / Sena Bhawan</div>
+      <h3 style="margin: 0; color: #0e2252;">GOVERNMENT OF INDIA &bull; MINISTRY OF HOME AFFAIRS</h3>
+      <div style="font-size: 11px; color: #64748b;">Official Smart Identity Card &amp; Security Access Pass &bull; NCB HQ, West Block No. 1, R.K. Puram</div>
     </div>
 
     <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
       <!-- Front Badge -->
-      <div style="width: 320px; background: linear-gradient(145deg, #002B49, #083358); color: #ffffff; border-radius: 10px; padding: 16px; border: 2px solid #facc15; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative;">
+      <div style="width: 320px; background: linear-gradient(145deg, #091638, #102a63); color: #ffffff; border-radius: 10px; padding: 16px; border: 2px solid #c9a23f; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative;">
         <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);"></div>
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 6px;">
           <img src="${EMBLEM_BASE64}" style="height: 38px;" alt="Emblem">
+          <img src="${NCB_LOGO_BASE64}" style="height: 36px; background:#fff; border-radius:4px; padding:2px;" alt="NCB Crest">
           <div>
-            <div style="font-size: 9px; color: #fde047; font-weight: bold;">MINISTRY OF DEFENCE &bull; भारत सरकार</div>
-            <div style="font-size: 10.5px; font-weight: bold;">DEPARTMENT OF MILITARY AFFAIRS</div>
+            <div style="font-size: 9px; color: #fde047; font-weight: bold;">MINISTRY OF HOME AFFAIRS &bull; भारत सरकार</div>
+            <div style="font-size: 10px; font-weight: bold;">NARCOTICS CONTROL BUREAU (NCB HQ)</div>
           </div>
         </div>
         <div style="display: flex; gap: 12px; align-items: center;">
-          <div style="width: 75px; height: 90px; border: 2px solid #facc15; border-radius: 4px; background: #fff; overflow: hidden;">
+          <div style="width: 75px; height: 90px; border: 2px solid #c9a23f; border-radius: 4px; background: #fff; overflow: hidden;">
             <img src="${AVATAR_SVG_BASE64}" style="width: 100%; height: 100%;" alt="Officer">
           </div>
           <div style="font-size: 10.5px; line-height: 1.35;">
@@ -2127,33 +2135,34 @@ export function downloadSmartIdCard(user, card) {
             <div style="color: #93c5fd; font-weight: bold;">${user.designation}</div>
             <div style="font-size: 9px; color: #e2e8f0; margin-top: 4px;">
               ID: <strong>${user.empId}</strong><br>
-              Blood: <strong style="color: #ef4444;">${card.bloodGroup || 'O+ve'}</strong> &bull; Pay: ${user.payLevel}<br>
-              Zone: <strong>ZONE-1 CLEARANCE</strong>
+              Blood: <strong style="color: #ef4444;">${card.bloodGroup || 'B+ve'}</strong> &bull; Pay: ${user.payLevel}<br>
+              Zone: <strong>${card.securityAccessZone || 'NCB HQ LEVEL-1 ACCESS'}</strong>
             </div>
           </div>
         </div>
         <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 6px; display: flex; justify-content: space-between; font-size: 8.5px; color: #cbd5e1;">
           <span>CARD: ${card.cardNo}</span>
-          <span>VALID: 12-NOV-2029</span>
+          <span>VALID: 19-NOV-2029</span>
         </div>
       </div>
 
       <!-- Back Badge -->
-      <div style="width: 320px; background: #ffffff; color: #0f172a; border-radius: 10px; padding: 16px; border: 2px solid #002B49; box-shadow: 0 4px 10px rgba(0,0,0,0.15); font-size: 9.5px; line-height: 1.4;">
-        <div style="background: #1e293b; height: 20px; margin: -16px -16px 10px -16px; border-top-left-radius: 8px; border-top-right-radius: 8px;"></div>
+      <div style="width: 320px; background: #ffffff; color: #0f172a; border-radius: 10px; padding: 16px; border: 2px solid #0e2252; box-shadow: 0 4px 10px rgba(0,0,0,0.15); font-size: 9.5px; line-height: 1.4;">
+        <div style="background: #091638; height: 20px; margin: -16px -16px 10px -16px; border-top-left-radius: 8px; border-top-right-radius: 8px;"></div>
         <div><strong>Hometown / Address:</strong> Bawaskar Niwas, Ramdaspeth, Nashik (MH) - 440010</div>
         <div style="margin-top: 3px;"><strong>Emergency Contact:</strong> ${card.emergencyContact}</div>
         <div style="margin-top: 3px;"><strong>PAN / PRAN:</strong> ${user.pan} &bull; ${user.pran}</div>
-        <div style="margin-top: 3px;"><strong>DDO Code:</strong> ${user.ddoCode} (DMA, Sena Bhawan)</div>
+        <div style="margin-top: 3px;"><strong>DDO / PAO:</strong> DDO ${user.ddoCode || '10501'} &bull; PAO (NCB), MHA New Delhi (021840)</div>
         <div style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 6px; display: flex; justify-content: space-between; align-items: flex-end;">
           <div>
             <div style="font-family: monospace; letter-spacing: 2px; font-size: 14px; font-weight: bold;">|||| | |||||| |||</div>
             <div style="font-size: 8px; color: #64748b;">RFID: ${card.rfidAccessId}</div>
           </div>
           <div style="text-align: right; font-size: 8.5px;">
-            <strong>Shri Anil Kumar Chhapolia</strong><br>
-            Joint Secretary (Estt & Coord, DMA)<br>
-            <span style="color: #166534; font-weight: bold;">[DIGITALLY AUTHORISED]</span>
+            <img src="${NCB_SIGN_BASE64}" style="height:22px; display:block; margin-left:auto; margin-bottom:2px;" alt="Sign">
+            <strong>Shri R. K. Verma</strong><br>
+            Deputy Director (Admn.), NCB HQ<br>
+            <span style="color: #166534; font-weight: bold;">[AUTHORIZED SIGNATORY]</span>
           </div>
         </div>
       </div>
@@ -2202,9 +2211,9 @@ export function downloadPranStatement(user, payroll, pension) {
       </tr>
       <tr>
         <td class="meta-label">Ministry / Department</td>
-        <td class="meta-val">Department of Military Affairs, Ministry of Defence</td>
+        <td class="meta-val">${user.department || 'Narcotics Control Bureau (NCB HQ)'}, ${user.ministry || 'Ministry of Home Affairs'}</td>
         <td class="meta-label">DDO Code / PAO</td>
-        <td class="meta-val"><strong>${user.ddoCode}</strong> (DMA) / 001488 (MoD)</td>
+        <td class="meta-val"><strong>${user.ddoCode || '10501'}</strong> (NCB HQ) / ${user.disbursingOfficer?.paoCode || '021840'} (PAO NCB, MHA)</td>
       </tr>
       <tr>
         <td class="meta-label">PAN / Mobile</td>
@@ -5909,39 +5918,37 @@ export function downloadWarRoomPass(user, order) {
 
 /**
  * 19. Download Official Government Letterhead Document
- * Ministry of Defence - DRDO - Office of Anurag A. Bawaskar, ASO-I
+ * Ministry of Home Affairs - Narcotics Control Bureau (NCB HQ)
  */
 export function downloadOfficialLetterhead(user, letter) {
   if (!user) {
     user = {
-      name: 'Anurag A. Bawaskar',
-      fullName: 'ANURAG A. BAWASKAR',
-      hindiName: 'अनुराग अ. बावस्कर',
-      designation: 'ADDITIONAL SECTION OFFICER',
-      hindiDesignation: 'अपर अनुभाग अधिकारी',
+      name: 'Anurag Anil Bawaskar',
+      fullName: 'ANURAG ANIL BAWASKAR',
+      hindiName: 'अनुराग अनिल बावस्कर',
+      designation: 'ASSISTANT DIRECTOR',
+      hindiDesignation: 'सहायक निदेशक',
       email: 'anurag.bawaskar.6328@gov.in',
-      phone: '23092020, 23092443',
-      telefax: '23092546',
-      empId: 'MOD-DMA-2024-8104'
+      phone: '011-26761000, 26761142',
+      telefax: '011-26185240',
+      empId: '41028104'
     };
   }
 
   if (!letter) {
     letter = {
-      fileNo: 'MoD/DRDO/ASO-I/2026/F-8104',
-      date: '10-September-2026',
+      fileNo: 'No. I-12014/18/2026-Ad.I/NCB',
+      date: '20-November-2026',
       classification: 'DEMI-OFFICIAL (D.O.)',
-      recipient: `Dr. Chandrashekhar R. Vyas, Sc. \'H\' / Outstanding Scientist\nDirector, Armament Research & Development Establishment (ARDE)\nDefence Research & Development Organisation (DRDO), Dighi, Pune - 411015`,
-      subject: 'Operational Readiness of Secure Cryptographic Network & High-Performance Computing Laboratory at DRDO Dighi, Pune - Advance Intimation regarding Joining',
+      recipient: `Shri Anil Kumar Chhapolia\nDeputy Director General (Ops & Coordination)\nNarcotics Control Bureau (NCB HQ), Ministry of Home Affairs\nWest Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066`,
+      subject: 'Joining Report & Assumption of Charge as Assistant Director on Deputation at Narcotics Control Bureau (NCB HQ), New Delhi',
       salutation: 'Respected Sir,',
-      body: `<p>Kindly refer to Ministry of Defence Gazette Notification No. <code>MoD/DRDO/TRF/2026/102</code> dated 08-Sep-2026 and Special Operational Movement Directives under Operation VAJRA-SHAKTI.</p>
-<p>I have the honour to submit that pursuant to the comprehensive multi-agency security vetting and Level-1 Top Secret clearance accorded by the Directorate General of Defence Intelligence & Security (DIA), I have completed the formal handover protocols at the President\'s Secretariat / Cabinet Secretariat, Rashtrapati Bhavan, New Delhi.</p>
-<p>As per the orders of the Competent Authority, I shall be reporting to the Defence Research & Development Organisation (DRDO), Dighi, Pune formation on 14-September-2026 (Forenoon) to assume substantive charge as <strong>Chief Information Security Specialist / Additional Section Officer - I (Group \'A\' Gazetted Cadre)</strong>.</p>
-<p>The advance deployment manifest, encrypted hardware telemetry protocols, and requisite cryptographic authorizations have been transmitted through secure military WAN (SEC-MIL-NET-DEL-01). Requisite residential accommodation requisition under Type-V entitlement has also been initiated through the Estate Management Unit (EMU), DRDO Pashan Road, Pune.</p>
-<p>I assure you of my utmost dedication to the strategic mandate of the Armament and Combat Engineering Cluster and look forward to your valued guidance.</p>`,
+      body: `<p>Kindly refer to Ministry of Home Affairs / Narcotics Control Bureau Office Order No. <code>I-12014/18/2026-Ad.I/NCB</code> dated 20-Nov-2026 regarding my appointment on deputation from DRDO, Ministry of Defence to NCB Headquarters, New Delhi.</p>
+<p>I have the honour to submit that consequent upon being relieved from Defence Research &amp; Development Organisation (DRDO), Dighi, Pune on 19-November-2026 (AN), I have reported for duty at Narcotics Control Bureau (NCB HQ), R.K. Puram, New Delhi on 20-November-2026 (FN) and assumed substantive charge as <strong>Assistant Director (Group 'A' Gazetted, Level-7)</strong>.</p>
+<p>My digitized e-Service Book, Last Pay Certificate (LPC), and payroll particulars are submitted herewith for onboarding under <strong>PAO (NCB), Ministry of Home Affairs, New Delhi (Code: 021840)</strong> and DDO Code <code>10501</code>.</p>`,
       signOff: 'Yours sincerely,',
-      copyTo: '1. Office of the Chief of Defence Staff (CDS), South Block, New Delhi\n2. Joint Secretary (Estt & Personnel), Ministry of Defence, New Delhi\n3. Directorate of Cyber Security & Cryptography, DRDO Bhawan, New Delhi\n4. Personal File & Guard Register 2026',
-      crestStyle: 'golden',
+      copyTo: '1. PS to Director General, Narcotics Control Bureau (NCB HQ), New Delhi\n2. Deputy Director (Admn.), NCB HQ, West Block No. 1, New Delhi\n3. PAO (NCB), Ministry of Home Affairs, New Delhi\n4. Personal File & Guard Register 2026',
+      crestStyle: 'ncb',
       showWatermark: true,
       showBarcode: true
     };
@@ -5963,26 +5970,27 @@ export function downloadOfficialLetterhead(user, letter) {
 
   const barcodeHtml = letter.showBarcode !== false ? `
     <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #cbd5e1; margin-top: 28px; padding-top: 6px; font-size: 8.5px; color: #64748b;">
-      <div>Sec-Hash: <code>*MOD-DRDO-2026-F-8104-ALPHA*</code> &bull; Verified u/s 5 IT Act 2000</div>
+      <div>Sec-Hash: <code>*MHA-NCB-2026-I-12014-8104*</code> &bull; Verified u/s 5 IT Act 2000</div>
       <div>Official Communications Repository &bull; National Informatics Centre (NIC) &bull; Page 1 of 1</div>
     </div>
   ` : '';
 
   // Center crest rendering based on crestStyle
   let crestCenterHtml = '';
-  if (letter.crestStyle === 'dual') {
+  if (letter.crestStyle === 'dual' || letter.crestStyle === 'ncb') {
     crestCenterHtml = `
       <div style="width: 28%; text-align: center;">
-        <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin: 0 auto 3px;">
-          <img src="${EMBLEM_GOLD_BASE64 || EMBLEM_BASE64}" style="width: 44px; height: 68px; object-fit: contain; display: block;" alt="State Emblem of India">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 auto 3px;">
+          <img src="${EMBLEM_GOLD_BASE64 || EMBLEM_BASE64}" style="width: 42px; height: 64px; object-fit: contain; display: block;" alt="State Emblem of India">
+          <img src="${NCB_LOGO_BASE64}" style="height: 50px; width: auto; object-fit: contain; display: block;" alt="NCB Crest">
         </div>
-        <div style="font-size: 8.5px; font-weight: 800; color: #c00000; letter-spacing: 0.8px;">सत्यमेव जयते &bull; बलस्य मूलं विज्ञानम्</div>
+        <div style="font-size: 8px; font-weight: 800; color: #0e2252; letter-spacing: 0.6px;">सत्यमेव जयते &bull; आसूचना प्रवर्तन समन्वय</div>
       </div>
     `;
   } else if (letter.crestStyle === 'drdo') {
     crestCenterHtml = `
       <div style="width: 28%; text-align: center;">
-        <div style="font-size: 8.5px; font-weight: 800; color: #c00000; letter-spacing: 0.8px;">बलस्य मूलं विज्ञानम्</div>
+        <div style="font-size: 8.5px; font-weight: 800; color: #c00000; letter-spacing: 0.8px;">सत्यमेव जयते &bull; भारत सरकार</div>
       </div>
     `;
   } else {
@@ -6074,32 +6082,32 @@ export function downloadOfficialLetterhead(user, letter) {
       
       <!-- Left Column: Officer Credentials (Centered within column) -->
       <div style="width: 36%; text-align: center; font-size: 11px; line-height: 1.35; color: #c00000;">
-        <div style="font-size: 15px; font-weight: 800; color: #c00000; font-family: 'Kokila', 'Mangal', 'Segoe UI', Arial, sans-serif;">${user.hindiName || 'अनुराग अ. बावस्कर'}</div>
-        <div style="font-size: 11.5px; font-weight: 700; color: #c00000; margin-bottom: 2px;">${user.hindiDesignation || 'अपर अनुभाग अधिकारी'}</div>
-        <div style="font-size: 14px; font-weight: 800; color: #c00000;">${user.name || 'Anurag A. Bawaskar'}</div>
-        <div style="font-size: 10.5px; font-weight: 700; color: #c00000; text-transform: uppercase;">${user.designation || 'ADDITIONAL SECTION OFFICER'}</div>
+        <div style="font-size: 15px; font-weight: 800; color: #c00000; font-family: 'Kokila', 'Mangal', 'Segoe UI', Arial, sans-serif;">${user.hindiName || 'अनुराग अनिल बावस्कर'}</div>
+        <div style="font-size: 11.5px; font-weight: 700; color: #c00000; margin-bottom: 2px;">${user.hindiDesignation || 'सहायक निदेशक'}</div>
+        <div style="font-size: 14px; font-weight: 800; color: #c00000;">${user.name || 'Anurag Anil Bawaskar'}</div>
+        <div style="font-size: 10.5px; font-weight: 700; color: #c00000; text-transform: uppercase;">${user.designation || 'ASSISTANT DIRECTOR'}</div>
         <div style="font-size: 9.5px; margin-top: 6px; line-height: 1.45;">
           <div><span style="color: #0066cc; text-decoration: underline;">E-mail :</span> <a href="mailto:${user.email || 'anurag.bawaskar.6328@gov.in'}" style="color: #c00000; text-decoration: none;">${user.email || 'anurag.bawaskar.6328@gov.in'}</a></div>
-          <div><span style="color: #0066cc; text-decoration: underline;">Website :</span> <a href="https://www.mod.gov.in" target="_blank" style="color: #c00000; text-decoration: none;">www.mod.gov.in</a></div>
+          <div><span style="color: #0066cc; text-decoration: underline;">Website :</span> <a href="https://narcoticsindia.nic.in" target="_blank" style="color: #c00000; text-decoration: none;">www.narcoticsindia.nic.in</a></div>
         </div>
       </div>
 
-      <!-- Center Crest (Golden Emblem of India / DRDO) -->
+      <!-- Center Crest (Golden Emblem of India / NCB Crest) -->
       ${crestCenterHtml}
 
-      <!-- Right Column: Ministry & DRDO Head Office (Centered within column) -->
+      <!-- Right Column: Ministry of Home Affairs & NCB Head Office (Centered within column) -->
       <div style="width: 36%; text-align: center; font-size: 11px; line-height: 1.35; color: #c00000;">
         <div style="font-size: 13.5px; font-weight: 800; color: #c00000;">भारत सरकार</div>
-        <div style="font-size: 12px; font-weight: 700; color: #c00000;">रक्षा मंत्रालय</div>
-        <div style="font-size: 12px; font-weight: 700; color: #c00000; margin-bottom: 4px;">डी.आर.डी.ओ.</div>
+        <div style="font-size: 12px; font-weight: 700; color: #c00000;">गृह मंत्रालय</div>
+        <div style="font-size: 12px; font-weight: 700; color: #c00000; margin-bottom: 4px;">स्वापक नियंत्रण ब्यूरो</div>
         <div style="font-size: 12.5px; font-weight: 700; color: #c00000;">Government of India</div>
-        <div style="font-size: 11.5px; font-weight: 700; color: #c00000;">Ministry of Defence</div>
-        <div style="font-size: 11.5px; font-weight: 800; color: #c00000;">DRDO</div>
-        <div style="font-size: 9.5px; color: #c00000; margin-top: 3px; line-height: 1.35;">
-          <div>डी.आर.डी.ओ. भवन, नई दिल्ली-110011</div>
-          <div>DRDO Bhawan, New Delhi-110011</div>
-          <div><span style="color: #0066cc; text-decoration: underline;">Tel. :</span> <span style="color: #c00000;">${user.phone || '23092020, 23092443'}</span></div>
-          <div><span style="color: #0066cc; text-decoration: underline;">Telefax :</span> <span style="color: #c00000;">${user.telefax || '23092546'}</span></div>
+        <div style="font-size: 11.5px; font-weight: 700; color: #c00000;">Ministry of Home Affairs</div>
+        <div style="font-size: 11px; font-weight: 800; color: #c00000;">Narcotics Control Bureau</div>
+        <div style="font-size: 9px; color: #c00000; margin-top: 3px; line-height: 1.35;">
+          <div>पश्चिमी खंड-1, आर. के. पुरम, नई दिल्ली-110066</div>
+          <div>West Block-1, R.K. Puram, New Delhi-110066</div>
+          <div><span style="color: #0066cc; text-decoration: underline;">Tel. :</span> <span style="color: #c00000;">${user.phone || '011-26761000, 26761142'}</span></div>
+          <div><span style="color: #0066cc; text-decoration: underline;">Telefax :</span> <span style="color: #c00000;">${user.telefax || '011-26185240'}</span></div>
         </div>
       </div>
 
@@ -6160,7 +6168,7 @@ export function downloadOfficialLetterhead(user, letter) {
             <div style="font-family: 'Brush Script MT', cursive; font-size: 22px; color: #002B49; line-height: 1;">Anurag Bawaskar</div>
             <strong style="font-size: 11px; color: #002B49; display: block; margin-top: 4px;">(${user.fullName || user.name})</strong>
             <span style="font-size: 9.5px; color: #475569;">${user.designation}</span><br>
-            <span style="font-size: 8.5px; color: #64748b;">Ministry of Defence &bull; DRDO</span><br>
+            <span style="font-size: 8.5px; color: #64748b;">Ministry of Home Affairs &bull; Narcotics Control Bureau (NCB HQ)</span><br>
             <span style="color: #059669; font-size: 8px; font-weight: 800;">[DIGITALLY SIGNED VIA e-SIGN DSC]</span>
           </div>
         </div>
@@ -6185,10 +6193,11 @@ export function downloadNocOrder(user, app) {
     <div class="doc-header">
       <div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 6px;">
         <img src="${EMBLEM_BASE64}" alt="State Emblem of India" style="width: 44px; height: 68px; object-fit: contain;">
+        <img src="${NCB_LOGO_BASE64}" alt="NCB Crest" style="height: 54px; width: auto; object-fit: contain;">
       </div>
       <h2>GOVERNMENT OF INDIA &bull; भारत सरकार</h2>
-      <h3>MINISTRY OF DEFENCE &bull; रक्षा मंत्रालय</h3>
-      <h4>CENTRAL VIGILANCE COMMISSION (CVC) NODE</h4>
+      <h3>MINISTRY OF HOME AFFAIRS &bull; गृह मंत्रालय</h3>
+      <h4>NARCOTICS CONTROL BUREAU (CVO NODE)</h4>
       <div class="doc-title-strip" style="background: linear-gradient(90deg, #166534, #14532d); color: #ffffff; padding: 6px 12px; margin-top: 8px; font-weight: 800; font-size: 11.5px;">
         VIGILANCE CLEARANCE CERTIFICATE (NOC)
       </div>
@@ -6220,7 +6229,7 @@ export function downloadNocOrder(user, app) {
     <div style="font-size: 12px; line-height: 1.8; margin: 16px 0; color: #1e293b; text-align: justify;">
       <p style="margin: 0 0 10px 0;"><strong>CERTIFICATION:</strong></p>
       <p style="margin: 0 0 10px 0;">
-        This is to certify that the vigilance records in respect of <strong>${user.name}</strong>, presently working as ${user.designation}, Ministry of Defence, have been verified.
+        This is to certify that the vigilance records in respect of <strong>${user.name}</strong>, presently working as ${user.designation}, ${user.department || 'Narcotics Control Bureau (NCB HQ)'}, ${user.ministry || 'Ministry of Home Affairs'}, have been verified.
       </p>
       <p style="margin: 0 0 10px 0;">
         It is certified that NO disciplinary/vigilance case is pending or contemplated against the aforementioned officer under the CCS (CCA) Rules, 1965 or any other statutory provisions. The officer is entirely clear from the vigilance angle as on date.
@@ -6232,7 +6241,7 @@ export function downloadNocOrder(user, app) {
 
     <div class="sig-block" style="margin-top: 24px; display: flex; justify-content: flex-end; align-items: flex-end;">
       <div style="text-align: right;">
-        <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Competent Authority (DMA / MoD):</div>
+        <div style="font-weight: 700; font-size: 10px; margin-bottom: 3px; color: #1e293b;">Competent Authority (NCB HQ / MHA):</div>
         ${(() => {
           let nocSignDate = "2026.07.18 12:10:05 +05'30'";
           if (app.appliedOn) {
@@ -6240,7 +6249,7 @@ export function downloadNocOrder(user, app) {
             const pad = (n) => String(n).padStart(2, '0');
             nocSignDate = `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} 12:10:05 +05'30'`;
           }
-          return generateAdobeDigitalSignature(app.authority || "Shri Rajender Singh", 'Deputy Secretary (Estt) & CVO, MoD', "Vigilance Clearance Certification Approval", "New Delhi, India", nocSignDate);
+          return generateAdobeDigitalSignature(app.authority || "Shri R. K. Verma", 'Chief Vigilance Officer (CVO), MHA / NCB HQ', "Vigilance Clearance Certification Approval", "New Delhi, India", nocSignDate);
         })()}
       </div>
     </div>
@@ -6266,7 +6275,7 @@ export function generateESignature(name, desig, reason = 'Official Record Attest
  */
 export function downloadServiceCertificate(user) {
   const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  const refNo = `MOD/DMA/CERT/${new Date().getFullYear()}/${Math.floor(1000 + Math.random() * 9000)}`;
+  const refNo = `MHA/NCB/CERT/${new Date().getFullYear()}/${Math.floor(1000 + Math.random() * 9000)}`;
 
   const body = `
     <style>
@@ -6392,8 +6401,8 @@ export function downloadServiceCertificate(user) {
       <div class="bilingual-header">
         <img src="data:image/png;base64,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" style="height: 50px; width: auto; margin-bottom: 5px; object-fit: contain; filter: grayscale(100%) contrast(150%);" alt="Logo">
         <h2>GOVERNMENT OF INDIA / भारत सरकार</h2>
-        <h3>MINISTRY OF DEFENCE / रक्षा मंत्रालय</h3>
-        <h4>DEPARTMENT OF MILITARY AFFAIRS / सैन्य कार्य विभाग</h4>
+        <h3>MINISTRY OF HOME AFFAIRS / गृह मंत्रालय</h3>
+        <h4>NARCOTICS CONTROL BUREAU (NCB HQ) / स्वापक नियंत्रण ब्यूरो</h4>
         <div class="doc-title-strip-old">
           SERVICE CERTIFICATE / सेवा प्रमाण पत्र
         </div>
@@ -6406,10 +6415,10 @@ export function downloadServiceCertificate(user) {
 
       <div class="typewriter-text">
         <p>
-          This is to certify that <strong>${user.name}</strong> (Son/Daughter of ${user.fatherName || '...'}) is a regular and permanent employee of the Government of India, currently serving under the Department of Military Affairs, Ministry of Defence.
+          This is to certify that <strong>${user.name}</strong> (Son/Daughter of ${user.fatherName || '...'}) is a regular and permanent officer of the Government of India, currently serving on deputation as <strong>${user.designation || 'Assistant Director'}</strong> in the ${user.department || 'Narcotics Control Bureau (NCB HQ)'}, ${user.ministry || 'Ministry of Home Affairs'}, New Delhi.
         </p>
         <p>
-          यह प्रमाणित किया जाता है कि <strong>${user.hindiName || user.name}</strong> (पुत्र/पुत्री ${user.fatherName || '...'}) भारत सरकार के नियमित और स्थायी कर्मचारी हैं, जो वर्तमान में रक्षा मंत्रालय के सैन्य कार्य विभाग के अधीन कार्यरत हैं।
+          यह प्रमाणित किया जाता है कि <strong>${user.hindiName || user.name}</strong> (पुत्र/पुत्री ${user.fatherName || '...'}) भारत सरकार के नियमित और स्थायी अधिकारी हैं, जो वर्तमान में गृह मंत्रालय के अधीन स्वापक नियंत्रण ब्यूरो (NCB HQ), नई दिल्ली में प्रतिनियुक्ति पर कार्यरत हैं।
         </p>
         <p>
           As per the official service records maintained by the Department, the detailed service and financial particulars are certified as below: <br>
@@ -6470,7 +6479,7 @@ export function downloadServiceCertificate(user) {
       <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: flex-end; font-family: Arial, sans-serif;">
         <div style="text-align: right;">
           <div style="font-size: 10px; font-weight: bold; margin-bottom: 4px; color: #334155;">Issuing Authority (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt), MoD", "Service Record Certification", "New Delhi, India", "2026.09.10 14:20:18 +05'30'")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri R. K. Verma", user.controllingOfficer?.designation || "Deputy Director (Admn.), NCB HQ", "Service Record Certification", "New Delhi, India", "2026.11.24 14:20:18 +05'30'")}
         </div>
       </div>
     </div>
@@ -6547,9 +6556,9 @@ export function downloadForm16(user) {
         <tr>
           <td style="width: 50%;">
             <strong>Name and address of the Employer:</strong><br><br>
-            DEPARTMENT OF MILITARY AFFAIRS<br>
-            MINISTRY OF DEFENCE, SOUTH BLOCK<br>
-            NEW DELHI - 110011
+            NARCOTICS CONTROL BUREAU (NCB HQ)<br>
+            MINISTRY OF HOME AFFAIRS, WEST BLOCK-1, R.K. PURAM<br>
+            NEW DELHI - 110066
           </td>
           <td style="width: 50%;">
             <strong>Name and designation of the Employee:</strong><br><br>
@@ -6605,7 +6614,7 @@ export function downloadForm16(user) {
       
       <div style="margin-top: 20px; text-align: justify; font-size: 11px;">
         <strong>Verification</strong><br><br>
-        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 001488) do hereby certify that a sum of Rs. 1,48,980.00 has been deducted and deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
+        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 021840 - PAO NCB, MHA) do hereby certify that a sum of Rs. 1,48,980.00 has been deducted and deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
         <div style="display: flex; justify-content: space-between; margin-top: 30px;">
           <div>
             Place: <strong>NEW DELHI</strong><br>
@@ -6613,9 +6622,9 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
+            ${generateSVGStamp("PAO (NCB)", "MINISTRY OF HOME AFFAIRS")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:42:20 +05'30'`)}\n<strong>Signature of person responsible for deduction of tax</strong><br>
             Full Name: Shri Pradeep Kumar, SAO<br>
-            Designation: Drawing & Disbursing Officer (DDO), Department of Defence Finance (CGDA)
+            Designation: Drawing & Disbursing Officer (DDO), PAO (NCB), Ministry of Home Affairs
           </div>
         </div>
       </div>
@@ -6787,7 +6796,7 @@ export function downloadForm16(user) {
       
       <div style="margin-top: 15px; text-align: justify; font-size: 11px;">
         <strong>Verification</strong><br><br>
-        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 001488) do hereby certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
+        I, <strong>Shri Pradeep Kumar, SAO</strong>, working in the capacity of Drawing and Disbursing Officer (DDO Code: 10501, PAO: 021840 - PAO NCB, MHA) do hereby certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, and other available records.<br><br>
         <div style="display: flex; justify-content: space-between; margin-top: 25px;">
           <div>
             Place: <strong>NEW DELHI</strong><br>
@@ -6795,7 +6804,7 @@ export function downloadForm16(user) {
           </div>
           <div style="text-align: center;">
             <div style="border-bottom: 1px solid #000; width: 200px; height: 30px; margin-bottom: 5px;"></div>
-            ${generateSVGStamp("PAY & ACCOUNTS OFFICE", "MINISTRY OF DEFENCE")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:45:35 +05'30'`)}\n<strong>Signature of DDO</strong>
+            ${generateSVGStamp("PAO (NCB)", "MINISTRY OF HOME AFFAIRS")}\n${generateHandSignature("Pradeep Kumar", "#0f172a", `${currentYear}.05.15 11:45:35 +05'30'`)}\n<strong>Signature of DDO</strong>
           </div>
         </div>
       </div>
@@ -6827,11 +6836,11 @@ export function downloadCGHSCertificate(user) {
       <button onclick="window.print()" style="padding: 6px 14px; background: #000; color: #fff; font-weight: bold; cursor: pointer;">PRINT CGHS CERT</button>
     </div>
     <div class="cert-box">
-      <img src="${window.location.origin}/assets/mod_logo.png" class="header-img" alt="Logo" onerror="this.style.display='none'">
-      <h3>GOVERNMENT OF INDIA<br>MINISTRY OF DEFENCE</h3>
+      <img src="${NCB_LOGO_BASE64}" class="header-img" alt="NCB Logo">
+      <h3>GOVERNMENT OF INDIA<br>${(user.ministry || 'MINISTRY OF HOME AFFAIRS').toUpperCase()}</h3>
       <h2>CGHS DEPENDENCY CERTIFICATE</h2>
       <div class="content">
-        This is to certify that <strong>${user.name}</strong>, Designation: <strong>${user.designation}</strong>, EMP ID: <strong>${user.empId}</strong> is a bonafide employee of the Department of Military Affairs.<br><br>
+        This is to certify that <strong>${user.name}</strong>, Designation: <strong>${user.designation}</strong>, EMP ID: <strong>${user.empId}</strong> is a bonafide officer of the ${user.department || 'Narcotics Control Bureau (NCB HQ)'}.<br><br>
         The following family members are entirely dependent on him/her and are eligible for medical facilities under the Central Government Health Scheme (CGHS):
       </div>
       <table>
@@ -6845,11 +6854,11 @@ export function downloadCGHSCertificate(user) {
       <div style="margin-top: 45px; text-align: right;">
         <div style="display: inline-block; text-align: right;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Signature of Issuing Authority (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", user.controllingOfficer?.designation || "Deputy Secretary (Estt), MoD", "CGHS Dependency Certification Approval", "New Delhi, India", "2026.08.18 14:15:30 +05'30'")}
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri R. K. Verma", user.controllingOfficer?.designation || "Deputy Director (Admn.), NCB HQ", "CGHS Dependency Certification Approval", "New Delhi, India", "2026.11.22 14:15:30 +05'30'")}
           <div style="font-size: 12px; font-weight: bold; margin-top: 6px; text-align: right; color: #111; line-height: 1.4;">
-            (${user.controllingOfficer?.name || "Shri Rajender Singh"})<br>
-            ${user.controllingOfficer?.designation || "Deputy Secretary to the Government of India"}<br>
-            Department of Military Affairs, Ministry of Defence
+            (${user.controllingOfficer?.name || "Shri R. K. Verma"})<br>
+            ${user.controllingOfficer?.designation || "Deputy Director (Admn.)"}<br>
+            ${user.department || 'Narcotics Control Bureau (NCB HQ)'}, ${user.ministry || 'Ministry of Home Affairs'}
           </div>
         </div>
       </div>
@@ -6888,7 +6897,7 @@ export function downloadForm26AS(user) {
       <h3>PART A: Details of Tax Deducted at Source</h3>
       <table>
         <tr><th>Name of Deductor</th><th>TAN of Deductor</th><th>Total Amount Paid</th><th>Total Tax Deducted</th><th>Total TDS Deposited</th></tr>
-        <tr><td>MINISTRY OF DEFENCE</td><td>DELD01010G</td><td>14,50,000.00</td><td>1,48,980.00</td><td>1,48,980.00</td></tr>
+        <tr><td>MINISTRY OF HOME AFFAIRS / PAO (NCB)</td><td>DELN04812B</td><td>14,50,000.00</td><td>1,48,980.00</td><td>1,48,980.00</td></tr>
       </table>
       
       <div style="margin-top: 40px; font-size: 10px; text-align: center; border-top: 1px solid #999; padding-top: 10px;">
@@ -6920,7 +6929,7 @@ export function downloadLTCCertificate(user) {
     <div class="ltc-box">
       <h2>LTC SETTLEMENT / SANCTION ORDER</h2>
       <p style="text-align: right;"><strong>Date:</strong> ${new Date().toLocaleDateString('en-GB')}</p>
-      <p><strong>Sanction Order No:</strong> DMA/LTC/${new Date().getFullYear()}/0892</p>
+      <p><strong>Sanction Order No:</strong> NCB/HQ/LTC/${new Date().getFullYear()}/0892</p>
       
       <p>Sanction of the Competent Authority is hereby accorded for the settlement of Leave Travel Concession (LTC) claim of <strong>${user.name}, ${user.designation}</strong>.</p>
       
@@ -6932,16 +6941,16 @@ export function downloadLTCCertificate(user) {
         <tr><th>Net Amount Payable</th><td><strong>Rs. 45,000/-</strong></td></tr>
       </table>
       
-      <p style="margin-top: 20px;">The amount of Rs. 45,000/- will be credited to salary account number ${user.bankDetails?.accountNo || 'XXX'}.</p>
+      <p style="margin-top: 20px;">The amount of Rs. 45,000/- will be credited to salary account number ${user.bankDetails?.accountNo || '39189241534'}.</p>
       
       <div style="margin-top: 45px; text-align: right;">
         <div style="display: inline-block; text-align: right;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Accounts Officer (PAO) / DDO (e-Sign DSC):</div>
-          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Drawing & Disbursing Officer (DDO), Dept of Defence Finance (CGDA)", "LTC Claim Financial Sanction Approval", "New Delhi, India", "2026.07.24 16:40:15 +05'30'")}
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333; text-align: right;">Accounts Officer (PAO NCB) / DDO (e-Sign DSC):</div>
+          ${generateAdobeDigitalSignature(user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO", user.disbursingOfficer?.designation || "Senior Accounts Officer & DDO (PAO NCB, MHA)", "LTC Claim Financial Sanction Approval", "New Delhi, India", "2026.07.24 16:40:15 +05'30'")}
           <div style="font-size: 12px; font-weight: bold; margin-top: 6px; text-align: right; color: #111; line-height: 1.4;">
             (${user.disbursingOfficer?.name || "Shri Pradeep Kumar, SAO"})<br>
-            Accounts Officer (PAO) &amp; DDO (Code: 10501)<br>
-            Department of Defence Finance (CGDA), Ministry of Defence
+            Accounts Officer (PAO NCB: 021840) &amp; DDO (Code: 10501)<br>
+            Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs
           </div>
         </div>
       </div>
@@ -7006,7 +7015,7 @@ export function downloadITRV(user) {
         </tr>
         <tr>
           <td style="font-weight: bold;">Address</td>
-          <td colspan="3">Department of Military Affairs, South Block, New Delhi - 110011</td>
+          <td colspan="3">Narcotics Control Bureau (NCB HQ), West Block-1, R.K. Puram, New Delhi - 110066</td>
         </tr>
         <tr>
           <td style="font-weight: bold;">Status</td>
@@ -7084,8 +7093,8 @@ export function downloadAPAR(user) {
 
     <!-- PART 1 & 2 -->
     <div class="apar-container">
-      <img src="${window.location.origin}/assets/mod_logo.png" class="header-img" alt="Logo" onerror="this.style.display='none'">
-      <h3>GOVERNMENT OF INDIA<br>MINISTRY OF DEFENCE<br>DEPARTMENT OF MILITARY AFFAIRS</h3>
+      <img src="${NCB_LOGO_BASE64}" class="header-img" alt="NCB Logo">
+      <h3>GOVERNMENT OF INDIA<br>${(user.ministry || 'MINISTRY OF HOME AFFAIRS').toUpperCase()}<br>${(user.department || 'NARCOTICS CONTROL BUREAU (NCB HQ)').toUpperCase()}</h3>
       <h2>ANNUAL PERFORMANCE ASSESSMENT REPORT (APAR)</h2>
       <h4 style="margin-bottom: 20px;">Report for the year/period from 01.04.${currentYear-1} to 31.03.${currentYear}</h4>
 
@@ -7207,13 +7216,13 @@ export function downloadMACPOrder(user) {
     </div>
     <div class="macp-container">
       <div class="top-header">
-        No. A-26011/12/${currentYear}-Estt.<br>
+        No. A-26011/12/${currentYear}-Ad.I/NCB<br>
         GOVERNMENT OF INDIA<br>
-        MINISTRY OF DEFENCE<br>
-        DEPARTMENT OF MILITARY AFFAIRS
+        MINISTRY OF HOME AFFAIRS<br>
+        NARCOTICS CONTROL BUREAU (NCB HQ)
       </div>
       <div class="ref-bar">
-        <div>South Block, New Delhi</div>
+        <div>West Block No. 1, Wing No. 5, R.K. Puram, New Delhi</div>
         <div>Dated: 12th August, ${currentYear}</div>
       </div>
       
@@ -7222,11 +7231,11 @@ export function downloadMACPOrder(user) {
       </div>
       
       <div class="subject">
-        Subject: Grant of financial upgradation under the Modified Assured Career Progression (MACP) Scheme to Group 'A' & 'B' officers of the Department of Military Affairs - regarding.
+        Subject: Grant of financial upgradation under the Modified Assured Career Progression (MACP) Scheme to Group 'A' & 'B' officers of the Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs - regarding.
       </div>
       
       <div style="text-align: justify;">
-        In pursuance of the Department of Personnel & Training (DoP&T) OM No. 35034/3/2015-Estt.(D) dated 22.10.2019 and upon the recommendation of the Departmental Screening Committee (DSC), the President is pleased to grant the next financial upgradation under the MACP Scheme to the following officer with effect from the date mentioned against his name:
+        In pursuance of the Department of Personnel & Training (DoP&T) OM No. 35034/3/2015-Estt.(D) dated 22.10.2019 and upon the recommendation of the Departmental Screening Committee (DSC), the Competent Authority is pleased to grant the next financial upgradation under the MACP Scheme to the following officer with effect from the date mentioned against his name:
       </div>
       
       <table>
@@ -7253,16 +7262,16 @@ export function downloadMACPOrder(user) {
       
       <div style="margin-top: 40px; display: flex; justify-content: flex-end; align-items: flex-end;">
         <div style="text-align: right;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Sanctioning Authority (Under Secretary to GoI):</div>
-          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri Rajender Singh", "Deputy Secretary (Estt) & Under Secretary, MoD", "MACP Office Order Sanction & Publication", "New Delhi, India", `${currentYear}.08.12 11:25:40 +05'30'`)}
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Sanctioning Authority (NCB HQ, MHA):</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri R. K. Verma", "Deputy Director (Admn.), NCB HQ", "MACP Office Order Sanction & Publication", "New Delhi, India", `${currentYear}.08.12 11:25:40 +05'30'`)}
         </div>
       </div>
       
       <div style="margin-top: 40px; font-size: 12px;">
         <strong>Copy to:</strong><br>
         1. The Officer concerned (${user.name}).<br>
-        2. The Pay & Accounts Officer, Ministry of Defence, South Block.<br>
-        3. DDO, Department of Military Affairs.<br>
+        2. Pay & Accounts Officer, PAO (NCB), Ministry of Home Affairs, New Delhi (Code: 021840).<br>
+        3. DDO, Narcotics Control Bureau (NCB HQ), New Delhi (Code: 10501).<br>
         4. Service Book / Personal File of the Officer.<br>
         5. IT Cell for uploading on e-HRMS 2.0.
       </div>
@@ -7307,7 +7316,7 @@ export function downloadNPSStatement(user) {
           <p style="margin: 0; font-size: 11px;">STATEMENT OF TRANSACTION (SOT) FOR THE FY ${currentYear-1}-${currentYear}</p>
         </div>
         <div style="text-align: right;">
-          <img src="${window.location.origin}/assets/mod_logo.png" style="height: 50px;" alt="Logo" onerror="this.style.display='none'">
+          <img src="${NCB_LOGO_BASE64}" style="height: 50px;" alt="NCB Logo">
         </div>
       </div>
 
@@ -7316,9 +7325,9 @@ export function downloadNPSStatement(user) {
           <strong>Subscriber Details</strong><br><br>
           Name: <strong>${user.name}</strong><br>
           PRAN: <strong>${user.pran}</strong><br>
-          Sector: Central Government<br>
-          DDO Reg. No: ${user.ddoCode}<br>
-          PAO Reg. No: 001488
+          Sector: Central Government (MHA / NCB)<br>
+          DDO Reg. No: ${user.ddoCode || '10501'}<br>
+          PAO Reg. No: ${user.disbursingOfficer?.paoCode || '021840'} (PAO NCB, MHA)
         </div>
         <div class="info-box">
           <strong>Value of your NPS Account (Tier-I)</strong><br><br>
@@ -7419,13 +7428,13 @@ export function downloadPostingOrder(user) {
     </div>
     <div class="transfer-container">
       <div class="top-header" style="font-size: 14px;">
-        No. E-11011/4/${currentYear}-Estt(A)<br>
-        <strong>GOVERNMENT OF INDIA<br>MINISTRY OF DEFENCE</strong><br>
-        (Department of Military Affairs)
+        No. I-12014/18/2026-Ad.I/NCB<br>
+        <strong>GOVERNMENT OF INDIA<br>MINISTRY OF HOME AFFAIRS</strong><br>
+        (Narcotics Control Bureau - NCB HQ)
       </div>
       <div class="ref-bar">
-        <div>South Block, New Delhi</div>
-        <div>Dated: 05th September, ${currentYear}</div>
+        <div>West Block No. 1, Wing No. 5, R.K. Puram, New Delhi</div>
+        <div>Dated: 20th November, ${currentYear}</div>
       </div>
       
       <div style="text-align: center; text-decoration: underline; font-weight: bold; font-size: 16px; margin-top: 30px;">
@@ -7433,33 +7442,33 @@ export function downloadPostingOrder(user) {
       </div>
       
       <div style="text-align: justify; margin-top: 30px;">
-        The President is pleased to approve the transfer and posting of the following Group 'A' officer of the Central Secretariat Service (CSS) with immediate effect, until further orders:
+        The Competent Authority in the Ministry of Home Affairs is pleased to approve the deputation appointment and posting of the following Group 'A' Gazetted officer in the Narcotics Control Bureau (NCB HQ), New Delhi with effect from 20 November 2026, until further orders:
       </div>
       
       <table>
         <tr>
           <th>S.No.</th>
           <th>Name of the Officer & EMP ID</th>
-          <th>Present Posting</th>
-          <th>Posted To</th>
+          <th>Parent Organisation (Relieved From)</th>
+          <th>Deputation Posting (Posted To)</th>
         </tr>
         <tr>
           <td>1.</td>
           <td><strong>${user.name}</strong><br>(${user.empId})<br>${user.designation}</td>
-          <td>Department of Military Affairs, MoD (Air-I Section)</td>
-          <td><strong>Department of Defence, MoD (D-Navy Section)</strong></td>
+          <td>DRDO, Ministry of Defence (Dighi, Pune)</td>
+          <td><strong>Assistant Director, Narcotics Control Bureau (NCB HQ), New Delhi</strong></td>
         </tr>
       </table>
       
       <div style="text-align: justify; margin-top: 20px;">
-        2. The officer is directed to report to the Department of Defence immediately after relinquishing charge of his present post in the Department of Military Affairs.<br><br>
+        2. The officer has assumed charge at NCB Headquarters, New Delhi on 20.11.2026 (FN) after relinquishing charge in DRDO, Ministry of Defence on 19.11.2026 (AN).<br><br>
         3. This issues with the approval of the Competent Authority.
       </div>
       
       <div style="margin-top: 40px; display: flex; justify-content: flex-end; align-items: flex-end;">
         <div style="text-align: right;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Competent Authority (Director / Joint Secretary):</div>
-          ${generateAdobeDigitalSignature(user.reportingOfficer?.name || "Shri Anil Kumar Chhapolia", "Joint Secretary / Director (Estt), MoD", "Presidential Transfer & Posting Notification", "New Delhi, India", `${currentYear}.09.05 16:20:15 +05'30'`)}
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #334155;">Competent Authority (NCB HQ, MHA):</div>
+          ${generateAdobeDigitalSignature(user.controllingOfficer?.name || "Shri R. K. Verma", "Deputy Director (Admn.), NCB HQ", "Deputation Appointment & Posting Order", "New Delhi, India", `${currentYear}.11.20 11:20:15 +05'30'`)}
         </div>
       </div>
       
@@ -7473,8 +7482,8 @@ export function downloadPostingOrder(user) {
       <div style="margin-top: 20px; font-size: 12px;">
         <strong>Copy to:</strong><br>
         1. The Officer concerned (${user.name}).<br>
-        2. JS (Estt), Department of Defence.<br>
-        3. PAO, Ministry of Defence.<br>
+        2. Joint Secretary (IS-II), Ministry of Home Affairs, North Block, New Delhi.<br>
+        3. PAO (NCB), Ministry of Home Affairs, New Delhi (Code: 021840).<br>
         4. Guard File / e-HRMS 2.0 Portal.
       </div>
     </div>
@@ -7487,14 +7496,14 @@ export function downloadPostingOrder(user) {
  * Download Toll Exemption Order
  */
 export function downloadTollExemption(user) {
-  if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104', designation: 'ADDITIONAL SECTION OFFICER - I' };
+  if (!user) user = { name: 'ANURAG ANIL BAWASKAR', empId: 'MHA-NCB-2026-8104', designation: 'ASSISTANT DIRECTOR' };
   const currentYear = new Date().getFullYear();
   const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 
   const adobeSig = generateAdobeDigitalSignature(
-    'Shri Rajender Singh, Deputy Secretary',
-    'MoD Toll Exemption Cell',
-    'Authorized under Indian Tolls (Army & Air Force) Act',
+    'Shri R. K. Verma, Deputy Director (Admn.)',
+    'NCB HQ Vigilance & Admn. Cell (MHA)',
+    'Authorized under NHAI / MoRTH Exempted Categories',
     'New Delhi',
     null
   );
@@ -7504,13 +7513,13 @@ export function downloadTollExemption(user) {
       <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">
         <img src="${EMBLEM_B64}" style="height: 50px;" alt="Emblem" />
         <h3 style="margin: 4px 0 2px 0; font-size: 14px; text-transform: uppercase;">Government of India</h3>
-        <h2 style="margin: 0; font-size: 16px; text-transform: uppercase;">Ministry of Defence</h2>
-        <h4 style="margin: 2px 0 0 0; font-size: 13px;">Department of Military Affairs</h4>
-        <p style="margin: 2px 0 0 0; font-size: 11px;">South Block, Secretariat Building, New Delhi - 110011</p>
+        <h2 style="margin: 0; font-size: 16px; text-transform: uppercase;">Ministry of Home Affairs</h2>
+        <h4 style="margin: 2px 0 0 0; font-size: 13px;">Narcotics Control Bureau (NCB HQ)</h4>
+        <p style="margin: 2px 0 0 0; font-size: 11px;">West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066</p>
       </div>
 
       <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 12px;">
-        <div>File No: MoD/DMA/TOLL-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</div>
+        <div>File No: MHA/NCB/TOLL-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</div>
         <div>Date: ${dateStr}</div>
       </div>
 
@@ -7523,7 +7532,7 @@ export function downloadTollExemption(user) {
       </div>
 
       <div style="margin-bottom: 10px; margin-left: 30px; font-size: 12px;">
-        <strong>Subject: Exemption from payment of User Fee (Toll) on National Highways in respect of Armed Forces / Ministry of Defence personnel - Official Order reg.</strong>
+        <strong>Subject: Exemption from payment of User Fee (Toll) on National Highways for Narcotics Control Bureau (MHA) Gazetted Officers on Enforcement / Official Duty - Official Order reg.</strong>
       </div>
 
       <div style="margin-bottom: 6px;">
@@ -7531,41 +7540,41 @@ export function downloadTollExemption(user) {
       </div>
 
       <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
-        I am directed to convey the sanction of the President of India and to refer to the provisions of the <strong>Indian Tolls (Army and Air Force) Act, 1901</strong>, read in conjunction with the Ministry of Road Transport and Highways (MoRTH) Notification No. H-25016/01/2014-Toll and NH Fee Rules 2008.
+        I am directed to convey the authorization of the Competent Authority and to refer to the provisions of the <strong>National Highways Fee (Determination of Rates and Collection) Rules, 2008</strong> and MoRTH Notification No. H-25016/01/2014-Toll regarding exempted enforcement/executive personnel on official transit.
       </p>
 
       <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
-        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri ${user.name}</strong>, holding the substantive post of <strong>${user.designation}</strong> (Group 'A' Gazetted), bearing Employee/Service ID <strong>${user.empId}</strong>, is a serving commissioned officer / gazetted official under the Ministry of Defence, Government of India.
+        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri ${user.name}</strong>, holding the substantive post of <strong>${user.designation}</strong> (Group 'A' Gazetted), bearing Official Service ID <strong>${user.empId}</strong>, is a serving Group 'A' Gazetted Officer of the Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs, Government of India.
       </p>
 
       <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
-        Accordingly, the above-named officer is <strong>exempted from the payment of user fee (Toll)</strong> across all National Highways, State Highways, bridges, tunnels, and Cantonment entry zones within the territorial jurisdiction of India. This exemption applies whether the officer is traveling on official duty or on leave, and covers the vehicle (official or private) being driven by or conveying the officer.
+        Accordingly, the above-named officer is <strong>exempted from the payment of user fee (Toll)</strong> across all National Highways, State Highways, bridges, tunnels, and expressways within the territorial jurisdiction of India while performing official duty and inter-zonal movement.
       </p>
 
       <div style="margin: 8px 0; padding: 6px; border: 1px solid #000; background-color: #f9f9f9;">
         <h4 style="margin-top: 0; text-align: center; text-decoration: underline; font-size: 12px; margin-bottom: 4px;">STANDARD OPERATING PROCEDURE FOR TOLL PLAZAS</h4>
         <ol style="margin-bottom: 0; padding-left: 18px;">
-          <li style="margin-bottom: 2px;">The production of this Exemption Order along with the official Ministry of Defence Identity Card / Smart Card by the officer shall be deemed sufficient proof of entitlement.</li>
-          <li style="margin-bottom: 2px;">Toll plaza staff / concessionaires are directed to immediately open the boom barrier and accord unrestricted free passage without demanding any further documentation or entry in registers that may cause delay.</li>
-          <li>Any obstruction, harassment, or delay caused to the officer during transit will be viewed seriously and constitutes a punishable offense under Section 6 of the Indian Tolls Act, 1901.</li>
+          <li style="margin-bottom: 2px;">The production of this Exemption Order along with the official Narcotics Control Bureau / Ministry of Home Affairs Smart Identity Card by the officer shall be deemed sufficient proof of entitlement.</li>
+          <li style="margin-bottom: 2px;">Toll plaza staff / concessionaires are directed to immediately accord priority clearance without delay.</li>
+          <li>This document is verifiable through e-HRMS 2.0 (MHA / NCB HQ).</li>
         </ol>
       </div>
 
       <p style="text-align: justify; text-indent: 30px; margin-bottom: 15px;">
-        This order is digitally signed, verifiable on the e-HRMS 2.0 portal, and carries the full authority of the Government of India. It is requested that necessary instructions be disseminated to all toll plaza operators under your jurisdiction to ensure strict compliance.
+        This order is digitally signed, verifiable on the e-HRMS 2.0 portal, and carries the full authority of the Ministry of Home Affairs / NCB HQ.
       </p>
 
       <div style="display: flex; justify-content: space-between; align-items: flex-end;">
         <div style="width: 35%; text-align: center;">
-          <img src="${MOD_STAMP_B64}" style="height: 120px;" alt="MoD Stamp" />
+          <img src="${NCB_LOGO_BASE64}" style="height: 85px;" alt="NCB Crest" />
         </div>
         <div style="width: 60%; text-align: right;">
           <div style="margin-bottom: 2px;">Yours faithfully,</div>
           ${adobeSig}
-          <div style="margin-top: 2px; font-weight: bold;">(Rajender Singh)</div>
-          <div>Deputy Secretary to the Government of India</div>
-          <div>Ministry of Defence / Department of Military Affairs</div>
-          <div>Tel: 011-2301XXXX</div>
+          <div style="margin-top: 2px; font-weight: bold;">(R. K. Verma)</div>
+          <div>Deputy Director (Admn.), Narcotics Control Bureau</div>
+          <div>Ministry of Home Affairs, Government of India</div>
+          <div>Tel: 011-26761000</div>
         </div>
       </div>
 
@@ -7637,14 +7646,14 @@ export function downloadSamruddhiTollExemption(user) {
       <div style="text-align: center; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 2px solid #000;">
         <img src="${EMBLEM_B64}" style="height: 60px; margin-bottom: 2px;" alt="Emblem" />
         <h3 style="margin: 0; font-size: 13px; text-transform: uppercase;">Government of India</h3>
-        <h2 style="margin: 2px 0; font-size: 16px; text-transform: uppercase; font-weight: 900;">Ministry of Defence</h2>
-        <h4 style="margin: 0; font-size: 12px; font-weight: bold; text-transform: uppercase;">Department of Military Affairs</h4>
-        <h5 style="margin: 2px 0; font-size: 11px; font-weight: normal;">Toll Exemption & Privileges Cell</h5>
-        <p style="margin: 4px 0 0 0; font-size: 10px;">South Block, Secretariat Building, New Delhi - 110011</p>
+        <h2 style="margin: 2px 0; font-size: 16px; text-transform: uppercase; font-weight: 900;">Ministry of Home Affairs</h2>
+        <h4 style="margin: 0; font-size: 12px; font-weight: bold; text-transform: uppercase;">Narcotics Control Bureau (NCB HQ)</h4>
+        <h5 style="margin: 2px 0; font-size: 11px; font-weight: normal;">Enforcement Duty Transit &amp; Toll Privilege Cell</h5>
+        <p style="margin: 4px 0 0 0; font-size: 10px;">West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066</p>
       </div>
 
       <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 11px;">
-        <div>File No: <span class="dot-matrix">MoD/DMA/MSRDC-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</span></div>
+        <div>File No: <span class="dot-matrix">MHA/NCB/MSRDC-EXEMPT/${currentYear}/${user.empId.split('-').pop()}</span></div>
         <div>VERIFICATION: <span class="dot-matrix">${user.empId}-MSRDC</span></div>
         <div>Date: <span class="dot-matrix">${dateStr}</span></div>
       </div>
@@ -7656,7 +7665,7 @@ export function downloadSamruddhiTollExemption(user) {
       </div>
 
       <div style="margin: 10px 0 10px 30px; font-size: 11px;">
-        <strong>Subject: <u>MANDATORY EXEMPTION FROM PAYMENT OF USER FEE (TOLL) ON SAMRUDDHI MAHAMARG / MSRDC EXPRESSWAYS IN RESPECT OF ARMED FORCES PERSONNEL.</u></strong>
+        <strong>Subject: <u>MANDATORY EXEMPTION FROM PAYMENT OF USER FEE (TOLL) ON SAMRUDDHI MAHAMARG / MSRDC EXPRESSWAYS IN RESPECT OF NCB / MHA GAZETTED ENFORCEMENT OFFICER ON DUTY.</u></strong>
       </div>
 
       <div style="margin-bottom: 6px;">
@@ -7664,36 +7673,36 @@ export function downloadSamruddhiTollExemption(user) {
       </div>
 
       <p style="text-align: justify; text-indent: 20px; margin-bottom: 4px;">
-        I am directed to convey the sanction of the President of India and to refer to the provisions of the <strong>Indian Tolls (Army and Air Force) Act, 1901</strong>, read in conjunction with the Maharashtra State Government Resolution (GR) No. टोल-1020/प्र.क्र.12/रस्ते-8 and MSRDC Toll Gazette Notifications.
+        I am directed to refer to the provisions of the <strong>National Highways Fee (Determination of Rates and Collection) Rules, 2008</strong>, read in conjunction with the Maharashtra State Government Resolution (GR) No. टोल-1020/प्र.क्र.12/रस्ते-8 and MSRDC Toll Gazette Notifications.
       </p>
 
       <p style="text-align: justify; text-indent: 20px; margin-bottom: 4px;">
-        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri <span class="dot-matrix">${user.name}</span></strong>, holding the substantive post of <strong><span class="dot-matrix">Section Officer</span></strong> (Gazetted), bearing Employee/Service ID <strong><span class="dot-matrix">${user.empId}</span></strong>, is a serving officer under the Ministry of Defence, Government of India.
+        Under the aforementioned statutory provisions, it is hereby certified that <strong>Shri <span class="dot-matrix">${user.name}</span></strong>, holding the substantive post of <strong><span class="dot-matrix">${user.designation || 'Assistant Director'}</span></strong> (Group 'A' Gazetted), bearing Service ID <strong><span class="dot-matrix">${user.empId}</span></strong>, is a serving Gazetted Enforcement Officer under the Narcotics Control Bureau, Ministry of Home Affairs, Government of India.
       </p>
 
       <p style="text-align: justify; text-indent: 30px; margin-bottom: 6px;">
-        Accordingly, the above-named officer is <strong>completely exempted from the payment of user fee (Toll)</strong> across the Hindu Hrudaysamrat Balasaheb Thackeray Maharashtra Samruddhi Mahamarg and all other Expressways/Bridges under the jurisdiction of MSRDC. This exemption applies whether the officer is traveling on official duty or on leave, and covers the vehicle (official or private) being driven by or conveying the officer.
+        Accordingly, the above-named officer is <strong>exempted from the payment of user fee (Toll)</strong> across the Hindu Hrudaysamrat Balasaheb Thackeray Maharashtra Samruddhi Mahamarg and all other Expressways/Bridges under MSRDC while performing official enforcement and intelligence duties.
       </p>
 
       <div style="margin: 10px 0;">
         <h4 style="margin-top: 0; text-align: center; text-decoration: underline; font-size: 11px; margin-bottom: 4px;">STRICT LEGAL WARNING & SOP FOR TOLL PLAZAS</h4>
         <ol style="margin-bottom: 0; padding-left: 18px; font-weight: 600;">
-          <li style="margin-bottom: 3px;">The production of this Exemption Order along with the official Ministry of Defence Identity Card by the officer is ABSOLUTE PROOF of entitlement.</li>
-          <li style="margin-bottom: 3px;">Toll plaza staff MUST immediately open the boom barrier and accord unrestricted free passage. No physical logbook entry or delay is permitted.</li>
-          <li><strong>PENALTY CLAUSE:</strong> Any refusal, argument, or delay caused to the officer is a direct violation of Section 6 of the Indian Tolls Act, 1901 and will invite immediate police action and contempt proceedings against the concerned Plaza Manager and Concessionaire.</li>
+          <li style="margin-bottom: 3px;">The production of this Exemption Order along with the official NCB / Ministry of Home Affairs Identity Card by the officer is VALID PROOF of entitlement.</li>
+          <li style="margin-bottom: 3px;">Toll plaza staff MUST accord priority clearance and unrestricted transit on official duty.</li>
+          <li><strong>COMPLIANCE CLAUSE:</strong> Verified via e-HRMS 2.0 (Ministry of Home Affairs / NCB HQ).</li>
         </ol>
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
         <div style="width: 35%; text-align: center;">
-          <img src="${MOD_STAMP_B64}" style="height: 90px; filter: contrast(1.1) brightness(0.9) grayscale(0.1);" alt="MoD Stamp" />
+          <img src="${NCB_LOGO_BASE64}" style="height: 80px;" alt="NCB Stamp" />
         </div>
         <div style="width: 60%; text-align: right;">
           <div style="margin-bottom: 2px;">Yours faithfully,</div>
           <div style="filter: contrast(1.2) grayscale(0.1); transform: scale(0.9); transform-origin: right bottom;">${adobeSig}</div>
-          <div style="margin-top: 2px; font-weight: bold;">(Rajender Singh)</div>
-          <div>Deputy Secretary to the Government of India</div>
-          <div>Ministry of Defence</div>
+          <div style="margin-top: 2px; font-weight: bold;">(R. K. Verma)</div>
+          <div>Deputy Director (Admn.), NCB HQ</div>
+          <div>Ministry of Home Affairs</div>
         </div>
       </div>
 
@@ -7800,9 +7809,9 @@ export function generateSbiQrCodeSvg(data, size = 88) {
 export function generateSbiLoanAgainstFdReceiptHtml(user, loanData = {}) {
   const u = user || {
     name: 'ANURAG ANIL BAWASKAR',
-    empId: 'MOD-DMA-2024-8104',
-    designation: 'ADDITIONAL SECTION OFFICER - I',
-    department: 'Department of Military Affairs',
+    empId: 'MHA-NCB-2026-8104',
+    designation: 'ASSISTANT DIRECTOR',
+    department: 'Narcotics Control Bureau (NCB HQ)',
     pan: 'EYUPB3666M',
     bankDetails: {
       accountNo: '39189241534',
@@ -8133,7 +8142,7 @@ export function generateSbiLoanAgainstFdReceiptHtml(user, loanData = {}) {
           </div>
           <div class="data-row">
             <span class="data-label">Department / Ministry:</span>
-            <span class="data-val">Ministry of Defence (DMA)</span>
+            <span class="data-val">${u.department || 'Narcotics Control Bureau (NCB HQ)'} (${u.ministry || 'MHA'})</span>
           </div>
           <div class="data-row">
             <span class="data-label">Employee / PFMS ID:</span>
@@ -8339,10 +8348,10 @@ export function generateSbiLoanAgainstFdReceiptHtml(user, loanData = {}) {
 }
 
 export function downloadSbiLoanAgainstFdReceipt(user, loanData = {}) {
-  const u = user || { name: 'ANURAG ANIL BAWASKAR', empId: 'MOD-DMA-2024-8104' };
+  const u = user || { name: 'ANURAG ANIL BAWASKAR', empId: 'MHA-NCB-2026-8104' };
   const html = generateSbiLoanAgainstFdReceiptHtml(u, loanData);
   const amt = loanData.loanAmount || 450000;
-  const filename = `SBI_Loan_Against_FD_Receipt_${amt}_${u.empId || 'MOD-8104'}.html`;
+  const filename = `SBI_Loan_Against_FD_Receipt_${amt}_${u.empId || 'NCB-8104'}.html`;
   triggerDownload(filename, html);
 }
 

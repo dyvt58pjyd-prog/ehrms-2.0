@@ -1,7 +1,7 @@
 /**
  * e-HRMS 2.0 - Official Government Letterhead & Correspondence Studio
- * Ministry of Defence • Defence Research & Development Organisation (DRDO)
- * Office of Shri Anurag A. Bawaskar, Group 'A' Gazetted Officer
+ * Ministry of Home Affairs • Narcotics Control Bureau (NCB HQ)
+ * Office of Shri Anurag Anil Bawaskar, Assistant Director (Group 'A' Gazetted)
  */
 
 import { store } from '../state.js';
@@ -10,82 +10,83 @@ import { downloadOfficialLetterhead } from '../downloader.js';
 export function renderLetterheadStudio(container) {
   const state = store.get();
   const user = state.currentUser || {
-    name: 'Anurag A. Bawaskar',
-    fullName: 'ANURAG A. BAWASKAR',
-    hindiName: 'अनुराग अ. बावस्कर',
-    designation: 'ADDITIONAL SECTION OFFICER',
-    hindiDesignation: 'अपर अनुभाग अधिकारी',
+    name: 'Anurag Anil Bawaskar',
+    fullName: 'ANURAG ANIL BAWASKAR',
+    hindiName: 'अनुराग अनिल बावस्कर',
+    designation: 'ASSISTANT DIRECTOR',
+    hindiDesignation: 'सहायक निदेशक',
     email: 'anurag.bawaskar.6328@gov.in',
-    phone: '23092020, 23092443',
-    telefax: '23092546',
-    empId: 'MOD-DMA-2024-8104'
+    phone: '011-26761000, 26174223',
+    telefax: '011-26185240',
+    empId: 'MHA-NCB-2026-8104'
   };
 
-  // Pre-configured Official Communication Templates
+  // Pre-configured Official Communication Templates (NCB HQ / MHA)
   const TEMPLATES = {
-    do_director: {
-      name: '🛡️ D.O. Letter to Director, DRDO Dighi, Pune',
-      fileNo: 'MoD/DRDO/ASO-I/2026/F-8104',
-      date: '10-September-2026',
-      classification: 'DEMI-OFFICIAL (D.O.)',
-      recipient: `Dr. Chandrashekhar R. Vyas, Sc. 'H' / Outstanding Scientist
-Director, Armament Research & Development Establishment (ARDE)
-Defence Research & Development Organisation (DRDO)
-Dighi, Pune - 411015`,
-      subject: 'Advance Intimation regarding Assumption of Substantive Charge as Additional Section Officer - I / Lead Cyber Security Specialist & Operational Lab Mobilization',
-      salutation: 'Respected Sir,',
-      body: `<p>Kindly refer to Ministry of Defence Gazette Notification No. <code>MoD/DRDO/TRF/2026/102</code> dated 08-Sep-2026 regarding my permanent posting to the Defence Research &amp; Development Organisation (DRDO), Dighi, Pune formation.</p>
+    ncb_joining: {
+      name: '🛡️ Joining Report to Deputy Director (Admn.), NCB HQ',
+      fileNo: 'I-12014/18/2026-Ad.I/NCB',
+      date: '20-November-2026',
+      classification: 'CONFIDENTIAL',
+      recipient: `Shri R. K. Verma
+Deputy Director (Admn.)
+Narcotics Control Bureau (Headquarters)
+West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066`,
+      subject: 'Joining Report on Deputation as Assistant Director, Narcotics Control Bureau (NCB HQ), New Delhi — Regarding',
+      salutation: 'Sir,',
+      body: `<p>Kindly refer to Narcotics Control Bureau (Ministry of Home Affairs) Office Order No. <code>I-12014/18/2026-Ad.I/NCB</code> dated <strong>20 November 2026</strong> appointing the undersigned on deputation to the Narcotics Control Bureau (Headquarters), New Delhi.</p>
 
-<p>I have the honour to submit that pursuant to the completion of formal relieving formalities at the President's Secretariat / Cabinet Secretariat, Rashtrapati Bhavan, New Delhi and the grant of Apex Level-1 Top Secret Security Clearance by the Directorate General of Defence Intelligence Agency (DIA), I shall be reporting to DRDO Dighi on <strong>14-September-2026 (Forenoon)</strong> to assume substantive charge as <strong>Chief Information Security Specialist / Additional Section Officer - I (Group 'A' Gazetted Cadre)</strong>.</p>
+<p>I have the honour to state that after being relieved from the Defence Research &amp; Development Organisation (DRDO), Ministry of Defence on 19 November 2026 (AN), I hereby report for duty at <strong>Narcotics Control Bureau (NCB HQ), West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066</strong> on the forenoon of <strong>20 November 2026</strong> and assume charge of the post of <strong>Assistant Director</strong> (Group 'A' Gazetted, Pay Level-7, Cell-16).</p>
 
-<p>In accordance with the operational directive for <strong>Operation VAJRA-SHAKTI</strong>, the advance technical deployment manifest, encrypted hardware telemetry protocols, and requisite cryptographic authorizations have been transmitted via secure military WAN (SEC-MIL-NET-DEL-01). Requisite residential accommodation requisition under Type-V entitlement has also been submitted through the Estate Management Unit (EMU), DRDO Pashan Road, Pune.</p>
-
-<p>I assure you of my highest dedication to the strategic mission of the Armament and Combat Engineering Cluster and look forward to working under your valued leadership.</p>`,
-      signOff: 'Yours sincerely,',
-      copyTo: `1. Office of the Chief of Defence Staff (CDS), South Block, New Delhi
-2. Joint Secretary (Estt & Personnel), Ministry of Defence, New Delhi
-3. Directorate of Cyber Security & Cryptography, DRDO Bhawan, New Delhi
-4. Personal File & Official Dispatch Register 2026`,
-      crestStyle: 'golden',
+<p>Requisite joining formalities including AEBAS biometric registration at NCB HQ, Smart Biometric Identity Card enrolment, and CGHS card endorsement have been initiated. It is requested that my service dossier and Last Pay Certificate (LPC) be taken on strength under <strong>PAO (NCB), Ministry of Home Affairs, New Delhi</strong>.</p>`,
+      signOff: 'Yours faithfully,',
+      copyTo: `1. PS to Director General, Narcotics Control Bureau, NCB HQ, New Delhi
+2. Deputy Director General (Ops &amp; Coord), NCB HQ, New Delhi
+3. Pay &amp; Accounts Officer, PAO (NCB), Ministry of Home Affairs, New Delhi
+4. Personal File &amp; Establishment-I Section, NCB HQ`,
+      crestStyle: 'ncb',
       showWatermark: true,
       showBarcode: true
     },
 
-    directive_cds: {
-      name: '🚨 Strategic Note to Chief of Defence Staff (CDS)',
-      fileNo: 'MoD/DoD/OPS-SPL/2026/8104-N-01',
-      date: '10-September-2026',
+    do_ddg_ncb: {
+      name: '📡 Inter-Agency Narcotics Cyber Intelligence Note (DDG NCB)',
+      fileNo: 'MHA/NCB-HQ/OPS-INT/2026/8104',
+      date: '24-November-2026',
       classification: 'TOP SECRET // OPERATIONAL IMMEDIATE',
-      recipient: `General Anil Chauhan, PVSM, UYSM, AVSM, SM, VSM
-Chief of Defence Staff & Secretary, Department of Military Affairs
-Apex Command War Room, South Block, New Delhi - 110011`,
-      subject: 'Tactical Technical Preparedness & C4I Terminal Hardening for Special Joint Task Force Deployment (Operation VAJRA-SHAKTI)',
-      salutation: 'Respected Chief,',
-      body: `<p>In compliance with Ministry of Defence Directive No. <code>MoD/DoD/OPS-SPL/2026/8104-SEC</code>, the 15-Member Strategic Joint Task Force technical chain of command has been mobilized on full operational standby effective 12-September-2026 (06:00 Hrs IST).</p>
+      recipient: `Shri Anil Kumar Chhapolia
+Deputy Director General (Operations & Coordination)
+Narcotics Control Bureau (Headquarters), Ministry of Home Affairs
+West Block No. 1, Wing No. 5, R.K. Puram, New Delhi - 110066`,
+      subject: 'Operational Readiness & Darknet Financial Forensics Architecture for Multi-Zonal Narcotics Interdiction',
+      salutation: 'Respected Sir,',
+      body: `<p>In continuation of NCB HQ Operations Directorate review dated 22 November 2026, the baseline cyber-forensic telemetry and inter-agency encrypted node integration with MHA Intelligence Wing and Customs / DRI zonal units has been deployed on operational readiness.</p>
 
-<p>As Lead Technical Operations Officer, I have audited the cryptographic key management systems and secure automated satellite failover links connecting South Block, Sena Bhawan, and the forward DRDO Pune facilities. Zero-trust architectural protocols have been deployed across all operational C4I endpoints.</p>
+<p>As <strong>Assistant Director (NCB HQ)</strong>, I have completed security auditing of the darknet cryptocurrency tracing terminals, Zonal Unit secure messaging gateways, and AEBAS/e-Office access controls across West Block-1. Zero-trust cryptographic controls are active across all operational intelligence endpoints.</p>
 
-<p>All 15 designated officers have completed biometric verification and received their SSO Level-1 Security Movement Passes. I shall be presenting the comprehensive In-Camera Technical Threat Telemetry during the Apex Briefing scheduled for <strong>12-September-2026 at 14:00 Hrs</strong> at the South Block War Room.</p>`,
+<p>All designated investigating officers have been briefed and onboarded onto the secure coordination grid ahead of the quarterly Inter-Ministerial Narcotics Coordination (NCORD) review.</p>`,
       signOff: 'Respectfully submitted,',
-      copyTo: `1. Office of the Defence Secretary, Ministry of Defence
-2. Vice Chief of the Army Staff (VCOAS), Sena Bhawan, New Delhi
-3. Director General, Defence Intelligence Agency (DIA)
-4. Joint Operations Command War Room Archives`,
+      copyTo: `1. Director General, Narcotics Control Bureau (NCB HQ), New Delhi
+2. Joint Secretary (IS-II), Ministry of Home Affairs, North Block
+3. Zonal Directors (Delhi, Mumbai, Chandigarh &amp; Kolkata Zones)
+4. Guard File • Operations &amp; Cyber Intelligence Division`,
       crestStyle: 'dual',
       showWatermark: true,
       showBarcode: true
     },
 
     relieving_handover: {
-      name: '🏢 Relieving & Handover Intimation Note',
-      fileNo: 'MoD/ESTT/REL-INT/2026/8104',
-      date: '08-September-2026',
+      name: '🏢 Relieving & Handover Intimation Note (DRDO to NCB)',
+      fileNo: 'DRDO/DIGHI/REL-INT/2026/8104',
+      date: '19-November-2026',
       classification: 'CONFIDENTIAL',
-      recipient: `Shri Anil Kumar Chhapolia<br>Joint Secretary to the Government of India<br>Establishment-I Branch, Ministry of Defence<br>South Block, New Delhi - 110011`,
-      subject: 'Formal Handover of Classified Cyber Infrastructure Files & Relieving from Rashtrapati Bhavan Deployment',
+      recipient: `The Director / Head of Establishment
+Defence Research & Development Organisation (DRDO)
+Dighi, Pune - 411015`,
+      subject: 'Formal Handover of Charge & Relieving on Deputation to Narcotics Control Bureau (MHA), New Delhi',
       salutation: 'Sir,',
-      body: `<p>With reference to Official Gazette Transfer Order No. <code>MoD/DRDO/TRF/2026/102</code> dated 08-Sep-2026, I have the honour to state that I have handed over complete charge of the classified cyber infrastructure dossiers, biometric registers, and network administration tokens to Shri Prateek Sengupta, ASO-II on this day (08-Sep-2026 afternoon).</p>
-<p>No vigilance or disciplinary proceedings are pending or contemplated against the undersigned. I request that my formal Last Pay Certificate (LPC) and digitized e-Service Book be transmitted electronically to the Pay &amp; Accounts Office (PAO), DRDO Accounts Pune.</p>`,
+      body: `<p>With reference to Narcotics Control Bureau Office Order No. <code>I-12014/18/2026-Ad.I/NCB</code> dated 20-Nov-2026 and parent-cadre concurrence from Ministry of Defence / DRDO HQ, I have the honour to state that I have handed over complete charge of cyber security dossiers, hardware tokens, and classified technical registers today (19-Nov-2026 afternoon).</p>
+<p>No vigilance or disciplinary proceedings are pending or contemplated against the undersigned. It is requested that my formal Last Pay Certificate (LPC) and digitized e-Service Book be transmitted electronically to <strong>PAO (NCB), Ministry of Home Affairs, New Delhi</strong>.</p>`,
       signOff: 'Yours faithfully,',
       crestStyle: 'golden',
       showWatermark: true,
@@ -93,45 +94,45 @@ Apex Command War Room, South Block, New Delhi - 110011`,
     },
 
     transfer_order: {
-      name: '📜 Official Transfer / Posting Order',
-      fileNo: 'MoD/DMA/ESTT-A/2026/T-114',
-      date: '22-September-2026',
+      name: '📜 Official Deputation & Posting Order (NCB HQ)',
+      fileNo: 'I-12014/18/2026-Ad.I/NCB',
+      date: '20-November-2026',
       classification: '[None / Standard Stationery]',
-      recipient: `The Pay & Accounts Officer (PAO)<br>Ministry of Defence (Civil)<br>South Block, New Delhi - 110011`,
-      subject: 'Transfer and Posting of Group A Gazetted Officers - Regarding',
+      recipient: `The Pay & Accounts Officer (PAO - NCB)<br>Ministry of Home Affairs<br>New Delhi`,
+      subject: 'Appointment on Deputation as Assistant Director in Narcotics Control Bureau (NCB HQ) - Regarding',
       salutation: 'Sir/Madam,',
-      body: `<p>I am directed to convey the approval of the Competent Authority for the transfer and posting of the following Group 'A' Gazetted Officer with immediate effect and until further orders:</p>
+      body: `<p>I am directed to convey the approval of the Competent Authority in the Ministry of Home Affairs for the appointment on deputation of the following Group 'A' Gazetted Officer to Narcotics Control Bureau (NCB HQ), New Delhi:</p>
 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 10px; font-size: 11px;" border="1">
   <tr style="background-color: #f1f5f9; font-weight: bold;">
     <td style="padding: 5px;">S.No</td>
-    <td style="padding: 5px;">Name & Designation</td>
-    <td style="padding: 5px;">From</td>
-    <td style="padding: 5px;">To</td>
+    <td style="padding: 5px;">Name &amp; Designation</td>
+    <td style="padding: 5px;">From (Parent Organisation)</td>
+    <td style="padding: 5px;">To (Borrowing Organisation)</td>
   </tr>
   <tr>
     <td style="padding: 5px; text-align: center;">1.</td>
-    <td style="padding: 5px;">Shri Anurag A. Bawaskar, ASO-I</td>
-    <td style="padding: 5px;">President's Secretariat, Rashtrapati Bhavan</td>
-    <td style="padding: 5px;">DRDO Headquarters, Pune</td>
+    <td style="padding: 5px;">Shri Anurag Anil Bawaskar</td>
+    <td style="padding: 5px;">DRDO, Ministry of Defence</td>
+    <td style="padding: 5px;">Assistant Director, NCB HQ, New Delhi</td>
   </tr>
 </table>
-<p>The officer is entitled to Joining Time and Transfer TA/DA as per the provisions of CCS (Joining Time) Rules, 1979 and SR 116 respectively. The expenditure on this account will be met from the sanctioned budget grant of the respective directorate.</p>`,
+<p>Pay and allowances are regulated under 7th CPC Level-7, Cell-16 (Basic ₹70,000, Net ₹1,18,232) and debited under Major Head 2055 - Police (Narcotics Control Bureau).</p>`,
       signOff: 'Yours faithfully,',
-      crestStyle: 'goi_logo',
+      crestStyle: 'ncb',
       showWatermark: true,
       showBarcode: true
     },
 
     leave_sanction: {
-      name: '🏝️ Leave Sanction Order (Earned Leave)',
-      fileNo: 'MoD/DRDO/ADMIN/LEAVE/2026/89',
-      date: '22-September-2026',
+      name: '🏝️ Leave Sanction Order (Earned Leave - NCB HQ)',
+      fileNo: 'MHA/NCB/ESTT-I/LEAVE/2026/412',
+      date: '25-November-2026',
       classification: '[None / Standard Stationery]',
-      recipient: `Shri Anurag A. Bawaskar<br>Additional Section Officer - I<br>Cyber Security Cell, DRDO Pune`,
+      recipient: `Shri Anurag Anil Bawaskar<br>Assistant Director<br>Narcotics Control Bureau (NCB HQ), New Delhi`,
       subject: 'Sanction of Earned Leave (EL)',
       salutation: 'Sir,',
-      body: `<p>With reference to your leave application submitted via e-HRMS 2.0 portal, I am directed to convey the sanction of the Competent Authority for <strong>14 days of Earned Leave (EL)</strong> from <strong>01-Oct-2026 to 14-Oct-2026</strong> along with permission to prefix and suffix public holidays.</p>
-<p>It is certified under SR-43 that the officer is likely to return to the same post and station from which they are proceeding on leave.</p>`,
+      body: `<p>With reference to your leave application submitted via e-HRMS 2.0 portal, I am directed to convey the sanction of the Competent Authority for Earned Leave as applied along with permission to prefix and suffix public holidays.</p>
+<p>It is certified under SR-43 that the officer is likely to return to the same post and station (NCB HQ, New Delhi) from which they are proceeding on leave.</p>`,
       signOff: 'Yours faithfully,',
       crestStyle: 'bw',
       showWatermark: false,
@@ -139,39 +140,38 @@ Apex Command War Room, South Block, New Delhi - 110011`,
     },
 
     show_cause: {
-      name: '⚠️ Show Cause Notice (Disciplinary)',
-      fileNo: 'MoD/VIGILANCE/SCN/2026/11',
-      date: '22-September-2026',
+      name: '⚠️ Show Cause Notice (Vigilance / Conduct)',
+      fileNo: 'MHA/NCB/VIG/SCN/2026/11',
+      date: '25-November-2026',
       classification: 'CONFIDENTIAL',
-      recipient: `[Name of Defaulter Officer]<br>[Designation]<br>[Department/Section]`,
-      subject: 'Show Cause Notice for Violation of Conduct Rules',
+      recipient: `[Name of Officer]<br>[Designation]<br>[Zonal Unit / Section]`,
+      subject: 'Show Cause Notice for Violation of CCS (Conduct) Rules, 1964',
       salutation: 'Sir/Madam,',
-      body: `<p>It has been brought to the notice of the undersigned that you have willfully violated the provisions of Rule 3(1)(i) and 3(1)(ii) of the Central Civil Services (Conduct) Rules, 1964 by [Insert Specific Incident Details Here].</p>
-<p>You are hereby directed to submit a written explanation within <strong>07 days</strong> from the date of receipt of this notice, showing cause as to why disciplinary action should not be initiated against you under the CCS (CCA) Rules, 1965.</p>
-<p>In the event of failure to submit a reply within the stipulated timeframe, it will be presumed that you have nothing to say in your defence, and ex-parte action will be taken as per extant rules.</p>`,
+      body: `<p>It has been brought to the notice of the undersigned that you have violated the provisions of Rule 3(1)(i) and 3(1)(ii) of the Central Civil Services (Conduct) Rules, 1964 by [Insert Incident Details Here].</p>
+<p>You are hereby directed to submit a written explanation within <strong>07 days</strong> from the date of receipt of this notice, showing cause as to why disciplinary action should not be initiated against you under the CCS (CCA) Rules, 1965.</p>`,
       signOff: 'Yours faithfully,',
-      crestStyle: 'golden',
+      crestStyle: 'ncb',
       showWatermark: true,
       showBarcode: true
     },
 
-    tech_sanction: {
-      name: '🔬 Technical Requisition & Security Directive',
-      fileNo: 'MoD/DRDO/TECH-REQ/2026/044',
-      date: '09-September-2026',
+    mha_coordination: {
+      name: '🔬 MHA / Forensic Tech Requisition (NCB HQ)',
+      fileNo: 'MHA/NCB/TECH-REQ/2026/044',
+      date: '25-November-2026',
       classification: 'RESTRICTED',
-      recipient: `The Director
-Directorate of Technical Coordination & Materials Management
-DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
-      subject: 'Requisition of High-Grade Hardware Security Modules (HSM) & Quantum Cryptographic Evaluation Equipment for DRDO Dighi Pune Cluster',
+      recipient: `The Joint Secretary (IS-II)
+Ministry of Home Affairs, Government of India
+North Block, New Delhi - 110001`,
+      subject: 'Requisition of Advanced Narcotics Spectroscopic & Darknet Forensic Systems for NCB HQ Special Wing',
       salutation: 'Sir,',
-      body: `<p>Under the operational mandate of Project KAVACH-II and the Strategic Deployment Directive 2026, sanction is requested for the immediate procurement and air dispatch of 4 units of FIPS 140-3 Level 4 Hardware Security Modules (HSM) and associated secure fiber cryptographic multiplexers to the DRDO Dighi campus.</p>
+      body: `<p>Under the operational mandate of the Narcotics Control Bureau (NCB HQ) Modernization Plan 2026, financial and technical sanction is requested for deployment of portable Raman narcotics spectrometers and FIPS 140-3 Level 4 forensic extraction workstations.</p>
 
-<p>The requisite expenditure shall be debitable under Major Head 2076, Minor Head 104 (Research &amp; Development Schemes). Technical specifications vetted by the Directorate General of Defence Intelligence &amp; Security are annexed herewith.</p>`,
+<p>The requisite expenditure shall be debitable under Major Head 2055 - Police (Narcotics Control Bureau). Technical specifications vetted by NCB Operations &amp; Technical Directorate are annexed herewith.</p>`,
       signOff: 'Yours sincerely,',
-      copyTo: `1. Integrated Financial Adviser (IFA Defence R&D), South Block
-2. Head of Department, Cyber Physical Systems, DRDO Dighi, Pune
-3. Guard File • Strategic Technical Requisitions 2026`,
+      copyTo: `1. PAO (NCB), Ministry of Home Affairs, New Delhi
+2. Deputy Director (Admn.), NCB HQ, R.K. Puram
+3. Guard File • Technical &amp; Forensic Division 2026`,
       crestStyle: 'dual',
       showWatermark: true,
       showBarcode: true
@@ -188,42 +188,42 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
       body: `<p style="margin: 0; min-height: 24px;">|</p>`,
       signOff: 'Yours sincerely,',
       copyTo: '',
-      crestStyle: 'golden',
+      crestStyle: 'ncb',
       showWatermark: false,
       showBarcode: false
     }
   };
 
   // Active state for letterhead composer
-  let currentTemplateKey = 'do_director';
-  let activeLetter = JSON.parse(JSON.stringify(TEMPLATES.do_director));
+  let currentTemplateKey = 'ncb_joining';
+  let activeLetter = JSON.parse(JSON.stringify(TEMPLATES.ncb_joining));
 
   // Render main studio layout
   container.innerHTML = `
     <!-- Letterhead Studio Main Header Strip -->
-    <div class="page-title-strip" style="background: linear-gradient(135deg, #7f1d1d 0%, #990000 50%, #580000 100%); color: white; padding: 20px 24px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(153, 0, 0, 0.25);">
+    <div class="page-title-strip" style="background: linear-gradient(135deg, #091638 0%, #0e2252 55%, #7f1d1d 100%); color: white; padding: 20px 24px; border-radius: 8px; margin-bottom: 20px; border-bottom: 3px solid #c9a23f; box-shadow: 0 4px 14px rgba(14, 34, 82, 0.25);">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
         <div>
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; color: #fca5a5; letter-spacing: 1px; text-transform: uppercase;">
-            <span>🇮🇳</span> GOVERNMENT OF INDIA &bull; MINISTRY OF DEFENCE &bull; DRDO
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; color: #fde68a; letter-spacing: 1px; text-transform: uppercase;">
+            <span>🇮🇳</span> GOVERNMENT OF INDIA &bull; MINISTRY OF HOME AFFAIRS &bull; NARCOTICS CONTROL BUREAU
           </div>
           <h1 style="margin: 4px 0 6px 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: 0.3px;">
             Official Letterhead &amp; Correspondence Studio
           </h1>
-          <div style="font-size: 12.5px; color: #fee2e2;">
-            Authentic Bilingual Government Stationery for <strong>${user.name || 'Anurag A. Bawaskar'}</strong> (${user.designation} &bull; Group 'A' Gazetted)
+          <div style="font-size: 12.5px; color: #e2e8f0;">
+            Authentic Bilingual Government Stationery for <strong>${user.name || 'Anurag Anil Bawaskar'}</strong> (${user.designation} &bull; NCB HQ New Delhi)
           </div>
         </div>
 
         <!-- Master Action Buttons in Header -->
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <button class="btn" id="btn-studio-download-pdf" style="background: #ffffff; color: #990000; border: none; font-weight: 800; font-size: 12.5px; padding: 9px 18px; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 7px; cursor: pointer;">
+          <button class="btn" id="btn-studio-download-pdf" style="background: #ffffff; color: #0e2252; border: none; font-weight: 800; font-size: 12.5px; padding: 9px 18px; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 7px; cursor: pointer;">
             <span>📥</span> Download Official Letter (PDF/HTML)
           </button>
           <button class="btn" id="btn-studio-download-doc" style="background: #1e3a8a; color: #ffffff; border: 1px solid #3b82f6; font-weight: 700; font-size: 12px; padding: 9px 16px; border-radius: 5px; display: flex; align-items: center; gap: 6px; cursor: pointer;" title="Export as native Word-compatible document">
             <span>📄</span> Export to Word (.doc)
           </button>
-          <button class="btn" id="btn-studio-print-letter" style="background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; font-weight: 700; font-size: 12px; padding: 9px 16px; border-radius: 5px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+          <button class="btn" id="btn-studio-print-letter" style="background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; font-weight: 700; font-size: 12px; padding: 9px 16px; border-radius: 5px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
             <span>🖨️</span> Print Letterhead (A4)
           </button>
         </div>
@@ -235,7 +235,7 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
       
       <!-- Left Controls & Customization Panel -->
       <div class="gov-card" style="padding: 18px; position: sticky; top: 80px;">
-        <h3 style="margin: 0 0 14px 0; font-size: 14px; font-weight: 800; color: #002B49; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+        <h3 style="margin: 0 0 14px 0; font-size: 14px; font-weight: 800; color: #0e2252; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
           <span>⚙️</span> Letterhead Studio Controls
         </h3>
 
@@ -245,10 +245,11 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
             Select Official Template / Preset:
           </label>
           <select id="select-template-preset" class="form-control" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1.5px solid #cbd5e1; border-radius: 5px; font-weight: 600;">
-            <option value="do_director">🛡️ D.O. Letter to Director, DRDO Pune</option>
-            <option value="directive_cds">🚨 Strategic Directive to Task Force (CDS)</option>
-            <option value="relieving_handover">🏢 Relieving &amp; Handover Intimation</option>
-            <option value="tech_sanction">🔬 Technical Requisition Note</option>
+            <option value="ncb_joining">🛡️ Joining Report to DD (Admn.), NCB HQ</option>
+            <option value="do_ddg_ncb">📡 Inter-Agency Narcotics Intelligence Note</option>
+            <option value="relieving_handover">🏢 DRDO Relieving &amp; LPC Handover Note</option>
+            <option value="transfer_order">📜 NCB Deputation Posting Order</option>
+            <option value="mha_coordination">🔬 MHA Forensic Requisition Note</option>
             <option value="blank">📄 Blank Official Stationery (Word Match)</option>
           </select>
         </div>
@@ -259,11 +260,11 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
             Header Crest Display:
           </label>
           <select id="select-crest-style" class="form-control" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1.5px solid #cbd5e1; border-radius: 5px; font-weight: 600;">
+            <option value="ncb">🛡️ NCB Official Crest + Ashoka Emblem</option>
             <option value="golden">👑 Golden Ashoka Emblem (Exact Word Match)</option>
-            <option value="dual">🛡️ Dual: Golden Emblem + DRDO Roundel Seal</option>
-            <option value="drdo">🎖️ DRDO Official Roundel Seal</option>
+            <option value="dual">🏛️ Dual: Golden Emblem + NCB Shield</option>
             <option value="monochrome">🇮🇳 State Lion Emblem (Monochrome)</option>
-            <option value="goi_logo">🏛️ Government of India (Official Layout)</option>
+            <option value="goi_logo">🏢 Government of India (Official Layout)</option>
           </select>
         </div>
 
@@ -388,34 +389,38 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
             
             <!-- Left Side: Officer Designation & Credentials (Centered) -->
             <div style="width: 36%; text-align: center; font-size: 11px; line-height: 1.35; color: #c00000;">
-              <div style="font-size: 15px; font-weight: 800; color: #c00000; font-family: 'Kokila', 'Mangal', 'Segoe UI', Arial, sans-serif;">${user.hindiName || 'अनुराग अ. बावस्कर'}</div>
-              <div style="font-size: 11.5px; font-weight: 700; color: #c00000; margin-bottom: 2px;">${user.hindiDesignation || 'अपर अनुभाग अधिकारी'}</div>
-              <div style="font-size: 14px; font-weight: 800; color: #c00000;">${user.name || 'Anurag A. Bawaskar'}</div>
-              <div style="font-size: 10.5px; font-weight: 700; color: #c00000; text-transform: uppercase;">${user.designation || 'ADDITIONAL SECTION OFFICER'}</div>
+              <div style="font-size: 15px; font-weight: 800; color: #c00000; font-family: 'Kokila', 'Mangal', 'Segoe UI', Arial, sans-serif;">${user.hindiName || 'अनुराग अनिल बावस्कर'}</div>
+              <div style="font-size: 11.5px; font-weight: 700; color: #c00000; margin-bottom: 2px;">${user.hindiDesignation || 'सहायक निदेशक'}</div>
+              <div style="font-size: 14px; font-weight: 800; color: #c00000;">${user.name || 'Anurag Anil Bawaskar'}</div>
+              <div style="font-size: 10.5px; font-weight: 700; color: #c00000; text-transform: uppercase;">${user.designation || 'ASSISTANT DIRECTOR'}</div>
               <div style="font-size: 9.5px; margin-top: 6px; line-height: 1.45;">
                 <div><span style="color: #0066cc; text-decoration: underline;">E-mail :</span> <a href="mailto:${user.email || 'anurag.bawaskar.6328@gov.in'}" style="color: #c00000; text-decoration: none;">${user.email || 'anurag.bawaskar.6328@gov.in'}</a></div>
-                <div><span style="color: #0066cc; text-decoration: underline;">Website :</span> <a href="https://www.mod.gov.in" target="_blank" style="color: #c00000; text-decoration: none;">www.mod.gov.in</a></div>
+                <div><span style="color: #0066cc; text-decoration: underline;">Website :</span> <a href="https://narcoticsindia.nic.in" target="_blank" style="color: #c00000; text-decoration: none;">www.narcoticsindia.nic.in</a></div>
               </div>
             </div>
 
-            <!-- Center: Crest Display Area (Golden Emblem / DRDO) -->
+            <!-- Center: Crest Display Area (NCB Official Crest / Golden Emblem) -->
             <div id="paper-crest-center" style="width: 28%; text-align: center;">
-              <img id="paper-emblem-img" src="assets/emblem_golden.png" alt="State Emblem of India" style="width: 50px; height: 76px; object-fit: contain; margin: 0 auto; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));">
+              <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0 auto 2px;">
+                <img src="assets/emblem_golden.png" alt="State Emblem of India" style="width: 44px; height: 68px; object-fit: contain; display: block;">
+                <img src="assets/ncb_logo.png" alt="NCB Crest" style="width: 54px; height: 54px; object-fit: contain; display: block;">
+              </div>
+              <div style="font-size: 8.5px; font-weight: 800; color: #0e2252;">सत्यमेव जयते &bull; आसूचना प्रवर्तन समन्वय</div>
             </div>
 
-            <!-- Right Side: Ministry of Defence & DRDO Headquarters (Centered) -->
+            <!-- Right Side: Ministry of Home Affairs & NCB Headquarters (Centered) -->
             <div style="width: 36%; text-align: center; font-size: 11px; line-height: 1.35; color: #c00000;">
               <div style="font-size: 13.5px; font-weight: 800; color: #c00000;">भारत सरकार</div>
-              <div style="font-size: 12px; font-weight: 700; color: #c00000;">रक्षा मंत्रालय</div>
-              <div style="font-size: 12px; font-weight: 700; color: #c00000; margin-bottom: 4px;">डी.आर.डी.ओ.</div>
+              <div style="font-size: 12px; font-weight: 700; color: #c00000;">गृह मंत्रालय</div>
+              <div style="font-size: 12px; font-weight: 700; color: #c00000; margin-bottom: 4px;">स्वापक नियंत्रण ब्यूरो</div>
               <div style="font-size: 12.5px; font-weight: 700; color: #c00000;">Government of India</div>
-              <div style="font-size: 11.5px; font-weight: 700; color: #c00000;">Ministry of Defence</div>
-              <div style="font-size: 11.5px; font-weight: 800; color: #c00000;">DRDO</div>
-              <div style="font-size: 9.5px; color: #c00000; margin-top: 3px; line-height: 1.35;">
-                <div>डी.आर.डी.ओ. भवन, नई दिल्ली-110011</div>
-                <div>DRDO Bhawan, New Delhi-110011</div>
-                <div><span style="color: #0066cc; text-decoration: underline;">Tel. :</span> <span style="color: #c00000;">${user.phone || '23092020, 23092443'}</span></div>
-                <div><span style="color: #0066cc; text-decoration: underline;">Telefax :</span> <span style="color: #c00000;">${user.telefax || '23092546'}</span></div>
+              <div style="font-size: 11.5px; font-weight: 700; color: #c00000;">Ministry of Home Affairs</div>
+              <div style="font-size: 11px; font-weight: 800; color: #c00000;">Narcotics Control Bureau</div>
+              <div style="font-size: 9px; color: #c00000; margin-top: 3px; line-height: 1.35;">
+                <div>पश्चिमी खंड-1, आर. के. पुरम, नई दिल्ली-110066</div>
+                <div>West Block-1, R.K. Puram, New Delhi-110066</div>
+                <div><span style="color: #0066cc; text-decoration: underline;">Tel. :</span> <span style="color: #c00000;">${user.phone || '011-26761000'}</span></div>
+                <div><span style="color: #0066cc; text-decoration: underline;">Fax :</span> <span style="color: #c00000;">${user.telefax || '011-26185240'}</span></div>
               </div>
             </div>
 
@@ -488,9 +493,9 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
                 </div>
                 
                 <div style="margin-top: 6px;">
-                  <strong style="font-size: 11px; color: #002B49;">(${user.fullName || user.name})</strong><br>
+                  <strong style="font-size: 11px; color: #0e2252;">(${user.fullName || user.name})</strong><br>
                   <span style="font-size: 9.5px; color: #475569;">${user.designation}</span><br>
-                  <span style="font-size: 8.5px; color: #64748b;">Ministry of Defence &bull; DRDO</span>
+                  <span style="font-size: 8.5px; color: #64748b;">Ministry of Home Affairs &bull; Narcotics Control Bureau (NCB HQ)</span>
                 </div>
               </div>
 
@@ -498,8 +503,8 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
 
             <!-- Authentic eOffice Footer -->
             <div id="paper-barcode-wrap" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #cbd5e1; margin-top: 28px; padding-top: 6px; font-size: 9px; color: #475569;">
-              <div style="text-align: left;"><strong>eOffice Receipt No:</strong> E-3498234 / 2026 / DRDO-HQ</div>
-              <div style="text-align: right;">Generated via NIC eOffice System &bull; Page 1 of 1</div>
+              <div style="text-align: left;"><strong>eOffice Receipt No:</strong> E-3498234 / 2026 / NCB-HQ</div>
+              <div style="text-align: right;">Generated via NIC eOffice System (MHA) &bull; Page 1 of 1</div>
             </div>
             
             <!-- Bottom Classification Banner -->
@@ -561,10 +566,19 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
       `;
     } else if (style === 'dual') {
       paperCrestCenter.innerHTML = `
-        <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin: 0 auto 3px;">
-          <img src="assets/emblem_golden.png" alt="State Emblem of India" style="width: 44px; height: 68px; object-fit: contain; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 auto 3px;">
+          <img src="assets/emblem_golden.png" alt="State Emblem of India" style="width: 42px; height: 64px; object-fit: contain; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));">
+          <img src="assets/ncb_logo.png" alt="NCB Crest" style="width: 50px; height: 50px; object-fit: contain; display: block;">
         </div>
-        <div style="font-size: 8.5px; font-weight: 800; color: #c00000; letter-spacing: 0.8px;">सत्यमेव जयते &bull; बलस्य मूलं विज्ञानम्</div>
+        <div style="font-size: 8.5px; font-weight: 800; color: #0e2252; letter-spacing: 0.6px;">सत्यमेव जयते &bull; आसूचना प्रवर्तन समन्वय</div>
+      `;
+    } else if (style === 'ncb') {
+      paperCrestCenter.innerHTML = `
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0 auto 2px;">
+          <img src="assets/emblem_golden.png" alt="State Emblem of India" style="width: 44px; height: 68px; object-fit: contain; display: block;">
+          <img src="assets/ncb_logo.png" alt="NCB Crest" style="width: 54px; height: 54px; object-fit: contain; display: block;">
+        </div>
+        <div style="font-size: 8.5px; font-weight: 800; color: #0e2252;">सत्यमेव जयते &bull; आसूचना प्रवर्तन समन्वय</div>
       `;
     } else if (style === 'drdo') {
       paperCrestCenter.innerHTML = `
@@ -781,32 +795,32 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
           <table style="width:100%; margin-bottom:12pt; padding-bottom:8pt;">
             <tr>
               <td style="width:36%; color:#c00000; text-align:center; vertical-align:top; font-size:10.5pt; line-height:1.35;">
-                <strong style="font-size:13pt; color:#c00000;">${user.hindiName || 'अनुराग अ. बावस्कर'}</strong><br>
-                <strong style="font-size:10pt; color:#c00000;">${user.hindiDesignation || 'अपर अनुभाग अधिकारी'}</strong><br>
-                <strong style="font-size:12pt; color:#c00000;">${user.name || 'Anurag A. Bawaskar'}</strong><br>
-                <strong style="font-size:9.5pt; color:#c00000;">${user.designation || 'ADDITIONAL SECTION OFFICER'}</strong><br>
+                <strong style="font-size:13pt; color:#c00000;">${user.hindiName || 'अनुराग अनिल बावस्कर'}</strong><br>
+                <strong style="font-size:10pt; color:#c00000;">${user.hindiDesignation || 'सहायक निदेशक'}</strong><br>
+                <strong style="font-size:12pt; color:#c00000;">${user.name || 'Anurag Anil Bawaskar'}</strong><br>
+                <strong style="font-size:9.5pt; color:#c00000;">${user.designation || 'ASSISTANT DIRECTOR'}</strong><br>
                 <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">E-mail :</span> <span style="font-size:9pt; color:#c00000;">${user.email || 'anurag.bawaskar.6328@gov.in'}</span><br>
-                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Website :</span> <span style="font-size:9pt; color:#c00000;">www.mod.gov.in</span>
+                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Website :</span> <span style="font-size:9pt; color:#c00000;">narcoticsindia.nic.in</span>
               </td>
               <td style="width:28%; text-align:center; vertical-align:top;">
                 ${activeLetter.crestStyle === 'goi_logo' ? `
                   <strong style="font-size:11pt; color:#c00000;">GOVERNMENT OF INDIA</strong>
                 ` : `
                   <strong style="font-size:11pt; color:#c00000;">भारत सरकार / GOVT. OF INDIA</strong><br>
-                  <strong style="font-size:9pt; color:#c00000;">सत्यमेव जयते</strong>
+                  <strong style="font-size:9pt; color:#c00000;">सत्यमेव जयते &bull; स्वापक नियंत्रण ब्यूरो</strong>
                 `}
               </td>
               <td style="width:36%; text-align:center; color:#c00000; vertical-align:top; font-size:10.5pt; line-height:1.35;">
                 <strong style="font-size:12pt; color:#c00000;">भारत सरकार</strong><br>
-                <strong style="color:#c00000;">रक्षा मंत्रालय</strong><br>
-                <strong style="color:#c00000;">डी.आर.डी.ओ.</strong><br>
+                <strong style="color:#c00000;">गृह मंत्रालय</strong><br>
+                <strong style="color:#c00000;">स्वापक नियंत्रण ब्यूरो (मुख्यालय)</strong><br>
                 <strong style="font-size:11.5pt; color:#c00000;">Government of India</strong><br>
-                <strong style="color:#c00000;">Ministry of Defence</strong><br>
-                <strong style="color:#c00000;">DRDO</strong><br>
-                <span style="font-size:9pt; color:#c00000;">डी.आर.डी.ओ. भवन, नई दिल्ली-110011</span><br>
-                <span style="font-size:9pt; color:#c00000;">DRDO Bhawan, New Delhi-110011</span><br>
-                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Tel. :</span> <span style="font-size:9pt; color:#c00000;">${user.phone || '23092020, 23092443'}</span><br>
-                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Telefax :</span> <span style="font-size:9pt; color:#c00000;">${user.telefax || '23092546'}</span>
+                <strong style="color:#c00000;">Ministry of Home Affairs</strong><br>
+                <strong style="color:#c00000;">Narcotics Control Bureau (HQ)</strong><br>
+                <span style="font-size:9pt; color:#c00000;">पश्चिमी खंड-1, आर. के. पुरम, नई दिल्ली-110066</span><br>
+                <span style="font-size:9pt; color:#c00000;">West Block No. 1, R.K. Puram, New Delhi-110066</span><br>
+                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Tel. :</span> <span style="font-size:9pt; color:#c00000;">${user.phone || '011-26761000, 26761142'}</span><br>
+                <span style="font-size:9pt; color:#0066cc; text-decoration:underline;">Telefax :</span> <span style="font-size:9pt; color:#c00000;">${user.telefax || '011-26185240'}</span>
               </td>
             </tr>
           </table>
@@ -870,9 +884,9 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
                   </table>
                   
                   <div style="margin-top: 8pt;">
-                    <strong style="font-size:11pt; color:#002B49;">(${user.fullName || user.name})</strong><br>
+                    <strong style="font-size:11pt; color:#0e2252;">(${user.fullName || user.name})</strong><br>
                     <span style="font-size:9.5pt; color:#475569;">${user.designation}</span><br>
-                    <span style="font-size:8.5pt; color:#64748b;">Ministry of Defence &bull; DRDO</span>
+                    <span style="font-size:8.5pt; color:#64748b;">Ministry of Home Affairs &bull; Narcotics Control Bureau (NCB HQ)</span>
                   </div>
                 </td>
               </tr>
@@ -884,8 +898,8 @@ DRDO Headquarters, DRDO Bhawan, New Delhi - 110011`,
             <strong style="color: #c00000; font-size: 12pt; text-transform: uppercase; letter-spacing: 2pt;">${activeLetter.classification}</strong>
             <table style="width: 100%; margin-top: 8pt; font-size: 9pt; color: #475569;">
               <tr>
-                <td style="text-align: left;"><strong>eOffice Receipt No:</strong> E-3498234 / 2026 / DRDO-HQ</td>
-                <td style="text-align: right;">Generated via NIC eOffice System &bull; Page 1 of 1</td>
+                <td style="text-align: left;"><strong>eOffice Receipt No:</strong> E-3498234 / 2026 / NCB-HQ</td>
+                <td style="text-align: right;">Generated via NIC eOffice System (MHA) &bull; Page 1 of 1</td>
               </tr>
             </table>
           </div>
@@ -1000,7 +1014,7 @@ Do not use markdown blocks around the JSON output, return raw valid JSON.`;
   // Copy Text Button
   const btnCopy = container.querySelector('#btn-copy-text');
   btnCopy.addEventListener('click', () => {
-    const textToCopy = `FILE NO: ${inputFileNo.value}\nDATE: ${inputDate.value}\n\nTo,\n${paperRecipient.innerText}\n\nSUBJECT: ${paperSubject.innerText}\n\n${paperSalutation.innerText}\n\n${paperBody.innerText}\n\n${paperSignOff.innerText}\n(${user.fullName || user.name})\n${user.designation}\nMinistry of Defence • DRDO`;
+    const textToCopy = `FILE NO: ${inputFileNo.value}\nDATE: ${inputDate.value}\n\nTo,\n${paperRecipient.innerText}\n\nSUBJECT: ${paperSubject.innerText}\n\n${paperSalutation.innerText}\n\n${paperBody.innerText}\n\n${paperSignOff.innerText}\n(${user.fullName || user.name})\n${user.designation}\nNarcotics Control Bureau (NCB HQ) • Ministry of Home Affairs`;
     navigator.clipboard.writeText(textToCopy).then(() => {
       btnCopy.innerHTML = '<span>✅</span> Copied to Clipboard!';
       setTimeout(() => {

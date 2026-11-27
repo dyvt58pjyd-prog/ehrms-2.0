@@ -1,7 +1,6 @@
 /**
  * e-HRMS 2.0 - Role-Adaptive Executive Dashboard Module
- * Department of Military Affairs • Ministry of Defence
- * Department of Personnel & Training (DoPT), Government of India
+ * Narcotics Control Bureau (NCB HQ) • Ministry of Home Affairs, Government of India
  */
 
 import { store, OFFICIAL_PERSONAS } from '../state.js';
@@ -54,8 +53,9 @@ export function renderDashboard(container) {
           </div>
         </div>
       </div>
-      <div style="display: flex; align-items: center; justify-content: center; padding: 0 16px;">
-        <img src="assets/emblem.png" alt="State Emblem of India" style="width: 44px; height: 70px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" title="State Emblem of India &bull; Government of India">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 16px;">
+        <img src="assets/ncb_logo.png" alt="Narcotics Control Bureau Crest" style="height: 68px; width: auto; object-fit: contain; background: rgba(255,255,255,0.92); padding: 4px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.25);" title="Narcotics Control Bureau (NCB HQ)">
+        <img src="assets/emblem.png" alt="State Emblem of India" style="width: 40px; height: 64px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" title="State Emblem of India &bull; Government of India">
       </div>
       <div class="officer-stats-right">
         ${renderPersonaStatPill(activeRole, serviceYears, yearsToRetire, totalPending, state)}
@@ -65,12 +65,15 @@ export function renderDashboard(container) {
     <!-- Active Persona Mode Indicator Strip -->
     <div style="background: #f1f5f9; border-left: 4px solid var(--goi-navy); padding: 8px 16px; border-radius: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
       <div style="font-size: 12px; color: var(--goi-navy); font-weight: 600;">
-        📌 Active e-HRMS 2.0 Desk: <strong>${currentPersona.roleTitle}</strong> &bull; Delegated Jurisdiction: <strong>${currentPersona.department}, ${currentPersona.ministry}</strong>
+        📌 Active NCB HQ (MHA) Desk: <strong>${currentPersona.roleTitle}</strong> &bull; Delegated Jurisdiction: <strong>${currentPersona.department}, ${currentPersona.ministry}</strong>
       </div>
       <a href="#login" class="btn btn-sm btn-outline" style="font-size: 11px; padding: 2px 8px; color: #dc2626; border-color: #fca5a5; font-weight: 600;">🔐 Sign Out</a>
     </div>
 
-    <!-- Special Operational Deployment Directive (Ministry of Defence, New Delhi) -->
+    <!-- Active NCB HQ Deputation Appointment Card -->
+    ${renderNcbDeputationBanner(state, user)}
+
+    <!-- Historical MoD Special Operation Directive Banner -->
     ${renderSpecialOperationBanner(state)}
 
     <!-- Main Dynamic Content based on Active Officer Role -->
@@ -123,11 +126,11 @@ function renderPersonaStatPill(role, serviceYears, yearsToRetire, totalPending, 
       return `
         <div class="stat-pill">
           <div class="val">10501</div>
-          <div class="lbl">DDO Code (CGDA)</div>
+          <div class="lbl">DDO • PAO (NCB, MHA)</div>
         </div>
         <div class="stat-pill" style="border-color: #10b981;">
           <div class="val" style="color: #047857;">₹1.40 Cr</div>
-          <div class="lbl">Aug 2026 DBT Disbursed</div>
+          <div class="lbl">Nov 2026 DBT Disbursed</div>
         </div>
       `;
     case 'ADMIN':
@@ -341,7 +344,7 @@ function renderEmployeeDashboard(state, user, leaves) {
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
               <div>
                 <div style="font-weight: 600; font-size: 13px;">Vigilance Status</div>
-                <div style="font-size: 11px; color: var(--text-muted);">CVO MoD / DMA Clearance</div>
+                <div style="font-size: 11px; color: var(--text-muted);">CVO (NCB HQ / MHA) Clearance</div>
               </div>
               <span class="status-badge badge-clear">Clear</span>
             </div>
@@ -412,7 +415,7 @@ function renderApproverDashboard(state, totalPending) {
           Manager Self Service (MSS) - Pending Executive Queue (${totalPending} Requests)
         </div>
         <div style="font-size: 12.5px; color: #78350f; margin-top: 2px;">
-          You have delegated administrative powers to sanction Leaves, Tours, and Reimbursements under Ministry of Defence Delegation of Financial Powers (DFP).
+          You have delegated administrative powers to sanction Leaves, Tours, and Reimbursements under Ministry of Home Affairs (NCB HQ) Delegation of Financial Powers (DFPR).
         </div>
       </div>
       <a href="#approvals" class="btn btn-sm btn-primary" style="background: #b45309; border-color: #92400e;">Open MSS Inbox &rarr;</a>
@@ -441,7 +444,7 @@ function renderApproverDashboard(state, totalPending) {
               <tbody>
                 ${pendingLeaves.map(app => `
                   <tr>
-                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">ASO-I (MOD-DMA-2024-8104)</span></td>
+                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">Assistant Director (41028104 • NCB HQ)</span></td>
                     <td>🌴 Leave (${app.typeName})</td>
                     <td>${app.startDate} to ${app.endDate} (${app.days} days)<br><span style="font-size: 11px; color: #475569;">"${app.reason}"</span></td>
                     <td>
@@ -451,7 +454,7 @@ function renderApproverDashboard(state, totalPending) {
                 `).join('')}
                 ${pendingTours.map(t => `
                   <tr>
-                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">ASO-I (MOD-DMA-2024-8104)</span></td>
+                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">Assistant Director (41028104 • NCB HQ)</span></td>
                     <td>✈️ Official Tour</td>
                     <td>${t.purpose} (${t.startDate} to ${t.endDate})</td>
                     <td>
@@ -461,7 +464,7 @@ function renderApproverDashboard(state, totalPending) {
                 `).join('')}
                 ${pendingClaims.map(c => `
                   <tr>
-                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">ASO-I (MOD-DMA-2024-8104)</span></td>
+                    <td><strong>Anurag Anil Bawaskar</strong><br><span style="font-size: 11px; color: var(--text-muted);">Assistant Director (41028104 • NCB HQ)</span></td>
                     <td>🧾 Allowance Claim</td>
                     <td>${c.category} (₹${c.amountClaimed.toLocaleString('en-IN')})</td>
                     <td>
@@ -485,7 +488,7 @@ function renderApproverDashboard(state, totalPending) {
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-weight: 700; color: var(--goi-navy); font-size: 13px;">
-                    APAR Cycle 2025-26 &bull; ASO-I Anurag Anil Bawaskar (MOD-DMA-2024-8104)
+                    APAR Cycle 2025-26 &bull; Assistant Director Anurag Anil Bawaskar (41028104 &bull; NCB HQ)
                   </div>
                   <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
                     Self-Appraisal submitted on 14-Apr-2026 &bull; Work Accomplishment: 100% Target Completion & Digitization
@@ -512,7 +515,7 @@ function renderApproverDashboard(state, totalPending) {
           </div>
           <div class="gov-card-body" style="font-size: 12px; line-height: 1.6; color: var(--text-secondary);">
             <div style="margin-bottom: 10px;">
-              <strong>Sanctioning Authority:</strong> Joint Secretary (Establishment & Coordination), Department of Military Affairs.
+              <strong>Sanctioning Authority:</strong> Deputy Director General (Ops &amp; Coordination), Narcotics Control Bureau (NCB HQ), MHA.
             </div>
             <div style="margin-bottom: 10px;">
               <strong>Financial Powers:</strong> Contingent expenditure up to ₹50,000 per case; TA/DA and Travel claims sanction.
@@ -551,7 +554,7 @@ function renderBranchOfficerDashboard(state) {
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-weight: 700; color: var(--goi-navy); font-size: 13px;">
-                    1. ASO-I Anurag Anil Bawaskar &bull; Leave Admissibility Verification
+                    1. Assistant Director Anurag Anil Bawaskar &bull; Leave Admissibility Verification
                   </div>
                   <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
                     Earned Leave for 5 days &bull; Verified EL Balance: 30 Days in Credit &bull; Rule 26 CCS (Leave) Rules
@@ -560,7 +563,7 @@ function renderBranchOfficerDashboard(state) {
                 <span class="status-badge badge-sanctioned">Admissible</span>
               </div>
               <div style="margin-top: 10px; display: flex; gap: 8px;">
-                <button class="btn btn-sm btn-primary" onclick="alert('Scrutiny Verified: Forwarded with positive recommendation to Director (Estt & Joint Staff).')">✅ Recommend to Director</button>
+                <button class="btn btn-sm btn-primary" onclick="alert('Scrutiny Verified: Forwarded with positive recommendation to DDG (Ops & Coord), NCB HQ.')">✅ Recommend to DDG</button>
                 <button class="btn btn-sm btn-outline" onclick="alert('Query raised on leave application.')">❓ Seek Clarification</button>
               </div>
             </div>
@@ -572,7 +575,7 @@ function renderBranchOfficerDashboard(state) {
                     2. Children Education Allowance (CEA) Claim Scrutiny
                   </div>
                   <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
-                    Claim Ref: DMA/CLM/2026/0541 &bull; School Fee Receipt & Bonafide Certificate checked under DoPT OM
+                    Claim Ref: NCB/CLM/2026/0541 &bull; School Fee Receipt & Bonafide Certificate checked under DoPT OM
                   </div>
                 </div>
                 <span class="status-badge badge-pending">Under Verification</span>
@@ -609,8 +612,8 @@ function renderBranchOfficerDashboard(state) {
             <span class="gov-card-title">📌 Establishment-I Roster</span>
           </div>
           <div class="gov-card-body" style="font-size: 12px; line-height: 1.6;">
-            <div><strong>Controlling Officer:</strong> Shri Rajender Singh, US</div>
-            <div><strong>Branch:</strong> Estt-I (Civilian Officers & Secretariats)</div>
+            <div><strong>Controlling Officer:</strong> Shri R. K. Verma, DD (Admn.)</div>
+            <div><strong>Branch:</strong> Ad.I / Establishment-I (NCB HQ, MHA)</div>
             <div><strong>Total Active Files:</strong> 18 Files</div>
             <div><strong>SLA Turnaround:</strong> 48 Hours max</div>
           </div>
@@ -639,7 +642,7 @@ function renderDdoDashboard(state, user) {
         <!-- 7th CPC Payroll Bill & Treasury Disbursement Card -->
         <div class="gov-card mb-20">
           <div class="gov-card-header">
-            <span class="gov-card-title">💰 7th CPC Payroll & Major Head 2052 Disbursement Desk</span>
+            <span class="gov-card-title">💰 7th CPC Payroll &amp; Major Head 2055 (NCB) Disbursement Desk</span>
             <span class="badge-tag-gov" style="background: #10b981; color: white;">DDO Code: 10501</span>
           </div>
           <div class="gov-card-body">
@@ -648,7 +651,7 @@ function renderDdoDashboard(state, user) {
                 ${curMonthName} ${curYear} Monthly Salary Bill Disbursed Successfully via PFMS Direct Benefit Transfer (DBT)
               </div>
               <div style="font-size: 11.5px; color: #15803d; margin-top: 4px;">
-                Bill Ref: <strong>DMA/ESTT-I/SAL-${curShortMon}-${curYear}/0412</strong> &bull; Token No: <strong>TK-10501-${curYear}-${curMonthNum}</strong> &bull; PAO: <strong>001488 (MoD Secretariat)</strong>
+                Bill Ref: <strong>NCB/HQ/ESTT/SAL-${curShortMon}-${curYear}/0412</strong> &bull; Token No: <strong>TK-10501-${curYear}-${curMonthNum}</strong> &bull; PAO: <strong>021840 (PAO NCB, MHA New Delhi)</strong>
               </div>
             </div>
 
@@ -660,7 +663,7 @@ function renderDdoDashboard(state, user) {
                     ANURAG ANIL BAWASKAR &bull; Group 'A' (Gazetted)
                   </div>
                   <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
-                    Additional Section Officer - I &bull; ID: <strong>MOD-DMA-2024-8104</strong> &bull; PAN: <strong>${user.pan}</strong> &bull; Mobile: <strong>${user.mobile}</strong>
+                    Assistant Director (NCB HQ) &bull; ID: <strong>${user.empId || 'MHA-NCB-2026-8104'}</strong> &bull; PAN: <strong>${user.pan}</strong> &bull; Mobile: <strong>${user.mobile}</strong>
                   </div>
                 </div>
                 <span class="status-badge badge-sanctioned" style="font-size: 11px; padding: 3px 8px;">PFMS Disbursed</span>
@@ -690,12 +693,12 @@ function renderDdoDashboard(state, user) {
               <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 4px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px;">
                 <div><strong>Disbursed To Account:</strong> 39189241534 (${user.bankDetails.accountHolder})</div>
                 <div><strong>Bank & Branch:</strong> ${user.bankDetails.bankName}, ${user.bankDetails.branch} (IFSC: ${user.bankDetails.ifsc})</div>
-                <div style="color: #047857; font-weight: 600; margin-top: 2px;">✓ PFMS UTR: SBIN2624491823 &bull; DSP (Defence Salary Package) Mandate Verified</div>
+                <div style="color: #047857; font-weight: 600; margin-top: 2px;">✓ PFMS UTR: SBIN2624491823 &bull; PAO (NCB), MHA New Delhi Mandate Verified</div>
               </div>
 
               <div style="display: flex; gap: 10px;">
                 <button class="btn btn-sm btn-primary" onclick="window.location.hash='#salary'">💳 View & Download 7th CPC Pay Slip &rarr;</button>
-                <button class="btn btn-sm btn-outline" onclick="alert('PFMS Bill Schedule 0412 for DDO Code 10501 downloaded.')">📥 Download PFMS Schedule (PDF)</button>
+                <button class="btn btn-sm btn-outline" onclick="alert('PFMS Bill Schedule 0412 for PAO (NCB) / DDO Code 10501 downloaded.')">📥 Download PFMS Schedule (PDF)</button>
               </div>
             </div>
 
@@ -721,8 +724,8 @@ function renderDdoDashboard(state, user) {
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>DMA/CLM/2026/0541</strong></td>
-                  <td>Anurag Anil Bawaskar (ASO-I)</td>
+                  <td><strong>NCB/CLM/2026/0541</strong></td>
+                  <td>Anurag Anil Bawaskar (Assistant Director)</td>
                   <td>Children Education Allowance (CEA)</td>
                   <td style="font-weight: 700; color: #166534;">₹18,000</td>
                   <td>
@@ -743,12 +746,12 @@ function renderDdoDashboard(state, user) {
             <span class="gov-card-title">🏦 DDO 10501 Accounting Ledger</span>
           </div>
           <div class="gov-card-body" style="font-size: 12px; line-height: 1.6;">
-            <div><strong>DDO Code:</strong> 10501 (Department of Defence Finance - CGDA)</div>
-            <div><strong>PAO Code:</strong> 001488 (MoD Secretariat / CGDA)</div>
-            <div><strong>Major Head:</strong> 2052 (Secretariat General)</div>
+            <div><strong>DDO Code:</strong> 10501 (NCB HQ, Ministry of Home Affairs)</div>
+            <div><strong>PAO Code:</strong> 021840 (PAO (NCB), MHA New Delhi)</div>
+            <div><strong>Major Head:</strong> 2055 - Police (Narcotics Control Bureau)</div>
             <div><strong>Disbursing Bank:</strong> State Bank of India</div>
-            <div><strong>TDS TAN:</strong> DELD01824A</div>
-            <div><strong>Form 16 Quarter:</strong> Q1 (Apr-Jun 2026) Filed</div>
+            <div><strong>TDS TAN:</strong> DELN04812B</div>
+            <div><strong>Form 16 Quarter:</strong> Q3 (Oct-Dec 2026) Active</div>
           </div>
         </div>
 
@@ -767,8 +770,8 @@ function renderAdminDashboard(state) {
         <!-- Departmental Cadre Governance Card -->
         <div class="gov-card mb-20">
           <div class="gov-card-header">
-            <span class="gov-card-title">👑 Department of Military Affairs - Cadre Controlling Authority (CCA)</span>
-            <a href="#analytics" class="btn btn-sm btn-primary">DMA Cadre Directory & Analytics &rarr;</a>
+            <span class="gov-card-title">👑 Narcotics Control Bureau (NCB HQ) - Cadre Controlling Authority (CCA)</span>
+            <a href="#analytics" class="btn btn-sm btn-primary">NCB HQ Directory &amp; Analytics &rarr;</a>
           </div>
           <div class="gov-card-body">
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; text-align: center; margin-bottom: 16px;">
@@ -796,11 +799,11 @@ function renderAdminDashboard(state) {
             </div>
 
             <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.6;">
-              As the Cadre Controlling Authority, you oversee the recruitment, confirmation, cadre restructuring, and annual performance appraisal (SPARROW) for all Defence Civil Services and Central Secretariat personnel in the Department of Military Affairs.
+              As the Cadre Controlling Authority, you oversee deputation induction, confirmation, zonal postings, and annual performance appraisal (SPARROW) for Group 'A'/'B' enforcement and intelligence officers in the Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs.
             </div>
 
             <div style="margin-top: 14px; display: flex; gap: 10px;">
-              <button class="btn btn-primary" onclick="window.location.hash='#analytics'">📊 View Full 1,280 Cadre Analytics</button>
+              <button class="btn btn-primary" onclick="window.location.hash='#analytics'">📊 View Full NCB HQ Cadre Analytics</button>
               <button class="btn btn-outline" onclick="window.location.hash='#apar'">🎯 SPARROW Reviewing Officer Endorsements</button>
             </div>
           </div>
@@ -819,8 +822,8 @@ function renderAdminDashboard(state) {
                 <span style="color: #166534; font-weight: 700;">Active (2FA Enforced)</span>
               </div>
               <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 6px;">
-                <span>DDO Code 10501 (CGDA / Defence Finance) PFMS Integration Status</span>
-                <span style="color: #166534; font-weight: 700;">Connected (PAO 001488)</span>
+                <span>DDO Code 10501 (NCB HQ / MHA) PFMS Integration Status</span>
+                <span style="color: #166534; font-weight: 700;">Connected (PAO 021840)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
                 <span>C-DAC Aadhaar e-Sign 3.0 ESP Health</span>
@@ -835,13 +838,13 @@ function renderAdminDashboard(state) {
       <div class="col-4">
         <div class="gov-card mb-20">
           <div class="gov-card-header">
-            <span class="gov-card-title">🏛️ Executive Secretariat</span>
+            <span class="gov-card-title">🏛️ NCB Executive Secretariat</span>
           </div>
           <div class="gov-card-body" style="font-size: 12px; line-height: 1.6;">
-            <div><strong>Officer:</strong> Lieutenant General N.S. Raja Subramani, CDS</div>
-            <div><strong>Office:</strong> Room 199-C, South Block</div>
-            <div><strong>Secretary:</strong> General Anil Chauhan, CDS</div>
-            <div><strong>Addl Secretary:</strong> Vice Admiral Atul Anand</div>
+            <div><strong>Director General:</strong> Shri N. S. Raja Subramani</div>
+            <div><strong>Office:</strong> West Block No. 1, Wing No. 5, R.K. Puram</div>
+            <div><strong>DDG (Ops &amp; Coord):</strong> Shri Anil Kumar Chhapolia</div>
+            <div><strong>DD (Admn.):</strong> Shri R. K. Verma</div>
           </div>
         </div>
 
@@ -909,6 +912,41 @@ function renderCircularsCard(state) {
               📜 Open Full Archive (${totalCount}) &rsaquo;
             </a>
           </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Active NCB HQ Deputation Appointment Card
+function renderNcbDeputationBanner(state, user) {
+  const order = state.ncbDeputationOrder;
+  if (!order) return '';
+
+  return `
+    <div class="gov-card mb-20" style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 55%, #f8fafc 100%); border-left: 5px solid #0e2252; border-right: 1px solid #bfdbfe; border-top: 1px solid #bfdbfe; border-bottom: 1px solid #bfdbfe; box-shadow: 0 4px 12px rgba(14, 34, 82, 0.08); padding: 18px 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+        <div style="flex: 1; min-width: 320px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <img src="assets/ncb_logo.png" alt="NCB Crest" style="height: 28px; width: auto; object-fit: contain;">
+            <span style="background: #0e2252; color: #fde68a; font-size: 10.5px; font-weight: 800; padding: 3px 10px; border-radius: 3px; letter-spacing: 0.5px;">ACTIVE DEPUTATION • MHA / NCB HQ</span>
+            <span style="font-size: 12px; font-weight: 700; color: #0e2252;">Order No: <code>${order.orderNo || 'No. I-12014/18/2026-Ad.I/NCB'}</code> &bull; Dated: ${order.orderDate || '20th November, 2026'}</span>
+          </div>
+          <h3 style="margin: 0 0 6px 0; font-size: 16px; font-weight: 800; color: #091638;">
+            Appointment on Deputation as Assistant Director — Narcotics Control Bureau (NCB HQ), New Delhi
+          </h3>
+          <div style="font-size: 12px; color: #334155; line-height: 1.55;">
+            Transferred on deputation from <strong>${order.parentDept || 'DRDO, Ministry of Defence'}</strong> to <strong>${order.postingStation || 'Narcotics Control Bureau (NCB HQ), New Delhi'}</strong> w.e.f. <strong>${order.effectiveDateDot || '20.11.2026'}</strong> (${order.tenureYears || 'three years'} up to ${order.endTenureDot || '19.11.2029'}).
+            Payroll mapped to <strong>PAO (NCB), Ministry of Home Affairs (Code: ${user.disbursingOfficer?.paoCode || '021840'})</strong> &bull; Net Pay: <strong>₹${(state.payroll?.netSalary || 118232).toLocaleString('en-IN')}</strong>.
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <button class="btn btn-sm btn-primary" id="btn-download-ncb-dep-banner" style="background: #0e2252; border-color: #0e2252; font-weight: 700; padding: 7px 14px;">
+            📥 Download NCB Deputation Order
+          </button>
+          <a href="#orders-circulars" class="btn btn-sm btn-outline" style="font-weight: 700; color: #0e2252; border-color: #93c5fd;">
+            📜 View Circulars Archive
+          </a>
         </div>
       </div>
     </div>
@@ -1172,12 +1210,14 @@ function attachDashboardEvents(container, state) {
   };
 
   const dlBannerBtn = container.querySelector('#btn-download-special-order-banner');
+  const dlNcbBannerBtn = container.querySelector('#btn-download-ncb-dep-banner');
   const dlCirBtn = container.querySelector('#btn-download-special-order-cir');
   const dlModalBtn = container.querySelector('#btn-download-special-order-modal');
   const dlNcbDepBtn = container.querySelector('#btn-download-ncb-dep-cir');
   const dlTransferBtn = container.querySelector('#btn-download-transfer-cir');
 
   if (dlBannerBtn) dlBannerBtn.addEventListener('click', triggerDownloadAction);
+  if (dlNcbBannerBtn) dlNcbBannerBtn.addEventListener('click', () => downloadNcbDeputationLetter(user, state.ncbDeputationOrder || {}));
   if (dlCirBtn) dlCirBtn.addEventListener('click', triggerDownloadAction);
   if (dlModalBtn) dlModalBtn.addEventListener('click', triggerDownloadAction);
   if (dlNcbDepBtn) dlNcbDepBtn.addEventListener('click', () => downloadNcbDeputationLetter(user, state.ncbDeputationOrder || {}));
@@ -1258,7 +1298,7 @@ function attachDashboardEvents(container, state) {
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             contents: [{
-              parts: [{ text: "You are Titan AI, an official HR assistant for the Government of India, Ministry of Defence (e-HRMS 2.0). Answer concisely and professionally as a central government virtual assistant. Provide factual answers based on CCS Rules if applicable. User query: " + query }]
+              parts: [{ text: "You are Titan AI, an official HR assistant for the Government of India, Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs (e-HRMS 2.0). Answer concisely and professionally as a central government virtual assistant. Provide factual answers based on CCS Rules and MHA guidelines if applicable. User query: " + query }]
             }]
           })
         });

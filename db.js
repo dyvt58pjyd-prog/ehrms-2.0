@@ -878,8 +878,16 @@ class DatabaseManager {
 
   // --- Leave Management & CCS Leave Rules 1972 Methods ---
   seedOfficialLeaves(state) {
-    const EMP_ID = 'MOD-DMA-2024-8104';
+    const EMP_ID = (state && state.currentUser && state.currentUser.empId) ? state.currentUser.empId : '41028104';
     const now = new Date().toISOString();
+    if (EMP_ID !== 'MOD-DMA-2024-8104') {
+      try {
+        this.db.prepare('DELETE FROM leave_balances WHERE officer_emp_id = ?').run('MOD-DMA-2024-8104');
+        this.db.prepare('UPDATE OR IGNORE leave_applications SET officer_emp_id = ? WHERE officer_emp_id = ?').run(EMP_ID, 'MOD-DMA-2024-8104');
+        this.db.prepare('DELETE FROM leave_applications WHERE officer_emp_id = ?').run('MOD-DMA-2024-8104');
+        this.db.prepare('DELETE FROM aebas_records WHERE officer_emp_id = ?').run('MOD-DMA-2024-8104');
+      } catch {}
+    }
 
     // 1. Initial Opening/Credited Entitlements
     const baselineBalances = [
@@ -1063,10 +1071,17 @@ class DatabaseManager {
       );
     }
 
-    // 3. Seed AEBAS Attendance Records matching leave dates
-    this.db.exec(`DELETE FROM aebas_records WHERE officer_emp_id = '${EMP_ID}'`);
+    // 3. Seed AEBAS Attendance Records matching NCB HQ (MHA) deputation + historical parent cadre leave dates
+    this.db.prepare(`DELETE FROM aebas_records WHERE officer_emp_id = ?`).run(EMP_ID);
     const aebasRecords = [
-      { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'Sena Bhawan Gate 2' },
+      { date: '2026-11-26', inTime: '09:02 AM', outTime: '--:--', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
+      { date: '2026-11-25', inTime: '08:56 AM', outTime: '06:10 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
+      { date: '2026-11-24', inTime: '08:59 AM', outTime: '06:04 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
+      { date: '2026-11-23', inTime: '09:05 AM', outTime: '05:55 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram' },
+      { date: '2026-11-22', inTime: '--:--', outTime: '--:--', status: 'Sunday', location: '-' },
+      { date: '2026-11-21', inTime: '--:--', outTime: '--:--', status: 'Saturday', location: '-' },
+      { date: '2026-11-20', inTime: '09:30 AM', outTime: '06:15 PM', status: 'Present', location: 'NCB HQ West Block-1, R.K. Puram (Deputation Joining)' },
+      { date: '2026-10-15', inTime: '08:52 AM', outTime: '--:--', status: 'Present', location: 'DRDO / Sena Bhawan Gate 2' },
       { date: '2026-10-14', inTime: '08:55 AM', outTime: '05:48 PM', status: 'Present', location: 'Sena Bhawan Gate 2' },
       { date: '2026-10-13', inTime: '09:02 AM', outTime: '05:40 PM', status: 'Present', location: 'South Block Gate 4' },
       { date: '2026-10-12', inTime: '--:--', outTime: '--:--', status: 'Leave (Sanctioned - CL)', location: 'Order: MOD/DMA/ESTT-I/LV/2026/501', leaveRef: 'LV-2026-10088' },
@@ -1099,7 +1114,7 @@ class DatabaseManager {
     this.calculateAndSyncLeaveBalances(EMP_ID, state);
   }
 
-  calculateAndSyncLeaveBalances(empId = 'MOD-DMA-2024-8104', state = null) {
+  calculateAndSyncLeaveBalances(empId = '41028104', state = null) {
     const now = new Date().toISOString();
 
     // Sum availed days for each type from SANCTIONED leaves
@@ -1186,7 +1201,7 @@ class DatabaseManager {
     };
   }
 
-  getLeaveApplications(empId = 'MOD-DMA-2024-8104') {
+  getLeaveApplications(empId = '41028104') {
     return this.db.prepare(`
       SELECT * FROM leave_applications
       WHERE officer_emp_id = ?
@@ -1215,7 +1230,7 @@ class DatabaseManager {
     });
   }
 
-  getLeaveBalances(empId = 'MOD-DMA-2024-8104') {
+  getLeaveBalances(empId = '41028104') {
     const rows = this.db.prepare(`SELECT * FROM leave_balances WHERE officer_emp_id = ?`).all(empId);
     const result = {};
     for (const r of rows) {
@@ -1233,7 +1248,7 @@ class DatabaseManager {
     return result;
   }
 
-  saveLeaveApplication(app, empId = 'MOD-DMA-2024-8104') {
+  saveLeaveApplication(app, empId = '41028104') {
     if (!app || !app.id) return;
     const now = new Date().toISOString();
     const stmt = this.db.prepare(`
@@ -1285,7 +1300,7 @@ class DatabaseManager {
     return this.calculateAndSyncLeaveBalances(empId);
   }
 
-  getAebasRecords(empId = 'MOD-DMA-2024-8104') {
+  getAebasRecords(empId = '41028104') {
     return this.db.prepare(`
       SELECT date, in_time as inTime, out_time as outTime, status, location
       FROM aebas_records

@@ -90,11 +90,11 @@ renderLoginScreen(container, (target) => {
   redirectedRoute = target;
 });
 
-console.log('1️⃣ Checking Branding & Visual Text matching Screenshot...');
+console.log('1️⃣ Checking Branding & Visual Text matching NCB HQ Login Portal...');
 assert(container.innerHTML.includes('e-HRMS 2.0'), 'Contains exact portal name "e-HRMS 2.0"');
-assert(container.innerHTML.includes('Department of Personnel &amp; Training') || container.innerHTML.includes('Department of Personnel & Training'), 'Contains "Department of Personnel & Training"');
-assert(container.innerHTML.includes('About e-HRMS'), 'Contains "About e-HRMS"');
-assert(container.innerHTML.includes('e-HRMS 2.0 is an online portal to provide end to end HR services to the Government employees'), 'Contains exact About description text');
+assert(container.innerHTML.includes('Narcotics Control Bureau') && container.innerHTML.includes('Ministry of Home Affairs'), 'Contains "Narcotics Control Bureau & Ministry of Home Affairs"');
+assert(container.innerHTML.includes('About NCB e-HRMS Portal'), 'Contains "About NCB e-HRMS Portal"');
+assert(container.innerHTML.includes('PAO NCB, MHA'), 'Contains NCB e-HRMS description text');
 
 console.log('\n2️⃣ Checking Form Fields & Controls matching Screenshot...');
 assert(container.innerHTML.includes('Login to Your Account'), 'Contains title "Login to Your Account"');
@@ -110,10 +110,10 @@ assert(container.innerHTML.includes('Copyright 2022 Department of Personnel and 
 console.log('\n4️⃣ Checking e-Parichay Persona Support...');
 assert(container.innerHTML.includes('modal-parichay-personas'), 'Contains e-Parichay personas modal');
 assert(container.innerHTML.includes('Anurag Anil Bawaskar'), 'Includes Anurag Anil Bawaskar in personas');
-assert(container.innerHTML.includes('Col. Devashish Sharma'), 'Includes Col. Devashish Sharma in personas');
-assert(container.innerHTML.includes('Shri Manoj Kumar Sinha'), 'Includes Manoj Kumar Sinha in personas');
+assert(container.innerHTML.includes('Shri Anil Kumar Chhapolia'), 'Includes DDG Anil Kumar Chhapolia in personas');
+assert(container.innerHTML.includes('Shri Rajender Singh'), 'Includes DD (Admn.) Rajender Singh in personas');
 assert(container.innerHTML.includes('Shri Pradeep Kumar, SAO'), 'Includes DDO Pradeep Kumar in personas');
-assert(container.innerHTML.includes('Shri Anil Kumar Chhapolia'), 'Includes CCA Anil Kumar Chhapolia in personas');
+assert(container.innerHTML.includes('Shri N. S. Raja Subramani'), 'Includes DG NCB HQ N. S. Raja Subramani in personas');
 
 console.log('\n================================================================');
 console.log(`🏁 Results: Passed: ${passed} | Failed: ${failed}`);

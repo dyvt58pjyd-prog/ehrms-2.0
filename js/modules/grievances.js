@@ -1,6 +1,6 @@
 /**
  * e-HRMS 2.0 - CPGRAMS & Employee Grievance Redressal Desk
- * Government of India - Department of Personnel & Training & Ministry of Defence
+ * Government of India - Ministry of Home Affairs • Narcotics Control Bureau (NCB HQ)
  */
 
 import { store } from '../state.js';
@@ -18,7 +18,7 @@ export function renderGrievances(container) {
           <span>⚖️</span> CPGRAMS &bull; Employee Grievance Redressal Desk
         </h2>
         <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">
-          Centralized Public Grievance Redress and Monitoring System &bull; Department of Military Affairs Internal Redressal Cell
+          Centralized Public Grievance Redress and Monitoring System &bull; Narcotics Control Bureau (NCB HQ) Internal Redressal Cell
         </div>
       </div>
       <div>
@@ -34,7 +34,7 @@ export function renderGrievances(container) {
         <div>
           <strong style="color: var(--goi-navy); font-size: 13px;">Statutory Citizen's Charter Mandate &mdash; Rule 37 CCS Rules</strong><br>
           <span style="font-size: 11.5px; color: var(--text-secondary);">
-            All official employee grievances within the Department of Military Affairs are subject to a mandatory <strong>30-Day SLA Turnaround</strong> monitored by the Cadre Controlling Authority.
+            All official employee grievances within Narcotics Control Bureau (NCB HQ, MHA) are subject to a mandatory <strong>30-Day SLA Turnaround</strong> monitored by the Cadre Controlling Authority.
           </span>
         </div>
         <span class="status-badge badge-sanctioned" style="font-size: 11px;">

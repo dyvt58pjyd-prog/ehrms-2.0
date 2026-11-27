@@ -35,13 +35,13 @@ export function renderApprovals(container) {
       </div>
     </div>
 
-    <!-- Genuine DMA Approver Persona Note -->
+    <!-- NCB HQ Approver Persona Note -->
     <div class="gov-alert gov-alert-info mb-20" style="border-left: 4px solid var(--goi-navy);">
       <div style="font-size: 24px;">🏛️</div>
       <div>
-        <strong>Sanctioning Authority View:</strong> Logged in as <strong>Shri Anil Kumar Chhapolia, Joint Secretary (Establishment & Coordination)</strong>, Department of Military Affairs, Ministry of Defence.
+        <strong>Sanctioning Authority View:</strong> Logged in as <strong>Shri Anil Kumar Chhapolia, Deputy Director General (Ops &amp; Coordination)</strong>, Narcotics Control Bureau (NCB HQ), Ministry of Home Affairs.
         <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
-          Competent delegated administrative and financial powers under Central Civil Services Rules and Ministry of Defence Delegation of Financial Powers (DFP).
+          Competent delegated administrative and financial powers under Central Civil Services Rules and Ministry of Home Affairs Delegation of Financial Powers (DFPR).
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ export function renderApprovals(container) {
         <div class="modal-body">
           <div class="gov-alert gov-alert-success mb-20">
             <div>
-              <strong>Ministry of Defence e-Governance:</strong> Legally binding digital authentication under Section 5 of Information Technology Act, 2000.
+              <strong>Narcotics Control Bureau (MHA) e-Governance:</strong> Legally binding digital authentication under Section 5 of Information Technology Act, 2000.
             </div>
           </div>
           <div style="background: #f8fafc; border: 1px solid var(--border-medium); border-radius: 6px; padding: 16px; margin-bottom: 20px;">
@@ -81,7 +81,7 @@ export function renderApprovals(container) {
           </div>
           <div class="form-group">
             <label class="form-label">Signer Identification (Aadhaar / Virtual ID)</label>
-            <input type="text" class="form-control" value="XXXX-XXXX-4819 (Shri Anil Kumar Chhapolia, Joint Secretary, DMA)" readonly>
+            <input type="text" class="form-control" value="XXXX-XXXX-4819 (Shri Anil Kumar Chhapolia, DDG Ops &amp; Coord, NCB HQ)" readonly>
           </div>
           <div class="form-group" style="margin-top: 14px;" id="esign-approval-date-group">
             <label class="form-label">Effective Sanction Date <span style="font-weight:normal; color:#666;">(Adjust to post-date or back-date)</span></label>

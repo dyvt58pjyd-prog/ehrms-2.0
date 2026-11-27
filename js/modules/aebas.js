@@ -48,8 +48,8 @@ export function renderAEBAS(container) {
     <!-- Attendance Log Table -->
     <div class="card">
       <div style="padding: 15px; border-bottom: 1px solid var(--border-light); font-weight: 700; color: var(--goi-navy); display: flex; justify-content: space-between; align-items: center;">
-        <span>📅 Recent Punch Logs</span>
-        <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">September 2026</span>
+        <span>📅 Recent Punch Logs (NCB HQ &bull; West Block-1, R.K. Puram)</span>
+        <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">November 2026</span>
       </div>
       <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">

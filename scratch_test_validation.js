@@ -106,13 +106,13 @@ assert(p3.name.includes('Rajender Singh') && p3.roleTitle.includes('Scrutiny'),
 assert(p3.userId === 'manoj.sinha' && p3.password === 'Scrutiny@2026', 'Persona 3 User ID: manoj.sinha, Password: Scrutiny@2026');
 
 const p4 = OFFICIAL_PERSONAS.DDO;
-assert(p4.name.includes('Pradeep Kumar') && p4.ddoCode === '10501' && p4.paoCode === '001488', 
-  'Persona 4 (DDO Treasury): Shri Pradeep Kumar, SAO, DDO Code 10501, PAO 001488');
+assert(p4.name.includes('Pradeep Kumar') && p4.ddoCode === '10501' && p4.paoCode === '021840', 
+  'Persona 4 (DDO Treasury): Shri Pradeep Kumar, SAO, DDO Code 10501, PAO 021840 (PAO NCB, MHA)');
 assert(p4.userId === 'ddo.10501' && p4.password === 'DDO@10501', 'Persona 4 User ID: ddo.10501, Password: DDO@10501');
 
 const p5 = OFFICIAL_PERSONAS.ADMIN;
 assert(p5.name.includes('Raja Subramani') && p5.roleTitle.includes('CCA'), 
-  'Persona 5 (Cadre CCA Admin): Lieutenant General N.S. Raja Subramani');
+  'Persona 5 (Cadre CCA Admin): Shri N. S. Raja Subramani (DG NCB HQ)');
 assert(p5.userId === 'raja.subramani' && p5.password === 'Admin@2026', 'Persona 5 User ID: raja.subramani, Password: Admin@2026');
 
 // 6. Role Switcher Removed from HTML Validation
@@ -185,8 +185,8 @@ globalThis.document = {
 };
 downloader.downloadOfficialLetterhead();
 
-assert(testLetterHtml.includes('अनुराग अ. बावस्कर'), 'Letterhead includes Hindi name');
-assert(testLetterHtml.includes('Anurag A. Bawaskar'), 'Letterhead includes English name in Title Case');
+assert(testLetterHtml.includes('अनुराग अनिल बावस्कर'), 'Letterhead includes Hindi name');
+assert(testLetterHtml.includes('Anurag Anil Bawaskar'), 'Letterhead includes English name in Title Case');
 assert(testLetterHtml.includes('FILE NO :'), 'Letterhead includes FILE NO: cell');
 assert(testLetterHtml.includes('DATE -'), 'Letterhead includes DATE - cell');
 assert(!testLetterHtml.includes('mod_stamp'), 'Letterhead has NO stamp image');
@@ -196,5 +196,6 @@ console.log(`\nResults: ${passed} passed, ${failed} failed`);
 if (failed > 0) {
   process.exit(1);
 } else {
-  console.log('🎉 ALL 37 COMPREHENSIVE TESTS PASSED PERFECTLY!');
+  console.log('🎉 ALL COMPREHENSIVE TESTS PASSED PERFECTLY!');
+  process.exit(0);
 }

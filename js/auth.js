@@ -65,25 +65,26 @@ export function renderLoginScreen(container, onLoginSuccess) {
       <!-- Main Centered Two-Panel Card -->
       <div class="ehrms-login-card">
         
-        <!-- LEFT PANEL: Royal Navy Sunburst Branding -->
+        <!-- LEFT PANEL: NCB / MHA Royal Navy Sunburst Branding -->
         <div class="ehrms-left-panel">
           <div class="sunbeam-rays"></div>
           
           <div class="left-panel-content">
-            <!-- Government of India / e-HRMS 2.0 Header -->
+            <!-- Government of India / MHA NCB HQ / e-HRMS 2.0 Header -->
             <div class="gov-brand-header">
               <img src="assets/emblem.png" alt="State Emblem of India" class="white-emblem" />
+              <img src="assets/ncb_logo.png" alt="Narcotics Control Bureau Crest" style="height: 54px; width: auto; object-fit: contain;" />
               <div class="brand-text">
                 <div class="portal-heading">e-HRMS 2.0</div>
-                <div class="portal-subheading">Department of Personnel & Training</div>
+                <div class="portal-subheading">Narcotics Control Bureau &bull; Ministry of Home Affairs</div>
               </div>
             </div>
 
             <!-- About Section with Warm Gold Accents -->
             <div class="about-ehrms-block">
-              <div class="about-title">About e-HRMS</div>
+              <div class="about-title">About NCB e-HRMS Portal</div>
               <div class="about-description">
-                e-HRMS 2.0 is an online portal to provide end to end HR services to the Government employees
+                Unified HR, Deputation, Payroll (PAO NCB, MHA), e-Service Book &amp; Vigilance Portal for Officers of the Narcotics Control Bureau (NCB HQ), New Delhi
               </div>
             </div>
           </div>
@@ -237,8 +238,8 @@ export function renderLoginScreen(container, onLoginSuccess) {
             <div class="persona-option-row" data-role="EMPLOYEE" data-uid="anurag.bawaskar" data-pwd="Anurag@2026">
               <div class="persona-avatar">👤</div>
               <div class="persona-details">
-                <div class="p-name">Anurag Anil Bawaskar <span class="badge-tag">ASO-I &bull; Group 'A' Gazetted</span></div>
-                <div class="p-meta">User ID: <strong>anurag.bawaskar</strong> &bull; Mobile: <strong>8459962390</strong> &bull; DDO: <strong>10501</strong></div>
+                <div class="p-name">Anurag Anil Bawaskar <span class="badge-tag">Assistant Director &bull; NCB HQ Delhi</span></div>
+                <div class="p-meta">User ID: <strong>anurag.bawaskar</strong> &bull; Mobile: <strong>8459962390</strong> &bull; DDO: <strong>10501</strong> (NCB MHA)</div>
               </div>
               <button type="button" class="btn btn-sm btn-primary">Sign In</button>
             </div>
@@ -247,8 +248,8 @@ export function renderLoginScreen(container, onLoginSuccess) {
             <div class="persona-option-row" data-role="APPROVER" data-uid="anil.chhapolia" data-pwd="Director@2026">
               <div class="persona-avatar">🎖️</div>
               <div class="persona-details">
-                <div class="p-name">Shri Anil Kumar Chhapolia <span class="badge-tag">Director (Estt & Joint Staff)</span></div>
-                <div class="p-meta">User ID: <strong>anil.chhapolia</strong> &bull; Role: <strong>MSS Approving Authority</strong></div>
+                <div class="p-name">Shri Anil Kumar Chhapolia <span class="badge-tag">Deputy Director General (Ops &amp; Coord), NCB HQ</span></div>
+                <div class="p-meta">User ID: <strong>anil.chhapolia</strong> &bull; Role: <strong>MSS Approving Authority (MHA)</strong></div>
               </div>
               <button type="button" class="btn btn-sm btn-outline">Sign In</button>
             </div>
@@ -257,28 +258,28 @@ export function renderLoginScreen(container, onLoginSuccess) {
             <div class="persona-option-row" data-role="BRANCH_OFFICER" data-uid="manoj.sinha" data-pwd="Scrutiny@2026">
               <div class="persona-avatar">⚖️</div>
               <div class="persona-details">
-                <div class="p-name">Shri Rajender Singh <span class="badge-tag">Under Secretary (Estt-I)</span></div>
-                <div class="p-meta">User ID: <strong>manoj.sinha</strong> &bull; Role: <strong>Branch Scrutiny Officer</strong></div>
+                <div class="p-name">Shri Rajender Singh <span class="badge-tag">Deputy Director (Admn.), NCB HQ</span></div>
+                <div class="p-meta">User ID: <strong>manoj.sinha</strong> &bull; Role: <strong>Estt. &amp; Scrutiny Officer (NCB HQ)</strong></div>
               </div>
               <button type="button" class="btn btn-sm btn-outline">Sign In</button>
             </div>
 
-            <!-- 4. Shri Pradeep Kumar, SAO (DDO Code 10501) -->
+            <!-- 4. Shri Pradeep Kumar, SAO (DDO / PAO NCB, MHA New Delhi) -->
             <div class="persona-option-row" data-role="DDO" data-uid="ddo.10501" data-pwd="DDO@10501">
               <div class="persona-avatar">💰</div>
               <div class="persona-details">
-                <div class="p-name">Shri Pradeep Kumar, SAO <span class="badge-tag">DDO (Dept of Defence Finance - CGDA)</span></div>
-                <div class="p-meta">User ID: <strong>ddo.10501</strong> &bull; DDO Code: <strong>10501 (CGDA)</strong> &bull; PAO: <strong>001488</strong></div>
+                <div class="p-name">Shri Pradeep Kumar, SAO <span class="badge-tag">DDO / PAO (NCB), Ministry of Home Affairs</span></div>
+                <div class="p-meta">User ID: <strong>ddo.10501</strong> &bull; DDO: <strong>10501</strong> &bull; PAO: <strong>PAO (NCB), MHA New Delhi</strong></div>
               </div>
               <button type="button" class="btn btn-sm btn-outline">Sign In</button>
             </div>
 
-            <!-- 5. Lieutenant General N.S. Raja Subramani (Cadre CCA Admin) -->
+            <!-- 5. Director General, NCB HQ (Cadre CCA Admin) -->
             <div class="persona-option-row" data-role="ADMIN" data-uid="raja.subramani" data-pwd="Admin@2026">
               <div class="persona-avatar">🏛️</div>
               <div class="persona-details">
-                <div class="p-name">Lieutenant General N.S. Raja Subramani <span class="badge-tag">Chief of Defence Staff</span></div>
-                <div class="p-meta">User ID: <strong>raja.subramani</strong> &bull; Role: <strong>Cadre Controlling Authority (CCA)</strong></div>
+                <div class="p-name">Shri N. S. Raja Subramani <span class="badge-tag">Director General / CCA, NCB HQ (MHA)</span></div>
+                <div class="p-meta">User ID: <strong>raja.subramani</strong> &bull; Role: <strong>Cadre Controlling Authority (NCB MHA)</strong></div>
               </div>
               <button type="button" class="btn btn-sm btn-outline">Sign In</button>
             </div>
@@ -310,7 +311,7 @@ export function renderLoginScreen(container, onLoginSuccess) {
   let lastKeyTime = 0;
   let isPasted = false;
 
-  passwordInput.addEventListener('keydown', (e) => {
+  passwordInput?.addEventListener?.('keydown', (e) => {
     const now = performance.now();
     if (lastKeyTime > 0) {
       keystrokeTimes.push(now - lastKeyTime);
@@ -318,7 +319,7 @@ export function renderLoginScreen(container, onLoginSuccess) {
     lastKeyTime = now;
   });
 
-  passwordInput.addEventListener('paste', () => {
+  passwordInput?.addEventListener?.('paste', () => {
     isPasted = true;
   });
 
